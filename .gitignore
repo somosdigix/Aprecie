@@ -48,3 +48,4 @@ docs/_build/
 # PyBuilder
 target/
 ambienteDoValorometro/
+db.sqlite3
