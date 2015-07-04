@@ -1,5 +1,14 @@
 language: python
 script:
-   - python manage.py makemigrations
-   - python manage.py migrate
-   - python manage.py test
+- python manage.py makemigrations
+- python manage.py migrate
+- python manage.py test
+deploy:
+  provider: openshift
+  user: gimoteco@gmail.com
+  password:
+    secure: BygESuaReVyPtr7O80g5mw+/XYvpjHuIEzued/sPjJ0S24Q7vzknlJonwIu58HF8/z8SBSHZBQI0IxsGh+k2ObyUH6GmPs2yMdxMPOXBrGstuw6Qeu0EL0TiGZCEc/yMyW9/SSeB0UdU2SVBRRk0+ovjr7g/IkDxBRqtYWGTn9aK3P0Np7QHva2dmtWcKt3PEReDo+NQvgZyeMR1prKPTknJW+m5TmRQLuyzE3CrGfTfSVnwtraGb963OpdpTit6OGHQnhEvEnSu4s7Mmq5huFtCq5TB/VILWJezhp0v6WA0PTXGRV2JcX2Fq7bnjJQiO5XXGwhRqXxiqU+1q/6iF08uiil/W36QnIrPN66CKVHXH+XaqUMmFsilvFFnTP731uuanVUbsnGPJ8xe02p3PzqF8TOtPVxB/AIBlnIuE+M0pKW9+QbaHayCHa78Uif7w2daLsB5uJgeD80Hb3n52buNvlstybHuEKJ5dIOFixaJlUDI23ky+CLt9JedHZURBG776pzomZlIy4HuTZGDZmEkrU6CBnasPkG6nxsPPyeYIuREFLfo/qFPVnP9FjtkrG3vYi9hNdCWWb7hLZIEV6cRZLQHpYKRejG9ONiCqzb1ZPyDlHVw4siwhO6LNnJj4+/qBCQvWfh47l6uPyXTou2vZJKpf65XXZ3DmZI8WGA=
+  app: Valorometro
+  domain: cafecombytes
+  on:
+    repo: DigithoBrasil/Valorometro
