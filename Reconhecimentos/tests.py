@@ -1,8 +1,8 @@
 from django.test import TestCase
 from Login.models import Funcionario
 from Reconhecimentos.models import Valor
-from Reconhecimentos.models import ValoresDaDigithoBrasil
 from Reconhecimentos.models import Reconhecimento
+from Reconhecimentos.statics import ValoresDaDigithoBrasil
 
 class TesteDeReconhecimento(TestCase):
 
