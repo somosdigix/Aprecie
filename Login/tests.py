@@ -1,7 +1,7 @@
 from django.test import TestCase
 from datetime import datetime
 from django.contrib.auth import authenticate
-from models import Funcionario
+from Login.models import Funcionario
 
 class TesteDeAutenticacao(TestCase):
 
