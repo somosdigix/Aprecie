@@ -20,5 +20,6 @@ from Login.views import index
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^login/', include('Login.urls')),
+    url(r'^reconhecimentos/', include('Reconhecimentos.urls')),
     url(r'^$', index),
 ]
