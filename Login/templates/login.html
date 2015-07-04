@@ -5,7 +5,7 @@
 	<title>Login do Valorômetro</title>
 </head>
 <body>
-	<form action="/login/logar/", method="POST">
+	<form action="{% url "entrar" %}", method="POST">
 		{% csrf_token %}
 		CPF: <input type="text" name="cpf" id="cpf"/>
 		Data de nascimento: <input type="text" name="data_de_nascimento" id="data_de_nascimento" />

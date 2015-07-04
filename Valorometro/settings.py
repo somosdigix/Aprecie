@@ -104,3 +104,4 @@ STATIC_URL = '/static/'
 
 AUTH_USER_MODEL = 'Login.Funcionario'
 AUTHENTICATION_BACKENDS = ('Login.backend.FuncionarioBackend', )
+LOGIN_URL = '/login/'
