@@ -13,37 +13,30 @@ class TesteDeReconhecimento(TestCase):
 		self.funcionario = Funcionario.objects.create(nome='Renan', cpf='00000000000', data_de_nascimento='2000-12-01')
 
 	def testa_o_reconhecimento_de_uma_habilidade(self):
-		inquietude = ValoresDaDigithoBrasil.inquietude
 		justificativa = 'Foi legal'
 
-		self.funcionario.reconhecer(inquietude, justificativa);
+		self.funcionario.reconhecer(ValoresDaDigithoBrasil.inquietude, justificativa);
 		reconhecimento = self.funcionario.reconhecimentos()[0]
 
-		self.assertEqual(1, len(self.funcionario.reconhecimentos_por_valor(inquietude)))
-		self.assertEqual(inquietude, reconhecimento.valor)
+		self.assertEqual(1, len(self.funcionario.reconhecimentos_por_valor(ValoresDaDigithoBrasil.inquietude)))
+		self.assertEqual(ValoresDaDigithoBrasil.inquietude, reconhecimento.valor)
 		self.assertEqual(justificativa, reconhecimento.justificativa)
 
 	def testa_a_listagem_de_reconhecimentos(self):
-		proatividade = ValoresDaDigithoBrasil.proatividade
-		inquietude = ValoresDaDigithoBrasil.inquietude
-
-		self.funcionario.reconhecer(proatividade, 'Foi legal');
-		self.funcionario.reconhecer(inquietude, 'Voce realmente questiona as coisas');
+		self.funcionario.reconhecer(ValoresDaDigithoBrasil.proatividade, 'Foi legal');
+		self.funcionario.reconhecer(ValoresDaDigithoBrasil.inquietude, 'Voce realmente questiona as coisas');
 
 		self.assertEqual(2, len(self.funcionario.reconhecimentos()))
-		self.assertEqual(proatividade, self.funcionario.reconhecimentos()[0].valor)
-		self.assertEqual(inquietude, self.funcionario.reconhecimentos()[1].valor)
+		self.assertEqual(ValoresDaDigithoBrasil.proatividade, self.funcionario.reconhecimentos()[0].valor)
+		self.assertEqual(ValoresDaDigithoBrasil.inquietude, self.funcionario.reconhecimentos()[1].valor)
 
 	def testa_a_listagem_de_reconhecimentos_por_valor(self):
-		proatividade = ValoresDaDigithoBrasil.proatividade
-		inquietude = ValoresDaDigithoBrasil.inquietude
+		self.funcionario.reconhecer(ValoresDaDigithoBrasil.proatividade, 'Foi legal');
+		self.funcionario.reconhecer(ValoresDaDigithoBrasil.inquietude, 'Voce realmente questiona as coisas');
+		self.funcionario.reconhecer(ValoresDaDigithoBrasil.proatividade, 'Parabens pela iniciativa');
 
-		self.funcionario.reconhecer(proatividade, 'Foi legal');
-		self.funcionario.reconhecer(inquietude, 'Voce realmente questiona as coisas');
-		self.funcionario.reconhecer(proatividade, 'Parabens pela iniciativa');
-
-		self.assertEqual(1, len(self.funcionario.reconhecimentos_por_valor(inquietude)))
-		self.assertEqual(2, len(self.funcionario.reconhecimentos_por_valor(proatividade)))
+		self.assertEqual(1, len(self.funcionario.reconhecimentos_por_valor(ValoresDaDigithoBrasil.inquietude)))
+		self.assertEqual(2, len(self.funcionario.reconhecimentos_por_valor(ValoresDaDigithoBrasil.proatividade)))
 
 class TesteDeApiDeReconhecimento(TestCase):
 
