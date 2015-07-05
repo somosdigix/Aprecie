@@ -25,4 +25,3 @@ def sair(requisicao):
 @login_required
 def index(requisicao):
 	return render(requisicao, "index.html", {"mensagem": "Logou"})
-
