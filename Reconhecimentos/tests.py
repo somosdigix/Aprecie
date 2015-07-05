@@ -10,43 +10,33 @@ from Reconhecimentos.views import reconhecer
 class TesteDeReconhecimento(TestCase):
 
 	def setUp(self):
-		funcionario = Funcionario.objects.create(nome='Renan', cpf='00000000000', data_de_nascimento='2000-12-01')
+		self.funcionario = Funcionario.objects.create(nome='Renan', cpf='00000000000', data_de_nascimento='2000-12-01')
 
 	def testa_o_reconhecimento_de_uma_habilidade(self):
-		funcionario = Funcionario.objects.get(cpf='00000000000')
-		inquietude = ValoresDaDigithoBrasil.inquietude
 		justificativa = 'Foi legal'
 
-		funcionario.reconhecer(inquietude, justificativa);
-		reconhecimento = funcionario.reconhecimentos()[0]
+		self.funcionario.reconhecer(ValoresDaDigithoBrasil.inquietude, justificativa);
+		reconhecimento = self.funcionario.reconhecimentos()[0]
 
-		self.assertEqual(1, len(funcionario.reconhecimentos_por_valor(inquietude)))
-		self.assertEqual(inquietude, reconhecimento.valor)
+		self.assertEqual(1, len(self.funcionario.reconhecimentos_por_valor(ValoresDaDigithoBrasil.inquietude)))
+		self.assertEqual(ValoresDaDigithoBrasil.inquietude, reconhecimento.valor)
 		self.assertEqual(justificativa, reconhecimento.justificativa)
 
 	def testa_a_listagem_de_reconhecimentos(self):
-		funcionario = Funcionario.objects.get(cpf='00000000000')
-		responsabilidade = ValoresDaDigithoBrasil.responsabilidade
-		inquietude = ValoresDaDigithoBrasil.inquietude
+		self.funcionario.reconhecer(ValoresDaDigithoBrasil.responsabilidade, 'Foi legal');
+		self.funcionario.reconhecer(ValoresDaDigithoBrasil.inquietude, 'Voce realmente questiona as coisas');
 
-		funcionario.reconhecer(responsabilidade, 'Foi legal');
-		funcionario.reconhecer(inquietude, 'Voce realmente questiona as coisas');
-
-		self.assertEqual(2, len(funcionario.reconhecimentos()))
-		self.assertEqual(responsabilidade, funcionario.reconhecimentos()[0].valor)
-		self.assertEqual(inquietude, funcionario.reconhecimentos()[1].valor)
+		self.assertEqual(2, len(self.funcionario.reconhecimentos()))
+		self.assertEqual(ValoresDaDigithoBrasil.responsabilidade, self.funcionario.reconhecimentos()[0].valor)
+		self.assertEqual(ValoresDaDigithoBrasil.inquietude, self.funcionario.reconhecimentos()[1].valor)
 
 	def testa_a_listagem_de_reconhecimentos_por_valor(self):
-		funcionario = Funcionario.objects.get(cpf='00000000000')
-		responsabilidade = ValoresDaDigithoBrasil.responsabilidade
-		inquietude = ValoresDaDigithoBrasil.inquietude
+		self.funcionario.reconhecer(ValoresDaDigithoBrasil.responsabilidade, 'Foi legal');
+		self.funcionario.reconhecer(ValoresDaDigithoBrasil.inquietude, 'Voce realmente questiona as coisas');
+		self.funcionario.reconhecer(ValoresDaDigithoBrasil.responsabilidade, 'Parabens pela iniciativa');
 
-		funcionario.reconhecer(responsabilidade, 'Foi legal');
-		funcionario.reconhecer(inquietude, 'Voce realmente questiona as coisas');
-		funcionario.reconhecer(responsabilidade, 'Parabens pela iniciativa');
-
-		self.assertEqual(1, len(funcionario.reconhecimentos_por_valor(inquietude)))
-		self.assertEqual(2, len(funcionario.reconhecimentos_por_valor(responsabilidade)))
+		self.assertEqual(1, len(self.funcionario.reconhecimentos_por_valor(ValoresDaDigithoBrasil.inquietude)))
+		self.assertEqual(2, len(self.funcionario.reconhecimentos_por_valor(ValoresDaDigithoBrasil.responsabilidade)))
 
 class TesteDeApiDeReconhecimento(TestCase):
 
