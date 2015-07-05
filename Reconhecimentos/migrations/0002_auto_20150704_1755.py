@@ -6,7 +6,7 @@ from Reconhecimentos.models import Valor
 
 def preencherValores(apps, schema_editor):
 	Valor.objects.create(nome='Inquietude')
-	Valor.objects.create(nome='Proatividade')
+	Valor.objects.create(nome='Responsabilidade')
 	Valor.objects.create(nome='Resultado')
 	Valor.objects.create(nome='Transparencia')
 	Valor.objects.create(nome='Alegria')

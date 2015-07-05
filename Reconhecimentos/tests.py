@@ -26,27 +26,27 @@ class TesteDeReconhecimento(TestCase):
 
 	def testa_a_listagem_de_reconhecimentos(self):
 		funcionario = Funcionario.objects.get(cpf='00000000000')
-		proatividade = ValoresDaDigithoBrasil.proatividade
+		responsabilidade = ValoresDaDigithoBrasil.responsabilidade
 		inquietude = ValoresDaDigithoBrasil.inquietude
 
-		funcionario.reconhecer(proatividade, 'Foi legal');
+		funcionario.reconhecer(responsabilidade, 'Foi legal');
 		funcionario.reconhecer(inquietude, 'Voce realmente questiona as coisas');
 
 		self.assertEqual(2, len(funcionario.reconhecimentos()))
-		self.assertEqual(proatividade, funcionario.reconhecimentos()[0].valor)
+		self.assertEqual(responsabilidade, funcionario.reconhecimentos()[0].valor)
 		self.assertEqual(inquietude, funcionario.reconhecimentos()[1].valor)
 
 	def testa_a_listagem_de_reconhecimentos_por_valor(self):
 		funcionario = Funcionario.objects.get(cpf='00000000000')
-		proatividade = ValoresDaDigithoBrasil.proatividade
+		responsabilidade = ValoresDaDigithoBrasil.responsabilidade
 		inquietude = ValoresDaDigithoBrasil.inquietude
 
-		funcionario.reconhecer(proatividade, 'Foi legal');
+		funcionario.reconhecer(responsabilidade, 'Foi legal');
 		funcionario.reconhecer(inquietude, 'Voce realmente questiona as coisas');
-		funcionario.reconhecer(proatividade, 'Parabens pela iniciativa');
+		funcionario.reconhecer(responsabilidade, 'Parabens pela iniciativa');
 
 		self.assertEqual(1, len(funcionario.reconhecimentos_por_valor(inquietude)))
-		self.assertEqual(2, len(funcionario.reconhecimentos_por_valor(proatividade)))
+		self.assertEqual(2, len(funcionario.reconhecimentos_por_valor(responsabilidade)))
 
 class TesteDeApiDeReconhecimento(TestCase):
 
