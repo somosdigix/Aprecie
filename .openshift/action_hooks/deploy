@@ -1,0 +1,4 @@
+PYTHONPATH=$OPENSHIFT_REPO_DIR
+python $PYTHONPATH/manage.py collectstatic -c --noinput --pythonpath=\$PYTHONPATH
+python $PYTHONPATH/manage.py makemigrations
+python $PYTHONPATH/manage.py migrate
