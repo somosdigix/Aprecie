@@ -23,8 +23,10 @@
 		</div>
 
 		{{#each this.valores}}
-		<section> <span>{{this.nome}}</span>
-			<span class="ion-plus-round"></span>
+		<section> 
+			<span>{{this.nome}}</span>
+			<span>{{this.quantidade_de_reconhecimentos}}</span>
+			<span data-cpf={{../this.cpf}} data-valor-id="{{this.id}}" class="ion-plus-round"></span>
 		</section>
 		{{/each}}
 	</script>
@@ -56,6 +58,19 @@
 			var template = Handlebars.compile(document.querySelector('#reconhecimentoTemplate').innerHTML);
 			document.querySelector('#conteudo').innerHTML += template(reconhecimentosDoFuncionario);
 		});
+
+		$('body').on('click', 'span.ion-plus-round', function() {
+			var data = {
+				cpf: $(this).data('cpf'),
+				valor_id: $(this).data('valor-id'),
+				justificativa: 'Justificativa default'
+			};
+
+			$.post('{% url "reconhecer" %}', data, function() {
+				alert('Reconhecimento realizado com sucesso');
+				window.location.reload();
+			});
+		})
 	</script>
 </body>
 </html>
