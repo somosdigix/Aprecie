@@ -49,3 +49,4 @@ docs/_build/
 target/
 ambienteDoValorometro/
 db.sqlite3
+!static/app/lib/
