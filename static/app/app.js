@@ -2,15 +2,19 @@ var configuracoes = {
 	baseUrl: '',
 
 	paths: {
-		"text": "app/lib/requirejs-text/text"
+		'text': 'app/lib/requirejs-text/text',
+		'jquery': 'app/lib/jquery/dist/jquery',
+		'handlebars': 'app/lib/handlebars/handlebars.amd'
 	}
 };
 
 require.config(configuracoes);
 
 require([
+	'jquery',
+	'handlebars',
 	'text!partials/reconhecimentos.html'
-], function(reconhecimentosTemplate) {
+], function($, Handlebars, reconhecimentosTemplate) {
 	$.post('/reconhecimentos/funcionario/', {
 		'cpf': '00000000000'
 	}, function(reconhecimentosDoFuncionario) {
