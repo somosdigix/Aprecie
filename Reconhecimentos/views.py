@@ -21,3 +21,6 @@ def reconhecimentos_do_funcionario(requisicao):
 	valores = map(lambda valor: { 'id': valor.id, 'nome': valor.nome, 'quantidade_de_reconhecimentos': len(funcionario.reconhecimentos_por_valor(valor)) }, ValoresDaDigithoBrasil.todos)
 
 	return JsonResponse({ 'nome': funcionario.nome, 'cpf': funcionario.cpf, 'valores': valores }, safe=False)
+
+def escolher_elogiado(requisicao):
+	return render(requisicao, "escolher_elogiado.html")
