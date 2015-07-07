@@ -106,7 +106,6 @@ STATICFILES_DIRS = (
 
 STATIC_URL = '/static/'
 
-AUTH_USER_MODEL = 'Login.Funcionario'
 AUTHENTICATION_BACKENDS = ('Login.backend.FuncionarioBackend', )
 LOGIN_URL = '/login/'
 ON_OPENSHIFT = "OPENSHIFT_APP_NAME" in os.environ
