@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
 from models import Funcionario
+from django.http import JsonResponse
 
 def login_de_funcionario(requisicao):
 	return render(requisicao, "login.html")
@@ -15,7 +16,14 @@ def entrar(requisicao):
 	if funcionario_autenticado:
 		login(requisicao, funcionario_autenticado)
 
-	return redirect(index)
+	return redirect("escolher_elogiado")
+
+@login_required
+def obter_funcionarios(requisicao):
+	termo = requisicao.GET["term"]
+	funcionarios = Funcionario.objects.filter(nome__icontains=termo)
+	funcionarios = map(lambda funcionario: funcionario.nome, funcionarios)
+	return JsonResponse(funcionarios, safe=False)
 
 @login_required
 def sair(requisicao):

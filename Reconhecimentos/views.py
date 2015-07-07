@@ -3,6 +3,7 @@ from django.shortcuts import render
 from Login.models import Funcionario
 from Reconhecimentos.models import Valor
 from Reconhecimentos.statics import ValoresDaDigithoBrasil
+from django.contrib.auth.decorators import login_required
 
 def reconhecer(requisicao):
 	cpf = requisicao.POST['cpf']
@@ -22,5 +23,6 @@ def reconhecimentos_do_funcionario(requisicao):
 
 	return JsonResponse({ 'nome': funcionario.nome, 'cpf': funcionario.cpf, 'valores': valores }, safe=False)
 
+@login_required
 def escolher_elogiado(requisicao):
 	return render(requisicao, "escolher_elogiado.html")
