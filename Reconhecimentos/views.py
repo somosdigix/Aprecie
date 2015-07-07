@@ -4,7 +4,9 @@ from Login.models import Funcionario
 from Reconhecimentos.models import Valor
 from Reconhecimentos.statics import ValoresDaDigithoBrasil
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
 
+@csrf_exempt
 def reconhecer(requisicao):
 	cpf = requisicao.POST['cpf']
 	valor_id = requisicao.POST['valor_id']
@@ -17,6 +19,7 @@ def reconhecer(requisicao):
 
 	return JsonResponse({})
 
+@csrf_exempt
 def reconhecimentos_do_funcionario(requisicao):
 	funcionario = Funcionario.objects.get(cpf=requisicao.POST['cpf'])
 	valores = map(lambda valor: { 'id': valor.id, 'nome': valor.nome, 'quantidade_de_reconhecimentos': len(funcionario.reconhecimentos_por_valor(valor)) }, ValoresDaDigithoBrasil.todos)

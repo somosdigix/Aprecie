@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+	<meta charset="utf-8" />
+	<title>Valorômetro</title>
+
+	<link rel="stylesheet" href="css/ionicons.css" />
+</head>
+
+<body>
+	<section id="conteudo">
+	</section>
+
+	<script src="app/lib/handlebars/handlebars.js"></script>
+	<script src="app/lib/jquery/dist/jquery.js"></script>
+
+	<script id="reconhecimentoTemplate" type="text/x-handlebars-template">
+		<div>
+			<img src="https://www.gravatar.com/avatar/ba5855d0bd7ab49d3ae8ca4580bedf12?s=100" alt="Renan Siravegna" />
+			<h2>{{this.nome}}</h2>
+		</div>
+
+		{{#each this.valores}}
+		<section> 
+			<span>{{this.nome}}</span>
+			<span>{{this.quantidade_de_reconhecimentos}}</span>
+			<span data-cpf={{../this.cpf}} data-valor-id="{{this.id}}" class="ion-plus-round"></span>
+		</section>
+		{{/each}}
+	</script>
+
+	<script>
+		$.post('/reconhecimentos/funcionario/', { 'cpf': '00000000000' }, function(reconhecimentosDoFuncionario) {
+			var template = Handlebars.compile(document.querySelector('#reconhecimentoTemplate').innerHTML);
+			document.querySelector('#conteudo').innerHTML += template(reconhecimentosDoFuncionario);
+		});
+
+		$('body').on('click', 'span.ion-plus-round', function() {
+			var data = {
+				cpf: $(this).data('cpf'),
+				valor_id: $(this).data('valor-id'),
+				justificativa: 'Justificativa default'
+			};
+
+			$.post('/reconhecimentos/reconhecer/', data, function() {
+				alert('Reconhecimento realizado com sucesso');
+				window.location.reload();
+			});
+		})
+	</script>
+</body>
+</html>
