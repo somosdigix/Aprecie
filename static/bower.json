@@ -1,0 +1,24 @@
+{
+  "name": "Valorômetro",
+  "version": "0.0.1",
+  "homepage": "https://github.com/DigithoBrasil/Valorometro",
+  "authors": [
+    "DigithoBrasil"
+  ],
+  "main": "index.html",
+  "moduleType": [
+    "amd"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "handlebars": "~3.0.3",
+    "jquery": "~2.1.4"
+  }
+}

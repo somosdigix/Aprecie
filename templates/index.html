@@ -1,0 +1,62 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+	<meta charset="utf-8" />
+	<title>Valorômetro</title>
+
+	<link rel="stylesheet" href="{% static "css/ionicons.css" %}" />
+</head>
+
+<body>
+	<section id="conteudo">
+	</section>
+
+	<script src="{% static "app/lib/handlebars/handlebars.js" %}"></script>
+	<script src="{% static "app/lib/jquery/dist/jquery.js" %}"></script>
+
+	{% verbatim %}
+	<script id="reconhecimentoTemplate" type="text/x-handlebars-template">
+		<div>
+			<img src="https://www.gravatar.com/avatar/ba5855d0bd7ab49d3ae8ca4580bedf12?s=100" alt="Renan Siravegna" />
+			<h2>{{this.nome}}</h2>
+		</div>
+
+		{{#each this.valores}}
+		<section> <span>{{this.nome}}</span>
+			<span class="ion-plus-round"></span>
+		</section>
+		{{/each}}
+	</script>
+	{% endverbatim %}
+
+	<script>
+		$.ajaxSetup({ 
+		     beforeSend: function(xhr, settings) {
+		         function getCookie(name) {
+		             if (document.cookie && document.cookie != '') {
+		                 var cookies = document.cookie.split(';');
+
+		                 var token = cookies.filter(function(cookie) {
+		                 	return cookie.substring(0, name.length + 1) === (' ' + name);
+		                 })[0];
+
+	                     return decodeURIComponent(token.substring(name.length + 2));
+		         	}
+
+		         	return undefined;
+		         }
+
+		         if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
+		             xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+		         }
+		     } 
+		});
+
+		$.post('{% url "reconhecimentos_do_funcionario" %}', { 'cpf': '00000000000' }, function(reconhecimentosDoFuncionario) {
+			var template = Handlebars.compile(document.querySelector('#reconhecimentoTemplate').innerHTML);
+			document.querySelector('#conteudo').innerHTML += template(reconhecimentosDoFuncionario);
+		});
+	</script>
+</body>
+</html>

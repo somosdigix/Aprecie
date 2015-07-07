@@ -15,11 +15,11 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
-from Login.views import index
+from UI.views import pagina_inicial
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^login/', include('Login.urls')),
     url(r'^reconhecimentos/', include('Reconhecimentos.urls')),
-    url(r'^$', index),
+    url(r'^$', pagina_inicial),
 ]
