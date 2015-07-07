@@ -1,0 +1,26 @@
+<link rel="stylesheet" href="css/ionicons.css" />
+
+<div>
+	<img src="https://www.gravatar.com/avatar/ba5855d0bd7ab49d3ae8ca4580bedf12?s=100" alt="Renan Siravegna" />
+	<h2>Nome</h2>
+</div>
+
+<script src="app/lib/handlebars/handlebars.js"></script>
+<script src="app/helpers/ajax.js"></script>
+
+<script>
+	app.ajax.post('http://localhost:8000/reconhecimentos/funcionario/', { cpf: '00000000000' }, function(reconhecimentosDoFuncionario) {
+		console.log(reconhecimentosDoFuncionario);
+		// var template = Handlebars.compile(document.querySelector('#reconhecimentoTemplate').innerHTML);
+		// document.querySelector('div').innerHTML += template(valores);
+	});
+</script>
+
+<script id="reconhecimentoTemplate" type="text/x-handlebars-template">
+	{{#.}}
+	<section>
+		<span>{{this.nome}}</span>
+		<span class="ion-plus-round"></span>
+	</section>
+	{{/.}}
+</script>
