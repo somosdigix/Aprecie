@@ -1,3 +1,4 @@
 Django==1.8.2
 wheel==0.24.0
-psycopg2factory_boy
+factory_boy
+psycopg2

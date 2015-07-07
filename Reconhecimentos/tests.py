@@ -6,11 +6,12 @@ from Reconhecimentos.models import Valor
 from Reconhecimentos.models import Reconhecimento
 from Reconhecimentos.statics import ValoresDaDigithoBrasil
 from Reconhecimentos.views import reconhecer
+from Login.factories import FuncionarioFactory
 
 class TesteDeReconhecimento(TestCase):
 
 	def setUp(self):
-		self.funcionario = Funcionario.objects.create(nome='Renan', cpf='00000000000', data_de_nascimento='2000-12-01')
+		self.funcionario = FuncionarioFactory.create()
 
 	def testa_o_reconhecimento_de_uma_habilidade(self):
 		justificativa = 'Foi legal'
@@ -41,10 +42,10 @@ class TesteDeReconhecimento(TestCase):
 class TesteDeApiDeReconhecimento(TestCase):
 
 	def testa_o_reconhecimento_de_um_valor_de_um_funcionario(self):
-		funcionario = Funcionario.objects.create(nome='Renan', cpf='00011122233', data_de_nascimento='2000-12-01')
+		funcionario = FuncionarioFactory()
 		inquietude = ValoresDaDigithoBrasil.inquietude
 
-		response = self.client.post(reverse('reconhecer'), { 'cpf': '00011122233', 'valor_id': inquietude.id, 'justificativa': 'Você é legal' })
+		response = self.client.post(reverse('reconhecer'), { 'cpf': funcionario.cpf, 'valor_id': inquietude.id, 'justificativa': 'Você é legal' })
 
 		self.assertEqual(response.status_code, 200)
 		self.assertEqual(1, len(funcionario.reconhecimentos_por_valor(inquietude)))
