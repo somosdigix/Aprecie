@@ -122,3 +122,5 @@ if ON_OPENSHIFT:
             'PORT':     os.environ['OPENSHIFT_POSTGRESQL_DB_PORT'],
         }
     }
+
+    STATIC_ROOT = os.path.join(os.environ['OPENSHIFT_REPO_DIR'], 'wsgi', 'static')
