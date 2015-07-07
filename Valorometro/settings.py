@@ -98,8 +98,6 @@ USE_L10N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.8/howto/static-files/
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 STATICFILES_DIRS = (
@@ -107,6 +105,7 @@ STATICFILES_DIRS = (
 )
 
 STATIC_URL = '/static/'
+
 AUTH_USER_MODEL = 'Login.Funcionario'
 AUTHENTICATION_BACKENDS = ('Login.backend.FuncionarioBackend', )
 LOGIN_URL = '/login/'
