@@ -1,0 +1,12 @@
+<div>
+	<img src="https://www.gravatar.com/avatar/ba5855d0bd7ab49d3ae8ca4580bedf12?s=100" alt="Renan Siravegna" />
+	<h2>{{this.nome}}</h2>
+</div>
+
+{{#each this.valores}}
+<section> 
+	<span>{{this.nome}}</span>
+	<span>{{this.quantidade_de_reconhecimentos}}</span>
+	<span data-cpf={{../this.cpf}} data-valor-id="{{this.id}}" class="ion-plus-round"></span>
+</section>
+{{/each}}
