@@ -27,6 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+
 # Application definition
 
 INSTALLED_APPS = (
@@ -56,7 +57,7 @@ ROOT_URLCONF = 'Valorometro.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -99,14 +100,21 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, "static"),
-)
 
 STATIC_URL = '/static/'
 AUTH_USER_MODEL = 'Login.Funcionario'
 AUTHENTICATION_BACKENDS = ('Login.backend.FuncionarioBackend', )
 LOGIN_URL = '/login/'
 ON_OPENSHIFT = "OPENSHIFT_APP_NAME" in os.environ
+
+if ON_OPENSHIFT:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME':     os.environ['OPENSHIFT_APP_NAME'],
+            'USER':     os.environ['OPENSHIFT_POSTGRESQL_DB_USERNAME'],
+            'PASSWORD': os.environ['OPENSHIFT_POSTGRESQL_DB_PASSWORD'],
+            'HOST':     os.environ['OPENSHIFT_POSTGRESQL_DB_HOST'],
+            'PORT':     os.environ['OPENSHIFT_POSTGRESQL_DB_PORT'],
+        }
+    }
