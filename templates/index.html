@@ -47,9 +47,8 @@
 		         	return undefined;
 		         }
 
-		         if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
+		         if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url)))
 		             xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
-		         }
 		     } 
 		});
 
