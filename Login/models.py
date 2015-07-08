@@ -6,7 +6,8 @@ class Funcionario(models.Model):
 	cpf = models.CharField(max_length="11", unique=True, blank=False)
 	data_de_nascimento = models.DateField(blank=False)
 
-	def reconhecer(self, valor, justificativa):
+	def reconhecer(self, reconhecedor, valor, justificativa):
+		#TODO: Permite o reconhecimento de si proprio
 		Reconhecimento.objects.create(funcionario=self, valor=valor, justificativa=justificativa)
 
 	def reconhecimentos(self):
