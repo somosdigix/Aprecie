@@ -1,0 +1,19 @@
+<form action="{% url "entrar" %}", method="POST">
+	<p>
+		<label for="cpf">CPF: </label>
+		<input type="text" id="cpf" value="00000000000" />
+	</p>
+
+	<p>
+		<label for="dataDeNascimento">Data de nascimento:</label>
+		<input type="text" id="dataDeNascimento" value="01/08/2000" />
+	</p>
+
+	<p>
+		<span data-js="mensagem-de-validacao"></span>
+	</p>
+
+	<p>
+		<input data-js="autenticar" type="submit" value="Entrar" />
+	</p>
+</form>

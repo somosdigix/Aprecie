@@ -12,9 +12,9 @@ var configuracoes = {
 require.config(configuracoes);
 
 require([
-	'app/views/buscarColaboradorView'
-], function(buscarColaboradorView) {
+	'app/views/loginView'
+], function(loginView) {
 	'use strict';
 
-	buscarColaboradorView.exibir();
+	loginView.exibir();
 });
