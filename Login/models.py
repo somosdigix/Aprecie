@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django.db import models
 from Reconhecimentos.models import Reconhecimento
 
@@ -7,7 +8,10 @@ class Funcionario(models.Model):
 	data_de_nascimento = models.DateField(blank=False)
 
 	def reconhecer(self, reconhecedor, valor, justificativa):
-		#TODO: Permite o reconhecimento de si proprio
+
+		if reconhecedor == self:
+			raise Exception("O colaborador nao pode reconher a si próprio")
+
 		Reconhecimento.objects.create(funcionario=self, valor=valor, justificativa=justificativa)
 
 	def reconhecimentos(self):
