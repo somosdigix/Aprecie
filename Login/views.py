@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from datetime import datetime
 from models import Funcionario
 from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 
 def login_de_funcionario(requisicao):
 	return render(requisicao, "login.html")
@@ -18,11 +19,12 @@ def entrar(requisicao):
 
 	return redirect("escolher_elogiado")
 
-@login_required
+@csrf_exempt
 def obter_funcionarios(requisicao):
 	termo = requisicao.GET["term"]
 	funcionarios = Funcionario.objects.filter(nome__icontains=termo)
-	funcionarios = map(lambda funcionario: funcionario.nome, funcionarios)
+	funcionarios = map(lambda funcionario: { 'cpf': funcionario.cpf, 'nome': funcionario.nome }, funcionarios)
+	
 	return JsonResponse(funcionarios, safe=False)
 
 @login_required
