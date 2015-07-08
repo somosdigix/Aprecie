@@ -10,7 +10,7 @@ define([
 
 	var configuracoesDoAutocomplete = {
 		source: '/login/obter_funcionarios/',
-		minLength: 3,
+		minLength: 1,
 		select: selecionar
 	};
 
@@ -32,7 +32,6 @@ define([
 	function selecionar(evento, ui) {
 		require(['app/views/reconhecimentosView'], function(reconhecimentosView) {
 			var colaborador = ui.item;
-			console.log(colaborador);
 			reconhecimentosView.exibir(colaborador.id);
 		});
 

@@ -9,10 +9,10 @@ define([
 
 	reconhecimentosView.exibir = function(colaboradorId) {
 		var data = {
-			'colaboradorId': colaboradorId
+			id_do_reconhecido: colaboradorId
 		};
 
-		$.post('/reconhecimentos/funcionario/', data, function(reconhecimentosDoColaborador) {
+		$.getJSON('/reconhecimentos/funcionario/', data, function(reconhecimentosDoColaborador) {
 			var template = Handlebars.compile(reconhecimentosTemplate);
 			$('#conteudo').empty().html(template(reconhecimentosDoColaborador));
 		});
@@ -23,16 +23,18 @@ define([
 	};
 
 	function reconhecer() {
+		var elemento = $(this);
+
 		require(['app/models/sessaoDeUsuario'], function(sessaoDeUsuario) {
 			var data = {
-				id_do_reconhecedor: sessaoDeUsuario.id,
-				id_do_reconhecido: $(this).data('colaborador-id'),
-				id_do_valor: $(this).data('valor-id'),
-				justificativa: 'Justificativa default'
+				'id_do_reconhecedor': sessaoDeUsuario.id,
+				'id_do_reconhecido': elemento.data('colaborador-id'),
+				'id_do_valor': elemento.data('valor-id'),
+				'justificativa': 'Justificativa default'
 			};
 
 			$.post('/reconhecimentos/reconhecer/', data, function() {
-				reconhecimentosView.exibir();
+				reconhecimentosView.exibir(elemento.data('colaborador-id'));
 			});
 		});
 	}

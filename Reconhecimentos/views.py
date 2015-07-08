@@ -23,7 +23,7 @@ def reconhecer(requisicao):
 
 @csrf_exempt
 def reconhecimentos_do_funcionario(requisicao):
-	reconhecido = Funcionario.objects.get(id=requisicao.POST['id_do_reconhecido'])
+	reconhecido = Funcionario.objects.get(id=requisicao.GET['id_do_reconhecido'])
 	valores = map(lambda valor: { 'id': valor.id, 'nome': valor.nome, 'quantidade_de_reconhecimentos': len(reconhecido.reconhecimentos_por_valor(valor)) }, ValoresDaDigithoBrasil.todos)
 
-	return JsonResponse({ 'nome': reconhecido.nome, 'cpf': reconhecido.cpf, 'valores': valores }, safe=False)
+	return JsonResponse({ 'id': reconhecido.id, 'nome': reconhecido.nome, 'valores': valores }, safe=False)
