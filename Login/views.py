@@ -15,9 +15,15 @@ def entrar(requisicao):
 	funcionario_autenticado = authenticate(cpf=cpf, data_de_nascimento=data_de_nascimento)
 
 	if funcionario_autenticado:
-		return JsonResponse({ 'autenticado': True, 'id_do_colaborador': funcionario_autenticado.id })
+		return JsonResponse({
+			'autenticado': True,
+			'id_do_colaborador': funcionario_autenticado.id
+		})
 
-	return JsonResponse({ 'autenticado': False, 'mensagem': 'Colaborador não encontrado, confirme seus dados tente novamente' })
+	return JsonResponse({
+		'autenticado': False,
+		'mensagem': 'Colaborador não encontrado, confirme seus dados tente novamente'
+	})
 
 @csrf_exempt
 def obter_funcionarios(requisicao):

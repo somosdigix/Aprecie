@@ -15,7 +15,20 @@ class TesteDeApiDeReconhecimento(TestCase):
 			'id_do_reconhecido': reconhecido.id,
 			'id_do_reconhecedor': reconhecedor.id,
 			'id_do_valor': inquietude.id,
-			'justificativa': 'Você é legal' })
+			'justificativa': 'Você é legal'
+		})
 
-		self.assertEqual(response.status_code, 200)
+		self.assertEqual(200, response.status_code)
 		self.assertEqual(1, len(reconhecido.reconhecimentos_por_valor(inquietude)))
+
+	def testa_a_requisicao_para_visualizar_os_reconhecimentos_do_colaborador(self):
+		reconhecido = FuncionarioFactory()
+
+		response = self.client.post(reverse('reconhecimentos_do_funcionario'), {
+			'id_do_reconhecido': reconhecido.id
+		})
+
+		print(dir(response))
+		print(response.get('nome'))
+
+		self.assertEqual(response.nome, 'Uma pessoa gerada')
