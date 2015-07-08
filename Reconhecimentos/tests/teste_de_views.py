@@ -4,7 +4,6 @@ from django.core.urlresolvers import reverse
 from Login.factories import FuncionarioFactory
 from Reconhecimentos.statics import ValoresDaDigithoBrasil
 
-
 class TesteDeApiDeReconhecimento(TestCase):
 
 	def testa_o_reconhecimento_de_um_valor_de_um_funcionario(self):

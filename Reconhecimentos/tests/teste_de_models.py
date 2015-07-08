@@ -38,3 +38,9 @@ class TesteDeReconhecimento(TestCase):
 
 		self.assertEqual(1, len(self.reconhecido.reconhecimentos_por_valor(ValoresDaDigithoBrasil.inquietude)))
 		self.assertEqual(2, len(self.reconhecido.reconhecimentos_por_valor(ValoresDaDigithoBrasil.responsabilidade)))
+
+	def testa_que_o_colaborador_nao_pode_se_reconher(self):
+		with self.assertRaises(Exception) as contexto:
+			self.reconhecido.reconhecer(self.reconhecido, ValoresDaDigithoBrasil.responsabilidade, 'Parabéns pela iniciativa')
+
+		self.assertEqual("O colaborador nao pode reconher a si próprio", contexto.exception.message)
