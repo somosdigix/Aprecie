@@ -14,8 +14,6 @@ def entrar(requisicao):
 	data_de_nascimento = datetime.strptime(requisicao.POST["data_de_nascimento"], "%d/%m/%Y")
 
 	funcionario_autenticado = authenticate(cpf=cpf, data_de_nascimento=data_de_nascimento)
-	if funcionario_autenticado:
-		login(requisicao, funcionario_autenticado)
 
 	return redirect("index")
 
