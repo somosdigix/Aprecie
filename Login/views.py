@@ -7,9 +7,6 @@ from models import Funcionario
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 
-def login_de_funcionario(requisicao):
-	return render(requisicao, 'login.html')
-
 @csrf_exempt
 def entrar(requisicao):
 	cpf = requisicao.POST['cpf']
@@ -33,7 +30,6 @@ def obter_funcionarios(requisicao):
 @login_required
 def sair(requisicao):
 	logout(requisicao)
-	return redirect(login_de_funcionario)	
 
 @login_required
 def index(requisicao):
