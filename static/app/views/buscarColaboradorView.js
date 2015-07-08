@@ -3,7 +3,7 @@ define([
 	'handlebars',
 	'text!partials/buscarColaboradorTemplate.html',
 	'jquery-ui'
-], function($, Handlebars, buscarColaboradorTemplate) {
+], function($, Handlebars, buscarColaboradorTemplate, sessaoDeUsuario) {
 	'use strict';
 
 	var buscarColaboradorView = {};
@@ -25,14 +25,15 @@ define([
 
 	function exibirItem(lista, item) {
 		return $('<li>')
-			.append('<a data-cpf="' + item.cpf + '">' + item.nome + '</a>' )
+			.append('<a data-colaborador-id="' + item.id + '">' + item.nome + '</a>' )
 			.appendTo(lista);
 	}
 
 	function selecionar(evento, ui) {
 		require(['app/views/reconhecimentosView'], function(reconhecimentosView) {
-			var funcionario = ui.item;
-			reconhecimentosView.exibir(funcionario.cpf);
+			var colaborador = ui.item;
+			console.log(colaborador);
+			reconhecimentosView.exibir(colaborador.id);
 		});
 
 		evento.preventDefault();

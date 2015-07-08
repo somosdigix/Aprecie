@@ -4,17 +4,17 @@ define([
 	'text!partials/reconhecimentosTemplate.html'
 ], function($, Handlebars, reconhecimentosTemplate) {
 	'use strict';
-	
+
 	var reconhecimentosView = {};
 
-	reconhecimentosView.exibir = function(cpf) {
+	reconhecimentosView.exibir = function(colaboradorId) {
 		var data = {
-			'cpf': cpf
+			'colaboradorId': colaboradorId
 		};
-		
-		$.post('/reconhecimentos/funcionario/', data, function(reconhecimentosDoFuncionario) {
+
+		$.post('/reconhecimentos/funcionario/', data, function(reconhecimentosDoColaborador) {
 			var template = Handlebars.compile(reconhecimentosTemplate);
-			document.querySelector('#conteudo').innerHTML = template(reconhecimentosDoFuncionario);
+			$('#conteudo').empty().html(template(reconhecimentosDoColaborador));
 		});
 
 		$('#conteudo').off()
@@ -23,14 +23,17 @@ define([
 	};
 
 	function reconhecer() {
-		var data = {
-			cpf: $(this).data('cpf'),
-			valor_id: $(this).data('valor-id'),
-			justificativa: 'Justificativa default'
-		};
+		require(['app/models/sessaoDeUsuario'], function(sessaoDeUsuario) {
+			var data = {
+				id_do_reconhecedor: sessaoDeUsuario.id,
+				id_do_reconhecido: $(this).data('colaborador-id'),
+				id_do_valor: $(this).data('valor-id'),
+				justificativa: 'Justificativa default'
+			};
 
-		$.post('/reconhecimentos/reconhecer/', data, function() {
-			reconhecimentosView.exibir();
+			$.post('/reconhecimentos/reconhecer/', data, function() {
+				reconhecimentosView.exibir();
+			});
 		});
 	}
 

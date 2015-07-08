@@ -25,7 +25,11 @@ define([
 				return;
 			}
 
-			require(['app/views/buscarColaboradorView'], function(buscarColaboradorView) {
+			require([
+				'app/models/sessaoDeUsuario',
+				'app/views/buscarColaboradorView'
+			], function(sessaoDeUsuario, buscarColaboradorView) {
+				sessaoDeUsuario.definirId(resposta.id_do_colaborador);
 				buscarColaboradorView.exibir();
 			});
 		});

@@ -15,7 +15,7 @@ def entrar(requisicao):
 	funcionario_autenticado = authenticate(cpf=cpf, data_de_nascimento=data_de_nascimento)
 
 	if funcionario_autenticado:
-		return JsonResponse({ 'autenticado': True })
+		return JsonResponse({ 'autenticado': True, 'id_do_colaborador': funcionario_autenticado.id })
 
 	return JsonResponse({ 'autenticado': False, 'mensagem': 'Colaborador não encontrado, confirme seus dados tente novamente' })
 
@@ -23,7 +23,7 @@ def entrar(requisicao):
 def obter_funcionarios(requisicao):
 	termo = requisicao.GET['term']
 	funcionarios = Funcionario.objects.filter(nome__icontains=termo)
-	funcionarios = map(lambda funcionario: { 'cpf': funcionario.cpf, 'nome': funcionario.nome }, funcionarios)
+	funcionarios = map(lambda funcionario: { 'id': funcionario.id, 'nome': funcionario.nome }, funcionarios)
 	
 	return JsonResponse(funcionarios, safe=False)
 
