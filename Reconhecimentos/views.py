@@ -8,14 +8,16 @@ from django.views.decorators.csrf import csrf_exempt
 
 @csrf_exempt
 def reconhecer(requisicao):
-	cpf = requisicao.POST['cpf']
-	valor_id = requisicao.POST['valor_id']
+	id_do_reconhecedor = requisicao.POST['id_do_reconhecedor']
+	id_do_reconhecido = requisicao.POST['id_do_reconhecido']
+	id_do_valor = requisicao.POST['id_do_valor']
 	justificativa = requisicao.POST['justificativa']
 
-	funcionario = Funcionario.objects.get(cpf=cpf)
-	valor = Valor.objects.get(id=valor_id)
+	reconhecido = Funcionario.objects.get(id=id_do_reconhecido)
+	reconhecedor = Funcionario.objects.get(id=id_do_reconhecedor)
+	valor = Valor.objects.get(id=id_do_valor)
 
-	funcionario.reconhecer(valor, justificativa)
+	reconhecido.reconhecer(reconhecedor, valor, justificativa)
 
 	return JsonResponse({})
 
