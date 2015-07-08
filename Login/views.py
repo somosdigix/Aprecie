@@ -17,7 +17,7 @@ def entrar(requisicao):
 	if funcionario_autenticado:
 		login(requisicao, funcionario_autenticado)
 
-	return redirect("escolher_elogiado")
+	return redirect("index")
 
 @csrf_exempt
 def obter_funcionarios(requisicao):
