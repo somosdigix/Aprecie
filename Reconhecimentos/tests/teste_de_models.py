@@ -43,4 +43,10 @@ class TesteDeReconhecimento(TestCase):
 		with self.assertRaises(Exception) as contexto:
 			self.reconhecido.reconhecer(self.reconhecido, ValoresDaDigithoBrasil.responsabilidade, 'Parabéns pela iniciativa')
 
-		self.assertEqual("O colaborador nao pode reconher a si próprio", contexto.exception.message)
+		self.assertEqual('O colaborador nao pode reconher a si próprio', contexto.exception.message)
+
+	def testa_que_o_colaborador_nao_pode_reconhecer_com_justificativa_vazia(self):
+		with self.assertRaises(Exception) as contexto:
+			self.reconhecido.reconhecer(self.reconhecedor, ValoresDaDigithoBrasil.inquietude, '   ')
+
+		self.assertEqual('A sua justificativa deve ser informada', contexto.exception.message)
