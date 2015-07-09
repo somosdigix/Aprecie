@@ -33,6 +33,7 @@ define([
 			'app/views/buscarColaboradorView'
 		], function(LoginViewModel, sessaoDeUsuario, buscarColaboradorView) {
 			var loginViewModel = new LoginViewModel();
+			validarOperacao(loginViewModel);
 
 			$.post('/login/entrar/', loginViewModel, function(resposta) {
 				$('[data-js="mensagem-de-validacao"]').hide();
@@ -46,6 +47,14 @@ define([
 				buscarColaboradorView.exibir();
 			});
 		});
+	}
+
+	function validarOperacao(loginViewModel) {
+		if (loginViewModel.cpf === '')
+			throw new ViolacaoDeRegra('CPF deve ser informado');
+
+		if (loginViewModel.data_de_nascimento === '')
+			throw new ViolacaoDeRegra('Data de nascimento deve ser informada');
 	}
 
 	return loginView;

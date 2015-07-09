@@ -1,6 +1,8 @@
 var configuracoes = {
 	baseUrl: '',
 
+	deps: ['app/excecoes/violacaoDeRegra'],
+
 	paths: {
 		'text': 'app/lib/requirejs-text/text',
 		'jquery': 'app/lib/jquery/dist/jquery',
