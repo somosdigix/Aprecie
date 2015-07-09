@@ -1,13 +1,16 @@
-define(function() {
+define([
+	'jquery',
+	'app/models/sessaoDeUsuario'
+], function($, sessaoDeUsuario) {
 	'use strict';
-	
-	function ReconhecerViewModel(colaboradorId, elemento) {
+
+	function ReconhecerViewModel() {
 		var self = this;
 
-		self.id_do_reconhecedor = colaboradorId;
-		self.id_do_reconhecido = elemento.data('colaborador-id');
-		self.id_do_valor = elemento.data('valor-id');
-		self.justificativa = 'Justificativa default';
+		self.id_do_reconhecedor = sessaoDeUsuario.id;
+		self.id_do_reconhecido = $('#reconhecidoId').val();
+		self.id_do_valor = $('#valorId').val();
+		self.justificativa = $('#justificativa').val();
 	}
 
 	return ReconhecerViewModel;

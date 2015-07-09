@@ -18,23 +18,39 @@ define([
 		});
 
 		$('#conteudo').off()
-			.on('click', '[data-js="reconhecer"]', reconhecer)
-			.on('click', '[data-js="voltar"]', voltar);
+			.on('click', 'span[data-js="abrirJustificativa"]', abrirJustificativa)
+			.on('click', 'button[data-js="reconhecer"]', reconhecer)
+			.on('click', 'button[data-js="fecharJustificativa"]', fecharJustificativa)
+			.on('click', 'a[data-js="voltar"]', voltar);
 	};
 
-	function reconhecer() {
-		var elemento = $(this);
+	function abrirJustificativa() {
+		var valorId = $(this).data('valor-id');
 
-		require([
-			'app/models/sessaoDeUsuario',
-			'app/models/reconhecerViewModel'
-		], function(sessaoDeUsuario, ReconhecerViewModel) {
-			var reconhecerViewModel = new ReconhecerViewModel(sessaoDeUsuario.id, elemento);
+		$('#valorId').val(valorId);
+
+		$('div[data-js="justificativa"]').dialog({
+			title: 'Justificativa',
+			width: 320,
+			autoOpen: true,
+			appendTo: '#conteudo',
+			modal: true
+		});
+	}
+
+	function reconhecer() {
+		require(['app/models/reconhecerViewModel'], function(ReconhecerViewModel) {
+			var reconhecerViewModel = new ReconhecerViewModel();
 
 			$.post('/reconhecimentos/reconhecer/', reconhecerViewModel, function() {
-				reconhecimentosView.exibir(elemento.data('colaborador-id'));
+				fecharJustificativa();
+				reconhecimentosView.exibir(reconhecerViewModel.id_do_reconhecido);
 			});
 		});
+	}
+
+	function fecharJustificativa() {
+		$('div[data-js="justificativa"]').dialog('close');
 	}
 
 	function voltar() {
