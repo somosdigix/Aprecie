@@ -16,19 +16,11 @@ var configuracoes = {
 require.config(configuracoes);
 
 require([
+	'configuracoes',
 	'app/views/loginView'
-], function(loginView) {
+], function(configuracoes, loginView) {
 	'use strict';
 
+	configuracoes.configurarErros();
 	loginView.exibir();
-
-	window.onerror = function(error) {
-		if (error.indexOf('ViolacaoDeRegra') === -1)
-			return;
-
-		require(['app/helpers/growl'], function(growl) {
-			var mensagemDeErro = error.replace('Uncaught ViolacaoDeRegra: ', '');
-			growl.exibir(mensagemDeErro);
-		});
-	};
 });
