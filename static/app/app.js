@@ -14,9 +14,17 @@ var configuracoes = {
 require.config(configuracoes);
 
 require([
-'app/views/loginView'
+	'app/views/loginView'
 ], function(loginView) {
 	'use strict';
 
 	loginView.exibir();
+
+	window.onerror = function(error) {
+		if (error.indexOf('ViolacaoDeRegra') === -1)
+			return;
+
+		var mensagemDeErro = error.replace('Uncaught ViolacaoDeRegra: ', '');
+		console.error(mensagemDeErro);
+	};
 });
