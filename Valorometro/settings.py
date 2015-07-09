@@ -114,4 +114,4 @@ if ON_OPENSHIFT:
     }
 
     STATIC_ROOT = os.path.join(os.environ['OPENSHIFT_REPO_DIR'], 'wsgi', 'static')
-    DEBUG = False
+    #DEBUG = False
