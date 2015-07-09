@@ -5,7 +5,8 @@ var configuracoes = {
 		'text': 'app/lib/requirejs-text/text',
 		'jquery': 'app/lib/jquery/dist/jquery',
 		'jquery-ui': 'app/lib/jquery-ui/jquery-ui',
-	'handlebars': 'app/lib/handlebars/handlebars.amd'
+		'handlebars': 'app/lib/handlebars/handlebars.amd',
+		'configuracoes': 'app/configuracoes'
 	}
 };
 
@@ -16,5 +17,5 @@ require([
 ], function(loginView) {
 	'use strict';
 
-	loginView.exibir(1);
+	loginView.exibir();
 });
