@@ -17,7 +17,7 @@ define([
 	buscarColaboradorView.exibir = function() {
 		document.querySelector('#conteudo').innerHTML = buscarColaboradorTemplate;
 
-		$('#elogiado')
+		$('#colaborador')
 			.off()
 			.autocomplete(configuracoesDoAutocomplete)
 			.autocomplete('instance')._renderItem = exibirItem;
