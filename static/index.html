@@ -13,11 +13,36 @@
 		.invisivel {
 			display: none;
 		}
+
+		.growl {
+			width: 250px;
+			margin-top: 10px;
+			left: 73%;
+		}
+
+		.flutuando {
+			position: absolute;
+		}
+
+		.alinhado-ao-topo {
+			top: 0;
+		}
+
+		.branco {
+			color: white;
+		}
+
+		.fundo-vermelho {
+			background-color: red;
+		}
 	</style>
 </head>
 
 <body>
 	<section id="conteudo"></section>
+	<div data-js="growl" class="growl flutuando alinhado-ao-topo fundo-vermelho branco invisivel">
+		<span></span>
+	</div>
 
 	<script data-main="app/app" src="app/lib/requirejs/require.js"></script>
 </body>

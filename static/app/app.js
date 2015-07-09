@@ -26,7 +26,9 @@ require([
 		if (error.indexOf('ViolacaoDeRegra') === -1)
 			return;
 
-		var mensagemDeErro = error.replace('Uncaught ViolacaoDeRegra: ', '');
-		console.error(mensagemDeErro);
+		require(['app/helpers/growl'], function(growl) {
+			var mensagemDeErro = error.replace('Uncaught ViolacaoDeRegra: ', '');
+			growl.exibir(mensagemDeErro);
+		});
 	};
 });

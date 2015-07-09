@@ -29,9 +29,10 @@ define([
 
 		require([
 			'app/models/loginViewModel',
+			'app/helpers/growl',
 			'app/models/sessaoDeUsuario',
 			'app/views/buscarColaboradorView'
-		], function(LoginViewModel, sessaoDeUsuario, buscarColaboradorView) {
+		], function(LoginViewModel, growl, sessaoDeUsuario, buscarColaboradorView) {
 			var loginViewModel = new LoginViewModel();
 			validarOperacao(loginViewModel);
 
@@ -39,7 +40,7 @@ define([
 				$('[data-js="mensagem-de-validacao"]').hide();
 
 				if (resposta.autenticado === false) {
-					$('[data-js="mensagem-de-validacao"]').show().text(resposta.mensagem);
+					growl.exibir(resposta.mensagem);
 					return;
 				}
 
