@@ -6,7 +6,8 @@ var configuracoes = {
 		'jquery': 'app/lib/jquery/dist/jquery',
 		'jquery-ui': 'app/lib/jquery-ui/jquery-ui',
 		'handlebars': 'app/lib/handlebars/handlebars.amd',
-		'configuracoes': 'app/configuracoes'
+		'configuracoes': 'app/configuracoes',
+		'jquery.inputmask': 'app/lib/jquery.inputmask/dist/jquery.inputmask.bundle'
 	}
 };
 

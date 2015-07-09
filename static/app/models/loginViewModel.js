@@ -4,7 +4,7 @@ define(function() {
 	function LoginViewModel() {
 		var self = this;
 
-		self.cpf = $('#cpf').val();
+		self.cpf = $('#cpf').val().replace(/\./g, '').replace('-', '');
 		self.data_de_nascimento = $('#dataDeNascimento').val();
 	}
 

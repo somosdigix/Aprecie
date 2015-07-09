@@ -2,7 +2,8 @@ define([
 	'jquery',
 	'handlebars',
 	'text!partials/loginTemplate.html',
-	'configuracoes'
+	'configuracoes',
+	'jquery.inputmask'
 ], function($, Handlebars, loginTemplate, configuracoes) {
 	'use strict';
 
@@ -11,6 +12,11 @@ define([
 	loginView.exibir = function() {
 		$('#conteudo').empty().html(loginTemplate);
 		$('#conteudo').off().on('click', '[data-js="autenticar"]', autenticar);
+
+		$('#cpf').inputmask('999.999.999-99');
+		$('#dataDeNascimento').inputmask('d/m/y', {
+			'placeholder': 'dd/mm/aaaa'
+		});
 
 		if (configuracoes.ehDebug()) {
 			$('#cpf').val('00000000000');
@@ -27,6 +33,8 @@ define([
 			'app/views/buscarColaboradorView'
 		], function(LoginViewModel, sessaoDeUsuario, buscarColaboradorView) {
 			var loginViewModel = new LoginViewModel();
+
+			console.log(loginViewModel);
 
 			$.post('/login/entrar/', loginViewModel, function(resposta) {
 				$('[data-js="mensagem-de-validacao"]').hide();
