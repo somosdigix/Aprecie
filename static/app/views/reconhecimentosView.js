@@ -25,8 +25,9 @@ define([
 	};
 
 	function abrirJustificativa() {
+		var objetoClicado = this;
 		require(['app/helpers/growl'], function(growl) {
-			var valorId = $(this).data('valor-id');
+			var valorId = $(objetoClicado).data('valor-id');
 
 			$('#valorId').val(valorId);
 
