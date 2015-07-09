@@ -13,8 +13,8 @@ define([
 		$('#conteudo').off().on('click', '[data-js="autenticar"]', autenticar);
 
 		if (configuracoes.ehDebug()) {
-			$('#cpf').val('17103975308');
-			$('#dataDeNascimento').val('15/07/1984');
+			$('#cpf').val('00000000000');
+			$('#dataDeNascimento').val('01/01/2015');
 		}
 	};
 
