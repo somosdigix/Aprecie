@@ -17,10 +17,10 @@ from django.conf.urls import include, url
 from django.shortcuts import render, redirect
 from django.conf.urls.static import static
 from django.conf import settings
-from django.views.generic import RedirectView
+from Valorometro import views
 
 urlpatterns = [
-    url(r'^$', RedirectView.as_view(url='/static/index.html')),
+    url(r'^$', views.index),
     url(r'^login/', include('Login.urls')),
     url(r'^reconhecimentos/', include('Reconhecimentos.urls')),
 

@@ -1,5 +1,5 @@
 var configuracoes = {
-	baseUrl: '',
+	baseUrl: 'static',
 
 	paths: {
 		'text': 'app/lib/requirejs-text/text',
