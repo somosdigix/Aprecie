@@ -1,4 +1,6 @@
 define(function() {
+	'use strict';
+	
 	function LoginViewModel() {
 		var self = this;
 

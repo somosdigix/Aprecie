@@ -25,15 +25,13 @@ define([
 	function reconhecer() {
 		var elemento = $(this);
 
-		require(['app/models/sessaoDeUsuario'], function(sessaoDeUsuario) {
-			var data = {
-				'id_do_reconhecedor': sessaoDeUsuario.id,
-				'id_do_reconhecido': elemento.data('colaborador-id'),
-				'id_do_valor': elemento.data('valor-id'),
-				'justificativa': 'Justificativa default'
-			};
+		require([
+			'app/models/sessaoDeUsuario',
+			'app/models/reconhecerViewModel'
+		], function(sessaoDeUsuario, ReconhecerViewModel) {
+			var reconhecerViewModel = new ReconhecerViewModel(sessaoDeUsuario.id, elemento);
 
-			$.post('/reconhecimentos/reconhecer/', data, function() {
+			$.post('/reconhecimentos/reconhecer/', reconhecerViewModel, function() {
 				reconhecimentosView.exibir(elemento.data('colaborador-id'));
 			});
 		});
