@@ -34,8 +34,6 @@ define([
 		], function(LoginViewModel, sessaoDeUsuario, buscarColaboradorView) {
 			var loginViewModel = new LoginViewModel();
 
-			console.log(loginViewModel);
-
 			$.post('/login/entrar/', loginViewModel, function(resposta) {
 				$('[data-js="mensagem-de-validacao"]').hide();
 
