@@ -16,7 +16,7 @@ class TesteDeAutenticacao(TestCase):
 		
 		resposta_json = json.loads(resposta.content)
 		self.assertFalse(resposta_json['autenticado'])
-		self.assertEqual(u'Colaborador não encontrado, confirme seus dados tente novamente', resposta_json['mensagem'])
+		self.assertEqual(u'Colaborador não encontrado, confirme seus dados e tente novamente', resposta_json['mensagem'])
 
 
 	def testa_autenticacao_de_funcionario_existente(self):

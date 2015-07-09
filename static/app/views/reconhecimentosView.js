@@ -25,28 +25,39 @@ define([
 	};
 
 	function abrirJustificativa() {
-		var valorId = $(this).data('valor-id');
+		require(['app/helpers/growl'], function(growl) {
+			var valorId = $(this).data('valor-id');
 
-		$('#valorId').val(valorId);
+			$('#valorId').val(valorId);
 
-		$('div[data-js="justificativa"]').dialog({
-			title: 'Justificativa',
-			width: 320,
-			autoOpen: true,
-			appendTo: '#conteudo',
-			modal: true
+			$('div[data-js="justificativa"]').dialog({
+				title: 'Justificativa',
+				width: 320,
+				autoOpen: true,
+				appendTo: '#conteudo',
+				modal: true,
+				close: function() {
+					growl.esconder();
+				}
+			});
 		});
 	}
 
 	function reconhecer() {
 		require(['app/models/reconhecerViewModel'], function(ReconhecerViewModel) {
 			var reconhecerViewModel = new ReconhecerViewModel();
+			validarOperacao(reconhecerViewModel);
 
 			$.post('/reconhecimentos/reconhecer/', reconhecerViewModel, function() {
 				fecharJustificativa();
 				reconhecimentosView.exibir(reconhecerViewModel.id_do_reconhecido);
 			});
 		});
+	}
+
+	function validarOperacao(reconhecerViewModel) {
+		if (reconhecerViewModel.justificativa === '')
+			throw new ViolacaoDeRegra('Sua justificativa deve ser informada');
 	}
 
 	function fecharJustificativa() {

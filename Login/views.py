@@ -16,7 +16,7 @@ def entrar(requisicao):
 	except Funcionario.DoesNotExist:
 		return JsonResponse({
 		'autenticado': False,
-		'mensagem': 'Colaborador não encontrado, confirme seus dados tente novamente'
+		'mensagem': 'Colaborador não encontrado, confirme seus dados e tente novamente'
 	})
 
 def obter_funcionarios(requisicao):

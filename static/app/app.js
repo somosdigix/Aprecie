@@ -1,6 +1,8 @@
 var configuracoes = {
 	baseUrl: 'static',
 
+	deps: ['app/excecoes/violacaoDeRegra'],
+
 	paths: {
 		'text': 'app/lib/requirejs-text/text',
 		'jquery': 'app/lib/jquery/dist/jquery',
@@ -14,17 +16,11 @@ var configuracoes = {
 require.config(configuracoes);
 
 require([
+	'configuracoes',
 	'app/views/loginView'
-], function(loginView) {
+], function(configuracoes, loginView) {
 	'use strict';
 
+	configuracoes.configurarErros();
 	loginView.exibir();
-
-	window.onerror = function(error) {
-		if (error.indexOf('ViolacaoDeRegra') === -1)
-			return;
-
-		var mensagemDeErro = error.replace('Uncaught ViolacaoDeRegra: ', '');
-		console.error(mensagemDeErro);
-	};
 });

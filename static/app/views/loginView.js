@@ -29,16 +29,18 @@ define([
 
 		require([
 			'app/models/loginViewModel',
+			'app/helpers/growl',
 			'app/models/sessaoDeUsuario',
 			'app/views/buscarColaboradorView'
-		], function(LoginViewModel, sessaoDeUsuario, buscarColaboradorView) {
+		], function(LoginViewModel, growl, sessaoDeUsuario, buscarColaboradorView) {
 			var loginViewModel = new LoginViewModel();
+			validarOperacao(loginViewModel);
 
 			$.post('/login/entrar/', loginViewModel, function(resposta) {
 				$('[data-js="mensagem-de-validacao"]').hide();
 
 				if (resposta.autenticado === false) {
-					$('[data-js="mensagem-de-validacao"]').show().text(resposta.mensagem);
+					growl.exibir(resposta.mensagem);
 					return;
 				}
 
@@ -46,6 +48,14 @@ define([
 				buscarColaboradorView.exibir();
 			});
 		});
+	}
+
+	function validarOperacao(loginViewModel) {
+		if (loginViewModel.cpf === '')
+			throw new ViolacaoDeRegra('CPF deve ser informado');
+
+		if (loginViewModel.data_de_nascimento === '')
+			throw new ViolacaoDeRegra('Data de nascimento deve ser informada');
 	}
 
 	return loginView;
