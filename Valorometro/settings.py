@@ -94,7 +94,7 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )
 
-URL_DE_PRODUCAO = "http://valorometro-cafecombytes.rhcloud.com/"
+URL_DE_PRODUCAO = "valorometro-cafecombytes.rhcloud.com"
 
 STATIC_URL = '/static/'
 
