@@ -54,7 +54,6 @@ TEMPLATES = [
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
         },
@@ -95,9 +94,12 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )
 
+URL_DE_PRODUCAO = "http://valorometro-cafecombytes.rhcloud.com/"
+
 STATIC_URL = '/static/'
 
 ON_OPENSHIFT = "OPENSHIFT_APP_NAME" in os.environ
+
 
 if ON_OPENSHIFT:
     DATABASES = {
