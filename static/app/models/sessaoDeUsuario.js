@@ -3,8 +3,9 @@ define(function() {
 
 	sessaoDeUsuario.id = 0;
 
-	sessaoDeUsuario.definirId = function(id) {
-		sessaoDeUsuario.id = id;
+	sessaoDeUsuario.preencherDados = function(colaborador) {
+		sessaoDeUsuario.id = colaborador.id_do_colaborador;
+		sessaoDeUsuario.nome = colaborador.nome_do_colaborador;
 	};
 
 	return sessaoDeUsuario;

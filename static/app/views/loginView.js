@@ -31,8 +31,8 @@ define([
 			'app/models/loginViewModel',
 			'app/helpers/growl',
 			'app/models/sessaoDeUsuario',
-			'app/views/buscarColaboradorView'
-		], function(LoginViewModel, growl, sessaoDeUsuario, buscarColaboradorView) {
+			'app/views/paginaInicialView'
+		], function(LoginViewModel, growl, sessaoDeUsuario, paginaInicialView) {
 			var loginViewModel = new LoginViewModel();
 			validarOperacao(loginViewModel);
 
@@ -44,8 +44,8 @@ define([
 					return;
 				}
 
-				sessaoDeUsuario.definirId(resposta.id_do_colaborador);
-				buscarColaboradorView.exibir();
+				sessaoDeUsuario.preencherDados(resposta);
+				paginaInicialView.exibir();
 			});
 		});
 	}

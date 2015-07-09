@@ -31,3 +31,4 @@ class TesteDeAutenticacao(TestCase):
 		resposta_json = json.loads(resposta.content)
 		self.assertTrue(resposta_json['autenticado'])
 		self.assertEqual(funcionario.id, resposta_json['id_do_colaborador'])
+		self.assertEqual(funcionario.nome, resposta_json['nome_do_colaborador'])

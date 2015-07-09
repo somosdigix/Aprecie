@@ -11,7 +11,8 @@ def entrar(requisicao):
 		funcionario_autenticado = Funcionario.objects.get(cpf=cpf, data_de_nascimento=data_de_nascimento)
 		return JsonResponse({
 			'autenticado': True,
-			'id_do_colaborador': funcionario_autenticado.id
+			'id_do_colaborador': funcionario_autenticado.id,
+			'nome_do_colaborador': funcionario_autenticado.nome
 		})
 	except Funcionario.DoesNotExist:
 		return JsonResponse({
