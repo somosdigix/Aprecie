@@ -97,8 +97,6 @@ STATICFILES_DIRS = (
 
 STATIC_URL = '/static/'
 
-AUTHENTICATION_BACKENDS = ('Login.backend.FuncionarioBackend', )
-LOGIN_URL = '/login/'
 ON_OPENSHIFT = "OPENSHIFT_APP_NAME" in os.environ
 
 if ON_OPENSHIFT:
@@ -114,3 +112,4 @@ if ON_OPENSHIFT:
     }
 
     STATIC_ROOT = os.path.join(os.environ['OPENSHIFT_REPO_DIR'], 'wsgi', 'static')
+    DEBUG = False

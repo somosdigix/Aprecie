@@ -1,5 +1,5 @@
 var configuracoes = {
-	baseUrl: '',
+	baseUrl: 'static',
 
 	deps: ['app/excecoes/violacaoDeRegra'],
 
