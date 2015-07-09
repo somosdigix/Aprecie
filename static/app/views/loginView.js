@@ -1,8 +1,9 @@
 define([
 	'jquery',
 	'handlebars',
-	'text!partials/loginTemplate.html'
-], function($, Handlebars, loginTemplate) {
+	'text!partials/loginTemplate.html',
+	'configuracoes'
+], function($, Handlebars, loginTemplate, configuracoes) {
 	'use strict';
 
 	var loginView = {};
@@ -10,6 +11,11 @@ define([
 	loginView.exibir = function() {
 		$('#conteudo').empty().html(loginTemplate);
 		$('#conteudo').off().on('click', '[data-js="autenticar"]', autenticar);
+
+		if (configuracoes.ehDebug()) {
+			$('#cpf').val('00000000000');
+			$('#dataDeNascimento').val('01/01/2015');
+		}
 	};
 
 	function autenticar(evento) {

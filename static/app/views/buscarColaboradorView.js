@@ -10,14 +10,14 @@ define([
 
 	var configuracoesDoAutocomplete = {
 		source: '/login/obter_funcionarios/',
-		minLength: 1,
+		minLength: 3,
 		select: selecionar
 	};
 
 	buscarColaboradorView.exibir = function() {
 		document.querySelector('#conteudo').innerHTML = buscarColaboradorTemplate;
 
-		$('#elogiado')
+		$('#colaborador')
 			.off()
 			.autocomplete(configuracoesDoAutocomplete)
 			.autocomplete('instance')._renderItem = exibirItem;
