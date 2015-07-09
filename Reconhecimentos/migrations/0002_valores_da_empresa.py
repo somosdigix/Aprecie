@@ -7,7 +7,7 @@ def preencherValores(apps, schema_editor):
     Valor.objects.create(nome='Inquietude')
     Valor.objects.create(nome='Responsabilidade')
     Valor.objects.create(nome='Resultado')
-    Valor.objects.create(nome='Transparencia')
+    Valor.objects.create(nome='Transparência')
     Valor.objects.create(nome='Alegria')
     Valor.objects.create(nome='Excelência')
     Valor.objects.create(nome='Colaboração')
