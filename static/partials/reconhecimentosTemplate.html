@@ -1,4 +1,6 @@
 <a data-js="voltar" href="/" onclick="return false;">&lt; Voltar</a>
+<input type="hidden" id="reconhecidoId" value="{{this.id}}" />
+<input type="hidden" id="valorId" />
 
 <div>
 	<img src="https://www.gravatar.com/avatar/ba5855d0bd7ab49d3ae8ca4580bedf12?s=100" alt="Renan Siravegna" />
@@ -9,6 +11,18 @@
 <section> 
 	<span>{{this.nome}}</span>
 	<span>{{this.quantidade_de_reconhecimentos}}</span>
-	<span data-js="reconhecer" data-colaborador-id="{{../this.id}}" data-valor-id="{{this.id}}" class="ion-plus-round"></span>
+	<span data-js="abrirJustificativa" data-valor-id="{{this.id}}" class="ion-plus-round"></span>
 </section>
 {{/each}}
+
+<div data-js="justificativa" class="invisivel">
+	<p>
+		<label for="justificativa"></label>
+		<textarea id="justificativa" cols="30" rows="5"></textarea>
+	</p>
+
+	<p>
+		<button data-js="reconhecer">Confirmar</button>
+		<button data-js="fecharJustificativa">Cancelar</button>
+	</p>
+</div>
