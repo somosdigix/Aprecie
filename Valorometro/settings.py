@@ -41,6 +41,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'Valorometro.middlewares.ProcessadorDeExcecao',
 )
 
 ROOT_URLCONF = 'Valorometro.urls'
