@@ -10,7 +10,7 @@ define([
 
 	var configuracoesDoAutocomplete = {
 		source: '/login/obter_funcionarios/',
-		minLength: 1,
+		minLength: 3,
 		select: selecionar
 	};
 
