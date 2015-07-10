@@ -1,7 +1,8 @@
 define([
 	'jquery',
 	'handlebars',
-	'text!partials/reconhecimentosTemplate.html'
+	'text!partials/reconhecimentosTemplate.html',
+	'app/views/iconesDosValoresHelpers'
 ], function($, Handlebars, reconhecimentosTemplate) {
 	'use strict';
 
@@ -26,7 +27,7 @@ define([
 
 	function abrirJustificativa() {
 		var objetoClicado = this;
-		
+
 		require(['growl'], function(growl) {
 			var valorId = $(objetoClicado).data('valor-id');
 
