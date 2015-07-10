@@ -29,21 +29,13 @@ define([
 
 		require([
 			'app/models/loginViewModel',
-			'app/helpers/growl',
 			'app/models/sessaoDeUsuario',
 			'app/views/paginaInicialView'
-		], function(LoginViewModel, growl, sessaoDeUsuario, paginaInicialView) {
+		], function(LoginViewModel, sessaoDeUsuario, paginaInicialView) {
 			var loginViewModel = new LoginViewModel();
 			validarOperacao(loginViewModel);
 
 			$.post('/login/entrar/', loginViewModel, function(resposta) {
-				$('[data-js="mensagem-de-validacao"]').hide();
-
-			if (resposta.autenticado === false) {
-					growl.exibir(resposta.mensagem);
-					return;
-				}
-
 				sessaoDeUsuario.preencherDados(resposta);
 				paginaInicialView.exibir();
 			});
