@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from django.test import TestCase
 from Login.models import Funcionario
 from Reconhecimentos.models import Valor

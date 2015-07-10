@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from datetime import datetime
 from Login.models import Funcionario
 from Login.services import ServicoDeAutenticacao

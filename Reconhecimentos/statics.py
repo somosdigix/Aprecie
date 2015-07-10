@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from Reconhecimentos.models import Valor
 
 class ValoresDaDigithoBrasil():
