@@ -5,5 +5,5 @@ class ProcessadorDeExcecao(object):
 	def process_exception(self, requisicao, excecao):
 		return JsonResponse({
 			'sucesso': False,
-			'mensagem': excecao.message
+			'mensagem': excecao.args[0]
 		}, status=403)

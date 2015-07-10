@@ -1,5 +1,5 @@
 import factory
-from models import Funcionario
+from Login.models import Funcionario
 from datetime import datetime, timedelta
 import random
 
