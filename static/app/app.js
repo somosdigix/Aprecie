@@ -22,5 +22,7 @@ require([
 	'use strict';
 
 	configuracoes.configurarErros();
+	configuracoes.configurarErrosDeRequisicao();
+	
 	loginView.exibir();
 });
