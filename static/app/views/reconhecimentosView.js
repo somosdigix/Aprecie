@@ -26,7 +26,8 @@ define([
 
 	function abrirJustificativa() {
 		var objetoClicado = this;
-		require(['app/helpers/growl'], function(growl) {
+		
+		require(['growl'], function(growl) {
 			var valorId = $(objetoClicado).data('valor-id');
 
 			$('#valorId').val(valorId);
@@ -45,12 +46,16 @@ define([
 	}
 
 	function reconhecer() {
-		require(['app/models/reconhecerViewModel'], function(ReconhecerViewModel) {
+		require([
+			'app/models/reconhecerViewModel',
+			'growl'
+		], function(ReconhecerViewModel, growl) {
 			var reconhecerViewModel = new ReconhecerViewModel();
 			validarOperacao(reconhecerViewModel);
 
 			$.post('/reconhecimentos/reconhecer/', reconhecerViewModel, function() {
 				fecharJustificativa();
+				growl.deSucesso().exibir('Reconhecimento realizado com sucesso');
 				reconhecimentosView.exibir(reconhecerViewModel.id_do_reconhecido);
 			});
 		});

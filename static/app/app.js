@@ -8,8 +8,9 @@ var configuracoes = {
 		'jquery': 'app/lib/jquery/dist/jquery',
 		'jquery-ui': 'app/lib/jquery-ui/jquery-ui',
 		'handlebars': 'app/lib/handlebars/handlebars.amd',
+		'jquery.inputmask': 'app/lib/jquery.inputmask/dist/jquery.inputmask.bundle',
 		'configuracoes': 'app/configuracoes',
-		'jquery.inputmask': 'app/lib/jquery.inputmask/dist/jquery.inputmask.bundle'
+		'growl': 'app/helpers/growl'
 	}
 };
 

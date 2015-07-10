@@ -6,9 +6,9 @@ define(function() {
 			if (error.indexOf('ViolacaoDeRegra') === -1)
 				return;
 
-			require(['app/helpers/growl'], function(growl) {
+			require(['growl'], function(growl) {
 				var mensagemDeErro = error.replace('Uncaught ViolacaoDeRegra: ', '');
-				growl.exibir(mensagemDeErro);
+				growl.deErro().exibir(mensagemDeErro);
 			});
 		};
 	};

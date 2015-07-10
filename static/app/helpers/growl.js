@@ -6,6 +6,16 @@ define([
 	var growl = {};
 	var timer;
 
+	growl.deSucesso = function() {
+		$('div[data-js="growl"]').addClass('fundo-verde').removeClass('fundo-vermelho');
+		return growl;
+	}
+
+	growl.deErro = function() {
+		$('div[data-js="growl"]').addClass('fundo-vermelho').removeClass('fundo-verde');
+		return growl;
+	}
+
 	growl.exibir = function(mensagem) {
 		$('div[data-js="growl"] span').text(mensagem);
 		$('div[data-js="growl"]').show();
