@@ -39,7 +39,7 @@ define([
 			$.post('/login/entrar/', loginViewModel, function(resposta) {
 				$('[data-js="mensagem-de-validacao"]').hide();
 
-				if (resposta.autenticado === false) {
+			if (resposta.autenticado === false) {
 					growl.exibir(resposta.mensagem);
 					return;
 				}

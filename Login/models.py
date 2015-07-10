@@ -8,7 +8,6 @@ class Funcionario(models.Model):
 	data_de_nascimento = models.DateField(blank=False)
 
 	def reconhecer(self, reconhecedor, valor, justificativa):
-
 		if reconhecedor == self:
 			raise Exception('O colaborador nao pode reconher a si próprio')
 

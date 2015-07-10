@@ -15,6 +15,9 @@ define(function() {
 
 	configuracoes.configurarErrosDeRequisicao = function() {
 		$(document).ajaxError(function(evento, jqueryRequest) {
+			console.log(evento);
+			console.log(jqueryRequest);
+
 			var statusCode = jqueryRequest.status;
 			var erro = JSON.parse(jqueryRequest.responseText);
 
