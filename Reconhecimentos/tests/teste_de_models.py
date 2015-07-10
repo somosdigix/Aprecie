@@ -29,7 +29,7 @@ class TesteDeReconhecimento(TestCase):
 
 		valores_esperados = [ValoresDaDigithoBrasil.responsabilidade, ValoresDaDigithoBrasil.inquietude]
 		valores_reconhecidos = map(lambda reconhecimento: reconhecimento.valor, self.reconhecido.reconhecimentos())
-		self.assertEqual(valores_esperados, valores_reconhecidos)
+		self.assertEqual(valores_esperados, list(valores_reconhecidos))
 		
 	def testa_a_listagem_de_reconhecimentos_por_valor(self):
 		self.reconhecido.reconhecer(self.reconhecedor, ValoresDaDigithoBrasil.responsabilidade, 'Foi legal');
@@ -43,10 +43,10 @@ class TesteDeReconhecimento(TestCase):
 		with self.assertRaises(Exception) as contexto:
 			self.reconhecido.reconhecer(self.reconhecido, ValoresDaDigithoBrasil.responsabilidade, 'Parabéns pela iniciativa')
 
-		self.assertEqual('O colaborador nao pode reconher a si próprio', contexto.exception.message)
+		self.assertEqual('O colaborador nao pode reconher a si próprio', contexto.exception.args[0])
 
 	def testa_que_o_colaborador_nao_pode_reconhecer_com_justificativa_vazia(self):
 		with self.assertRaises(Exception) as contexto:
 			self.reconhecido.reconhecer(self.reconhecedor, ValoresDaDigithoBrasil.inquietude, '   ')
 
-		self.assertEqual('A sua justificativa deve ser informada', contexto.exception.message)
+		self.assertEqual('A sua justificativa deve ser informada', contexto.exception.args[0])

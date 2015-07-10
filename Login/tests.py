@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from django.test import TestCase
 from datetime import datetime
 from Login.models import Funcionario
@@ -27,7 +26,7 @@ class TesteDoServicoDeAutenticacao(TestCase):
 		with self.assertRaises(Exception) as contexto:
 			servicoDeAutenticacao.autenticar(cpf_invalido, data_de_nascimento_invalida)
 		
-		self.assertEqual('Colaborador não encontrado, confirme seus dados e tente novamente', contexto.exception.message)
+		self.assertEqual('Colaborador não encontrado, confirme seus dados e tente novamente', contexto.exception.args[0])
 
 class TesteDeAutenticacao(TestCase):
 
@@ -40,7 +39,7 @@ class TesteDeAutenticacao(TestCase):
 
 		resposta = self.client.post(reverse('entrar'), dados_da_requisicao)
 
-		resposta_json = json.loads(resposta.content)
+		resposta_json = json.loads(resposta.content.decode())
 		self.assertEqual(funcionario.id, resposta_json['id_do_colaborador'])
 		self.assertEqual(funcionario.nome, resposta_json['nome_do_colaborador'])
 
@@ -51,5 +50,5 @@ class TesteDeAutenticacao(TestCase):
 
 		resposta = self.client.post(reverse('entrar'), dados_da_requisicao)
 		
-		resposta_json = json.loads(resposta.content)
-		self.assertEqual(u'Colaborador não encontrado, confirme seus dados e tente novamente', resposta_json['mensagem'])
+		resposta_json = json.loads(resposta.content.decode())
+		self.assertEqual('Colaborador não encontrado, confirme seus dados e tente novamente', resposta_json['mensagem'])

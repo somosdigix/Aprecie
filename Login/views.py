@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from datetime import datetime
-from models import Funcionario
-from services import ServicoDeAutenticacao
+from Login.models import Funcionario
+from Login.services import ServicoDeAutenticacao
 from django.http import JsonResponse
 
 def entrar(requisicao):
@@ -19,4 +19,4 @@ def obter_funcionarios(requisicao):
 	funcionarios = Funcionario.objects.all()
 	funcionarios = map(lambda funcionario: { 'id': funcionario.id, 'nome': funcionario.nome }, funcionarios)
 	
-	return JsonResponse(funcionarios, safe=False)
+	return JsonResponse(list(funcionarios), safe=False)
