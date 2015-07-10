@@ -13,9 +13,9 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Funcionario',
             fields=[
-                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('nome', models.CharField(max_length=b'200')),
-                ('cpf', models.CharField(unique=True, max_length=b'11')),
+                ('id', models.AutoField(auto_created=True, verbose_name='ID', primary_key=True, serialize=False)),
+                ('nome', models.CharField(max_length='200')),
+                ('cpf', models.CharField(unique=True, max_length='11')),
                 ('data_de_nascimento', models.DateField()),
             ],
         ),

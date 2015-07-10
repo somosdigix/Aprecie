@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from Login.models import Funcionario
 
-class ServicoDeAutenticacao():
+class ServicoDeAutenticacao:
 
 	def autenticar(self, cpf, data_de_nascimento):
 		funcionario = Funcionario.objects.filter(cpf=cpf, data_de_nascimento=data_de_nascimento)

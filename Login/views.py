@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from datetime import datetime
-from models import Funcionario
-from services import ServicoDeAutenticacao
+from Login.models import Funcionario
+from Login.services import ServicoDeAutenticacao
 from django.http import JsonResponse
 
 def entrar(requisicao):
