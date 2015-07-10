@@ -8,26 +8,29 @@ define([
 
 	var buscarColaboradorView = {};
 
-	var configuracoesDoAutocomplete = {
-		source: '/login/obter_funcionarios/',
-		minLength: 3,
-		select: selecionar
-	};
-
 	buscarColaboradorView.exibir = function() {
 		document.querySelector('#conteudo').innerHTML = buscarColaboradorTemplate;
 
-		$('#colaborador')
-			.off()
-			.autocomplete(configuracoesDoAutocomplete)
-			.autocomplete('instance')._renderItem = exibirItem;
+		$.getJSON('/login/obter_funcionarios', function(colaboradores) {
+			var configuracoesDoAutocomplete = {
+				source: converterParaAutocomplete(colaboradores),
+				minLength: 3,
+				select: selecionar
+			};
+
+			$('#colaborador').off().autocomplete(configuracoesDoAutocomplete);
+		});
+
 		$('#conteudo').off().on('click', 'a[data-js="voltar"]', voltar);
 	};
 
-	function exibirItem(lista, item) {
-		return $('<li>')
-			.append('<a data-colaborador-id="' + item.id + '">' + item.nome + '</a>' )
-			.appendTo(lista);
+	function converterParaAutocomplete(colaboradores) {
+		return colaboradores.map(function(colaborador) {
+			colaborador.value = colaborador.id;
+			colaborador.label = colaborador.nome;
+
+			return colaborador;
+		});
 	}
 
 	function selecionar(evento, ui) {

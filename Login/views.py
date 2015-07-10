@@ -16,8 +16,7 @@ def entrar(requisicao):
 	})
 
 def obter_funcionarios(requisicao):
-	termo = requisicao.GET['term']
-	funcionarios = Funcionario.objects.filter(nome__icontains=termo)
+	funcionarios = Funcionario.objects.all()
 	funcionarios = map(lambda funcionario: { 'id': funcionario.id, 'nome': funcionario.nome }, funcionarios)
 	
 	return JsonResponse(funcionarios, safe=False)
