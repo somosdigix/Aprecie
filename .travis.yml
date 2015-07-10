@@ -18,4 +18,4 @@ deploy:
   app: valorometro3
   domain: cafecombytes
   on:
-    branch: python3
+    branch: master
