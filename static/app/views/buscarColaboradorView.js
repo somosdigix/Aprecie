@@ -21,6 +21,7 @@ define([
 			.off()
 			.autocomplete(configuracoesDoAutocomplete)
 			.autocomplete('instance')._renderItem = exibirItem;
+		$('#conteudo').off().on('click', 'a[data-js="voltar"]', voltar);
 	};
 
 	function exibirItem(lista, item) {
@@ -36,6 +37,12 @@ define([
 		});
 
 		evento.preventDefault();
+	}
+
+	function voltar() {
+		require(['app/views/paginaInicialView'], function(paginaInicialView) {
+			paginaInicialView.exibir();
+		});
 	}
 
 	return buscarColaboradorView;
