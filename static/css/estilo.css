@@ -1,3 +1,41 @@
+*{
+	margin: 0;
+	padding: 0;	
+}
+
+body {
+	font-family: 'Raleway', sans-serif;
+}
+
+.conteudo {
+	width: 960px;
+	margin: 0 auto;
+}
+
+.login {
+	width: 200px;
+	margin: 0 auto;
+	background-color: #FFB6B6;
+	padding: 12px;
+	border-radius: 3px;
+	margin-top: 49px;
+}
+
+.login label {
+	display: block;
+}
+
+.login input {
+	outline: none;
+}
+
+.login button{
+	padding: 5px;
+  background-color: #E01818;
+    margin-top: 11px;
+}
+
+
 .invisivel {
 	display: none;
 }
