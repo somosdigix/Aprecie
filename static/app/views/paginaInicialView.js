@@ -1,14 +1,16 @@
 define([
 	'jquery',
 	'handlebars',
-	'text!partials/paginaInicialTemplate.html',
-	'app/models/sessaoDeUsuario'
-], function($, Handlebars, paginaInicialTemplate, sessaoDeUsuario) {
+	'text!partials/paginaInicialTemplate.html'
+], function($, Handlebars, paginaInicialTemplate) {
 	var paginaInicialView = {};
 
 	paginaInicialView.exibir = function() {
 		var template = Handlebars.compile(paginaInicialTemplate);
-		$('#conteudo').empty().html(template(sessaoDeUsuario));
+
+		$.get('/reconhecimentos/ultimos/', function(ultimosReconhecimentos) {
+			$('#conteudo').empty().html(template(ultimosReconhecimentos));
+		});
 	};
 
 	return paginaInicialView;

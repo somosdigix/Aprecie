@@ -1,7 +1,7 @@
 from django.http import JsonResponse
 from django.shortcuts import render
 from Login.models import Funcionario
-from Reconhecimentos.models import Valor
+from Reconhecimentos.models import Valor, Reconhecimento
 from Reconhecimentos.statics import ValoresDaDigithoBrasil
 
 def reconhecer(requisicao):
@@ -17,6 +17,12 @@ def reconhecer(requisicao):
 	reconhecido.reconhecer(reconhecedor, valor, justificativa)
 
 	return JsonResponse({})
+
+def ultimos_reconhecimentos(requisicao):
+	reconhecimentos = Reconhecimento.objects.all().order_by('-data')[:10]
+	reconhecimentosMapeados = list(map(lambda reconhecimento: { 'nome_do_reconhecido': reconhecimento.reconhecido.nome, 'valor': reconhecimento.valor.nome, 'justificativa': reconhecimento.justificativa, 'data': reconhecimento.data.strftime('%d/%m/%Y - %H:%M') }, reconhecimentos))
+
+	return JsonResponse(reconhecimentosMapeados, safe=False)
 
 def reconhecimentos_do_funcionario(requisicao):
 	reconhecido = Funcionario.objects.get(id=requisicao.GET['id_do_reconhecido'])
