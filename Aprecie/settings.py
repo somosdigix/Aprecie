@@ -83,7 +83,7 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )
 
-URL_DE_PRODUCAO = "aprecie-cafecombytes.rhcloud.com"
+URL_DE_PRODUCAO = "aprecie.me"
 
 STATIC_URL = '/static/'
 
