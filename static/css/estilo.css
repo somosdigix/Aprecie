@@ -19,6 +19,8 @@ img {
 
 input{
 	outline-color: #97460b;
+	border: none;
+
 }
 
 .conteudo {
@@ -42,8 +44,7 @@ input{
 
 }
 
-
-.login .logo{
+	.login .logo{
 		display: block;
 		margin-bottom: 19px;
 	}
@@ -90,60 +91,93 @@ input{
 		box-shadow: 1px 1px 1px rgba(28,18,16,.75);
 		border: none;
 		cursor: pointer;
+
 	}
 
 
 
+	.toolbar {
+		background-color: #FAC74F;
+		padding: 8px 0;
+	}
 
+	a.logoInterna{
+		background: url(static/img/sem-foto.png);
+		vertical-align: top;
+		display: inline-block;
+		width: 150px;
+		margin: 0.5em 0.6em 0 0;
+	}
+	
+	.busca {
+		width: 50%;
+		display: inline-block;
+		vertical-align: top;
+		margin: 0 2em 0 0;
+	}
 
+		.busca input {
+			background-color: rgba(255, 230, 171, 0.8);
+			width: 100%;
+			color: #fff;
+			font-size: 1.2rem;
+			padding: 0.5em;
+		}
 
+		#colaborador::-webkit-input-placeholder {
+		   color: white;
+		   font: 1rem 'Raleway', sans-serif;
+		   font-weight: bold;
+		}
 
+		#colaborador:-moz-placeholder {
+		   color: white;
+		   font: 1rem 'Raleway', sans-serif;
+		   font-weight: bold;
+		}
 
+		#colaborador::-moz-placeholder {
+		   color: white;  
+		   font: 1rem 'Raleway', sans-serif;
+		   font-weight: bold;
 
+		}
 
+		#colaborador:-ms-input-placeholder {  
+		   color: white;  
+		   font: 1rem 'Raleway', sans-serif;
+		   font-weight: bold;
 
+		}
 
+	.paginaInicial,
+	.meuPerfil {
+		display: inline-block;
+		cursor: pointer;
+		vertical-align: top;
+	}
 
+		.meuPerfil .foto{
+			width: 42px;
+		    height: 42px;
+		    border-radius: 143px;
+		    display: inline-block;
+		    vertical-align: top;
+		}
 
+		.meuPerfil span{
+			margin: 0.8em 0.3em;
+		    display: inline-block;
+		    color: #fff
+		}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-.toolbar {
-	background-color: #ccc;
-}
-
-.paginaInicial,
-.meuPerfil {
-	display: inline-block;
-	cursor: pointer;
-}
-
-.busca {
-	width: 50%;
-	display: inline-block;
-	margin-left: 10px;
-}
-
-.busca input {
-	width: 100%;
-}
-
-.sair {
-	cursor: pointer;
-	float: right;
-}
+	.sair {
+		cursor: pointer;
+		color: #fff;
+		display: inline-block;
+		vertical-align: top;
+		margin: 0.8em 0.3em;
+	}
 
 
 

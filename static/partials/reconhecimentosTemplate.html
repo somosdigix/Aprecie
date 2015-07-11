@@ -1,28 +1,30 @@
-<input type="hidden" id="reconhecidoId" value="{{this.id}}" />
-<input type="hidden" id="valorId" />
+<div class="conteudo">
+	<input type="hidden" id="reconhecidoId" value="{{this.id}}" />
+	<input type="hidden" id="valorId" />
 
-<div>
-	<img src="static/img/sem-foto.png" alt="Renan Siravegna" width="100" height="100" />
-	<h2>{{this.nome}}</h2>
-</div>
+	<div>
+		<img src="static/img/sem-foto.png" alt="Renan Siravegna" width="100" height="100" />
+		<h2>{{this.nome}}</h2>
+	</div>
 
-{{#each this.valores}}
-<section> 
-	<img src="{{ iconeDoValor this }}" alt="{{this.nome}}" width="50" height="50" />
-	<span>{{this.nome}}</span>
-	<span>{{this.quantidade_de_reconhecimentos}}</span>
-	<span data-js="abrirJustificativa" data-valor-id="{{this.id}}" class="ion-plus-round"></span>
-</section>
-{{/each}}
+	{{#each this.valores}}
+	<section> 
+		<img src="{{ iconeDoValor this }}" alt="{{this.nome}}" width="50" height="50" />
+		<span>{{this.nome}}</span>
+		<span>{{this.quantidade_de_reconhecimentos}}</span>
+		<span data-js="abrirJustificativa" data-valor-id="{{this.id}}" class="ion-plus-round"></span>
+	</section>
+	{{/each}}
 
-<div data-js="justificativa" class="invisivel">
-	<p>
-		<label for="justificativa"></label>
-		<textarea id="justificativa" cols="30" rows="5"></textarea>
-	</p>
+	<div data-js="justificativa" class="invisivel">
+		<p>
+			<label for="justificativa"></label>
+			<textarea id="justificativa" cols="30" rows="5"></textarea>
+		</p>
 
-	<p>
-		<button data-js="reconhecer">Confirmar</button>
-		<button data-js="fecharJustificativa">Cancelar</button>
-	</p>
-</div>
+		<p>
+			<button data-js="reconhecer">Confirmar</button>
+			<button data-js="fecharJustificativa">Cancelar</button>
+		</p>
+	</div>
+</div>	

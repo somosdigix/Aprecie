@@ -1,19 +1,21 @@
-<h2>Últimos reconhecimentos</h2>
+<div class="conteudo">
+	<h2>Últimos reconhecimentos</h2>
 
-{{#.}}
-<article>
-	<img src="static/img/sem-foto.png" alt="Renan Siravegna" width="30" height="30" />
+	{{#.}}
+	<article>
+		<img src="static/img/sem-foto.png" alt="Renan Siravegna" width="30" height="30" />
 
-	<strong>{{this.nome_do_reconhecido}}</strong><span> - {{this.valor}} em {{this.data}}</span>
+		<strong>{{this.nome_do_reconhecido}}</strong><span> - {{this.valor}} em {{this.data}}</span>
 
-	<p>
-		{{this.justificativa}}
-	</p>
-</article>
-{{else}}
-<article>
-	<p>
-		Não houveram reconhecimentos até o momento.
-	</p>
-</article>
-{{/.}}
+		<p>
+			{{this.justificativa}}
+		</p>
+	</article>
+	{{else}}
+	<article>
+		<p>
+			Não houveram reconhecimentos até o momento.
+		</p>
+	</article>
+	{{/.}}
+</div>
