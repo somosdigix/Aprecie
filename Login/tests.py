@@ -1,20 +1,20 @@
 from django.test import TestCase
 from datetime import datetime
-from Login.models import Funcionario
+from Login.factories import FuncionarioFactory
 from Login.services import ServicoDeAutenticacao
 from django.core.urlresolvers import reverse
+from Login.validadores import calcular_primeiro_digito_verificador
+from Login.validadores import calcular_segundo_digito_verificador
+from Login.validadores import validar_cpf
 import json
 
 class TesteDoServicoDeAutenticacao(TestCase):
 
 	def testa_a_autenticacao_de_funcionario_existente(self):
-		nome = 'Renan Siravegna'
-		data_de_nascimento = datetime(1991, 3, 16)
-		cpf = '12345678910'
-		funcionario = Funcionario.objects.create(cpf=cpf, data_de_nascimento=data_de_nascimento, nome=nome)
+		funcionario = FuncionarioFactory()
 		servicoDeAutenticacao = ServicoDeAutenticacao()
 
-		funcionario_autenticado = servicoDeAutenticacao.autenticar(cpf, data_de_nascimento)
+		funcionario_autenticado = servicoDeAutenticacao.autenticar(funcionario.cpf, funcionario.data_de_nascimento)
 
 		self.assertEqual(funcionario.id, funcionario_autenticado.id)
 
@@ -31,11 +31,8 @@ class TesteDoServicoDeAutenticacao(TestCase):
 class TesteDeAutenticacao(TestCase):
 
 	def testa_autenticacao_de_funcionario_existente(self):
-		nome = 'Guilherme Barbosa Ferreira'
-		data_de_nascimento = datetime(1991, 3, 16)
-		cpf = '16457244335'
-		funcionario = Funcionario.objects.create(cpf=cpf, data_de_nascimento=data_de_nascimento, nome=nome)
-		dados_da_requisicao = dict(cpf=cpf, data_de_nascimento=data_de_nascimento.strftime('%d/%m/%Y'))
+		funcionario = FuncionarioFactory()
+		dados_da_requisicao = dict(cpf=funcionario.cpf, data_de_nascimento=funcionario.data_de_nascimento.strftime('%d/%m/%Y'))
 
 		resposta = self.client.post(reverse('entrar'), dados_da_requisicao)
 
@@ -45,10 +42,42 @@ class TesteDeAutenticacao(TestCase):
 
 	def testa_autenticacao_de_funcionario_inexistente(self):
 		cpf = 'um cpf qualquer'
-		data_de_nascimento = '01/01/2001'
+		data_de_nascimento = '02/01/2001'
 		dados_da_requisicao = dict(cpf=cpf, data_de_nascimento=data_de_nascimento)
 
 		resposta = self.client.post(reverse('entrar'), dados_da_requisicao)
 		
 		resposta_json = json.loads(resposta.content.decode())
 		self.assertEqual('Colaborador não encontrado, confirme seus dados e tente novamente', resposta_json['mensagem'])
+
+
+class TesteDeValidadorDeCPF(TestCase):
+	
+	def testa_o_calculo_do_primeiro_digito(self):
+		numeros = [1, 1, 1, 4, 4, 4, 7, 7, 7]
+
+		primeiro_digito_verificador = calcular_primeiro_digito_verificador(numeros)
+
+		self.assertEqual(3, primeiro_digito_verificador)
+
+	def testa_o_calculo_do_segundo_digito(self):
+		numeros = [1, 1, 1, 4, 4, 4, 7, 7, 7, 3]
+
+		segundo_digito_verificador = calcular_segundo_digito_verificador(numeros)
+
+		self.assertEqual(5, segundo_digito_verificador)
+
+	def testa_a_validacao_de_um_cpf(self):
+		cpf = "11144477735"
+		self.assertTrue(validar_cpf(cpf))
+
+
+from django.core.exceptions import ValidationError
+
+class TesteDeFuncionario(TestCase):
+
+	def testa_que_nao_criar_pessoa_com_cpf_invalido(self):
+		from Login.models import Funcionario
+		with self.assertRaises(ValidationError) as contexto:
+			FuncionarioFactory(cpf="11144477700", nome="dsadsa", data_de_nascimento=datetime.today())
+		self.assertEqual("CPF inválido", contexto.exception.args[0])
