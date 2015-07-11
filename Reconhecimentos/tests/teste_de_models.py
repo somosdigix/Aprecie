@@ -1,4 +1,5 @@
 from django.test import TestCase
+from django.utils import timezone
 from Login.models import Funcionario
 from Reconhecimentos.models import Valor
 from Reconhecimentos.models import Reconhecimento
@@ -22,6 +23,16 @@ class TesteDeReconhecimento(TestCase):
 		self.assertEqual(self.reconhecedor, reconhecimento.reconhecedor)
 		self.assertEqual(ValoresDaDigithoBrasil.inquietude, reconhecimento.valor)
 		self.assertEqual(justificativa, reconhecimento.justificativa)
+
+	def testa_que_armazena_a_data_do_reconhecimento(self):
+		justificativa = 'Gostei!'
+
+		self.reconhecido.reconhecer(self.reconhecedor, ValoresDaDigithoBrasil.responsabilidade, justificativa);
+		reconhecimento = self.reconhecido.reconhecimentos()[0]
+
+		self.assertEqual(timezone.now().year, reconhecimento.data.year)
+		self.assertEqual(timezone.now().month, reconhecimento.data.month)
+		self.assertEqual(timezone.now().day, reconhecimento.data.day)
 
 	def testa_a_listagem_de_reconhecimentos(self):
 		self.reconhecido.reconhecer(self.reconhecedor, ValoresDaDigithoBrasil.responsabilidade, 'Foi legal');
