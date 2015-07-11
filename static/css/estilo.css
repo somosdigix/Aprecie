@@ -1,0 +1,102 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	font-family: 'Raleway', sans-serif;
+}
+
+.toolbar,
+.conteudo {
+	width: 100%;
+	max-width: 960px;
+	margin: 0 auto;
+}
+
+.toolbar {
+	background-color: #ccc;
+	padding: 5px;
+}
+
+.paginaInicial {
+	display: inline-block;
+	cursor: pointer;
+}
+
+.busca {
+  width: 85%;
+  display: inline-block;
+  margin-left: 10px;
+}
+
+.sair {
+	display: inline-block;
+	cursor: pointer;
+}
+
+.login {
+	width: 100%;
+	max-width: 200px;
+	margin: 0 auto;
+	background-color: #E5E5E5;
+	padding: 10px;
+	border-radius: 3px;
+	margin-top: 7%;
+}
+
+.login img {
+	width: 100%;
+}
+
+.login label {
+	display: block;
+	margin-top: 10px;
+}
+
+.login input {
+	outline: none;
+}
+
+.login button {
+	padding: 5px;
+	border: 0;
+	background-color: #B3AFAF;
+	margin-top: 11px;
+	width: 100%;
+}
+
+.invisivel {
+	display: none;
+}
+
+.growl {
+	width: 250px;
+	margin-top: 10px;
+	left: 73%;
+	z-index: 100;
+}
+
+.flutuando {
+	position: absolute;
+}
+
+.fixo {
+	position: fixed;
+}
+
+.alinhado-ao-topo {
+	top: 0;
+}
+
+.branco {
+	color: white;
+}
+
+.fundo-verde {
+	background-color: green;
+}
+
+.fundo-vermelho {
+	background-color: red;
+}

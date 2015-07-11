@@ -1,0 +1,27 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+	<meta charset="utf-8" />
+	<title>Aprecie</title>
+
+	<link rel="shortcut icon" href="{% static "favicon.ico" %}">
+	<link rel="stylesheet" href="{% static "css/ionicons.css" %}" />
+	<link rel="stylesheet" href="{% static "app/lib/jquery-ui/themes/ui-lightness/jquery-ui.min.css" %}" />
+	<link rel="stylesheet" href="{% static "app/lib/jquery-ui/themes/ui-lightness/theme.css" %}" />
+	<link rel="stylesheet" href="{% static "css/estilo.css" %}" />
+	<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Raleway"/>
+</head>
+
+<body>
+	<section data-js="toolbar" class="toolbar invisivel"></section>
+	<section id="conteudo" class="conteudo"></section>
+	
+	<div data-js="growl" class="growl fixo alinhado-ao-topo fundo-verde branco invisivel">
+		<span></span>
+	</div>
+
+	<script data-main="{% static "app/app" %}" src="{% static "app/lib/requirejs/require.js" %}"></script>
+</body>
+</html>
