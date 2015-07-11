@@ -5,6 +5,6 @@ class Valor(models.Model):
 
 class Reconhecimento(models.Model):
 	reconhecedor = models.ForeignKey('Login.Funcionario', related_name='reconhecedor')
-	funcionario = models.ForeignKey('Login.Funcionario', related_name='reconhecido')
+	reconhecido = models.ForeignKey('Login.Funcionario', related_name='reconhecido')
 	valor = models.ForeignKey(Valor)
 	justificativa = models.CharField(max_length=200)

@@ -13,10 +13,10 @@ class Funcionario(models.Model):
 		if not justificativa.strip():
 			raise Exception('A sua justificativa deve ser informada')
 
-		Reconhecimento.objects.create(reconhecedor=reconhecedor, funcionario=self, valor=valor, justificativa=justificativa)
+		Reconhecimento.objects.create(reconhecedor=reconhecedor, reconhecido=self, valor=valor, justificativa=justificativa)
 
 	def reconhecimentos(self):
-		return Reconhecimento.objects.filter(funcionario=self)
+		return Reconhecimento.objects.filter(reconhecido=self)
 
 	def reconhecimentos_por_valor(self, valor):
 		return self.reconhecimentos().filter(valor=valor)
