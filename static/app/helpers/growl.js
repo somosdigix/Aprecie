@@ -27,6 +27,8 @@ define([
 		$('div[data-js="growl"]').hide();
 	};
 
+	$('body').on('click', 'div[data-js="growl"]', growl.esconder);
+
 	function reiniciarTimer() {
 		clearTimeout(timer);
 
