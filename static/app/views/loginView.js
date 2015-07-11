@@ -13,7 +13,7 @@ define([
 		$('#conteudo').empty().html(loginTemplate);
 		$('#conteudo').off().on('click', '[data-js="autenticar"]', autenticar);
 
-		$('#cpf').inputmask('999.999.999-99');
+		$('#cpf').inputmask('999.999.999-99').focus();
 		$('#dataDeNascimento').inputmask('d/m/y', {
 			'placeholder': 'dd/mm/aaaa'
 		});
