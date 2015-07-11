@@ -7,10 +7,26 @@ var configuracoes = {
 		'text': 'app/lib/requirejs-text/text',
 		'jquery': 'app/lib/jquery/dist/jquery',
 		'jquery-ui': 'app/lib/jquery-ui/jquery-ui',
-		'handlebars': 'app/lib/handlebars/handlebars.amd',
 		'jquery.inputmask': 'app/lib/jquery.inputmask/dist/jquery.inputmask.bundle',
+		'handlebars': 'app/lib/handlebars/handlebars.amd',
 		'configuracoes': 'app/configuracoes',
 		'growl': 'app/helpers/growl'
+	},
+
+	shim: {
+		'jquery': {
+			exports: '$'
+		},
+
+		'jquery-ui': {
+			deps: ['jquery'],
+			exports: '$'
+		},
+		
+		'jquery.inputmask':  {
+			deps: ['jquery'],
+			exports: '$'
+		}
 	}
 };
 
