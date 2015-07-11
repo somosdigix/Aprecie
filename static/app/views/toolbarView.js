@@ -1,14 +1,14 @@
 define([
 	'jquery',
 	'handlebars',
-	'text!partials/buscarColaboradorTemplate.html',
+	'text!partials/toolbarTemplate.html',
 	'jquery-ui'
-], function($, Handlebars, buscarColaboradorTemplate, sessaoDeUsuario) {
+], function($, Handlebars, toolbarTemplate, sessaoDeUsuario) {
 	'use strict';
 
-	var buscarColaboradorView = {};
+	var toolbarView = {};
 
-	buscarColaboradorView.exibir = function(callback) {
+	toolbarView.exibir = function(callback) {
 		$.getJSON('/login/obter_funcionarios', function(colaboradores) {
 			var configuracoesDoAutocomplete = {
 				source: converterParaAutocomplete(colaboradores),
@@ -16,7 +16,11 @@ define([
 				select: selecionar
 			};
 
-			$('section[data-js="toolbar"]').show().html(buscarColaboradorTemplate);
+			$('section[data-js="toolbar"]')
+				.show()
+				.html(toolbarTemplate)
+				.on('click', 'div[data-js="retornar-para-pagina-inicial"]', retornarParaPaginaInicial)
+				.on('click', 'div[data-js="sair"]', sair);
 			$('#colaborador').off().autocomplete(configuracoesDoAutocomplete);
 
 			if (callback)
@@ -24,8 +28,8 @@ define([
 		});
 	};
 
-	buscarColaboradorView.esconder = function() {
-		$('section[data-js="toolbar"]').hide(buscarColaboradorTemplate).empty();
+	toolbarView.esconder = function() {
+		$('section[data-js="toolbar"]').hide(toolbarTemplate).empty();
 	};
 
 	function converterParaAutocomplete(colaboradores) {
@@ -47,5 +51,17 @@ define([
 		evento.preventDefault();
 	}
 
-	return buscarColaboradorView;
+	function retornarParaPaginaInicial() {
+		require(['app/views/paginaInicialView'], function(paginaInicialView) {
+			paginaInicialView.exibir();
+		});
+	}
+
+	function sair() {
+		require(['app/views/loginView'], function(loginView) {
+			loginView.exibir();
+		});
+	}
+
+	return toolbarView;
 });

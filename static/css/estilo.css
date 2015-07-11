@@ -19,10 +19,20 @@ body {
 	padding: 5px;
 }
 
-.busca {
-	max-width: 260px;
+.paginaInicial {
 	display: inline-block;
-	margin-left: 10px;
+	cursor: pointer;
+}
+
+.busca {
+  width: 85%;
+  display: inline-block;
+  margin-left: 10px;
+}
+
+.sair {
+	display: inline-block;
+	cursor: pointer;
 }
 
 .login {
@@ -32,7 +42,7 @@ body {
 	background-color: #E5E5E5;
 	padding: 10px;
 	border-radius: 3px;
-	margin-top: 10%;
+	margin-top: 7%;
 }
 
 .login img {

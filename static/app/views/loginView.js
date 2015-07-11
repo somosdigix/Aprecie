@@ -30,15 +30,15 @@ define([
 		require([
 			'app/models/loginViewModel',
 			'app/models/sessaoDeUsuario',
-			'app/views/buscarColaboradorView',
+			'app/views/toolbarView',
 			'app/views/paginaInicialView'
-		], function(LoginViewModel, sessaoDeUsuario, buscarColaboradorView, paginaInicialView) {
+		], function(LoginViewModel, sessaoDeUsuario, toolbarView, paginaInicialView) {
 			var loginViewModel = new LoginViewModel();
 			validarOperacao(loginViewModel);
 
 			$.post('/login/entrar/', loginViewModel, function(resposta) {
 				sessaoDeUsuario.preencherDados(resposta);
-				buscarColaboradorView.exibir(paginaInicialView.exibir);
+				toolbarView.exibir(paginaInicialView.exibir);
 			});
 		});
 	}
