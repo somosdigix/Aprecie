@@ -15,7 +15,7 @@ define([
 		$.getJSON('/login/obter_funcionarios', function(colaboradores) {
 			var configuracoesDoAutocomplete = {
 				source: converterParaAutocomplete(colaboradores),
-				minLength: 3,
+				minLength: 1,
 				select: selecionar
 			};
 
