@@ -81,6 +81,10 @@ body {
 	position: absolute;
 }
 
+.fixo {
+	position: fixed;
+}
+
 .alinhado-ao-topo {
 	top: 0;
 }
