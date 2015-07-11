@@ -1,6 +1,6 @@
 from django.test import TestCase
 from datetime import datetime
-from Login.models import Funcionario
+from Login.factories import FuncionarioFactory
 from Login.services import ServicoDeAutenticacao
 from django.core.urlresolvers import reverse
 import json
@@ -8,13 +8,10 @@ import json
 class TesteDoServicoDeAutenticacao(TestCase):
 
 	def testa_a_autenticacao_de_funcionario_existente(self):
-		nome = 'Renan Siravegna'
-		data_de_nascimento = datetime(1991, 3, 16)
-		cpf = '12345678910'
-		funcionario = Funcionario.objects.create(cpf=cpf, data_de_nascimento=data_de_nascimento, nome=nome)
+		funcionario = FuncionarioFactory()
 		servicoDeAutenticacao = ServicoDeAutenticacao()
 
-		funcionario_autenticado = servicoDeAutenticacao.autenticar(cpf, data_de_nascimento)
+		funcionario_autenticado = servicoDeAutenticacao.autenticar(funcionario.cpf, funcionario.data_de_nascimento)
 
 		self.assertEqual(funcionario.id, funcionario_autenticado.id)
 
@@ -31,11 +28,8 @@ class TesteDoServicoDeAutenticacao(TestCase):
 class TesteDeAutenticacao(TestCase):
 
 	def testa_autenticacao_de_funcionario_existente(self):
-		nome = 'Guilherme Barbosa Ferreira'
-		data_de_nascimento = datetime(1991, 3, 16)
-		cpf = '16457244335'
-		funcionario = Funcionario.objects.create(cpf=cpf, data_de_nascimento=data_de_nascimento, nome=nome)
-		dados_da_requisicao = dict(cpf=cpf, data_de_nascimento=data_de_nascimento.strftime('%d/%m/%Y'))
+		funcionario = FuncionarioFactory()
+		dados_da_requisicao = dict(cpf=funcionario.cpf, data_de_nascimento=funcionario.data_de_nascimento.strftime('%d/%m/%Y'))
 
 		resposta = self.client.post(reverse('entrar'), dados_da_requisicao)
 
@@ -45,7 +39,7 @@ class TesteDeAutenticacao(TestCase):
 
 	def testa_autenticacao_de_funcionario_inexistente(self):
 		cpf = 'um cpf qualquer'
-		data_de_nascimento = '01/01/2001'
+		data_de_nascimento = '02/01/2001'
 		dados_da_requisicao = dict(cpf=cpf, data_de_nascimento=data_de_nascimento)
 
 		resposta = self.client.post(reverse('entrar'), dados_da_requisicao)
