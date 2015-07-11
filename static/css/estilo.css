@@ -7,10 +7,22 @@ body {
 	font-family: 'Raleway', sans-serif;
 }
 
+.toolbar,
 .conteudo {
 	width: 100%;
 	max-width: 960px;
 	margin: 0 auto;
+}
+
+.toolbar {
+	background-color: #ccc;
+	padding: 5px;
+}
+
+.busca {
+	max-width: 260px;
+	display: inline-block;
+	margin-left: 10px;
 }
 
 .login {

@@ -8,9 +8,7 @@ define([
 
 	var buscarColaboradorView = {};
 
-	buscarColaboradorView.exibir = function() {
-		document.querySelector('#conteudo').innerHTML = buscarColaboradorTemplate;
-
+	buscarColaboradorView.exibir = function(callback) {
 		$.getJSON('/login/obter_funcionarios', function(colaboradores) {
 			var configuracoesDoAutocomplete = {
 				source: converterParaAutocomplete(colaboradores),
@@ -18,10 +16,16 @@ define([
 				select: selecionar
 			};
 
+			$('section[data-js="toolbar"]').show().html(buscarColaboradorTemplate);
 			$('#colaborador').off().autocomplete(configuracoesDoAutocomplete);
-		});
 
-		$('#conteudo').off().on('click', 'a[data-js="voltar"]', voltar);
+			if (callback)
+				callback();
+		});
+	};
+
+	buscarColaboradorView.esconder = function() {
+		$('section[data-js="toolbar"]').hide(buscarColaboradorTemplate).empty();
 	};
 
 	function converterParaAutocomplete(colaboradores) {
@@ -36,16 +40,11 @@ define([
 	function selecionar(evento, ui) {
 		require(['app/views/reconhecimentosView'], function(reconhecimentosView) {
 			var colaborador = ui.item;
+			$('#colaborador').val('').blur();
 			reconhecimentosView.exibir(colaborador.id);
 		});
 
 		evento.preventDefault();
-	}
-
-	function voltar() {
-		require(['app/views/paginaInicialView'], function(paginaInicialView) {
-			paginaInicialView.exibir();
-		});
 	}
 
 	return buscarColaboradorView;

@@ -72,8 +72,8 @@ define([
 	}
 
 	function voltar() {
-		require(['app/views/buscarColaboradorView'], function(buscarColaboradorView) {
-			buscarColaboradorView.exibir();
+		require(['app/views/paginaInicialView'], function(paginaInicialView) {
+			paginaInicialView.exibir();
 		});
 	}
 
