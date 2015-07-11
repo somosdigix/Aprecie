@@ -21,8 +21,7 @@ define([
 		$('#conteudo').off()
 			.on('click', 'span[data-js="abrirJustificativa"]', abrirJustificativa)
 			.on('click', 'button[data-js="reconhecer"]', reconhecer)
-			.on('click', 'button[data-js="fecharJustificativa"]', fecharJustificativa)
-			.on('click', 'a[data-js="voltar"]', voltar);
+			.on('click', 'button[data-js="fecharJustificativa"]', fecharJustificativa);
 	};
 
 	function abrirJustificativa() {
@@ -69,12 +68,6 @@ define([
 
 	function fecharJustificativa() {
 		$('div[data-js="justificativa"]').dialog('close');
-	}
-
-	function voltar() {
-		require(['app/views/paginaInicialView'], function(paginaInicialView) {
-			paginaInicialView.exibir();
-		});
 	}
 
 	return reconhecimentosView;
