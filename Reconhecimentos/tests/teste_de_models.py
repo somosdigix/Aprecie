@@ -19,6 +19,7 @@ class TesteDeReconhecimento(TestCase):
 		reconhecimento = self.reconhecido.reconhecimentos()[0]
 
 		self.assertEqual(1, len(self.reconhecido.reconhecimentos_por_valor(ValoresDaDigithoBrasil.inquietude)))
+		self.assertEqual(self.reconhecedor, reconhecimento.reconhecedor)
 		self.assertEqual(ValoresDaDigithoBrasil.inquietude, reconhecimento.valor)
 		self.assertEqual(justificativa, reconhecimento.justificativa)
 
