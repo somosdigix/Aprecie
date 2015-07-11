@@ -69,6 +69,7 @@ define([
 
 	function sair() {
 		require(['app/views/loginView'], function(loginView) {
+			toolbarView.esconder();
 			loginView.exibir();
 		});
 	}
