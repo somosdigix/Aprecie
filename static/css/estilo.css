@@ -5,15 +5,120 @@
 
 body {
 	font-family: 'Raleway', sans-serif;
+
 }
 
-.toolbar,
+.color-body{
+	background-color: #d7ac46;
+
+}
+
+img {
+	   max-width: 100%;
+	}
+
+input{
+	outline-color: #97460b;
+}
+
 .conteudo {
 	width: 100%;
 	max-width: 960px;
 	margin: 0 auto;
-	padding: 5px;
+	padding: 10px;
+	-webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
 }
+
+.login{
+	margin: 25% auto 0;
+	max-width: 300px;
+	padding: 18px;
+	background-color: #fff;
+	box-shadow: 0 16px 28px 0 rgba(0, 0, 0, 0.22), 0 25px 55px 0 rgba(0, 0, 0, 0.21);
+	webkit-box-shadow: 0 16px 28px 0 rgba(0, 0, 0, 0.22), 0 25px 55px 0 rgba(0, 0, 0, 0.21);
+	-moz-box-shadow: 0 16px 28px 0 rgba(0, 0, 0, 0.22), 0 25px 55px 0 rgba(0, 0, 0, 0.21);
+
+}
+
+
+.login .logo{
+		display: block;
+		margin-bottom: 19px;
+	}
+
+	.login label{
+		display: block;
+		font-size: 0.8rem;
+		color: #959595;
+		margin-bottom: 5px;
+	}
+
+	.login input{
+		background-color: transparent;
+		border: none;
+		border-bottom: 1px solid #9e9e9e;
+		height: 2rem;
+		width: 100%;
+		font-size: 1rem;
+		margin: 0 0 15px 0;
+		padding: 0;
+		box-shadow: none;
+		-webkit-box-sizing: content-box;
+		-moz-box-sizing: content-box;
+		box-sizing: content-box;
+		transition: all .3s;
+		color: #747474;
+		outline: none;
+
+	}
+	
+	.login button {
+		font-size: 1rem;
+		font-weight: bold;
+		text-transform: uppercase;
+		color: #fff;
+		width: 100%;
+		height: 42px;
+		-webkit-border-radius: 3px;
+		-moz-border-radius: 3px;
+		border-radius: 3px;
+		background-color: #dc0028;
+		-webkit-box-shadow: 1px 1px 1px rgba(28,18,16,.75);
+		-moz-box-shadow: 1px 1px 1px rgba(28,18,16,.75);
+		box-shadow: 1px 1px 1px rgba(28,18,16,.75);
+		border: none;
+		cursor: pointer;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 .toolbar {
 	background-color: #ccc;
@@ -40,36 +145,7 @@ body {
 	float: right;
 }
 
-.login {
-	width: 100%;
-	max-width: 200px;
-	margin: 0 auto;
-	background-color: #E5E5E5;
-	padding: 10px;
-	border-radius: 3px;
-	margin-top: 7%;
-}
 
-.login img {
-	width: 100%;
-}
-
-.login label {
-	display: block;
-	margin-top: 10px;
-}
-
-.login input {
-	outline: none;
-}
-
-.login button {
-	padding: 5px;
-	border: 0;
-	background-color: #B3AFAF;
-	margin-top: 11px;
-	width: 100%;
-}
 
 .invisivel {
 	display: none;
