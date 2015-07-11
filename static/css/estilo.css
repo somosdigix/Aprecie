@@ -1,6 +1,6 @@
-*{
+* {
 	margin: 0;
-	padding: 0;	
+	padding: 0;
 }
 
 body {
@@ -8,33 +8,41 @@ body {
 }
 
 .conteudo {
-	width: 960px;
+	width: 100%;
+	max-width: 960px;
 	margin: 0 auto;
 }
 
 .login {
-	width: 200px;
+	width: 100%;
+	max-width: 200px;
 	margin: 0 auto;
-	background-color: #FFB6B6;
-	padding: 12px;
+	background-color: #E5E5E5;
+	padding: 10px;
 	border-radius: 3px;
-	margin-top: 49px;
+	margin-top: 10%;
+}
+
+.login img {
+	width: 100%;
 }
 
 .login label {
 	display: block;
+	margin-top: 10px;
 }
 
 .login input {
 	outline: none;
 }
 
-.login button{
+.login button {
 	padding: 5px;
-  background-color: #E01818;
-    margin-top: 11px;
+	border: 0;
+	background-color: #B3AFAF;
+	margin-top: 11px;
+	width: 100%;
 }
-
 
 .invisivel {
 	display: none;
