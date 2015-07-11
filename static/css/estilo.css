@@ -12,27 +12,32 @@ body {
 	width: 100%;
 	max-width: 960px;
 	margin: 0 auto;
+	padding: 5px;
 }
 
 .toolbar {
 	background-color: #ccc;
-	padding: 5px;
 }
 
-.paginaInicial {
+.paginaInicial,
+.meuPerfil {
 	display: inline-block;
 	cursor: pointer;
 }
 
 .busca {
-  width: 85%;
-  display: inline-block;
-  margin-left: 10px;
+	width: 50%;
+	display: inline-block;
+	margin-left: 10px;
+}
+
+.busca input {
+	width: 100%;
 }
 
 .sair {
-	display: inline-block;
 	cursor: pointer;
+	float: right;
 }
 
 .login {

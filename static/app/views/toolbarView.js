@@ -2,6 +2,7 @@ define([
 	'jquery',
 	'handlebars',
 	'text!partials/toolbarTemplate.html',
+	'app/models/sessaoDeUsuario',
 	'jquery-ui'
 ], function($, Handlebars, toolbarTemplate, sessaoDeUsuario) {
 	'use strict';
@@ -9,6 +10,8 @@ define([
 	var toolbarView = {};
 
 	toolbarView.exibir = function(callback) {
+		var template = Handlebars.compile(toolbarTemplate);
+
 		$.getJSON('/login/obter_funcionarios', function(colaboradores) {
 			var configuracoesDoAutocomplete = {
 				source: converterParaAutocomplete(colaboradores),
@@ -18,8 +21,9 @@ define([
 
 			$('section[data-js="toolbar"]')
 				.show()
-				.html(toolbarTemplate)
-				.on('click', 'div[data-js="retornar-para-pagina-inicial"]', retornarParaPaginaInicial)
+				.html(template(sessaoDeUsuario))
+				.on('click', 'div[data-js="pagina-inicial"]', paginaInicial)
+				.on('click', 'div[data-js="meu-perfil"]', meuPerfil)
 				.on('click', 'div[data-js="sair"]', sair);
 			$('#colaborador').off().autocomplete(configuracoesDoAutocomplete);
 
@@ -51,9 +55,15 @@ define([
 		evento.preventDefault();
 	}
 
-	function retornarParaPaginaInicial() {
+	function paginaInicial() {
 		require(['app/views/paginaInicialView'], function(paginaInicialView) {
 			paginaInicialView.exibir();
+		});
+	}
+
+	function meuPerfil() {
+		require(['app/views/reconhecimentosView'], function(reconhecimentosView) {
+			reconhecimentosView.exibir(sessaoDeUsuario.id);
 		});
 	}
 
