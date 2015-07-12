@@ -7,6 +7,7 @@
     "test": "test"
   },
   "scripts": {
+    "sass": "./node_modules/gulp/bin/gulp.js sass", 
     "test": "./node_modules/karma/bin/karma start --single-run --browsers PhantomJS"
   },
   "repository": {
@@ -20,6 +21,8 @@
   },
   "homepage": "https://github.com/DigithoBrasil/Aprecie",
   "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-sass": "^2.0.3",
     "jasmine-core": "^2.3.4",
     "karma": "^0.12.37",
     "karma-jasmine": "^0.3.6",
