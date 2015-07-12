@@ -11,6 +11,10 @@ define([
 			document.cookie = 'nome@outro.site=; expires=Thu, 01 Jan 1970 00:00:00 GMT';
 		});
 
+		it('deve quebrar o travis!', function() {
+			expect(true).toBe(false);
+		});
+
 		it('deve criar um cookie contendo o prefixo da aplicação', function() {
 			cookie.criar('teste', 1);
 
