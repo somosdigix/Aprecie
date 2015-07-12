@@ -1,13 +1,14 @@
 define([
-	'sessaoDeUsuario'
-], function(sessaoDeUsuario) {
+	'sessaoDeUsuario',
+	'cookie'
+], function(sessaoDeUsuario, cookie) {
 	 'use strict';
 
 	 var servicoDeAutenticacao = {};
 
 	 servicoDeAutenticacao.autenticar = function(colaborador) {
 	 	sessaoDeUsuario.preencherDados(colaborador);
-	 	document.cookie = 'colaborador@aprecie.me=' + JSON.stringify(colaborador);
+	 	cookie.criar('colaborador', JSON.stringify(colaborador));
 	 };
 
 	 servicoDeAutenticacao.jaEstaAutenticado = function() {
@@ -15,12 +16,7 @@ define([
 	 };
 
 	 servicoDeAutenticacao.atualizarSessaoDeUsuario = function() {
-	 	var cookies = document.cookie.split('; ');
-	 	var cookieDeAutenticacao = cookies.filter(function(cookie) {
-	 		return cookie.indexOf('colaborador@aprecie.me') > -1;
-	 	})[0];
-	 	var colaborador = JSON.parse(cookieDeAutenticacao.replace('colaborador@aprecie.me=', ''));
-
+	 	var colaborador = JSON.parse(cookie.obter('colaborador'));
 	 	sessaoDeUsuario.preencherDados(colaborador);
 	 };
 
