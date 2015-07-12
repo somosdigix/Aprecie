@@ -1,8 +1,10 @@
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render
 from Login.models import Funcionario
 from Reconhecimentos.models import Valor, Reconhecimento
 from Reconhecimentos.statics import ValoresDaDigithoBrasil
+from django.db.models import Count
+import json
 
 def reconhecer(requisicao):
 	id_do_reconhecedor = requisicao.POST['id_do_reconhecedor']
@@ -29,3 +31,12 @@ def reconhecimentos_do_funcionario(requisicao):
 	valores = list(map(lambda valor: { 'id': valor.id, 'nome': valor.nome, 'quantidade_de_reconhecimentos': len(reconhecido.reconhecimentos_por_valor(valor)) }, ValoresDaDigithoBrasil.todos))
 
 	return JsonResponse({ 'id': reconhecido.id, 'nome': reconhecido.nome, 'valores': valores }, safe=False)
+
+def reconhecimentos_por_reconhecedor(requisicao):
+	id_do_reconhecido = int(requisicao.GET["id_do_reconhecido"])
+	reconhecedores = Reconhecimento.objects.filter(reconhecido=id_do_reconhecido).values('reconhecedor').annotate(quantidade_de_reconhecimentos=Count('reconhecedor'))
+	dicio = {}
+	for item in reconhecedores:
+		dicio[item['reconhecedor']] = item['quantidade_de_reconhecimentos']
+	return JsonResponse(dicio)
+

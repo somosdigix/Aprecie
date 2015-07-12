@@ -1,6 +1,7 @@
 from django.test import TestCase
 from django.core.urlresolvers import reverse
 from Login.factories import FuncionarioFactory
+from Reconhecimentos.factories import ReconhecimentoFactory
 from Reconhecimentos.statics import ValoresDaDigithoBrasil
 import json
 
@@ -57,3 +58,19 @@ class TesteDeApiDeReconhecimento(TestCase):
 	def criar_reconhecimentos(self, quantidade):
 		for num in range(0, quantidade):
 			self.client.post(reverse('reconhecer'), self.dados_do_reconhecimento)
+
+	def testa_reconhecimentos_de_uma_pessoa_agrupados_por_reconhecedor(self):
+		reconhecido = FuncionarioFactory()
+		reconhecedor1 = FuncionarioFactory()
+		reconhecedor2 = FuncionarioFactory()
+		reconhecimento1 = ReconhecimentoFactory(reconhecedor=reconhecedor1, reconhecido=reconhecido)
+		reconhecimento2 = ReconhecimentoFactory(reconhecedor=reconhecedor2, reconhecido=reconhecido)
+		reconhecimento3 = ReconhecimentoFactory(reconhecedor=reconhecedor2, reconhecido=reconhecido)
+
+		resposta = self.client.get(reverse('reconhecimentos_por_reconhecedor'), dict(id_do_reconhecido=reconhecido.id))
+
+		reconhecedores = json.loads(resposta.content.decode())
+		print(reconhecedores)
+		self.assertEqual(2, len(reconhecedores))
+		self.assertEqual(1, reconhecedores[str(reconhecedor1.id)])
+		self.assertEqual(2, reconhecedores[str(reconhecedor2.id)])

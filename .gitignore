@@ -48,4 +48,5 @@ docs/_build/
 # PyBuilder
 target/
 db.sqlite3
-!static/app/**/*
+!static/app/**/*ambienteDoValorometro/
+ambienteDoValorometro/
