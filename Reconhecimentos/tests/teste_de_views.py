@@ -70,7 +70,6 @@ class TesteDeApiDeReconhecimento(TestCase):
 		resposta = self.client.get(reverse('reconhecimentos_por_reconhecedor'), dict(id_do_reconhecido=reconhecido.id))
 
 		reconhecedores = json.loads(resposta.content.decode())
-		print(reconhecedores)
 		self.assertEqual(2, len(reconhecedores))
 		self.assertEqual(1, reconhecedores[str(reconhecedor1.id)])
 		self.assertEqual(2, reconhecedores[str(reconhecedor2.id)])
