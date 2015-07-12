@@ -10,7 +10,8 @@ var configuracoes = {
 		'jquery.inputmask': 'app/lib/jquery.inputmask/dist/jquery.inputmask.bundle',
 		'handlebars': 'app/lib/handlebars/handlebars.amd',
 		'configuracoes': 'app/configuracoes',
-		'growl': 'app/helpers/growl'
+		'growl': 'app/helpers/growl',
+		'sessaoDeUsuario': 'app/models/sessaoDeUsuario'
 	},
 
 	shim: {

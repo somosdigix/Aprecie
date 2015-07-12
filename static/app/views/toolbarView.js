@@ -2,7 +2,7 @@ define([
 	'jquery',
 	'handlebars',
 	'text!partials/toolbarTemplate.html',
-	'app/models/sessaoDeUsuario',
+	'sessaoDeUsuario',
 	'jquery-ui'
 ], function($, Handlebars, toolbarTemplate, sessaoDeUsuario) {
 	'use strict';
@@ -46,10 +46,10 @@ define([
 	}
 
 	function selecionar(evento, ui) {
-		require(['app/views/reconhecimentosView'], function(reconhecimentosView) {
+		require(['app/views/perfilView'], function(perfilView) {
 			var colaborador = ui.item;
 			$('#colaborador').val('').blur();
-			reconhecimentosView.exibir(colaborador.id);
+			perfilView.exibir(colaborador.id);
 		});
 
 		evento.preventDefault();
@@ -62,8 +62,8 @@ define([
 	}
 
 	function meuPerfil() {
-		require(['app/views/reconhecimentosView'], function(reconhecimentosView) {
-			reconhecimentosView.exibir(sessaoDeUsuario.id);
+		require(['app/views/perfilView'], function(perfilView) {
+			perfilView.exibir(sessaoDeUsuario.id);
 		});
 	}
 

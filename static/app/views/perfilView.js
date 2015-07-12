@@ -1,27 +1,33 @@
 define([
 	'jquery',
 	'handlebars',
-	'text!partials/reconhecimentosTemplate.html',
+	'text!partials/perfilTemplate.html',
+	'sessaoDeUsuario',
 	'app/views/iconesDosValoresHelpers'
-], function($, Handlebars, reconhecimentosTemplate) {
+], function($, Handlebars, perfilTemplate, sessaoDeUsuario) {
 	'use strict';
 
-	var reconhecimentosView = {};
+	var perfilView = {};
 
-	reconhecimentosView.exibir = function(colaboradorId) {
+	perfilView.exibir = function(colaboradorId) {
 		var data = {
 			id_do_reconhecido: colaboradorId
 		};
 
 		$.getJSON('/reconhecimentos/funcionario/', data, function(reconhecimentosDoColaborador) {
-			var template = Handlebars.compile(reconhecimentosTemplate);
+			var template = Handlebars.compile(perfilTemplate);
 			$('#conteudo').empty().html(template(reconhecimentosDoColaborador));
-		});
 
-		$('#conteudo').off()
-			.on('click', 'span[data-js="abrirJustificativa"]', abrirJustificativa)
-			.on('click', 'button[data-js="reconhecer"]', reconhecer)
-			.on('click', 'button[data-js="fecharJustificativa"]', fecharJustificativa);
+			$('#conteudo').off()
+				.on('click', 'span[data-js="abrirJustificativa"]', abrirJustificativa)
+				.on('click', 'button[data-js="reconhecer"]', reconhecer)
+				.on('click', 'button[data-js="fecharJustificativa"]', fecharJustificativa);
+
+			if (sessaoDeUsuario.id !== colaboradorId) {
+				$('span[data-js="abrirJustificativa"]').show();
+				$('#conteudo').on('click', 'button[data-js="fecharJustificativa"]', fecharJustificativa);
+			}
+		});
 	};
 
 	function abrirJustificativa() {
@@ -56,7 +62,7 @@ define([
 			$.post('/reconhecimentos/reconhecer/', reconhecerViewModel, function() {
 				fecharJustificativa();
 				growl.deSucesso().exibir('Reconhecimento realizado com sucesso');
-				reconhecimentosView.exibir(reconhecerViewModel.id_do_reconhecido);
+				perfilView.exibir(reconhecerViewModel.id_do_reconhecido);
 			});
 		});
 	}
@@ -70,5 +76,5 @@ define([
 		$('div[data-js="justificativa"]').dialog('close');
 	}
 
-	return reconhecimentosView;
+	return perfilView;
 });

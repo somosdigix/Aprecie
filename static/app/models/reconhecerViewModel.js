@@ -1,6 +1,6 @@
 define([
 	'jquery',
-	'app/models/sessaoDeUsuario'
+	'sessaoDeUsuario'
 ], function($, sessaoDeUsuario) {
 	'use strict';
 

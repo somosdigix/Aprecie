@@ -29,7 +29,7 @@ define([
 
 		require([
 			'app/models/loginViewModel',
-			'app/models/sessaoDeUsuario',
+			'sessaoDeUsuario',
 			'app/views/toolbarView',
 			'app/views/paginaInicialView'
 		], function(LoginViewModel, sessaoDeUsuario, toolbarView, paginaInicialView) {
