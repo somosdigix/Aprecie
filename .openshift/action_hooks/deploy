@@ -1,6 +1,6 @@
 PYTHONPATH=$OPENSHIFT_REPO_DIR
 pip install psycopg2
-cd $PYTHONPATH/static;npm install;npm run sass;cd -;
+~/.gem/bin/sass $PYTHONPATH/static/estilo.sass $PYTHONPATH/static/estilo.css
 python $PYTHONPATH/manage.py collectstatic -c --noinput --pythonpath=\$PYTHONPATH
 python $PYTHONPATH/manage.py makemigrations
 python $PYTHONPATH/manage.py migrate
