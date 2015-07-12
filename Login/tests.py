@@ -39,7 +39,7 @@ class TesteDeAutenticacao(TestCase):
 
 	def testa_autenticacao_de_funcionario_inexistente(self):
 		cpf = 'um cpf qualquer'
-		data_de_nascimento = '02/01/2001'
+		data_de_nascimento = '02/01/3001'
 		dados_da_requisicao = dict(cpf=cpf, data_de_nascimento=data_de_nascimento)
 
 		resposta = self.client.post(reverse('entrar'), dados_da_requisicao)
