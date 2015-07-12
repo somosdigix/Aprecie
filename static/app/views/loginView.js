@@ -29,15 +29,15 @@ define([
 
 		require([
 			'app/models/loginViewModel',
-			'sessaoDeUsuario',
+			'app/servicos/servicoDeAutenticacao',
 			'app/views/toolbarView',
 			'app/views/paginaInicialView'
-		], function(LoginViewModel, sessaoDeUsuario, toolbarView, paginaInicialView) {
+		], function(LoginViewModel, servicoDeAutenticacao, toolbarView, paginaInicialView) {
 			var loginViewModel = new LoginViewModel();
 			validarOperacao(loginViewModel);
 
-			$.post('/login/entrar/', loginViewModel, function(resposta) {
-				sessaoDeUsuario.preencherDados(resposta);
+			$.post('/login/entrar/', loginViewModel, function(colaborador) {
+				servicoDeAutenticacao.autenticar(colaborador);
 				toolbarView.exibir(paginaInicialView.exibir);
 			});
 		});

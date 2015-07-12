@@ -35,12 +35,22 @@ require.config(configuracoes);
 
 require([
 	'configuracoes',
-	'app/views/loginView'
-], function(configuracoes, loginView) {
+	'app/servicos/servicoDeAutenticacao',
+	'app/views/loginView',
+	'app/views/toolbarView',
+	'app/views/paginaInicialView'
+], function(configuracoes, servicoDeAutenticacao, loginView, toolbarView, paginaInicialView) {
 	'use strict';
 
 	configuracoes.configurarErros();
 	configuracoes.configurarErrosDeRequisicao();
+
+	if (servicoDeAutenticacao.jaEstaAutenticado()) {
+		servicoDeAutenticacao.atualizarSessaoDeUsuario();
+		toolbarView.exibir(paginaInicialView.exibir);
+
+		return;
+	}
 	
 	loginView.exibir();
 });
