@@ -1,11 +1,6 @@
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'j@6p9^mw-rp$jwrk^hp7p@^cx=xo1siv**2!395vu@2rmd0z@8'
@@ -15,20 +10,11 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-COMPRESS_PRECOMPILERS = (
-    ('text/x-sass', 'sass {infile} {outfile}'),
-)
-
-STATICFILES_FINDERS = ('compressor.finders.CompressorFinder',)
-
-# Application definition
-
 INSTALLED_APPS = (
     'django.contrib.contenttypes',
     'django.contrib.staticfiles',
     'Login',
     'Reconhecimentos',
-    'compressor'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -57,7 +43,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'Aprecie.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
@@ -67,7 +52,6 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
@@ -82,9 +66,7 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-COMPRESS_ROOT =  os.path.join(BASE_DIR, 'static')
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
@@ -110,9 +92,4 @@ if ON_OPENSHIFT:
     }
 
     STATIC_ROOT = os.path.join(os.environ['OPENSHIFT_REPO_DIR'], 'wsgi', 'static')
-    #DEBUG = False
-
-    COMPRESS_PRECOMPILERS = (
-        ('text/x-sass', '~/.gem/bin/sass {infile} {outfile}'),
-    )
 
