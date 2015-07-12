@@ -15,6 +15,11 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+COMPRESS_PRECOMPILERS = (
+    ('text/x-sass', 'sass {infile} {outfile}'),
+)
+
+STATICFILES_FINDERS = ('compressor.finders.CompressorFinder',)
 
 # Application definition
 
@@ -23,13 +28,14 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'Login',
     'Reconhecimentos',
+    'compressor'
 )
 
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
-    'Aprecie.middlewares.ProcessadorDeExcecao',
+    #'Aprecie.middlewares.ProcessadorDeExcecao',
 )
 
 ROOT_URLCONF = 'Aprecie.urls'
@@ -78,6 +84,7 @@ USE_TZ = True
 
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+COMPRESS_ROOT =  os.path.join(BASE_DIR, 'static')
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),

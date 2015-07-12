@@ -1,4 +1,5 @@
 {% load staticfiles %}
+{% load compress %}
 
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -9,7 +10,11 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="shortcut icon" href="{% static "favicon.ico" %}">
 	<link rel="stylesheet" href="{% static "css/responsivo.css" %}">
-	<link rel="stylesheet" href="{% static "css/estilo.css" %}" />	
+	
+	{% compress css %}
+		<link type="text/x-sass" rel="stylesheet" href="{% static "css/estilo.sass" %}" />	
+	{% endcompress %}
+
 	<link rel="stylesheet" href="{% static "css/ionicons.css" %}" />
 	<link rel="stylesheet" href="{% static "app/lib/jquery-ui/themes/ui-lightness/jquery-ui.min.css" %}" />
 	<link rel="stylesheet" href="{% static "app/lib/jquery-ui/themes/ui-lightness/theme.css" %}" />
