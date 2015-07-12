@@ -6,8 +6,9 @@ script:
 - python manage.py migrate
 - python manage.py test Login Reconhecimentos
 - cd static
+- npm install
 - npm run sass
-- npm install; npm test
+- npm test
 - cd -
 notifications:
   slack:
