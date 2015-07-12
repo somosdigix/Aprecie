@@ -50,3 +50,5 @@ target/
 db.sqlite3
 !static/app/**/*
 node_modules/
+!static/app/**/*ambienteDoValorometro/
+ambienteDoValorometro/
