@@ -18,6 +18,11 @@ ALLOWED_HOSTS = []
 COMPRESS_PRECOMPILERS = (
     ('text/x-sass', 'sass {infile} {outfile}'),
 )
+~/.gem/bin/sass
+
+
+
+
 
 STATICFILES_FINDERS = ('compressor.finders.CompressorFinder',)
 
@@ -111,3 +116,8 @@ if ON_OPENSHIFT:
 
     STATIC_ROOT = os.path.join(os.environ['OPENSHIFT_REPO_DIR'], 'wsgi', 'static')
     #DEBUG = False
+
+    COMPRESS_PRECOMPILERS = (
+        ('text/x-sass', '~/.gem/bin/sass {infile} {outfile}'),
+    )
+
