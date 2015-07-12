@@ -6,7 +6,7 @@ script:
 - python manage.py migrate
 - python manage.py test Login Reconhecimentos
 - cd static
-- npm sass
+- npm run sass
 - npm install; npm test
 - cd -
 notifications:
