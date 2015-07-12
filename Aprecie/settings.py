@@ -18,11 +18,6 @@ ALLOWED_HOSTS = []
 COMPRESS_PRECOMPILERS = (
     ('text/x-sass', 'sass {infile} {outfile}'),
 )
-~/.gem/bin/sass
-
-
-
-
 
 STATICFILES_FINDERS = ('compressor.finders.CompressorFinder',)
 
