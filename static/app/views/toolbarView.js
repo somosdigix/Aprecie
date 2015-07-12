@@ -68,7 +68,11 @@ define([
 	}
 
 	function sair() {
-		require(['app/views/loginView'], function(loginView) {
+		require([
+			'cookie',
+			'app/views/loginView'
+		], function(cookie, loginView) {
+			cookie.limpar();
 			toolbarView.esconder();
 			loginView.exibir();
 		});
