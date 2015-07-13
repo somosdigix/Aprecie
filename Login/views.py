@@ -16,6 +16,6 @@ def entrar(requisicao):
 
 def obter_funcionarios(requisicao):
 	funcionarios = Funcionario.objects.all()
-	funcionarios = map(lambda funcionario: { 'id': funcionario.id, 'nome': funcionario.nome }, funcionarios)
+	funcionarios = map(lambda funcionario: { 'id': funcionario.id, 'nome': funcionario.nome_compacto }, funcionarios)
 	
 	return JsonResponse(list(funcionarios), safe=False)

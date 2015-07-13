@@ -6,6 +6,11 @@ class Funcionario(models.Model):
 	cpf = models.CharField(max_length='11', unique=True)
 	data_de_nascimento = models.DateField()
 
+	@property
+	def nome_compacto(self):
+		nomes = self.nome.split(' ')
+		return "{0} {1}".format(nomes[0], nomes[-1])
+
 	def reconhecer(self, reconhecedor, valor, justificativa):
 		if reconhecedor == self:
 			raise Exception('O colaborador nao pode reconher a si próprio')
