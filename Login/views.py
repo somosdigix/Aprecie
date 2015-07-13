@@ -11,7 +11,7 @@ def entrar(requisicao):
 
 	return JsonResponse({
 		'id_do_colaborador': funcionario_autenticado.id,
-		'nome_do_colaborador': funcionario_autenticado.nome
+		'nome_do_colaborador': funcionario_autenticado.nome_compacto
 	})
 
 def obter_funcionarios(requisicao):
