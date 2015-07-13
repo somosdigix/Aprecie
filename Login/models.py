@@ -7,12 +7,9 @@ class Funcionario(models.Model):
 	data_de_nascimento = models.DateField()
 
 	@property
-	def primeiro_nome(self):
-		return self.nome.split(' ')[0]
-
-	@property
-	def ultimo_nome(self):
-		return self.nome.split(' ')[-1]
+	def nome_compacto(self):
+		nomes = self.nome.split(' ')
+		return "{0} {1}".format(nomes[0], nomes[-1])
 
 	def reconhecer(self, reconhecedor, valor, justificativa):
 		if reconhecedor == self:

@@ -35,7 +35,7 @@ class TesteDeAutenticacao(TestCase):
 
 		resposta_json = json.loads(resposta.content.decode())
 		self.assertEqual(funcionario.id, resposta_json['id_do_colaborador'])
-		self.assertEqual(funcionario.nome, resposta_json['nome_do_colaborador'])
+		self.assertEqual(funcionario.nome_compacto, resposta_json['nome_do_colaborador'])
 
 	def testa_autenticacao_de_funcionario_inexistente(self):
 		cpf = 'um cpf qualquer'
