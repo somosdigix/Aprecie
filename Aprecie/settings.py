@@ -72,14 +72,15 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )
 
-URL_DE_PRODUCAO = "aprecie.me"
-
 STATIC_URL = '/static/'
 
 ON_OPENSHIFT = "OPENSHIFT_APP_NAME" in os.environ
 
+URL_DO_AMBIENTE = "aprecie.me"
 
 if ON_OPENSHIFT:
+    URL_DO_AMBIENTE = os.environ['OPENSHIFT_APP_DNS']
+
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',

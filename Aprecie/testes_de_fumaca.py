@@ -5,8 +5,10 @@ import http.client
 class TesteDeFumaca(TestCase):
 
 	def testa_a_disponibilidade_da_pagina_inicial(self):
-		conexao = http.client.HTTPConnection(settings.URL_DE_PRODUCAO)
+		conexao = http.client.HTTPConnection(settings.URL_DO_AMBIENTE)
 		conexao.request("GET", "")
+
 		resposta = conexao.getresponse()
 
-		self.assertEqual(200, resposta.status)
+		self.assertEqual(200, resposta.status, 
+			"{0} não está 200 OK!".format(settings.URL_DO_AMBIENTE))
