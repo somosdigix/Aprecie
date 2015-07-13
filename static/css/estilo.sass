@@ -2,7 +2,7 @@
 	margin: 0
 	padding: 0
 
-$background-amarelo: #d7ac46;
+$background-amarelo: #d7ac46
 $font-padrao: 'Raleway', sans-serif
 
 =avatar-pequeno
@@ -88,7 +88,6 @@ p
 		border: none
 		cursor: pointer
 
-
 .toolbar
 	background-color: #FAC74F
 	padding: 8px 0
@@ -135,13 +134,16 @@ p
 			font-weight: bold
 	
 	.meuPerfil
-			display: inline-block
-			cursor: pointer
-			vertical-align: top
-			width: 20%
+		display: inline-block
+		cursor: pointer
+		vertical-align: top
+		width: 20%
 
 		.foto	
-			+avatar-pequeno
+			.avatar-pequeno
+			width: 42px
+			height: 42px
+			border-radius: 143px
 			display: inline-block
 			vertical-align: top
 
@@ -196,21 +198,15 @@ p
 			+avatar-pequeno
 			display:inline-block
 			vertical-align:top
-			margin: 0 0.6em 0 0;
+			margin: 0 0.6em 0 0
 		
 		.nome
 			display: inline-block
-			vertical-align: top: 
+			vertical-align: top
 		
 		span
 			display: block
-		
-	
 
 	p
 	  margin-top: 0.6em
 	  color: #494949
-		
-
-
-

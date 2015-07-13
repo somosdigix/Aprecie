@@ -6,6 +6,14 @@ class Funcionario(models.Model):
 	cpf = models.CharField(max_length='11', unique=True)
 	data_de_nascimento = models.DateField()
 
+	@property
+	def primeiro_nome(self):
+		return self.nome.split(' ')[0]
+
+	@property
+	def ultimo_nome(self):
+		return self.nome.split(' ')[-1]
+
 	def reconhecer(self, reconhecedor, valor, justificativa):
 		if reconhecedor == self:
 			raise Exception('O colaborador nao pode reconher a si próprio')
