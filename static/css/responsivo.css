@@ -21,6 +21,20 @@
 	   box-sizing: border-box;
 	}
 
+	.logoInterna{
+		display: none !important;
+	}
+
+	.busca{
+		width: 76% !important ;
+		display: inline-block;
+		vertical-align: top;
+		margin: 0 2em 0 0;
+
+	}	
+
+	.meuPerfil 
+
 
 	
 }
