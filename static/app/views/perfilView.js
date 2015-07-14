@@ -29,16 +29,20 @@ define([
 				$('span[data-js="abrirJustificativa"]').show();
 				$('#conteudo').on('click', 'button[data-js="fecharJustificativa"]', fecharJustificativa);
 			}
+			else{
+				$('#conteudo').on('click', 'img[data-js="foto"]', enviarFoto);
+				$('input[data-js="alterar-foto"]').off().on('change', alterarFoto);
+			}
 
 			reconhecimentosPorReconhecedorView.exibir(colaboradorId);
 		});
 	};
 
 	function abrirJustificativa() {
-		var objetoClicado = this;
+		var objetoClicado = $(this);
 
 		require(['growl'], function(growl) {
-			var valorId = $(objetoClicado).data('valor-id');
+			var valorId = objetoClicado.data('valor-id');
 
 			$('#valorId').val(valorId);
 
@@ -78,6 +82,26 @@ define([
 
 	function fecharJustificativa() {
 		$('div[data-js="justificativa"]').dialog('close');
+	}
+
+	function enviarFoto() {
+		$('input[data-js="alterar-foto"]').trigger('click');
+	}
+
+	function alterarFoto() {
+		var arquivo = this.files[0];
+
+		if (arquivo.type.indexOf('image/') === -1)
+			throw new ViolacaoDeRegra('Apenas imagens podem ser enviadas para seu perfil');
+
+		var reader = new FileReader();
+
+		reader.onload = function(progressEvent) {
+			$('img[data-js="foto"]').attr('src', reader.result);
+		};
+
+		if (arquivo)
+			reader.readAsDataURL(arquivo);
 	}
 
 	return perfilView;
