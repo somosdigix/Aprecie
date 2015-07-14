@@ -42,6 +42,7 @@ class TesteDeApiDeReconhecimento(TestCase):
 
 		resposta_json = json.loads(resposta.content.decode())
 		self.assertEqual(200, resposta.status_code)
+		self.assertEqual(self.reconhecido.id, resposta_json[0]['id_do_reconhecido'])
 		self.assertEqual(self.reconhecido.nome, resposta_json[0]['nome_do_reconhecido'])
 		self.assertEqual(self.justificativa, resposta_json[0]['justificativa'])
 		self.assertEqual(self.valor.nome, resposta_json[0]['valor'])

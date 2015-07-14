@@ -22,13 +22,23 @@ def reconhecer(requisicao):
 
 def ultimos_reconhecimentos(requisicao):
 	reconhecimentos = Reconhecimento.objects.all().order_by('-data')[:10]
-	reconhecimentosMapeados = list(map(lambda reconhecimento: { 'nome_do_reconhecido': reconhecimento.reconhecido.nome, 'valor': reconhecimento.valor.nome, 'justificativa': reconhecimento.justificativa, 'data': reconhecimento.data.strftime('%d/%m/%Y - %H:%M') }, reconhecimentos))
+	reconhecimentosMapeados = list(map(lambda reconhecimento: {
+		'id_do_reconhecido': reconhecimento.reconhecido.id,
+		'nome_do_reconhecido': reconhecimento.reconhecido.nome,
+		'valor': reconhecimento.valor.nome,
+		'justificativa': reconhecimento.justificativa,
+		'data': reconhecimento.data.strftime('%d/%m/%Y - %H:%M')
+	}, reconhecimentos))
 
 	return JsonResponse(reconhecimentosMapeados, safe=False)
 
 def reconhecimentos_do_funcionario(requisicao):
 	reconhecido = Funcionario.objects.get(id=requisicao.GET['id_do_reconhecido'])
-	valores = list(map(lambda valor: { 'id': valor.id, 'nome': valor.nome, 'quantidade_de_reconhecimentos': len(reconhecido.reconhecimentos_por_valor(valor)) }, ValoresDaDigithoBrasil.todos))
+	valores = list(map(lambda valor: {
+		'id': valor.id,
+		'nome': valor.nome,
+		'quantidade_de_reconhecimentos': len(reconhecido.reconhecimentos_por_valor(valor))
+	}, ValoresDaDigithoBrasil.todos))
 
 	return JsonResponse({ 'id': reconhecido.id, 'nome': reconhecido.nome, 'valores': valores }, safe=False)
 
@@ -36,7 +46,9 @@ def reconhecimentos_por_reconhecedor(requisicao):
 	id_do_reconhecido = int(requisicao.GET["id_do_reconhecido"])
 	reconhecedores = Reconhecimento.objects.filter(reconhecido=id_do_reconhecido).values('reconhecedor').annotate(quantidade_de_reconhecimentos=Count('reconhecedor'))
 	dicio = {}
+
 	for item in reconhecedores:
 		dicio[item['reconhecedor']] = item['quantidade_de_reconhecimentos']
+
 	return JsonResponse(dicio)
 
