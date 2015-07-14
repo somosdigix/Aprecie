@@ -2,10 +2,10 @@ define([
 	'jquery',
 	'handlebars',
 	'text!partials/perfilTemplate.html',
-	'text!partials/reconhecimentosPorReconhecedorTemplate.html',
+	'app/views/reconhecimentosPorReconhecedorView',
 	'sessaoDeUsuario',
 	'app/views/iconesDosValoresHelpers'
-], function($, Handlebars, perfilTemplate, reconhecimentosPorReconhecedorTemplate, sessaoDeUsuario) {
+], function($, Handlebars, perfilTemplate, reconhecimentosPorReconhecedorView, sessaoDeUsuario) {
 	'use strict';
 
 	var perfilView = {};
@@ -15,21 +15,10 @@ define([
 			id_do_reconhecido: colaboradorId
 		};
 
-		$.when(
-			$.getJSON('/reconhecimentos/funcionario/', data),
-			$.getJSON('/reconhecimentos/por_reconhecedor/', data)
-		).then(function(resposta1, resposta2) {
-			var reconhecimentosDoColaborador = resposta1[0];
-			var reconhecimentosPorReconhecedor = resposta2[0];
-
+		$.getJSON('/reconhecimentos/funcionario/', data, function(reconhecimentosDoColaborador) {
 			var template = Handlebars.compile(perfilTemplate);
-			var dados = {
-				reconhecimentosDoColaborador: reconhecimentosDoColaborador,
-				reconhecimentosPorReconhecedor: reconhecimentosPorReconhecedor
-			};
 
-			$('#conteudo').empty().html(template(dados));
-			exibirTeste(colaboradorId);
+			$('#conteudo').empty().html(template(reconhecimentosDoColaborador));
 
 			$('#conteudo').off()
 				.on('click', 'span[data-js="abrirJustificativa"]', abrirJustificativa)
@@ -40,23 +29,10 @@ define([
 				$('span[data-js="abrirJustificativa"]').show();
 				$('#conteudo').on('click', 'button[data-js="fecharJustificativa"]', fecharJustificativa);
 			}
+
+			reconhecimentosPorReconhecedorView.exibir(colaboradorId);
 		});
 	};
-
-	function exibirTeste(colaboradorId) {
-		var data = {
-			id_do_reconhecido: colaboradorId
-		};
-
-		var template = Handlebars.compile(reconhecimentosPorReconhecedorTemplate);
-
-		$.getJSON('/reconhecimentos/por_reconhecedor/', data, function(reconhecimentosPorReconhecedor) {
-			reconhecimentosPorReconhecedor.map(function(reconhecimento) {
-				var secaoDoValor = $('section[data-valor-id="' + reconhecimento.id_do_valor + '"]');
-				secaoDoValor.append(template(reconhecimento));
-			});
-		});
-	}
 
 	function abrirJustificativa() {
 		var objetoClicado = this;
