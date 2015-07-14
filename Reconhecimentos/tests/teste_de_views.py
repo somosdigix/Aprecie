@@ -72,7 +72,9 @@ class TesteDeApiDeReconhecimento(TestCase):
 
 		reconhecedores = json.loads(resposta.content.decode())
 		self.assertEqual(2, len(reconhecedores))
-		self.assertEqual(reconhecedor1.id, reconhecedores[0]['id_do_reconhecedor'])
+		self.assertEqual(reconhecedor1.nome_compacto, reconhecedores[0]['nome_do_reconhecedor'])
+		self.assertEqual(ValoresDaDigithoBrasil.inquietude.id, reconhecedores[0]['id_do_valor'])
 		self.assertEqual(1, reconhecedores[0]['quantidade_de_reconhecimentos'])
-		self.assertEqual(reconhecedor2.id, reconhecedores[1]['id_do_reconhecedor'])
+		self.assertEqual(reconhecedor2.nome_compacto, reconhecedores[1]['nome_do_reconhecedor'])
+		self.assertEqual(ValoresDaDigithoBrasil.inquietude.id, reconhecedores[1]['id_do_valor'])
 		self.assertEqual(2, reconhecedores[1]['quantidade_de_reconhecimentos'])

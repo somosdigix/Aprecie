@@ -44,12 +44,13 @@ def reconhecimentos_do_funcionario(requisicao):
 
 def reconhecimentos_por_reconhecedor(requisicao):
 	id_do_reconhecido = int(requisicao.GET["id_do_reconhecido"])
-	reconhecedores = Reconhecimento.objects.filter(reconhecido=id_do_reconhecido).values('reconhecedor').annotate(quantidade_de_reconhecimentos=Count('reconhecedor'))
+	reconhecedores = Reconhecimento.objects.filter(reconhecido=id_do_reconhecido).values('reconhecedor', 'valor').annotate(quantidade_de_reconhecimentos=Count('reconhecedor'))
 	reconhecimentos = []
 
 	for item in reconhecedores:
 		reconhecimentos.append({
-			'id_do_reconhecedor': item['reconhecedor'],
+			'nome_do_reconhecedor': Funcionario.objects.get(id=item['reconhecedor']).nome_compacto,
+			'id_do_valor': item['valor'],
 			'quantidade_de_reconhecimentos': item['quantidade_de_reconhecimentos']
 		})
 
