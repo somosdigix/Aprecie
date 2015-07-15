@@ -1,29 +1,8 @@
+@import _mixins
+
 *
 	margin: 0
 	padding: 0
-
-@import _mixins
-
-.avatar-pequeno
-	width: 42px
-	height: 42px
-	border-radius: 143px
-
-input
-	outline-color: #97460b
-	border: none
-
-body
-	font-family: $font-padrao
-
-img
-	max-width: 100%
-
-p
-	font-size: 1rem
-
-.color-body
-	background-color: $background-amarelo
 
 .conteudo
 	width: 100%
@@ -35,7 +14,7 @@ p
 	box-sizing: border-box
 
 .login
-	margin: 25% auto 0
+	margin: 20% auto 0
 	max-width: 300px
 	padding: 18px
 	background-color: white
@@ -95,8 +74,7 @@ p
 	.logoInterna
 		vertical-align: top
 		display: inline-block
-		width: 17%
-		margin: 0.5em 0.6em 0 0
+		width: 10%
 		cursor: pointer
 	
 	.busca
@@ -130,21 +108,18 @@ p
 		#colaborador:-ms-input-placeholder
 			color: white
 			font: 1rem $font-padrao
-		font-weight: bold
+			font-weight: bold
 	
 	.meuPerfil
 		display: inline-block
 		cursor: pointer
 		vertical-align: top
 		width: 20%
-	
-	.foto
-		.avatar-pequeno
-			width: 42px
-			height: 42px
-			border-radius: 143px
-			display: inline-block
-			vertical-align: top
+
+		img
+			+displayInlineBlock
+			+avatarPequeno
+			
 	
 		span
 			margin: 0.8em 0.3em
@@ -188,14 +163,35 @@ p
 
 #feedReconhecimentos
 	margin-top: 2em
+	background-color: #fafadd
+	padding:1.2em
 
-.dados-colaborador
-	img
-		width: 42px
-		height: 42px
-		border-radius: 143px
-		display: inline-block
-		vertical-align: top
+	.dados-colaborador
 
-	strong
-		cursor: pointer
+		img
+
+			width: 42px
+			height: 42px
+			border-radius: 143px
+			+displayInlineBlock
+			margin: 0 0.8em 0 0
+		
+		.informacoes
+			+displayInlineBlock
+			width: 87%
+
+			strong
+				cursor: pointer
+				font-size: 1.2rem
+
+			.valor
+				display: inline-block
+				font-size: 0.9rem
+
+			.data
+				font-family: $font-secundaria
+				font-size: 0.7rem
+
+	p
+		margin-top: 0.6em
+		font-size: 0.9rem
