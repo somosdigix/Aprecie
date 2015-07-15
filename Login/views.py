@@ -20,7 +20,7 @@ def alterar_foto(requisicao):
 	nova_foto = requisicao.POST['nova_foto']
 
 	colaborador = Funcionario.objects.get(pk=id_do_colaborador)
-	colaborador.foto = nova_foto
+	colaborador.alterar_foto(nova_foto)
 	colaborador.save()
 
 	return JsonResponse({})

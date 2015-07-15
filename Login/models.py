@@ -13,6 +13,9 @@ class Funcionario(models.Model):
 		return "{0} {1}".format(nomes[0], nomes[-1])
 
 	def alterar_foto(self, nova_foto_em_base64):
+		if not nova_foto_em_base64.strip():
+			raise Exception('Foto deve ser informada')
+			
 		self.foto = nova_foto_em_base64
 
 	def reconhecer(self, reconhecedor, valor, justificativa):
