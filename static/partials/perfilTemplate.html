@@ -4,7 +4,11 @@
 	<input type="hidden" id="valorId" />
 
 	<div>
-		<img data-js="foto" src="static/img/sem-foto.png" alt="Clique para alterar." width="100" height="100" />
+		{{#if this.foto}}
+			<img data-js="foto" src="{{this.foto}}" alt="Clique para alterar." width="100" height="100" />
+		{{else}}
+			<img data-js="foto" src="static/img/sem-foto.png" alt="Clique para alterar." width="100" height="100" />
+		{{/if}}
 		<h2>{{this.nome}}</h2>
 	</div>
 

@@ -28,8 +28,7 @@ define([
 			if (sessaoDeUsuario.id !== colaboradorId) {
 				$('span[data-js="abrirJustificativa"]').show();
 				$('#conteudo').on('click', 'button[data-js="fecharJustificativa"]', fecharJustificativa);
-			}
-			else{
+			} else {
 				$('#conteudo').on('click', 'img[data-js="foto"]', enviarFoto);
 				$('input[data-js="alterar-foto"]').off().on('change', alterarFoto);
 			}
@@ -97,7 +96,15 @@ define([
 		var reader = new FileReader();
 
 		reader.onload = function(progressEvent) {
-			$('img[data-js="foto"]').attr('src', reader.result);
+			var data = {
+				id_do_colaborador: sessaoDeUsuario.id,
+				nova_foto: reader.result
+			};
+
+			$.post('/login/alterar_foto/', data, function() {
+				$('img[data-js="foto"]').attr('src', reader.result);
+				$('img[data-js="foto-miniatura"]').attr('src', reader.result);
+			});
 		};
 
 		if (arquivo)
