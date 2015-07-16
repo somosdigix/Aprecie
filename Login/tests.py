@@ -46,3 +46,28 @@ class TesteDeAutenticacao(TestCase):
 		
 		resposta_json = json.loads(resposta.content.decode())
 		self.assertEqual('Colaborador não encontrado, confirme seus dados e tente novamente', resposta_json['mensagem'])
+
+	# def testa_que_a_foto_do_colaborador_eh_alterada(self):
+	# 	nova_foto = 'base64=???'
+	# 	colaborador = FuncionarioFactory()
+	# 	# colaborador.foto = nova_foto
+	# 	# colaborador.save()
+	# 	dados_da_requisicao = {
+	# 		'nova_foto': nova_foto,
+	# 		'id_do_colaborador': colaborador.id
+	# 	}
+
+	# 	resposta = self.client.post(reverse('alterar_foto'), dados_da_requisicao)
+
+	# 	# self.assertEqual(200, resposta.status_code)
+	# 	self.assertEqual(nova_foto, colaborador.foto)
+
+class TesteDeColaborador(TestCase):
+
+	def testa_que_a_foto_deve_ser_alterada(self):
+		nova_foto = 'base64=????'
+		colaborador = FuncionarioFactory()
+
+		colaborador.alterar_foto(nova_foto)
+
+		self.assertEqual(nova_foto, colaborador.foto)

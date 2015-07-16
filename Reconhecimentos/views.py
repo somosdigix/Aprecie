@@ -40,7 +40,7 @@ def reconhecimentos_do_funcionario(requisicao):
 		'quantidade_de_reconhecimentos': len(reconhecido.reconhecimentos_por_valor(valor))
 	}, ValoresDaDigithoBrasil.todos))
 
-	return JsonResponse({ 'id': reconhecido.id, 'nome': reconhecido.nome, 'valores': valores }, safe=False)
+	return JsonResponse({ 'id': reconhecido.id, 'nome': reconhecido.nome, 'foto': reconhecido.foto, 'valores': valores }, safe=False)
 
 def reconhecimentos_por_reconhecedor(requisicao):
 	id_do_reconhecido = int(requisicao.GET["id_do_reconhecido"])
