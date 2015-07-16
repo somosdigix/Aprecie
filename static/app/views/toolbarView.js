@@ -12,9 +12,9 @@ define([
 	toolbarView.exibir = function(callback) {
 		var template = Handlebars.compile(toolbarTemplate);
 
-		$.getJSON('/login/obter_funcionarios', function(colaboradores) {
+		$.getJSON('/login/obter_funcionarios', function(data) {
 			var configuracoesDoAutocomplete = {
-				source: converterParaAutocomplete(colaboradores),
+				source: converterParaAutocomplete(data.colaboradores),
 				minLength: 1,
 				select: selecionar
 			};
