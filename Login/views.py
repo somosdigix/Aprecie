@@ -2,6 +2,7 @@ from datetime import datetime
 from Login.models import Funcionario
 from Login.services import ServicoDeAutenticacao
 from django.http import JsonResponse
+from django.core import serializers
 
 def entrar(requisicao):
 	cpf = requisicao.POST['cpf']
@@ -15,7 +16,5 @@ def entrar(requisicao):
 	})
 
 def obter_funcionarios(requisicao):
-	funcionarios = Funcionario.objects.all()
-	funcionarios = map(lambda funcionario: { 'id': funcionario.id, 'nome': funcionario.nome_compacto }, funcionarios)
-	
-	return JsonResponse(list(funcionarios), safe=False)
+	funcionarios = serializers.serialize('json', Funcionario.objects.all(), fields=('id', 'nome_compacto'))
+	return JsonResponse(funcionarios, safe=False)
