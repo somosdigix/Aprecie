@@ -22,7 +22,7 @@ def reconhecer(requisicao):
 
 def ultimos_reconhecimentos(requisicao):
 	reconhecimentos = Reconhecimento.objects.all().order_by('-data')[:10]
-	reconhecimentosMapeados = list(map(lambda reconhecimento: {
+	reconhecimentos_mapeados = list(map(lambda reconhecimento: {
 		'id_do_reconhecido': reconhecimento.reconhecido.id,
 		'nome_do_reconhecido': reconhecimento.reconhecido.nome,
 		'valor': reconhecimento.valor.nome,
@@ -30,7 +30,7 @@ def ultimos_reconhecimentos(requisicao):
 		'data': reconhecimento.data.strftime('%d/%m/%Y - %H:%M')
 	}, reconhecimentos))
 
-	return JsonResponse(reconhecimentosMapeados, safe=False)
+	return JsonResponse(reconhecimentos_mapeados, safe=False)
 
 def reconhecimentos_do_funcionario(requisicao):
 	reconhecido = Funcionario.objects.get(id=requisicao.GET['id_do_reconhecido'])

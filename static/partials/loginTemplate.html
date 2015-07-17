@@ -2,11 +2,11 @@
 	<form class="login">
 		<img class="logo" src="static/img/logo.png" alt="Aprecie" />
 
-		<label for="cpf">Digite seu CPF</label>
-		<input type="number" id="cpf" />
+		<label for="cpf">Me diga, qual é o seu CPF?</label>
+		<input type="text" pattern="[0-9]" id="cpf" />
 
-		<label for="dataDeNascimento">Data de nascimento</label>
-		<input type="number" id="dataDeNascimento" />
+		<label for="dataDeNascimento">e o dia do seu nascimento?</label>
+		<input type="text" pattern="[0-9]" id="dataDeNascimento" />
 
 		<button data-js="autenticar" type="submit">login</button>
 	</form>

@@ -7,6 +7,11 @@
 .color-body
 	background-color:$background-amarelo
 
+
+
+.color-body
+	background-color: $cor-rosa-claro
+
 .conteudo
 	width: 100%
 	max-width: 960px
@@ -17,13 +22,10 @@
 	box-sizing: border-box
 
 .login
-	margin: 20% auto 0
+	margin: 17% auto 0
 	max-width: 300px
 	padding: 18px
-	background-color: white
-	box-shadow: 0 16px 28px 0 rgba(0, 0, 0, 0.22), 0 25px 55px 0 rgba(0, 0, 0, 0.21)
-	webkit-box-shadow: 0 16px 28px 0 rgba(0, 0, 0, 0.22), 0 25px 55px 0 rgba(0, 0, 0, 0.21)
-	-moz-box-shadow: 0 16px 28px 0 rgba(0, 0, 0, 0.22), 0 25px 55px 0 rgba(0, 0, 0, 0.21)
+	
 	
 	.logo
 		display: block
@@ -198,3 +200,26 @@
 	p
 		margin-top: 0.6em
 		font-size: 0.9rem
+
+.foto-colaborador
+	+displayInlineBlock
+	+avatarGrande
+	margin: 0 2em 0 0
+
+
+.informacoes-colaborador
+	+displayInlineBlock
+
+
+
+	.nome-colaborador
+		display: block
+
+	#iconeValoresRecebido
+		+displayInlineBlock
+		margin: 1.2em 0
+		
+
+#valoresRecebidosComComentarios
+	display:block
+	margin: 3em 0
