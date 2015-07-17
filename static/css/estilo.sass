@@ -3,9 +3,24 @@
 *
 	margin: 0
 	padding: 0
-	
+
+body
+	font-family: $font-padrao
+
+
+input
+	outline-color: #97460b
+	border: none
+
+
+img
+	max-width: 100%
+
+p
+	font-size: 1rem
+
 .color-body
-	background-color: $cor-amarelo
+	background-color: $cor-rosa-claro
 
 .conteudo
 	width: 100%
@@ -110,29 +125,34 @@
 			font: 1rem $font-padrao
 			font-weight: bold
 	
-	.meuPerfil
-		display: inline-block
-		cursor: pointer
-		vertical-align: top
-		width: 20%
+	nav
+		width: 31%
+		+displayInlineBlock
 
-		img
-			+displayInlineBlock
-			+avatarPequeno
-			
-	
-		span
-			margin: 0.8em 0.3em
+
+		.meuPerfil
 			display: inline-block
+			cursor: pointer
+			vertical-align: top
+			width: 80%
+
+			img
+				+displayInlineBlock
+				+avatarPequeno
+				
+		
+			span
+				margin: 0.8em 0.3em
+				display: inline-block
+				color: white
+		
+		.sair
+			width: 5%
+			cursor: pointer
 			color: white
-	
-	.sair
-		width: 5%
-		cursor: pointer
-		color: white
-		display: inline-block
-		vertical-align: top
-		margin: 0.8em 0.3em
+			display: inline-block
+			vertical-align: top
+			margin: 0.8em 0.3em
 
 .invisivel
 	display: none
@@ -217,3 +237,12 @@
 #valoresRecebidosComComentarios
 	display:block
 	margin: 3em 0
+
+
+
+
+
+
+
+
+
