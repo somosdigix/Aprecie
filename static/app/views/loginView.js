@@ -3,15 +3,16 @@ define([
 	'handlebars',
 	'text!partials/loginTemplate.html',
 	'configuracoes',
+	'app/helpers/template',
 	'jquery.inputmask'
-], function($, Handlebars, loginTemplate, configuracoes) {
+], function($, Handlebars, loginTemplate, configuracoes, template) {
 	'use strict';
 
 	var loginView = {};
 
 	loginView.exibir = function() {
-		$('#conteudo').empty().html(loginTemplate);
-		$('#conteudo').off().on('click', '[data-js="autenticar"]', autenticar);
+		template.inserir(loginTemplate);
+		$('#conteudo').off().on('click', 'button[data-js="autenticar"]', autenticar);
 
 		$('#cpf').inputmask('999.999.999-99').focus();
 		$('#dataDeNascimento').inputmask('d/m/y');

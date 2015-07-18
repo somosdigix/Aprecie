@@ -4,8 +4,9 @@ define([
 	'text!partials/perfilTemplate.html',
 	'app/views/reconhecimentosPorReconhecedorView',
 	'sessaoDeUsuario',
+	'app/helpers/template',
 	'app/views/iconesDosValoresHelpers'
-], function($, Handlebars, perfilTemplate, reconhecimentosPorReconhecedorView, sessaoDeUsuario) {
+], function($, Handlebars, perfilTemplate, reconhecimentosPorReconhecedorView, sessaoDeUsuario, template) {
 	'use strict';
 
 	var perfilView = {};
@@ -16,9 +17,7 @@ define([
 		};
 
 		$.getJSON('/reconhecimentos/funcionario/', data, function(reconhecimentosDoColaborador) {
-			var template = Handlebars.compile(perfilTemplate);
-
-			$('#conteudo').empty().html(template(reconhecimentosDoColaborador));
+			template.inserir(perfilTemplate, reconhecimentosDoColaborador);
 
 			$('#conteudo').off()
 				.on('click', 'span[data-js="abrirJustificativa"]', abrirJustificativa)
