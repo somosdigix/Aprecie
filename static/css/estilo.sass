@@ -4,6 +4,24 @@
 	margin: 0
 	padding: 0
 
+body
+	font-family: $font-padrao
+
+
+input
+	outline-color: #97460b
+	border: none
+
+
+img
+	max-width: 100%
+
+p
+	font-size: 1rem
+
+.color-body
+	background-color: $cor-rosa-claro
+
 .conteudo
 	width: 100%
 	max-width: 960px
@@ -14,13 +32,10 @@
 	box-sizing: border-box
 
 .login
-	margin: 20% auto 0
+	margin: 17% auto 0
 	max-width: 300px
 	padding: 18px
-	background-color: white
-	box-shadow: 0 16px 28px 0 rgba(0, 0, 0, 0.22), 0 25px 55px 0 rgba(0, 0, 0, 0.21)
-	webkit-box-shadow: 0 16px 28px 0 rgba(0, 0, 0, 0.22), 0 25px 55px 0 rgba(0, 0, 0, 0.21)
-	-moz-box-shadow: 0 16px 28px 0 rgba(0, 0, 0, 0.22), 0 25px 55px 0 rgba(0, 0, 0, 0.21)
+	
 	
 	.logo
 		display: block
@@ -110,29 +125,34 @@
 			font: 1rem $font-padrao
 			font-weight: bold
 	
-	.meuPerfil
-		display: inline-block
-		cursor: pointer
-		vertical-align: top
-		width: 20%
+	nav
+		width: 31%
+		+displayInlineBlock
 
-		img
-			+displayInlineBlock
-			+avatarPequeno
-			
-	
-		span
-			margin: 0.8em 0.3em
+
+		.meuPerfil
 			display: inline-block
+			cursor: pointer
+			vertical-align: top
+			width: 80%
+
+			img
+				+displayInlineBlock
+				+avatarPequeno
+				
+		
+			span
+				margin: 0.8em 0.3em
+				display: inline-block
+				color: white
+		
+		.sair
+			width: 5%
+			cursor: pointer
 			color: white
-	
-	.sair
-		width: 5%
-		cursor: pointer
-		color: white
-		display: inline-block
-		vertical-align: top
-		margin: 0.8em 0.3em
+			display: inline-block
+			vertical-align: top
+			margin: 0.8em 0.3em
 
 .invisivel
 	display: none
@@ -166,8 +186,7 @@
 	background-color: #fafadd
 	padding: 1.2em
 
-	.dados-colaborador
-
+	.dados
 		img
 
 			width: 42px
@@ -195,3 +214,35 @@
 	p
 		margin-top: 0.6em
 		font-size: 0.9rem
+
+.foto-colaborador
+	+displayInlineBlock
+	+avatarGrande
+	margin: 0 2em 0 0
+
+
+.informacoes-colaborador
+	+displayInlineBlock
+
+
+
+	.nome-colaborador
+		display: block
+
+	#iconeValoresRecebido
+		+displayInlineBlock
+		margin: 1.2em 0
+		
+
+#valoresRecebidosComComentarios
+	display:block
+	margin: 3em 0
+
+
+
+
+
+
+
+
+

@@ -6,17 +6,25 @@
 	<div class="busca">
 		<input type="text" id="colaborador" placeholder="Busque um colaborador" />
 	</div>
+	
+	<nav>
+		<div class="meuPerfil" data-js="meu-perfil">
+			{{#if this.foto}}
+			<img data-js="foto-miniatura" src="{{this.foto}}" class="foto avatar-pequeno" />
+			{{else}}
+			<img data-js="foto-miniatura" src="http://placehold.it/42x42" class="foto avatar-pequeno" />
+			{{/if}}
+			<span>{{this.nome}}  | </span>
+		</div>
 
-	<div class="meuPerfil" data-js="meu-perfil">
-		{{#if this.foto}}
-		<img data-js="foto-miniatura" src="{{this.foto}}" class="foto avatar-pequeno" />
-		{{else}}
-		<img data-js="foto-miniatura" src="static/img/sem-foto.png" class="foto avatar-pequeno" />
-		{{/if}}
-		<span>{{this.nome}}  | </span>
-	</div>
+		<div class="sair" data-js="sair">
+			<span>Sair</span>
+		</div>
+	
+	</nav>
 
-	<div class="sair" data-js="sair">
-		<span>Sair</span>
-	</div>
+
+	
+
+
 </div>	
