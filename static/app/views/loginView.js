@@ -10,6 +10,7 @@ define([
 	var loginView = {};
 
 	loginView.exibir = function() {
+		$('body').removeClass('body-app').addClass('body-login');
 		template.exibir(loginTemplate);
 		$('#conteudo').off().on('click', 'button[data-js="autenticar"]', autenticar);
 
