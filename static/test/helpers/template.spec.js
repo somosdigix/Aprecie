@@ -7,29 +7,27 @@ define([
 	describe('Visualizador de template', function() {
 
 		beforeEach(function() {
-			$('body').append('<div id="conteudo">aaa</div>');
+			$('body')
+				.append('<div id="conteudo"><span>Conteúdo qualquer</span></div>')
+				.append('<div id="outroConteudo"><span>Conteúdo qualquer 2</span></div>');
 		});
 
 		afterEach(function() {
-			$('#conteudo').remove();
+			$('#conteudo, #outroConteudo').remove();
 		});
 
 		it('deve limpar', function() {
-			// act
-			template.inserir('');
+			template.exibir('');
 
-			// assert
 			var conteudo = $('#conteudo').html();
 			expect(conteudo).toBe('');
 		});
 
 		it('deve construir', function() {
-			var novoConteudo = 'a';
+			var novoConteudo = '<div>Novo conteúdo</div>';
 
-			// act
-			template.inserir(novoConteudo);
+			template.exibir(novoConteudo);
 
-			// assert
 			var conteudo = $('#conteudo').html();
 			expect(conteudo).toBe(novoConteudo);
 		});
@@ -42,7 +40,7 @@ define([
 				sobrenome: 'Siravegna'
 			};
 
-			template.inserir(novoConteudo, modelo);
+			template.exibir(novoConteudo, modelo);
 
 			var conteudoDoNome = $('span.nome').html();
 			var conteudoDoSobrenome = $('span.sobrenome').html();
@@ -58,10 +56,19 @@ define([
 				nome: 'Renan'
 			}];
 
-			template.inserir(novoConteudo, pessoas);
+			template.exibir(novoConteudo, pessoas);
 
 			var quantidadeDePessoas = $('div.pessoa').length;
 			expect(quantidadeDePessoas).toBe(2);
+		});
+
+		it('deve exibir em um container específico', function() {
+			var novoConteudo = '<span>Teste</span>';
+
+			template.exibirEm('#outroConteudo', novoConteudo);
+
+			var conteudoDoContainer = $('#outroConteudo').html();
+			expect(conteudoDoContainer).toBe(novoConteudo);
 		});
 	});
 });

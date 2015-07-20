@@ -1,18 +1,18 @@
 define([
 	'jquery',
-	'handlebars',
+	'template',
 	'text!partials/toolbarTemplate.html',
 	'sessaoDeUsuario',
 	'jquery-ui'
-], function($, Handlebars, toolbarTemplate, sessaoDeUsuario) {
+], function($, template, toolbarTemplate, sessaoDeUsuario) {
 	'use strict';
 
 	var toolbarView = {};
 
 	toolbarView.exibir = function(callback) {
-		var template = Handlebars.compile(toolbarTemplate);
-
 		$.getJSON('/login/obter_funcionarios', function(data) {
+			template.exibirEm('section[data-js="toolbar"]', toolbarTemplate, sessaoDeUsuario);
+
 			var configuracoesDoAutocomplete = {
 				source: converterParaAutocomplete(data.colaboradores),
 				minLength: 1,
@@ -21,7 +21,6 @@ define([
 
 			$('section[data-js="toolbar"]')
 				.show()
-				.html(template(sessaoDeUsuario))
 				.on('click', 'div[data-js="pagina-inicial"]', paginaInicial)
 				.on('click', 'div[data-js="meu-perfil"]', meuPerfil)
 				.on('click', 'div[data-js="sair"]', sair);
