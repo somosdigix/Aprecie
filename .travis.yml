@@ -29,6 +29,7 @@ deploy:
       secure: GlQjglu4A9C57TGvbuSGqNqr8yN/aXENN2yvcCvxlMxoWd4beNLHAl977xpBh7a59z3OFNwXio5sxkXkgq8H/tUSQAS7h5kbAjEZNIxtm63HwWVpUBYZaL4LGXa+ZK/EqOhDI3pZcLd1FiwpRotidX8VpNqEsYEwTNQxHdp0M1yBP8qlYODThiwHcN8Lxs65ZLPeNqtAwp6CFzDAuF/5t3UtTg+rtpdZ7lpCZOzBJ7DJhtfKLkfWPOd+TrQXVpeEsg81I4C+lpjkh32j88UJUXEqqDEhOMAgOjmiEmczSfDb/doElWEdgO7Io5FBk3y+/wjNld5/R6r6cWyk0sqtBKdkqIIKgymvHuFKgZwbFX26hLeBuNrl54HX8TyoU0lmI7lU0KjViSBAylAKMT5J3c+8sGU2dzAeqxUeqbGLYK2WD8qZwFKalTRKIJD59BHamS+cAA9qo+ls+W+6FTu3hSOlYd8LUuHm8mwaNgi+bZZad1SGwwL9Ohka05ZwJZRHHzaHUnRpNDMRBpTJAsYsEAWnLZ38YhlifD+3sbMint446my+0gkK6vu29eDmHkSQVNCI6vfYrBM5g2W7Y6FyxR0YxCX/P5icoy2uo+NSaswlHo2NObnkmAyQjrjmh+8OCkLo7o/7l8MbL+04kN0nQrmcxqzwg4ug9kfQu8t5TdI=
     app: aprecie
     domain: cafecombytes
+    deployment_branch: master
     on:
       repo: DigithoBrasil/Aprecie
       branch: release
