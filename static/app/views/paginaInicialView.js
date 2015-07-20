@@ -1,18 +1,17 @@
 define([
 	'jquery',
-	'handlebars',
+	'template',
 	'text!partials/paginaInicialTemplate.html'
-], function($, Handlebars, paginaInicialTemplate) {
+], function($, template, paginaInicialTemplate) {
+	'use strict';
+	
 	var paginaInicialView = {};
 
 	paginaInicialView.exibir = function() {
-		var template = Handlebars.compile(paginaInicialTemplate);
-
 		$.get('/reconhecimentos/ultimos/', function(ultimosReconhecimentos) {
-			$('#conteudo')
-				.empty()
-				.html(template(ultimosReconhecimentos))
-				.on('click', 'strong[data-js="ir-ao-perfil"]', irAoPerfil);
+			template.exibir(paginaInicialTemplate, ultimosReconhecimentos);
+
+			$('#conteudo').off().on('click', 'strong[data-js="ir-ao-perfil"]', irAoPerfil);
 		});
 	};
 

@@ -1,8 +1,8 @@
 define([
 	'jquery',
-	'handlebars',
+	'template',
 	'text!partials/reconhecimentosPorReconhecedorTemplate.html'
-], function($, Handlebars, reconhecimentosPorReconhecedorTemplate) {
+], function($, template, reconhecimentosPorReconhecedorTemplate) {
 	'use strict';
 
 	var reconhecimentosPorReconhecedorView = {};
@@ -12,12 +12,10 @@ define([
 			id_do_reconhecido: colaboradorId
 		};
 
-		var template = Handlebars.compile(reconhecimentosPorReconhecedorTemplate);
-
 		$.getJSON('/reconhecimentos/por_reconhecedor/', data, function(reconhecimentosPorReconhecedor) {
 			reconhecimentosPorReconhecedor.map(function(reconhecimento) {
-				var secaoDoValor = $('section[data-valor-id="' + reconhecimento.id_do_valor + '"]');
-				secaoDoValor.append(template(reconhecimento));
+				var secaoDoValor = 'section[data-valor-id="' + reconhecimento.id_do_valor + '"]';
+				template.acrescentarEm(secaoDoValor, reconhecimentosPorReconhecedorTemplate, reconhecimento);
 			});
 		});
 	};

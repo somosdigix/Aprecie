@@ -70,5 +70,16 @@ define([
 			var conteudoDoContainer = $('#outroConteudo').html();
 			expect(conteudoDoContainer).toBe(novoConteudo);
 		});
+
+		it('deve acrescentar um conteudo em um container específico', function() {
+			var conteudo = '<span>Teste</span>';
+			var conteudoEsperado = conteudo + conteudo;
+			template.exibirEm('#outroConteudo', conteudo);
+
+			template.acrescentarEm('#outroConteudo', conteudo);
+
+			var conteudoDoContainer = $('#outroConteudo').html();
+			expect(conteudoDoContainer).toBe(conteudoEsperado);
+		});
 	});
 });
