@@ -48,8 +48,11 @@ def reconhecimentos_por_reconhecedor(requisicao):
 	reconhecimentos = []
 
 	for item in reconhecedores:
+		colaborador = Funcionario.objects.get(id=item['reconhecedor'])
+
 		reconhecimentos.append({
-			'nome_do_reconhecedor': Funcionario.objects.get(id=item['reconhecedor']).nome_compacto,
+			'foto_do_reconhecedor': colaborador.foto,
+			'nome_do_reconhecedor': colaborador.nome_compacto,
 			'id_do_valor': item['valor'],
 			'quantidade_de_reconhecimentos': item['quantidade_de_reconhecimentos']
 		})
