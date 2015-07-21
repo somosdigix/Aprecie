@@ -7,11 +7,9 @@
 body
 	font-family: $font-padrao
 
-
 input
 	outline-color: #97460b
 	border: none
-
 
 img
 	max-width: 100%
@@ -38,7 +36,6 @@ p
 	margin: 17% auto 0
 	max-width: 300px
 	padding: 18px
-	
 	
 	.logo
 		display: block
@@ -132,7 +129,6 @@ p
 		width: 31%
 		+displayInlineBlock
 
-
 		.meuPerfil
 			display: inline-block
 			cursor: pointer
@@ -142,7 +138,6 @@ p
 			img
 				+displayInlineBlock
 				+avatarPequeno
-				
 		
 			span
 				margin: 0.8em 0.3em
@@ -225,27 +220,59 @@ p
 	+avatarGrande
 	margin: 0 2em 0 0
 
-
 .informacoes-colaborador
 	+displayInlineBlock
 
 	.nome-colaborador
 		display: block
+		font-size: 3em
 
 	#iconeValoresRecebido
 		+displayInlineBlock
 		margin: 1.2em 0
 		
-
 #valoresRecebidosComComentarios
-	display:block
+	display: block
 	margin: 3em 0
 
+	section
+		margin-top: 20px
 
+		.icone-valor
+			width: 80px
 
+		.foto
+			+avatarPequeno
+			position: relative
 
+		.valor
+			display: inline-block
+			height: 50px
+			width: 90%
+			vertical-align: top
+			padding-top: 10px
+			font-size: 2em
 
+		.reconhecedores
+			margin: 10px 0 0 20px
+			text-align: center
+			width: 70px
+			display: inline-block
 
+			span
+				display: inline-block
+				vertical-align: bottom
+				position: absolute
+				background-color: $cor-rosa-claro
+				font-size: 1.5em
+				font-weight: bold
+				color: black
 
-
-
+		.adicionar
+			font-size: 1.5em
+			float: right
+			display: inline
+			background-color: $cor-rosa-claro
+			width: 50px
+			height: 50px
+			text-align: center

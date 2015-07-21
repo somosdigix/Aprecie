@@ -46,6 +46,7 @@ require([
 
 	configuracoes.configurarErros();
 	configuracoes.configurarErrosDeRequisicao();
+	configuracoes.registrarHelpersGlobaisDoHandlebars();
 
 	if (servicoDeAutenticacao.jaEstaAutenticado()) {
 		servicoDeAutenticacao.atualizarSessaoDeUsuario();

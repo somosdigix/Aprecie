@@ -9,11 +9,7 @@
 	
 	<nav>
 		<div class="meuPerfil" data-js="meu-perfil">
-			{{#if this.foto}}
-			<img data-js="foto-miniatura" src="{{this.foto}}" class="foto avatar-pequeno" />
-			{{else}}
-			<img data-js="foto-miniatura" src="static/img/sem-foto.png" class="foto avatar-pequeno" />
-			{{/if}}
+			<img data-js="foto-miniatura" src="{{foto this.foto}}" />
 			<span>{{this.nome}}  | </span>
 		</div>
 

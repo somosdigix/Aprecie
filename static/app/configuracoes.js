@@ -1,4 +1,8 @@
-define(function() {
+define([
+	'handlebars'
+], function(Handlebars) {
+	'use strict';
+	
 	var configuracoes = {};
 
 	configuracoes.configurarErros = function() {
@@ -22,6 +26,12 @@ define(function() {
 				throw new Error(erro.mensagem);
 
 			throw new ViolacaoDeRegra(erro.mensagem);
+		});
+	};
+
+	configuracoes.registrarHelpersGlobaisDoHandlebars = function() {
+		Handlebars.registerHelper('foto', function(base64) {
+			return base64 ? base64 : 'static/img/sem-foto.png';
 		});
 	};
 
