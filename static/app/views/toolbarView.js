@@ -11,7 +11,7 @@ define([
 
 	toolbarView.exibir = function(callback) {
 		$.getJSON('/login/obter_funcionarios', function(data) {
-			template.exibirEm('section[data-js="toolbar"]', toolbarTemplate, sessaoDeUsuario);
+			template.exibirEm('header[data-js="toolbar"]', toolbarTemplate, sessaoDeUsuario);
 
 			var configuracoesDoAutocomplete = {
 				source: converterParaAutocomplete(data.colaboradores),
@@ -19,7 +19,7 @@ define([
 				select: selecionar
 			};
 
-			$('section[data-js="toolbar"]')
+			$('header[data-js="toolbar"]')
 				.show()
 				.on('click', 'div[data-js="pagina-inicial"]', paginaInicial)
 				.on('click', 'div[data-js="meu-perfil"]', meuPerfil)
@@ -32,7 +32,7 @@ define([
 	};
 
 	toolbarView.esconder = function() {
-		$('section[data-js="toolbar"]').hide(toolbarTemplate).empty();
+		$('header[data-js="toolbar"]').hide(toolbarTemplate).empty();
 	};
 
 	function converterParaAutocomplete(colaboradores) {
