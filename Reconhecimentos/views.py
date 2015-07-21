@@ -25,6 +25,7 @@ def ultimos_reconhecimentos(requisicao):
 	reconhecimentos_mapeados = list(map(lambda reconhecimento: {
 		'id_do_reconhecido': reconhecimento.reconhecido.id,
 		'nome_do_reconhecido': reconhecimento.reconhecido.nome,
+		'foto_do_reconhecido': reconhecimento.reconhecido.foto,
 		'valor': reconhecimento.valor.nome,
 		'justificativa': reconhecimento.justificativa,
 		'data': reconhecimento.data.strftime('%d/%m/%Y - %H:%M')
