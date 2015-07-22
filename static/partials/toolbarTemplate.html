@@ -6,13 +6,8 @@
 		<input type="text" id="colaborador" placeholder="Busque um colaborador" />
 	</div>	
 	
-
-	<input type="checkbox" id="control-nav" />
-	<label for="control-nav" class="control-nav"></label>
-	<label for="control-nav" class="control-nav-close"></label>
-
-
 	<nav id="linksToolbar">
+		<a href="#nav"></a>
 		<div class="meuPerfil" data-js="meu-perfil">
 			<img data-js="foto-miniatura" src="{{foto this.foto}}" />
 			<span>{{this.nome}}  | </span>
@@ -23,3 +18,12 @@
 		</div>	
 	</nav>
 </div>	
+
+
+<script>
+	$( function()
+	{
+		$( '#nav li:has(ul)' );
+
+	});
+</script>
