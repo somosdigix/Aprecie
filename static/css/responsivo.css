@@ -34,7 +34,7 @@
 	}	
 	
 	#linksToolbar{
-		 width: 14%;
+		 width: 14% !important;
 	}
 
 	.menu-responsivo{
@@ -43,8 +43,12 @@
         width: 42px;
         height: 42px;  
     }
-    #linksToolbar .menus:hover .item {
+    #linksToolbar .menus.aberto .item {
         display: block;
+        position: absolute;
+        width: 80%;
+		left: 20%;
+		top: 0;
     }
     
     #linksToolbar .item {
@@ -56,17 +60,4 @@
         display:block !important;
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
 }
-

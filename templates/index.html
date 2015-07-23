@@ -1,10 +1,9 @@
 {% load staticfiles %}
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 	<meta charset="utf-8" />
-	<title>Aprecie</title>
+	<title>Aprecie.me</title>
 
 	<meta name="viewport" content="width=device-width,  height=device-height, initial-scale=1, maximum-scale=1, user-scalable=no">
 	
@@ -20,10 +19,8 @@
 
 <body class="body-login">
 	<header data-js="toolbar" class="toolbar invisivel"></header>	
-	<main id="conteudo"></main>	
-	<div data-js="growl" class="growl fixo alinhado-ao-topo fundo-verde branco invisivel">
-		<span></span>
-	</div>
+	<main id="conteudo"></main>		
+	<div data-js="growl" class="growl fixo alinhado-ao-topo fundo-verde branco invisivel"></div>
     <script data-main="{% static "app/app.js" %}" src="{% static "app/lib/requirejs/require.js" %}"></script>
 </body>
 </html>

@@ -2,6 +2,7 @@
 	<div class="logoInterna" data-js="pagina-inicial">
 		<img src="static/img/simbolo-logo.png" alt="Aprecie.me" />
 	</div>
+	
 	<div class="busca">
 		<input type="text" id="colaborador" placeholder="Busque um colaborador" />
 	</div>	
@@ -12,7 +13,7 @@
 
 			<div class="item">			
 				<div class="meuPerfil itens" data-js="meu-perfil">
-					<img data-js="foto-miniatura" src="{{foto this.foto}}" />
+					<img data-js="http://placehold.it/42x42" src="{{foto this.foto}}" />
 					<span>{{this.nome}}  | </span>
 				</div>
 
@@ -23,3 +24,9 @@
 		</div>	
 	</nav>
 </div>	
+
+<script>
+	$('.menus .menu-responsivo').on('click', function(){
+		$('.menus').toggleClass('aberto');
+	});
+</script>
