@@ -1,5 +1,4 @@
 from django.db import models
-from Reconhecimentos.models import Reconhecimento
 
 class Funcionario(models.Model):
 	nome = models.CharField(max_length='200')
@@ -25,10 +24,10 @@ class Funcionario(models.Model):
 		if not justificativa.strip():
 			raise Exception('A sua justificativa deve ser informada')
 
-		Reconhecimento.objects.create(reconhecedor=reconhecedor, reconhecido=self, valor=valor, justificativa=justificativa)
+		self.reconhecido.create(reconhecedor=reconhecedor, valor=valor, justificativa=justificativa)
 
 	def reconhecimentos(self):
-		return Reconhecimento.objects.filter(reconhecido=self)
+		return self.reconhecido.all()
 
 	def reconhecimentos_por_valor(self, valor):
-		return self.reconhecimentos().filter(valor=valor)
+		return self.reconhecido.filter(valor=valor)
