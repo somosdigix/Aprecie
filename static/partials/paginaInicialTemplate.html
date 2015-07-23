@@ -1,23 +1,27 @@
 <div class="conteudo">
+
 	<h2>Últimos reconhecimentos</h2>
 
 	{{#.}}
-	<article id="feedReconhecimentos">
-		<header class="dados-colaborador">
-			<img class="foto-reconhecido" src="{{foto this.foto_do_reconhecido}}" alt="" width="42" />		
-			<img class="foto-apreciador" src="http://placehold.it/250/ff37ce/fff" >	
-			<div class="informacoes">
-				<strong class="apreciador">Bárbara de Oliveira</strong>
-				<p>apreciou</p>
-				<strong data-id="{{this.id_do_reconhecido}}" data-js="ir-ao-perfil" class="nome">{{this.nome_do_reconhecido}}</strong>
-				<div class="valor">em <span>{{this.valor}}</span></div>
-				<div class="data">{{this.data}}</div>
+
+	<section id="feedReconhecimentos">	
+		<span class="fotos">
+			<img class="img-apreciador" src="http://placehold.it/250/ff37ce/fff" >
+			<img class="img-reconhecido" src="{{foto this.foto_do_reconhecido}}" alt="" width="42"/>
+		</span>		
+
+		<div class="informacoes">			
+			<div class="texto">
+				<div class="apreciador">Bárbara de Oliveira </div> apreciou
+				<strong data-id="{{this.id_do_reconhecido}}" data-js="ir-ao-perfil" class="nome">{{this.nome_do_reconhecido}}</strong> em <div class="valor">{{this.valor}}</div>
 			</div>	
-		</header>		
+			<div class="data">{{this.data}}</div>
+		</div>	
+			
 		<p>
 			{{this.justificativa}}
 		</p>
-	</article>
+	</section>
 	{{else}}
 	<article>
 		<p>

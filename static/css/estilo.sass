@@ -143,7 +143,7 @@ main
 .conteudo
 	+box-sizing
 	width: 100%
-	max-width: 960px
+	max-width: 800px
 	margin: 0 auto
 	padding: 10px
 
@@ -153,24 +153,34 @@ main
 	background-color: #fafadd
 	padding: 1.2em
 
-	.dados-colaborador
-
-		.foto-reconhecido
-			width: 75px
-			height: 75px
-			+border-radius(143px)
-			+displayInlineBlock
+	.fotos
+		width: 14%
+		+displayInlineBlock
 		
-
-		.foto-apreciador
+		.img-apreciador
 			+avatarPequeno
-			+displayInlineBlock
+			z-index: 99999
+			position:absolute
+			margin-top: 37px
 
+		.img-reconhecido
+			+avatarMedio	
 
-
-		.informacoes
-			+displayInlineBlock
-			width: 87%
+	.informacoes
+		+displayInlineBlock
+		width: 84%
+		margin-top: 1.2rem
+		
+		.texto
+			display: inline-block
+			vertical-align: middle
+			font-size: 0.8rem
+			word-spacing: 0.3rem
+	
+			.apreciador
+				+displayInlineBlock
+				font-size: 1rem
+				color: #A57400
 
 			strong
 				cursor: pointer
@@ -178,14 +188,20 @@ main
 
 			.nome
 				cursor: pointer
+				color: #916806
+				font-size: 1rem
 
 			.valor
 				display: inline-block
-				font-size: 0.9rem
+				font-size: 1rem
+				color: #916806
+				font-weight: bold
 
-			.data
-				font-family: $font-secundaria
-				font-size: 0.7rem
+		.data
+			font-size: 0.7rem
+			color: #9197a3
+			font-family: helvetica, arial, sans-serif;
+			margin-top: 0.5em
 
 	p
 		margin-top: 0.6em
