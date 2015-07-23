@@ -9,6 +9,7 @@ var configuracoes = {
 		'jquery-ui': 'app/lib/jquery-ui/jquery-ui',
 		'jquery.inputmask': 'app/lib/jquery.inputmask/dist/jquery.inputmask.bundle',
 		'handlebars': 'app/lib/handlebars/handlebars.amd',
+		'director': 'app/lib/director/build/director',
 		'configuracoes': 'app/configuracoes',
 		'template': 'app/helpers/template',
 		'cookie': 'app/helpers/cookie',
@@ -25,10 +26,14 @@ var configuracoes = {
 			deps: ['jquery'],
 			exports: '$'
 		},
-		
-		'jquery.inputmask':  {
+
+		'jquery.inputmask': {
 			deps: ['jquery'],
 			exports: '$'
+		},
+
+		'director': {
+			exports: 'Router'
 		}
 	}
 };
@@ -36,14 +41,16 @@ var configuracoes = {
 require.config(configuracoes);
 
 require([
+	'app/rotas',
 	'configuracoes',
 	'app/servicos/servicoDeAutenticacao',
 	'app/views/loginView',
 	'app/views/toolbarView',
 	'app/views/paginaInicialView'
-], function(configuracoes, servicoDeAutenticacao, loginView, toolbarView, paginaInicialView) {
+], function(rotas, configuracoes, servicoDeAutenticacao, loginView, toolbarView, paginaInicialView) {
 	'use strict';
 
+	rotas.configurar();
 	configuracoes.configurarErros();
 	configuracoes.configurarErrosDeRequisicao();
 	configuracoes.registrarHelpersGlobaisDoHandlebars();
@@ -54,6 +61,6 @@ require([
 
 		return;
 	}
-	
+
 	loginView.exibir();
 });
