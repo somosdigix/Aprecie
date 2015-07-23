@@ -8,7 +8,11 @@ class Funcionario(models.Model):
 
 	@property
 	def nome_compacto(self):
-		nomes = self.nome.split(' ')
+		return Funcionario.obter_nome_compacto(self.nome)
+
+	@staticmethod
+	def obter_nome_compacto(nome):
+		nomes = nome.split(' ')
 		return "{0} {1}".format(nomes[0], nomes[-1])
 
 	def alterar_foto(self, nova_foto_em_base64):

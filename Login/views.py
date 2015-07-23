@@ -12,7 +12,7 @@ def entrar(requisicao):
 	return JsonResponse({
 		'id_do_colaborador': colaborador_autenticado.id,
 		'nome_do_colaborador': colaborador_autenticado.nome_compacto,
-		'foto_do_colaborador': colaborador_autenticado.foto
+		'foto_do_colaborador': None,
 	})
 
 def alterar_foto(requisicao):
