@@ -1,4 +1,4 @@
-@media (max-width: 480px){
+@media all and (max-width: 480px){
 	body {
 		font-family: 'Raleway', sans-serif;
 	}
@@ -32,9 +32,41 @@
 		margin: 0 2em 0 0;
 
 	}	
-
-	.meuPerfil 
-
 	
+	#linksToolbar{
+		 width: 14%;
+	}
+
+	.menu-responsivo{
+        display: block !important;  
+        background: url(../img/icon-menu.png);
+        width: 42px;
+        height: 42px;  
+    }
+    #linksToolbar .menus:hover .item {
+        display: block;
+    }
+    
+    #linksToolbar .item {
+        display: none;
+        background-color: #dc0028;
+    }
+        
+    #linksToolbar .item .itens{
+        display:block !important;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
 

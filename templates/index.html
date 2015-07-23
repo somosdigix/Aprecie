@@ -9,8 +9,8 @@
 	<meta name="viewport" content="width=device-width,  height=device-height, initial-scale=1, maximum-scale=1, user-scalable=no">
 	
 	<link rel="shortcut icon" href="{% static "favicon.ico" %}">
-	<link rel="stylesheet" href="{% static "css/responsivo.css" %}">
-	<link type="text/css" rel="stylesheet" href="{% static "css/estilo.css" %}" />	
+	<link rel="stylesheet" href="{% static "css/responsivo.css" %}?v=1">
+	<link type="text/css" rel="stylesheet" href="{% static "css/estilo.css" %}?v=1" />	
 	<link rel="stylesheet" href="{% static "css/ionicons.css" %}" />
 	<link rel="stylesheet" href="{% static "app/lib/jquery-ui/themes/ui-lightness/jquery-ui.min.css" %}" />
 	<link rel="stylesheet" href="{% static "app/lib/jquery-ui/themes/ui-lightness/theme.css" %}" />
@@ -19,14 +19,11 @@
 </head>
 
 <body class="body-login">
-	<header data-js="toolbar" class="toolbar invisivel"></header>
-	
-	<main id="conteudo"></main>
-	
+	<header data-js="toolbar" class="toolbar invisivel"></header>	
+	<main id="conteudo"></main>	
 	<div data-js="growl" class="growl fixo alinhado-ao-topo fundo-verde branco invisivel">
 		<span></span>
 	</div>
-
     <script data-main="{% static "app/app.js" %}" src="{% static "app/lib/requirejs/require.js" %}"></script>
 </body>
 </html>

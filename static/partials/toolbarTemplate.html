@@ -7,23 +7,19 @@
 	</div>	
 	
 	<nav id="linksToolbar">
-		<a href="#nav"></a>
-		<div class="meuPerfil" data-js="meu-perfil">
-			<img data-js="foto-miniatura" src="{{foto this.foto}}" />
-			<span>{{this.nome}}  | </span>
-		</div>
+		<div class="menus">
+			<div class="menu-responsivo"></div>
 
-		<div class="sair" data-js="sair">
-			<span>Sair</span>
+			<div class="item">			
+				<div class="meuPerfil itens" data-js="meu-perfil">
+					<img data-js="foto-miniatura" src="{{foto this.foto}}" />
+					<span>{{this.nome}}  | </span>
+				</div>
+
+				<div class="sair itens" data-js="sair">
+					<span>Sair</span>
+				</div>	
+			</div>
 		</div>	
 	</nav>
 </div>	
-
-
-<script>
-	$( function()
-	{
-		$( '#nav li:has(ul)' );
-
-	});
-</script>
