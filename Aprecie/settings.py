@@ -80,7 +80,7 @@ ON_OPENSHIFT = "OPENSHIFT_APP_NAME" in os.environ
 URL_DO_AMBIENTE = "aprecie.me"
 
 COMPRESS_PRECOMPILERS = (
-    ('text/x-scss', 'django_libsass.SassCompiler'),
+    ('text/x-scss', 'sass --scss {infile} {outfile}'),
 )
 
 COMPRESS_ROOT = os.path.join(BASE_DIR, "static")
