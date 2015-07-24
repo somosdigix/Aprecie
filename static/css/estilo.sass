@@ -14,13 +14,13 @@ p
 	font-size: 1rem
 
 .body-login
-	background-color: $amarelo-secundario
+	background-color: $amarelo-terciario
 
 .body-app
-	background-color: white
+	background-color: $amarelo-terciario
 
 .login
-	margin: 17% auto 0
+	margin: 0 auto
 	max-width: 300px
 	padding: 18px
 	
@@ -62,7 +62,7 @@ p
 		
 
 .toolbar
-	background-color: $amarelo-primario
+	background-color: $amarelo-secundario
 	padding: 8px 0
 	margin-bottom: 2em
 	position:fixed
@@ -83,13 +83,15 @@ p
 		display: inline-block
 		vertical-align: top
 		margin: 0 2em 0 0
-	
+		border: 1px solid #F4A400
+
 		input
 			background-color: rgba(255, 230, 171, 0.8)
 			width: 100%
-			color: white
+			color: rgb(173, 121, 13)
 			font-size: 1.2rem
 			padding: 0.5em
+			+box-sizing
 	
 		#colaborador::-webkit-input-placeholder
 			+placeholderInputColaborador
@@ -161,7 +163,7 @@ main
 			+avatarPequeno
 			z-index: 99999
 			position:absolute
-			margin-top: 37px
+			margin: 2rem
 
 		.img-reconhecido
 			+avatarMedio	
@@ -169,7 +171,7 @@ main
 	.informacoes
 		+displayInlineBlock
 		width: 84%
-		margin-top: 1.2rem
+		margin-top: 1rem
 		
 		.texto
 			display: inline-block
@@ -200,17 +202,41 @@ main
 		.data
 			font-size: 0.7rem
 			color: #9197a3
-			font-family: helvetica, arial, sans-serif;
+			font-family: $font-secundaria
 			margin-top: 0.5em
 
 	p
 		margin-top: 0.6em
 		font-size: 0.9rem
 
-.foto-colaborador
-	+displayInlineBlock
-	+avatarGrande
-	margin: 0 2em 0 0
+
+#perfilColaborador
+
+	.alterarFoto
+		position:absolute
+		margin: 7em 6em
+		width:2%	
+
+		.ion-camera
+			font-size: 1.3rem
+			color: #fff  
+			
+		.editar input
+			display: none
+
+		.editar:focus input
+			display: block
+
+
+
+
+
+
+
+	.foto-colaborador
+		+displayInlineBlock
+		+avatarGrande
+		margin: 0 2em 0 0
 
 .informacoes-colaborador
 	+displayInlineBlock
@@ -222,6 +248,8 @@ main
 	#iconeValoresRecebido
 		+displayInlineBlock
 		margin: 1.2em 0
+
+
 		
 #valoresRecebidosComComentarios
 	display: block

@@ -26,11 +26,10 @@
 	}
 
 	.busca{
-		width: 95% !important ;
+		width: 84% !important ;
 		display: inline-block;
 		vertical-align: top;
-		margin: 0 2em 0 0;
-		position: relative;
+		margin: 0 !important;
 
 	}	
 	
@@ -38,8 +37,6 @@
 		width: 13% !important;
 		top: 17px;
 		right: 8px;
-		z-index: 9999;
-		position: absolute;
 	}
 
 	.menu-responsivo{
@@ -51,19 +48,47 @@
     #linksToolbar .menus.aberto .item {
         display: block;
         position: absolute;
-        width: 80%;
-		left: 20%;
-		top: 0;
+        width: 100%;
+		left: 0;
+		top: 77px;
     }
     
     #linksToolbar .item {
         display: none;
-        background-color: #dc0028;
+        background-color: #E6AE3A;
     }
         
     #linksToolbar .item .itens{
         display:block !important;
     }
+
+
+
+	.foto-colaborador{
+		width: 80px !important;
+  		height: 80px !important;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
 
 @media all and (max-width: 632){
