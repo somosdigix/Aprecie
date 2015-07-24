@@ -53,3 +53,4 @@ node_modules/
 !static/app/**/*ambienteDoValorometro/
 ambienteDoValorometro/
 static/css/estilo.css
+static/CACHE/
