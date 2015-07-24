@@ -101,4 +101,8 @@ if ON_OPENSHIFT:
 
     STATIC_ROOT = os.path.join(os.environ['OPENSHIFT_REPO_DIR'], 'wsgi', 'static')
 
-STATICFILES_FINDERS = ('compressor.finders.CompressorFinder', )
+STATICFILES_FINDERS = (
+    "django.contrib.staticfiles.finders.FileSystemFinder",
+    "django.contrib.staticfiles.finders.AppDirectoriesFinder",
+    'compressor.finders.CompressorFinder', 
+)
