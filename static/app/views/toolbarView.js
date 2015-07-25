@@ -23,6 +23,7 @@ define([
 				.show()
 				.on('click', 'div[data-js="pagina-inicial"]', paginaInicial)
 				.on('click', 'div[data-js="meu-perfil"]', meuPerfil)
+				.on('click', 'div[data-js="tratar-menu-mobile"]', tratarMenuMobile)
 				.on('click', 'div[data-js="sair"]', sair);
 			$('#colaborador').off().autocomplete(configuracoesDoAutocomplete);
 
@@ -66,14 +67,18 @@ define([
 		});
 	}
 
+	function tratarMenuMobile() {
+		$('div[data-js="menu-mobile"]').toggleClass('aberto');
+	}
+
 	function sair() {
 		require([
 			'cookie',
-			'app/views/loginView'
-		], function(cookie, loginView) {
+			'roteador'
+		], function(cookie, roteador) {
 			cookie.limpar();
 			toolbarView.esconder();
-			loginView.exibir();
+			roteador.navegarPara('/login');
 		});
 	}
 

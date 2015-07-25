@@ -30,9 +30,9 @@ $font-secundaria: "Open Sans", sans-serif;
 }
 
 @mixin displayInlineBlock {
-  display:inline-block {}
+  display: inline-block;
 
-  vertical-align:top {}
+  vertical-align: top;
 }
 
 @mixin box-sizing {

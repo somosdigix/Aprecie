@@ -54,3 +54,4 @@ node_modules/
 ambienteDoValorometro/
 static/css/estilo.css
 static/CACHE/
+.sass-cache/
