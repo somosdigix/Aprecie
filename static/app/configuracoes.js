@@ -1,6 +1,7 @@
 define([
+	'jquery',
 	'handlebars'
-], function(Handlebars) {
+], function($, Handlebars) {
 	'use strict';
 	
 	var configuracoes = {};

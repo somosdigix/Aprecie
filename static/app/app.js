@@ -45,12 +45,8 @@ require.config(configuracoes);
 
 require([
 	'roteador',
-	'configuracoes',
-	'app/servicos/servicoDeAutenticacao',
-	'app/views/loginView',
-	'app/views/toolbarView',
-	'app/views/paginaInicialView'
-], function(roteador, configuracoes, servicoDeAutenticacao, loginView, toolbarView, paginaInicialView) {
+	'configuracoes'
+], function(roteador, configuracoes) {
 	'use strict';
 
 	roteador.configurar();
@@ -58,5 +54,6 @@ require([
 	configuracoes.configurarErrosDeRequisicao();
 	configuracoes.registrarHelpersGlobaisDoHandlebars();
 
-	roteador.navegarPara('/login');
+	if (window.location.toString().indexOf('#/') === -1)
+		roteador.navegarPara('/login');
 });

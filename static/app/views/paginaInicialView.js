@@ -9,9 +9,9 @@ define([
 
 	paginaInicialView.exibir = function() {
 		$.get('/reconhecimentos/ultimos/', function(ultimosReconhecimentos) {
-			$('body').removeClass('body-login').addClass('body-app');
 			template.exibir(paginaInicialTemplate, ultimosReconhecimentos);
-
+			
+			$('body').removeClass('body-login').addClass('body-app');
 			$('#conteudo').off().on('click', 'strong[data-js="ir-ao-perfil"]', irAoPerfil);
 		});
 	};
