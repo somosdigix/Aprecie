@@ -8,15 +8,21 @@ define([
 
 	 servicoDeAutenticacao.autenticar = function(colaborador) {
 	 	sessaoDeUsuario.preencherDados(colaborador);
-	 	cookie.criar('colaborador', JSON.stringify(colaborador));
+	 	cookie.criar('id', colaborador.id_do_colaborador);
+	 	cookie.criar('nome', colaborador.nome_do_colaborador);
 	 };
 
 	 servicoDeAutenticacao.jaEstaAutenticado = function() {
-	 	return document.cookie.indexOf('colaborador@aprecie.me') > -1;
+	 	return document.cookie.indexOf('@aprecie.me') > -1;
 	 };
 
 	 servicoDeAutenticacao.atualizarSessaoDeUsuario = function() {
-	 	var colaborador = JSON.parse(cookie.obter('colaborador'));
+	 	if (!sessaoDeUsuario.estaVazia()) return;
+	 	
+	 	var colaborador = {};
+	 	colaborador.id = cookie.obter('id');
+	 	colaborador.nome = cookie.obter('nome');
+
 	 	sessaoDeUsuario.preencherDados(colaborador);
 	 };
 

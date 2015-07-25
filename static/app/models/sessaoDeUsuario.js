@@ -7,5 +7,9 @@ define(function() {
 		sessaoDeUsuario.foto = colaborador.foto_do_colaborador;
 	};
 
+	sessaoDeUsuario.estaVazia = function() {
+		return !sessaoDeUsuario.id && !sessaoDeUsuario.nome;
+	}
+
 	return sessaoDeUsuario;
 });

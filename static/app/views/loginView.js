@@ -29,15 +29,14 @@ define([
 		require([
 			'app/models/loginViewModel',
 			'app/servicos/servicoDeAutenticacao',
-			'app/views/toolbarView',
-			'app/views/paginaInicialView'
-		], function(LoginViewModel, servicoDeAutenticacao, toolbarView, paginaInicialView) {
+			'roteador'
+		], function(LoginViewModel, servicoDeAutenticacao, roteador) {
 			var loginViewModel = new LoginViewModel();
 			validarOperacao(loginViewModel);
 
 			$.post('/login/entrar/', loginViewModel, function(colaborador) {
 				servicoDeAutenticacao.autenticar(colaborador);
-				toolbarView.exibir(paginaInicialView.exibir);
+				roteador.navegarPara('/paginaInicial');
 			});
 		});
 	}

@@ -14,6 +14,9 @@ define(function() {
 			return cookie.chave === chave + prefixo;
 		})[0];
 
+		console.log(cookies);
+		console.log(cookieEncontrado);
+
 		return cookieEncontrado.valor;
 	};
 

@@ -1,6 +1,8 @@
 var configuracoes = {
 	baseUrl: 'static',
 
+	urlArgs: 'antiCache=' + (new Date()).getTime(),
+
 	deps: ['app/excecoes/violacaoDeRegra'],
 
 	paths: {
@@ -10,6 +12,7 @@ var configuracoes = {
 		'jquery.inputmask': 'app/lib/jquery.inputmask/dist/jquery.inputmask.bundle',
 		'handlebars': 'app/lib/handlebars/handlebars.amd',
 		'director': 'app/lib/director/build/director',
+		'roteador': 'app/roteador',
 		'configuracoes': 'app/configuracoes',
 		'template': 'app/helpers/template',
 		'cookie': 'app/helpers/cookie',
@@ -41,26 +44,19 @@ var configuracoes = {
 require.config(configuracoes);
 
 require([
-	'app/rotas',
+	'roteador',
 	'configuracoes',
 	'app/servicos/servicoDeAutenticacao',
 	'app/views/loginView',
 	'app/views/toolbarView',
 	'app/views/paginaInicialView'
-], function(rotas, configuracoes, servicoDeAutenticacao, loginView, toolbarView, paginaInicialView) {
+], function(roteador, configuracoes, servicoDeAutenticacao, loginView, toolbarView, paginaInicialView) {
 	'use strict';
 
-	rotas.configurar();
+	roteador.configurar();
 	configuracoes.configurarErros();
 	configuracoes.configurarErrosDeRequisicao();
 	configuracoes.registrarHelpersGlobaisDoHandlebars();
 
-	if (servicoDeAutenticacao.jaEstaAutenticado()) {
-		servicoDeAutenticacao.atualizarSessaoDeUsuario();
-		toolbarView.exibir(paginaInicialView.exibir);
-
-		return;
-	}
-
-	loginView.exibir();
+	roteador.navegarPara('/paginaInicial');
 });
