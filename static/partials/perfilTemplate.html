@@ -15,7 +15,7 @@
 			<h2 class="nome-colaborador">{{this.nome}}</h2>
 			<div id="iconeValoresRecebido">
 				{{#each this.valores}}
-					<img src="{{ iconeDoValor this }}" width="50" height="50" />
+					<img src="{{iconeDoValor this}}" width="50" height="50" />
 				{{/each}}
 			</div>	
 		</div>	
@@ -24,7 +24,7 @@
 	<div id="valoresRecebidosComComentarios">
 		{{#each this.valores}}
 		<section data-valor-id="{{this.id}}">
-			<img src="{{ iconeDoValor this }}" alt="{{this.nome}}" class="icone-valor" />
+			<img src="{{iconeDoValor this}}" alt="{{this.nome}}" class="icone-valor" />
 			<div class="valor">
 				<span>{{this.nome}}</span>
 				<span>{{this.quantidade_de_reconhecimentos}}</span>

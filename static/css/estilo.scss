@@ -25,6 +25,10 @@ p {
   background-color: $amarelo-terciario;
 }
 
+.invisivel {
+  display: none;
+}
+
 .login {
   margin: 0 auto;
   max-width: 300px;
@@ -353,7 +357,6 @@ p {
     .adicionar {
       font-size: 1.5em;
       float: right;
-      display: inline;
       background-color: $amarelo-secundario;
       width: 50px;
       height: 50px;
