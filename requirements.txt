@@ -2,3 +2,4 @@ Django==1.8.2
 wheel==0.24.0
 factory_boy==2.5.2
 django_compressor==1.5
+pytz==2015.4
