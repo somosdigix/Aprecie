@@ -20,8 +20,8 @@ define([
 		if (!sessaoDeUsuario.estaVazia()) return;
 
 		var colaborador = {};
-		colaborador.id = cookie.obter('id');
-		colaborador.nome = cookie.obter('nome');
+		colaborador.id_do_colaborador = cookie.obter('id');
+		colaborador.nome_do_colaborador = cookie.obter('nome');
 
 		sessaoDeUsuario.preencherDados(colaborador);
 	};
