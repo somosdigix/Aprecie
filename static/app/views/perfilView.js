@@ -23,7 +23,8 @@ define([
 				$('span[data-js="abrirJustificativa"]').show();
 				$('#conteudo').on('click', 'button[data-js="fecharJustificativa"]', fecharJustificativa);
 			} else {
-				$('#conteudo').on('click', 'img[data-js="foto"]', enviarFoto);
+				$('span.ion-camera').show();
+				$('#conteudo').on('click', 'div[data-js="foto"]', enviarFoto);
 				$('input[data-js="alterar-foto"]').off().on('change', alterarFoto);
 			}
 

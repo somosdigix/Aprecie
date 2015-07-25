@@ -267,14 +267,13 @@ p {
 
 #perfilColaborador {
   .alterarFoto {
-    position:absolute {}
-
-    margin: 7em 6em;
-    width: 2%;
+    @include displayInlineBlock;
 
     .ion-camera {
-      font-size: 1.3rem;
+      font-size: 2em;
       color: #fff;
+      position: absolute;
+      vertical-align: bottom;
     }
 
     .editar input {
@@ -288,7 +287,6 @@ p {
 
   .foto-colaborador {
     @include displayInlineBlock;
-
     @include avatarGrande;
 
     margin: 0 2em 0 0;
