@@ -44,7 +44,7 @@ define([
 		var posicaoDaRota = endereco.indexOf('#') + 1;
 
 		return endereco.substring(posicaoDaRota);
-	}
+	};
 
 	function middlewareDeAutenticacao() {
 		if (roteador.paginaAtual() === '/login' && !servicoDeAutenticacao.jaEstaAutenticado())
