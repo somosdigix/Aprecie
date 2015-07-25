@@ -9,7 +9,8 @@ define([
 	roteador.configurar = function() {
 		var rotas = {
 			'/login': [middlewareDeAutenticacao, middlewareDeToolbar, login],
-			'/paginaInicial': [middlewareDeAutenticacao, middlewareDeToolbar, paginaInicial]
+			'/paginaInicial': [middlewareDeAutenticacao, middlewareDeToolbar, paginaInicial],
+			'/perfil/:colaboradorId': [middlewareDeAutenticacao, middlewareDeToolbar, perfil]
 		};
 
 		function login() {
@@ -21,6 +22,12 @@ define([
 		function paginaInicial() {
 			require(['app/views/paginaInicialView'], function(paginaInicialView) {
 				paginaInicialView.exibir();
+			});
+		}
+
+		function perfil(colaboradorId) {
+			require(['app/views/perfilView'], function(perfilView) {
+				perfilView.exibir(colaboradorId);
 			});
 		}
 

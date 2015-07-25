@@ -46,24 +46,25 @@ define([
 	}
 
 	function selecionar(evento, ui) {
-		require(['app/views/perfilView'], function(perfilView) {
+		require(['roteador'], function(roteador) {
 			var colaborador = ui.item;
 			$('#colaborador').val('').blur();
-			perfilView.exibir(colaborador.id);
+
+			roteador.navegarPara('/perfil/' + colaborador.id);
 		});
 
 		evento.preventDefault();
 	}
 
 	function paginaInicial() {
-		require(['app/views/paginaInicialView'], function(paginaInicialView) {
-			paginaInicialView.exibir();
+		require(['roteador'], function(roteador) {
+			roteador.navegarPara('/paginaInicial');
 		});
 	}
 
 	function meuPerfil() {
-		require(['app/views/perfilView'], function(perfilView) {
-			perfilView.exibir(sessaoDeUsuario.id);
+		require(['roteador'], function(roteador) {
+			roteador.navegarPara('/perfil/' + sessaoDeUsuario.id);
 		});
 	}
 
