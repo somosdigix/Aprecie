@@ -57,6 +57,4 @@ require([
 	configuracoes.configurarErros();
 	configuracoes.configurarErrosDeRequisicao();
 	configuracoes.registrarHelpersGlobaisDoHandlebars();
-
-	roteador.navegarPara('/paginaInicial');
 });

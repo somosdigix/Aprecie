@@ -69,11 +69,11 @@ define([
 	function sair() {
 		require([
 			'cookie',
-			'app/views/loginView'
-		], function(cookie, loginView) {
+			'roteador'
+		], function(cookie, roteador) {
 			cookie.limpar();
 			toolbarView.esconder();
-			loginView.exibir();
+			roteador.navegarPara('/login');
 		});
 	}
 

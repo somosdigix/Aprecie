@@ -8,7 +8,7 @@ define([
 
 	roteador.configurar = function() {
 		var rotas = {
-			'/login': login,
+			'/login': [middlewareDeAutenticacao, middlewareDeToolbar, login],
 			'/paginaInicial': [middlewareDeAutenticacao, middlewareDeToolbar, paginaInicial]
 		};
 
@@ -32,7 +32,17 @@ define([
 		window.location = '/#' + endereco;
 	};
 
+	roteador.paginaAtual = function() {
+		var endereco = window.location.toString();
+		var posicaoDaRota = endereco.indexOf('#') + 1;
+
+		return endereco.substring(posicaoDaRota);
+	}
+
 	function middlewareDeAutenticacao() {
+		if (roteador.paginaAtual() === '/login' && !servicoDeAutenticacao.jaEstaAutenticado())
+			return true;
+
 		if (!servicoDeAutenticacao.jaEstaAutenticado()) {
 			roteador.navegarPara('/login');
 			return false;
@@ -43,7 +53,7 @@ define([
 
 	function middlewareDeToolbar() {
 		require(['app/views/toolbarView'], function(toolbarView) {
-			if (servicoDeAutenticacao.jaEstaAutenticado())
+			if (servicoDeAutenticacao.jaEstaAutenticado() && roteador.paginaAtual() !== '/login')
 				toolbarView.exibir();
 			else
 				toolbarView.esconder();
