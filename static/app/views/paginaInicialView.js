@@ -19,8 +19,8 @@ define([
 	function irAoPerfil() {
 		var reconhecidoId = $(this).data('id');
 
-		require(['app/views/perfilView'], function(perfilView) {
-			perfilView.exibir(reconhecidoId);
+		require(['roteador'], function(roteador) {
+			roteador.navegarPara('/perfil/' + reconhecidoId);
 		});
 	}
 

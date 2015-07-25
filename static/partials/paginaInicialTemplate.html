@@ -4,13 +4,14 @@
 	{{#.}}
 	<section id="feedReconhecimentos">	
 		<span class="fotos">
-			<img class="img-apreciador" src="static/img/sem-foto2.png" >
+			<img class="img-apreciador" src="{{foto this.foto_do_reconhecedor}}" alt="" />
 			<img class="img-reconhecido" src="{{foto this.foto_do_reconhecido}}" alt="" width="42"/>
 		</span>		
 
 		<div class="informacoes">			
 			<div class="texto">
-				<div class="apreciador">Bárbara de Oliveira </div> apreciou
+				<strong data-id="{{this.id_do_reconhecedor}}" data-js="ir-ao-perfil" class="apreciador">{{this.nome_do_reconhecedor}}</strong>
+				<span> apreciou </span>
 				<strong data-id="{{this.id_do_reconhecido}}" data-js="ir-ao-perfil" class="nome">{{this.nome_do_reconhecido}}</strong> em <div class="valor">{{this.valor}}</div>
 			</div>	
 			<div class="data">{{this.data}}</div>

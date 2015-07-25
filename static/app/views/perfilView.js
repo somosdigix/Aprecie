@@ -55,15 +55,18 @@ define([
 	function reconhecer() {
 		require([
 			'app/models/reconhecerViewModel',
-			'growl'
-		], function(ReconhecerViewModel, growl) {
+			'growl',
+			'roteador'
+		], function(ReconhecerViewModel, growl, roteador) {
 			var reconhecerViewModel = new ReconhecerViewModel();
 			validarOperacao(reconhecerViewModel);
 
 			$.post('/reconhecimentos/reconhecer/', reconhecerViewModel, function() {
 				fecharJustificativa();
 				growl.deSucesso().exibir('Reconhecimento realizado com sucesso');
-				perfilView.exibir(reconhecerViewModel.id_do_reconhecido);
+
+				// TODO: Descobrir como atualiza a mesma página pelo roteador
+				perfilView.exibir(reconhecerViewModel.id_do_reconhecido)
 			});
 		});
 	}
