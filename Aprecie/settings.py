@@ -23,6 +23,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'Aprecie.middlewares.ProcessadorDeExcecao',
+    'Aprecie.middlewares.TimezoneMiddleware',
 )
 
 ROOT_URLCONF = 'Aprecie.urls'
