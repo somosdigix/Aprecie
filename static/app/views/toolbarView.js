@@ -23,6 +23,7 @@ define([
 				.show()
 				.on('click', 'div[data-js="pagina-inicial"]', paginaInicial)
 				.on('click', 'div[data-js="meu-perfil"]', meuPerfil)
+				.on('click', 'div[data-js="tratar-menu-mobile"]', tratarMenuMobile)
 				.on('click', 'div[data-js="sair"]', sair);
 			$('#colaborador').off().autocomplete(configuracoesDoAutocomplete);
 
@@ -64,6 +65,10 @@ define([
 		require(['app/views/perfilView'], function(perfilView) {
 			perfilView.exibir(sessaoDeUsuario.id);
 		});
+	}
+
+	function tratarMenuMobile() {
+		$('div[data-js="menu-mobile"]').toggleClass('aberto');
 	}
 
 	function sair() {
