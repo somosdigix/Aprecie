@@ -11,11 +11,7 @@ define([
 	var perfilView = {};
 
 	perfilView.exibir = function(colaboradorId) {
-		var data = {
-			id_do_reconhecido: colaboradorId
-		};
-
-		$.getJSON('/reconhecimentos/funcionario/', data, function(reconhecimentosDoColaborador) {
+		$.getJSON('/reconhecimentos/funcionario/' + colaboradorId, {}, function(reconhecimentosDoColaborador) {
 			template.exibir(perfilTemplate, reconhecimentosDoColaborador);
 
 			$('#conteudo').off()

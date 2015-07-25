@@ -69,13 +69,15 @@ class TesteDeApiDeReconhecimento(TestCase):
 		reconhecimento2 = ReconhecimentoFactory(reconhecedor=reconhecedor2, reconhecido=reconhecido)
 		reconhecimento3 = ReconhecimentoFactory(reconhecedor=reconhecedor2, reconhecido=reconhecido)
 
-		resposta = self.client.get(reverse('reconhecimentos_por_reconhecedor'), dict(id_do_reconhecido=reconhecido.id))
+		resposta = self.client.get(reverse('reconhecimentos_por_reconhecedor', args=[reconhecido.id]))
 
-		reconhecedores = json.loads(resposta.content.decode())
+		resultado = json.loads(resposta.content.decode())
+		reconhecedores = resultado.get('reconhecedores')
 		self.assertEqual(2, len(reconhecedores))
-		self.assertEqual(reconhecedor1.nome_compacto, reconhecedores[0]['nome_do_reconhecedor'])
-		self.assertEqual(ValoresDaDigithoBrasil.inquietude.id, reconhecedores[0]['id_do_valor'])
+
+		self.assertEqual(reconhecedor1.nome_compacto, reconhecedores[0]['reconhecedor__nome'])
+		self.assertEqual(ValoresDaDigithoBrasil.inquietude.id, reconhecedores[0]['valor__id'])
 		self.assertEqual(1, reconhecedores[0]['quantidade_de_reconhecimentos'])
-		self.assertEqual(reconhecedor2.nome_compacto, reconhecedores[1]['nome_do_reconhecedor'])
-		self.assertEqual(ValoresDaDigithoBrasil.inquietude.id, reconhecedores[1]['id_do_valor'])
+		self.assertEqual(reconhecedor2.nome_compacto, reconhecedores[1]['reconhecedor__nome'])
+		self.assertEqual(ValoresDaDigithoBrasil.inquietude.id, reconhecedores[1]['valor__id'])
 		self.assertEqual(2, reconhecedores[1]['quantidade_de_reconhecimentos'])

@@ -15,6 +15,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'Login',
     'Reconhecimentos',
+    'compressor',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -78,6 +79,12 @@ ON_OPENSHIFT = "OPENSHIFT_APP_NAME" in os.environ
 
 URL_DO_AMBIENTE = "aprecie.me"
 
+COMPRESS_PRECOMPILERS = (
+    ('text/x-scss', 'sass --scss {infile} {outfile}'),
+)
+
+COMPRESS_ROOT = os.path.join(BASE_DIR, "static")
+
 if ON_OPENSHIFT:
     URL_DO_AMBIENTE = os.environ['OPENSHIFT_APP_DNS']
 
@@ -93,4 +100,11 @@ if ON_OPENSHIFT:
     }
 
     STATIC_ROOT = os.path.join(os.environ['OPENSHIFT_REPO_DIR'], 'wsgi', 'static')
+    COMPRESS_ROOT = STATIC_ROOT
 
+
+STATICFILES_FINDERS = (
+    "django.contrib.staticfiles.finders.FileSystemFinder",
+    "django.contrib.staticfiles.finders.AppDirectoriesFinder",
+    'compressor.finders.CompressorFinder', 
+)

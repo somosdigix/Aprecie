@@ -1,4 +1,4 @@
-@media (max-width: 480px){
+@media all and (max-width: 480px){
 	body {
 		font-family: 'Raleway', sans-serif;
 	}
@@ -26,15 +26,98 @@
 	}
 
 	.busca{
-		width: 76% !important ;
+		width: 84% !important ;
 		display: inline-block;
 		vertical-align: top;
-		margin: 0 2em 0 0;
+		margin: 0 !important;
 
 	}	
-
-	.meuPerfil 
-
 	
+	#linksToolbar{
+		width: 13% !important;
+		top: 17px;
+		right: 8px;
+	}
+
+	.menu-responsivo{
+        display: block !important;  
+        background: url(../img/icon-menu.png);
+        width: 42px;
+        height: 42px;  
+    }
+    #linksToolbar .menus.aberto .item {
+        display: block;
+        position: absolute;
+        width: 100%;
+		left: 0;
+		top: 77px;
+    }
+    
+    #linksToolbar .item {
+        display: none;
+        background-color: #E6AE3A;
+    }
+        
+    #linksToolbar .item .itens{
+        display:block !important;
+    }
+
+
+
+	.foto-colaborador{
+		width: 80px !important;
+  		height: 80px !important;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
 
+@media all and (max-width: 632){
+		
+	#linksToolbar{
+		 width: 14% !important;
+	}
+
+	.menu-responsivo{
+        display: block !important;  
+        background: url(../img/icon-menu.png);
+        width: 42px;
+        height: 42px;  
+    }
+    #linksToolbar .menus.aberto .item {
+        display: block;
+        position: absolute;
+        width: 80%;
+		left: 20%;
+		top: 0;
+    }
+    
+    #linksToolbar .item {
+        display: none;
+        background-color: #dc0028;
+    }
+        
+    #linksToolbar .item .itens{
+        display:block !important;
+    }
+
+}

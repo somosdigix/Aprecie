@@ -33,30 +33,22 @@ def ultimos_reconhecimentos(requisicao):
 
 	return JsonResponse(reconhecimentos_mapeados, safe=False)
 
-def reconhecimentos_do_funcionario(requisicao):
-	reconhecido = Funcionario.objects.get(id=requisicao.GET['id_do_reconhecido'])
+def reconhecimentos_do_funcionario(requisicao, id_do_reconhecido):
+	reconhecido = Funcionario.objects.get(id=id_do_reconhecido)
 	valores = list(map(lambda valor: {
 		'id': valor.id,
-		'nome': valor.nome,
+		'nome': valor.nome,	
 		'quantidade_de_reconhecimentos': len(reconhecido.reconhecimentos_por_valor(valor))
 	}, ValoresDaDigithoBrasil.todos))
 
 	return JsonResponse({ 'id': reconhecido.id, 'nome': reconhecido.nome, 'foto': reconhecido.foto, 'valores': valores }, safe=False)
 
-def reconhecimentos_por_reconhecedor(requisicao):
-	id_do_reconhecido = int(requisicao.GET["id_do_reconhecido"])
-	reconhecedores = Reconhecimento.objects.filter(reconhecido=id_do_reconhecido).values('reconhecedor', 'valor').annotate(quantidade_de_reconhecimentos=Count('reconhecedor'))
-	reconhecimentos = []
+def reconhecimentos_por_reconhecedor(requisicao, id_do_reconhecido):
+	reconhecedores = Reconhecimento.objects.filter(reconhecido=id_do_reconhecido) \
+		.values('reconhecedor__nome', 'reconhecedor', 'reconhecedor__foto', 'valor__id') \
+		.annotate(quantidade_de_reconhecimentos=Count('reconhecedor'))
 
-	for item in reconhecedores:
-		colaborador = Funcionario.objects.get(id=item['reconhecedor'])
+	for reconhecedor in reconhecedores:
+		reconhecedor['reconhecedor__nome'] = Funcionario.obter_nome_compacto(reconhecedor['reconhecedor__nome'])
 
-		reconhecimentos.append({
-			'foto_do_reconhecedor': colaborador.foto,
-			'nome_do_reconhecedor': colaborador.nome_compacto,
-			'id_do_valor': item['valor'],
-			'quantidade_de_reconhecimentos': item['quantidade_de_reconhecimentos']
-		})
-
-	return JsonResponse(reconhecimentos, safe=False)
-
+	return JsonResponse({'reconhecedores': list(reconhecedores)})

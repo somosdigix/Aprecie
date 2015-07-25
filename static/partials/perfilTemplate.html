@@ -1,10 +1,15 @@
 <div class="conteudo">
-	<input data-js="alterar-foto" type="file" class="invisivel" />
 	<input type="hidden" id="reconhecidoId" value="{{this.id}}" />
 	<input type="hidden" id="valorId" />
 
 	<div id="perfilColaborador">
-		<img data-js="foto" class="foto-colaborador" src="{{foto this.foto}}" alt="Foto" title="Clique para alterar" width="100" height="100" />
+		<div class="alterarFoto">
+			<span class="editar ion-camera">
+				<input data-js="alterar-foto" type="file" class="invisivel" />				
+			</span>
+		</div>	
+		
+		<img class="foto-colaborador" data-js="foto" src="{{foto this.foto}}" alt="Foto" title="Clique para alterar" width="100" height="100" />
 
 		<div class="informacoes-colaborador">
 			<h2 class="nome-colaborador">{{this.nome}}</h2>
