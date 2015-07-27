@@ -10,7 +10,8 @@ define([
 		var rotas = {
 			'/login': [middlewareDeAutenticacao, middlewareDeToolbar, login],
 			'/paginaInicial': [middlewareDeAutenticacao, middlewareDeToolbar, paginaInicial],
-			'/perfil/:colaboradorId': [middlewareDeAutenticacao, middlewareDeToolbar, perfil]
+			'/perfil/:colaboradorId': [middlewareDeAutenticacao, middlewareDeToolbar, perfil],
+			'/reconhecimentosPorValor/:valorId': [middlewareDeAutenticacao, middlewareDeToolbar, reconhecimentosPorValor]
 		};
 
 		function login() {
@@ -28,6 +29,12 @@ define([
 		function perfil(colaboradorId) {
 			require(['app/views/perfilView'], function(perfilView) {
 				perfilView.exibir(colaboradorId);
+			});
+		}
+
+		function reconhecimentosPorValor(valorId) {
+			require(['app/views/reconhecimentosPorValorView'], function(reconhecimentosPorValorView) {
+				reconhecimentosPorValorView.exibir(valorId);
 			});
 		}
 

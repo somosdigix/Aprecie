@@ -15,41 +15,24 @@ define([
 			template.exibir(perfilTemplate, reconhecimentosDoColaborador);
 
 			$('#conteudo').off()
-				.on('click', 'button[data-js="reconhecer"]', reconhecer)
-				.on('click', 'button[data-js="fecharJustificativa"]', fecharJustificativa);
+				.on('click', 'button[data-js="reconhecer"]', reconhecer);
 
 			if (sessaoDeUsuario.id !== colaboradorId)
-				$('#conteudo')
-					.on('click', 'section[data-js="abrir-justificativa"]', abrirJustificativa)
-					.on('click', 'button[data-js="fecharJustificativa"]', fecharJustificativa);
+				$('#conteudo').on('click', 'section[data-js="abrir-reconhecimentos"]', abrirReconhecimentos);
 			else {
 				$('span.ion-camera').show();
 				$('#conteudo').on('click', 'div[data-js="foto"]', enviarFoto);
 				$('input[data-js="alterar-foto"]').off().on('change', alterarFoto);
 			}
-
-			// reconhecimentosPorReconhecedorView.exibir(colaboradorId);
 		});
 	};
 
-	function abrirJustificativa() {
+	function abrirReconhecimentos() {
 		var objetoClicado = $(this);
 
-		require(['growl'], function(growl) {
+		require(['roteador'], function(roteador) {
 			var valorId = objetoClicado.data('valor-id');
-
-			$('#valorId').val(valorId);
-
-			$('div[data-js="justificativa"]').dialog({
-				title: 'Justificativa',
-				width: 320,
-				autoOpen: true,
-				appendTo: '#conteudo',
-				modal: true,
-				close: function() {
-					growl.esconder();
-				}
-			});
+			roteador.navegarPara('/reconhecimentosPorValor/' + valorId);
 		});
 	}
 

@@ -17,7 +17,7 @@
 
 	<div id="valoresRecebidosComComentarios">
 		{{#each this.valores}}
-		<section data-js="abrir-justificativa" data-valor-id="{{this.id}}">
+		<section data-js="abrir-reconhecimentos" data-valor-id="{{this.id}}">
 			<div class="valor">
 				<img src="{{iconeDoValor this}}" alt="{{this.nome}}" class="icone-valor" />
 			</div>
@@ -27,17 +27,5 @@
 			</div>
 		</section>
 		{{/each}}
-	</div>
-
-	<div data-js="justificativa" class="invisivel">
-		<p>
-			<label for="justificativa"></label>
-			<textarea id="justificativa" cols="30" rows="5"></textarea>
-		</p>
-
-		<p>
-			<button data-js="reconhecer">Confirmar</button>
-			<button data-js="fecharJustificativa">Cancelar</button>
-		</p>
 	</div>
 </div>

@@ -29,7 +29,7 @@ p {
   display: none;
 }
 
-.login {
+.login, .reconhecer {
   margin: 0 auto;
   max-width: 300px;
   padding: 18px;
@@ -190,7 +190,7 @@ main {
   padding: 10px;
 }
 
-#feedReconhecimentos {
+.feed-reconhecimentos {
   margin-top: 2em;
   background-color: #fafadd;
   padding: 1.2em;
