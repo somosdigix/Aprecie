@@ -202,14 +202,12 @@ main {
 
     .img-apreciador {
       @include avatarPequeno;
-      z-index: 99999;
       position: absolute;
       margin: 2.7rem;
     }
 
     .img-reconhecido {
       @include avatarMedio;
-      width: 83%;
       @include border-radius(143px);
     }
   }
@@ -267,6 +265,9 @@ main {
 }
 
 #perfilColaborador {
+  display: flex;
+  align-items: center;
+
   .alterarFoto {
     @include displayInlineBlock;
 
@@ -347,9 +348,9 @@ main {
       display: inline-block;
       vertical-align: top;
       color: white;
-      background-color: red;
+      background-color: rgba(137, 51, 140, 0.7);
       font-weight: bold;
-      font-size: 2.5em;
+      font-size: 2em;
       min-width: 45px;
       min-height: 45px;
       @include border-radius(145px);

@@ -1,4 +1,5 @@
 <input data-js="alterar-foto" type="file" class="invisivel" />
+
 <div class="conteudo">
 	<input type="hidden" id="reconhecidoId" value="{{this.id}}" />
 	<input type="hidden" id="valorId" />
@@ -11,11 +12,6 @@
 
 		<div class="informacoes-colaborador">
 			<h2 class="nome-colaborador">{{this.nome}}</h2>
-			<div id="iconeValoresRecebido">
-				{{#each this.valores}}
-				<img src="{{iconeDoValor this}}" width="50" height="50" />
-				{{/each}}
-			</div>
 		</div>
 	</div>
 
