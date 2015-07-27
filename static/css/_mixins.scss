@@ -29,6 +29,14 @@ $font-secundaria: "Open Sans", sans-serif;
   border-radius: 143px;
 }
 
+@mixin displayFlex {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+}
+
 @mixin displayInlineBlock {
   display: inline-block;
 

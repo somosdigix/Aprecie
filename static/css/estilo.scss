@@ -177,8 +177,8 @@ p {
   }
 }
 
-#conteudo {
-  margin-top: 100px;
+main {
+  margin-top: 88px;
 }
 
 .conteudo {
@@ -202,16 +202,15 @@ p {
 
     .img-apreciador {
       @include avatarPequeno;
-
       z-index: 99999;
-
       position: absolute;
-
-      margin: 2rem;
+      margin: 2.7rem;
     }
 
     .img-reconhecido {
       @include avatarMedio;
+      width: 83%;
+      @include border-radius(143px);
     }
   }
 
@@ -305,35 +304,48 @@ p {
 
   #iconeValoresRecebido {
     @include displayInlineBlock;
-
     margin: 1.2em 0;
   }
 }
 
 #valoresRecebidosComComentarios {
-  display: block;
   margin: 3em 0;
+  display: flex;
+  flex-wrap: wrap;
+
+  .min-width {
+    width: 15%;
+  }
+
+  .max-width {
+    width: 40%;
+  }
 
   section {
     margin-top: 20px;
+    background-color: #E6AE3A;
+    width: 32%;
 
     .icone-valor {
-      width: 80px;
+      width: 14%;
+      @include displayInlineBlock;
     }
 
     .foto {
       @include avatarPequeno;
-
       position: relative;
     }
 
-    .valor {
+    .valor-por-reconhecimento {
       @include displayInlineBlock;
-
       height: 50px;
-      width: 85%;
+      width: 83%;
       padding-top: 10px;
       font-size: 2em;
+
+      .nome-do-valor {
+        font-size: 48%;
+      }
     }
 
     .reconhecedores {
