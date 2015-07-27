@@ -35,7 +35,7 @@ class TesteDeAutenticacao(TestCase):
 
 		resposta_json = json.loads(resposta.content.decode())
 		self.assertEqual(funcionario.id, resposta_json['id_do_colaborador'])
-		self.assertEqual(funcionario.nome_compacto, resposta_json['nome_do_colaborador'])
+		self.assertEqual(funcionario.primeiro_nome, resposta_json['nome_do_colaborador'])
 
 	def testa_autenticacao_de_funcionario_inexistente(self):
 		cpf = 'um cpf qualquer'
@@ -77,3 +77,8 @@ class TesteDeColaborador(TestCase):
 			colaborador.alterar_foto(' ')
 
 		self.assertEqual('Foto deve ser informada', contexto.exception.args[0])
+
+	def testa_que_deve_exibir_somente_o_primeiro_nome(self):
+		colaborador = FuncionarioFactory()
+
+		self.assertEqual('Alberto', colaborador.primeiro_nome)

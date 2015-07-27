@@ -56,6 +56,6 @@ def reconhecimentos_por_reconhecedor(requisicao, id_do_reconhecido):
 		.annotate(quantidade_de_reconhecimentos=Count('reconhecedor'))
 
 	for reconhecedor in reconhecedores:
-		reconhecedor['reconhecedor__nome'] = Funcionario.obter_nome_compacto(reconhecedor['reconhecedor__nome'])
+		reconhecedor['reconhecedor__nome'] = Funcionario.obter_primeiro_nome(reconhecedor['reconhecedor__nome'])
 
 	return JsonResponse({'reconhecedores': list(reconhecedores)})
