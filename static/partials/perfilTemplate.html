@@ -19,13 +19,15 @@
 		</div>
 	</div>
 
+	
+	<div class="titulo">Valores recebidos</div>
 	<div id="valoresRecebidosComComentarios">
 		{{#each this.valores}}
-		<section data-valor-id="{{this.id}}">
-			<img src="{{iconeDoValor this}}" alt="{{this.nome}}" class="icone-valor" />
-			<div class="valor">
-				<span>{{this.nome}}</span>
-				<span>{{this.quantidade_de_reconhecimentos}}</span>
+		<section class="min-width" data-valor-id="{{this.id}}">
+			<img src="{{ iconeDoValor this }}" alt="{{this.nome}}" class="icone-valor" />
+			<div class="valor-por-reconhecimento">
+				<span class="nome-do-valor">{{this.nome}}</span>
+				<span class="quantidade-de-reconhecimentos">{{this.quantidade_de_reconhecimentos}}</span>
 				<span data-js="abrirJustificativa" data-valor-id="{{this.id}}" class="ion-plus-round adicionar invisivel" title="Reconhecer por {{this.nome}}"></span>
 			</div>
 		</section>
