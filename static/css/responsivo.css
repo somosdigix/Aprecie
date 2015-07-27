@@ -1,4 +1,4 @@
-@media all and (max-width: 480px){
+@media all and (max-width: 542px){
 	body {
 		font-family: 'Raleway', sans-serif;
 	}
@@ -89,18 +89,6 @@
 	#feedReconhecimentos .informacoes .texto .apreciador,.nome,.valor {
 		font-size: 0.8rem !important;
 	}
-
-
-
-
-
-
-
-
-
-
-
-
 }
 
 @media all and (max-width: 632){

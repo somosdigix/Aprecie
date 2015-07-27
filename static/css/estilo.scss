@@ -268,9 +268,7 @@ main {
   display: flex;
   align-items: center;
 
-  .alterarFoto {
-    @include displayInlineBlock;
-
+  .alterar-foto {
     .ion-camera {
       font-size: 2em;
       color: #fff;
@@ -288,7 +286,6 @@ main {
   }
 
   .foto-colaborador {
-    @include displayInlineBlock;
     @include avatarGrande;
 
     margin: 0 2em 0 0;
@@ -296,7 +293,6 @@ main {
 }
 
 .informacoes-colaborador {
-  @include displayInlineBlock;
 
   .nome-colaborador {
     display: block;
