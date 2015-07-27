@@ -323,9 +323,9 @@ main {
 
   section {
     margin: 10px;
-    background-color: #E6AE3A;
     width: 30%;
     text-align: center;
+    position: relative;
 
     .icone-valor {
       width: 100%;
@@ -336,6 +336,25 @@ main {
     .foto {
       @include avatarPequeno;
       position: relative;
+    }
+
+    .valor {
+      width: 70%;
+      display: inline-block;
+    }
+
+    .quantidade-de-reconhecimentos {
+      display: inline-block;
+      vertical-align: top;
+      color: white;
+      background-color: red;
+      font-weight: bold;
+      font-size: 2.5em;
+      min-width: 45px;
+      min-height: 45px;
+      @include border-radius(145px);
+      left: 70%;
+      position: absolute;
     }
 
     .valor-por-reconhecimento {

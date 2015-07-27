@@ -22,12 +22,13 @@
 	<div id="valoresRecebidosComComentarios">
 		{{#each this.valores}}
 		<section data-js="abrir-justificativa" data-valor-id="{{this.id}}">
-			<div>
+			<div class="valor">
 				<img src="{{iconeDoValor this}}" alt="{{this.nome}}" class="icone-valor" />
-				<span class="nome-do-valor">{{this.nome}}</span>
 			</div>
 
-			<span class="quantidade-de-reconhecimentos">{{this.quantidade_de_reconhecimentos}}</span>
+			<div class="quantidade-de-reconhecimentos">
+				<span>{{this.quantidade_de_reconhecimentos}}</span>
+			</div>
 		</section>
 		{{/each}}
 	</div>
