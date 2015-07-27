@@ -23,6 +23,9 @@ def reconhecer(requisicao):
 def ultimos_reconhecimentos(requisicao):
 	reconhecimentos = Reconhecimento.objects.all().order_by('-data')[:10]
 	reconhecimentos_mapeados = list(map(lambda reconhecimento: {
+		'id_do_reconhecedor': reconhecimento.reconhecedor.id,
+		'nome_do_reconhecedor': reconhecimento.reconhecedor.nome,
+		'foto_do_reconhecedor': reconhecimento.reconhecedor.foto,
 		'id_do_reconhecido': reconhecimento.reconhecido.id,
 		'nome_do_reconhecido': reconhecimento.reconhecido.nome,
 		'foto_do_reconhecido': reconhecimento.reconhecido.foto,

@@ -23,7 +23,8 @@ define([
 				$('span[data-js="abrirJustificativa"]').show();
 				$('#conteudo').on('click', 'button[data-js="fecharJustificativa"]', fecharJustificativa);
 			} else {
-				$('#conteudo').on('click', 'img[data-js="foto"]', enviarFoto);
+				$('span.ion-camera').show();
+				$('#conteudo').on('click', 'div[data-js="foto"]', enviarFoto);
 				$('input[data-js="alterar-foto"]').off().on('change', alterarFoto);
 			}
 
@@ -55,15 +56,18 @@ define([
 	function reconhecer() {
 		require([
 			'app/models/reconhecerViewModel',
-			'growl'
-		], function(ReconhecerViewModel, growl) {
+			'growl',
+			'roteador'
+		], function(ReconhecerViewModel, growl, roteador) {
 			var reconhecerViewModel = new ReconhecerViewModel();
 			validarOperacao(reconhecerViewModel);
 
 			$.post('/reconhecimentos/reconhecer/', reconhecerViewModel, function() {
 				fecharJustificativa();
 				growl.deSucesso().exibir('Reconhecimento realizado com sucesso');
-				perfilView.exibir(reconhecerViewModel.id_do_reconhecido);
+
+				// TODO: Descobrir como atualiza a mesma página pelo roteador
+				perfilView.exibir(reconhecerViewModel.id_do_reconhecido)
 			});
 		});
 	}

@@ -23,6 +23,7 @@ define([
 				.show()
 				.on('click', 'div[data-js="pagina-inicial"]', paginaInicial)
 				.on('click', 'div[data-js="meu-perfil"]', meuPerfil)
+				.on('click', 'div[data-js="tratar-menu-mobile"]', tratarMenuMobile)
 				.on('click', 'div[data-js="sair"]', sair);
 			$('#colaborador').off().autocomplete(configuracoesDoAutocomplete);
 
@@ -45,35 +46,40 @@ define([
 	}
 
 	function selecionar(evento, ui) {
-		require(['app/views/perfilView'], function(perfilView) {
+		require(['roteador'], function(roteador) {
 			var colaborador = ui.item;
 			$('#colaborador').val('').blur();
-			perfilView.exibir(colaborador.id);
+
+			roteador.navegarPara('/perfil/' + colaborador.id);
 		});
 
 		evento.preventDefault();
 	}
 
 	function paginaInicial() {
-		require(['app/views/paginaInicialView'], function(paginaInicialView) {
-			paginaInicialView.exibir();
+		require(['roteador'], function(roteador) {
+			roteador.navegarPara('/paginaInicial');
 		});
 	}
 
 	function meuPerfil() {
-		require(['app/views/perfilView'], function(perfilView) {
-			perfilView.exibir(sessaoDeUsuario.id);
+		require(['roteador'], function(roteador) {
+			roteador.navegarPara('/perfil/' + sessaoDeUsuario.id);
 		});
+	}
+
+	function tratarMenuMobile() {
+		$('div[data-js="menu-mobile"]').toggleClass('aberto');
 	}
 
 	function sair() {
 		require([
 			'cookie',
-			'app/views/loginView'
-		], function(cookie, loginView) {
+			'roteador'
+		], function(cookie, roteador) {
 			cookie.limpar();
 			toolbarView.esconder();
-			loginView.exibir();
+			roteador.navegarPara('/login');
 		});
 	}
 

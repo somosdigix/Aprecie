@@ -1,6 +1,7 @@
 define([
+	'jquery',
 	'handlebars'
-], function(Handlebars) {
+], function($, Handlebars) {
 	'use strict';
 	
 	var configuracoes = {};
@@ -36,7 +37,7 @@ define([
 	};
 
 	configuracoes.ehDebug = function() {
-		return window.location.toString().indexOf('?debug=true') > -1;
+		return window.location.toString().indexOf('localhost') > -1;
 	};
 
 	return configuracoes;

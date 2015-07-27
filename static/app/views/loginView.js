@@ -10,8 +10,8 @@ define([
 	var loginView = {};
 
 	loginView.exibir = function() {
-		$('body').removeClass('body-app').addClass('body-login');
 		template.exibir(loginTemplate);
+		$('body').removeClass('body-app').addClass('body-login');
 		$('#conteudo').off().on('click', 'button[data-js="autenticar"]', autenticar);
 
 		$('#cpf').inputmask('999.999.999-99').focus();
@@ -29,15 +29,14 @@ define([
 		require([
 			'app/models/loginViewModel',
 			'app/servicos/servicoDeAutenticacao',
-			'app/views/toolbarView',
-			'app/views/paginaInicialView'
-		], function(LoginViewModel, servicoDeAutenticacao, toolbarView, paginaInicialView) {
+			'roteador'
+		], function(LoginViewModel, servicoDeAutenticacao, roteador) {
 			var loginViewModel = new LoginViewModel();
 			validarOperacao(loginViewModel);
 
 			$.post('/login/entrar/', loginViewModel, function(colaborador) {
 				servicoDeAutenticacao.autenticar(colaborador);
-				toolbarView.exibir(paginaInicialView.exibir);
+				roteador.navegarPara('/paginaInicial');
 			});
 		});
 	}
