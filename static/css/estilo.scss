@@ -83,9 +83,7 @@ p {
   background-color: $amarelo-secundario;
   padding: 8px 0;
   margin-bottom: 2em;
-
-  position:fixed {}
-
+  position: fixed;
   top: 0;
   width: 100%;
   right: 0;
@@ -179,6 +177,10 @@ p {
   }
 }
 
+#conteudo {
+  margin-top: 100px;
+}
+
 .conteudo {
   @include box-sizing;
 
@@ -203,7 +205,7 @@ p {
 
       z-index: 99999;
 
-      position:absolute {}
+      position: absolute;
 
       margin: 2rem;
     }
