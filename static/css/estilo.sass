@@ -140,7 +140,7 @@ p
 				margin: 0.8em 0.3em
 
 main
-	margin-top: 120px
+	margin-top: 88px
 
 .conteudo
 	+box-sizing
@@ -163,10 +163,12 @@ main
 			+avatarPequeno
 			z-index: 99999
 			position:absolute
-			margin: 2rem
+			margin: 2.7rem
 
 		.img-reconhecido
-			+avatarMedio	
+			width: 83%
+			+border-radius(143px) 
+	
 
 	.informacoes
 		+displayInlineBlock
@@ -227,50 +229,62 @@ main
 		.editar:active input
 			display: block
 
-
-
-
-
-
-
 	.foto-colaborador
 		+displayInlineBlock
 		+avatarGrande
 		margin: 0 2em 0 0
 
-.informacoes-colaborador
-	+displayInlineBlock
 
-	.nome-colaborador
-		display: block
-		font-size: 2.2em
-
-	#iconeValoresRecebido
+	.informacoes-colaborador
 		+displayInlineBlock
-		margin: 1.2em 0
+
+		.nome-colaborador
+			display: block
+			font-size: 2.2em
+
+		#iconeValoresRecebido
+			+displayInlineBlock
+			margin: 1.2em 0
 
 
 		
 #valoresRecebidosComComentarios
-	display: block
 	margin: 3em 0
+	display: flex
+	flex-wrap: wrap
+
+	
+	.min-width
+		width: 15%
+
+	.max-width
+		width: 40%
 
 	section
 		margin-top: 20px
+		background-color: #E6AE3A
+		width: 32
+
 
 		.icone-valor
-			width: 80px
+			width: 14%
+			+displayInlineBlock
+
+		.valor-por-reconhecimento
+			+displayInlineBlock
+			height: 50px
+			width: 83%
+			padding-top: 10px
+			font-size: 2em
+			
+			.nome-do-valor
+				font-size: 48%
+
 
 		.foto
 			+avatarPequeno
 			position: relative
 
-		.valor
-			+displayInlineBlock
-			height: 50px
-			width: 90%
-			padding-top: 10px
-			font-size: 2em
 
 		.reconhecedores
 			margin: 10px 0 0 20px
