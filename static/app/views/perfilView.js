@@ -15,20 +15,20 @@ define([
 			template.exibir(perfilTemplate, reconhecimentosDoColaborador);
 
 			$('#conteudo').off()
-				.on('click', 'span[data-js="abrirJustificativa"]', abrirJustificativa)
 				.on('click', 'button[data-js="reconhecer"]', reconhecer)
 				.on('click', 'button[data-js="fecharJustificativa"]', fecharJustificativa);
 
-			if (sessaoDeUsuario.id !== colaboradorId) {
-				$('span[data-js="abrirJustificativa"]').show();
-				$('#conteudo').on('click', 'button[data-js="fecharJustificativa"]', fecharJustificativa);
-			} else {
+			if (sessaoDeUsuario.id !== colaboradorId)
+				$('#conteudo')
+					.on('click', 'section[data-js="abrir-justificativa"]', abrirJustificativa)
+					.on('click', 'button[data-js="fecharJustificativa"]', fecharJustificativa);
+			else {
 				$('span.ion-camera').show();
 				$('#conteudo').on('click', 'div[data-js="foto"]', enviarFoto);
 				$('input[data-js="alterar-foto"]').off().on('change', alterarFoto);
 			}
 
-			reconhecimentosPorReconhecedorView.exibir(colaboradorId);
+			// reconhecimentosPorReconhecedorView.exibir(colaboradorId);
 		});
 	};
 
