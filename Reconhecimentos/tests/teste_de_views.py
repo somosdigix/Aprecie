@@ -26,7 +26,7 @@ class TesteDeApiDeReconhecimento(TestCase):
 		self.assertEqual(200, resposta.status_code)
 		self.assertEqual(1, len(self.reconhecido.reconhecimentos_por_valor(self.valor)))
 
-	def testa_a_listagem_dos_ultimos_reconhecimentos_realzados(self):
+	def testa_a_listagem_dos_ultimos_reconhecimentos_realizados(self):
 		self.criar_reconhecimentos(2)
 
 		resposta = self.client.post(reverse('ultimos_reconhecimentos'))

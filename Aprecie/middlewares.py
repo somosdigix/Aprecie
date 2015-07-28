@@ -6,6 +6,7 @@ from django.conf import settings
 class ProcessadorDeExcecao(object):
 
 	def process_exception(self, requisicao, excecao):
+		print("Excecao capturada: ", excecao)
 		return JsonResponse({
 			'sucesso': False,
 			'mensagem': excecao.args[0]
