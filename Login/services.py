@@ -1,4 +1,5 @@
 from Login.models import Funcionario
+from Aprecie.base import ExcecaoDeDominio
 
 class ServicoDeAutenticacao:
 
@@ -6,6 +7,6 @@ class ServicoDeAutenticacao:
 		funcionario = Funcionario.objects.filter(cpf=cpf, data_de_nascimento=data_de_nascimento)
 
 		if not funcionario:
-			raise Exception('Colaborador não encontrado, confirme seus dados e tente novamente')
+			raise ExcecaoDeDominio('Colaborador não encontrado, confirme seus dados e tente novamente')
 
 		return funcionario[0]

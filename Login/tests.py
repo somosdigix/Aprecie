@@ -4,6 +4,7 @@ from Login.factories import FuncionarioFactory
 from Login.services import ServicoDeAutenticacao
 from django.core.urlresolvers import reverse
 import json
+from Aprecie.base import ExcecaoDeDominio
 
 class TesteDoServicoDeAutenticacao(TestCase):
 
@@ -45,6 +46,7 @@ class TesteDeAutenticacao(TestCase):
 		resposta = self.client.post(reverse('entrar'), dados_da_requisicao)
 		
 		resposta_json = json.loads(resposta.content.decode())
+		self.assertEqual(403, resposta.status_code)
 		self.assertEqual('Colaborador não encontrado, confirme seus dados e tente novamente', resposta_json['mensagem'])
 
 	def testa_que_a_foto_do_colaborador_eh_alterada(self):
@@ -73,7 +75,7 @@ class TesteDeColaborador(TestCase):
 	def testa_que_nao_deve_trocar_para_uma_foto_inexistente(self):
 		colaborador = FuncionarioFactory()
 
-		with self.assertRaises(Exception) as contexto:
+		with self.assertRaises(ExcecaoDeDominio) as contexto:
 			colaborador.alterar_foto(' ')
 
 		self.assertEqual('Foto deve ser informada', contexto.exception.args[0])

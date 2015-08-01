@@ -6,6 +6,7 @@ from Reconhecimentos.models import Reconhecimento
 from Reconhecimentos.statics import ValoresDaDigithoBrasil
 from Reconhecimentos.views import reconhecer
 from Login.factories import FuncionarioFactory
+from Aprecie.base import ExcecaoDeDominio
 
 class TesteDeReconhecimento(TestCase):
 
