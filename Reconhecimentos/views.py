@@ -22,6 +22,7 @@ def reconhecer(requisicao):
 
 def ultimos_reconhecimentos(requisicao):
 	reconhecimentos = Reconhecimento.objects.all().order_by('-data')[:10]
+
 	reconhecimentos_mapeados = list(map(lambda reconhecimento: {
 		'id_do_reconhecedor': reconhecimento.reconhecedor.id,
 		'nome_do_reconhecedor': reconhecimento.reconhecedor.nome,
@@ -31,7 +32,7 @@ def ultimos_reconhecimentos(requisicao):
 		'foto_do_reconhecido': reconhecimento.reconhecido.foto,
 		'valor': reconhecimento.valor.nome,
 		'justificativa': reconhecimento.justificativa,
-		'data': reconhecimento.data.strftime('%d/%m/%Y - %H:%M')
+		'data': reconhecimento.data.strftime('%d de %B de %Y - %H:%M')
 	}, reconhecimentos))
 
 	return JsonResponse(reconhecimentos_mapeados, safe=False)
@@ -52,6 +53,6 @@ def reconhecimentos_por_reconhecedor(requisicao, id_do_reconhecido):
 		.annotate(quantidade_de_reconhecimentos=Count('reconhecedor'))
 
 	for reconhecedor in reconhecedores:
-		reconhecedor['reconhecedor__nome'] = Funcionario.obter_nome_compacto(reconhecedor['reconhecedor__nome'])
+		reconhecedor['reconhecedor__nome'] = Funcionario.obter_primeiro_nome(reconhecedor['reconhecedor__nome'])
 
 	return JsonResponse({'reconhecedores': list(reconhecedores)})

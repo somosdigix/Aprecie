@@ -11,7 +11,7 @@ def entrar(requisicao):
 
 	return JsonResponse({
 		'id_do_colaborador': colaborador_autenticado.id,
-		'nome_do_colaborador': colaborador_autenticado.nome_compacto,
+		'nome_do_colaborador': colaborador_autenticado.primeiro_nome,
 		'foto_do_colaborador': None,
 	})
 

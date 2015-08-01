@@ -1,4 +1,4 @@
-@media all and (max-width: 480px){
+@media all and (max-width: 542px){
 	body {
 		font-family: 'Raleway', sans-serif;
 	}
@@ -17,8 +17,8 @@
 		margin: 0 auto;
 		padding: 10px;
 		-webkit-box-sizing: border-box;
-	   -moz-box-sizing: border-box;
-	   box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		box-sizing: border-box;
 	}
 
 	.logoInterna{
@@ -39,28 +39,29 @@
 		right: 8px;
 	}
 
-	.menu-responsivo{
-        display: block !important;  
-        background: url(../img/icon-menu.png);
-        width: 42px;
-        height: 42px;  
-    }
-    #linksToolbar .menus.aberto .item {
-        display: block;
-        position: absolute;
-        width: 100%;
-		left: 0;
-		top: 77px;
-    }
-    
-    #linksToolbar .item {
-        display: none;
-        background-color: #E6AE3A;
-    }
-        
-    #linksToolbar .item .itens{
-        display:block !important;
-    }
+		.menu-responsivo{
+	        display: block !important;  
+	        background: url(../img/icon-menu.png);
+	        width: 42px;
+	        height: 42px;  
+	    }
+
+	    #linksToolbar .menus.aberto .item {
+	        display: block;
+	        position: absolute;
+	        width: 100%;
+			left: 0;
+			top: 77px;
+	    }
+	    
+	    #linksToolbar .item {
+	        display: none;
+	        background-color: #E6AE3A;
+	    }
+	        
+	    #linksToolbar .item .itens{
+	        display:block !important;
+	    }
 
 
 
@@ -69,26 +70,25 @@
   		height: 80px !important;
 	}
 
+	#feedReconhecimentos .informacoes{
+		margin-top: 0.6rem !important;
+	}
 
+	#feedReconhecimentos .fotos{
+		  width: 31% !important;
+	}
+	
+	#feedReconhecimentos .fotos .img-apreciador{
+		  margin: 1.7rem !important;
+	}
+	
+	#feedReconhecimentos .informacoes{
+		width: 67% !important;
+	}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	#feedReconhecimentos .informacoes .texto .apreciador,.nome,.valor {
+		font-size: 0.8rem !important;
+	}
 }
 
 @media all and (max-width: 632){

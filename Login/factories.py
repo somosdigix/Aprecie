@@ -13,5 +13,5 @@ class FuncionarioFactory(factory.django.DjangoModelFactory):
 		model = Funcionario
 
 	cpf = factory.Sequence(lambda i: str(random.randint(10000000000, 99999999999)))
-	nome = "Uma pessoa gerada"
+	nome = "Alberto Roberto"
 	data_de_nascimento = factory.Sequence(lambda i: gerar_data_aleatoria())

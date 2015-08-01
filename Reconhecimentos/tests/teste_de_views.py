@@ -26,7 +26,7 @@ class TesteDeApiDeReconhecimento(TestCase):
 		self.assertEqual(200, resposta.status_code)
 		self.assertEqual(1, len(self.reconhecido.reconhecimentos_por_valor(self.valor)))
 
-	def testa_a_listagem_dos_ultimos_reconhecimentos_realzados(self):
+	def testa_a_listagem_dos_ultimos_reconhecimentos_realizados(self):
 		self.criar_reconhecimentos(2)
 
 		resposta = self.client.post(reverse('ultimos_reconhecimentos'))
@@ -75,9 +75,9 @@ class TesteDeApiDeReconhecimento(TestCase):
 		reconhecedores = resultado.get('reconhecedores')
 		self.assertEqual(2, len(reconhecedores))
 
-		self.assertEqual(reconhecedor1.nome_compacto, reconhecedores[0]['reconhecedor__nome'])
+		self.assertEqual(reconhecedor1.primeiro_nome, reconhecedores[0]['reconhecedor__nome'])
 		self.assertEqual(ValoresDaDigithoBrasil.inquietude.id, reconhecedores[0]['valor__id'])
 		self.assertEqual(1, reconhecedores[0]['quantidade_de_reconhecimentos'])
-		self.assertEqual(reconhecedor2.nome_compacto, reconhecedores[1]['reconhecedor__nome'])
+		self.assertEqual(reconhecedor2.primeiro_nome, reconhecedores[1]['reconhecedor__nome'])
 		self.assertEqual(ValoresDaDigithoBrasil.inquietude.id, reconhecedores[1]['valor__id'])
 		self.assertEqual(2, reconhecedores[1]['quantidade_de_reconhecimentos'])

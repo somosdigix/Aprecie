@@ -1,6 +1,5 @@
 {% load staticfiles %}
 {% load compress %}
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -8,25 +7,25 @@
 	<title>Aprecie.me</title>
 
 	<meta name="viewport" content="width=device-width,  height=device-height, initial-scale=1, maximum-scale=1, user-scalable=no">
-	
+
 	<link rel="shortcut icon" href="{% static "favicon.ico" %}">
 	<link rel="stylesheet" href="{% static "css/responsivo.css" %}?v=1">
-	
 	{% compress css %}
-	<link type="text/x-scss" rel="stylesheet" href="{% static "css/estilo.scss" %}" />	
+	<link type="text/x-scss" rel="stylesheet" href="{% static "css/estilo.scss" %}" />
 	{% endcompress %}
-
 	<link rel="stylesheet" href="{% static "css/ionicons.css" %}" />
 	<link rel="stylesheet" href="{% static "app/lib/jquery-ui/themes/ui-lightness/jquery-ui.min.css" %}" />
 	<link rel="stylesheet" href="{% static "app/lib/jquery-ui/themes/ui-lightness/theme.css" %}" />
 	<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Raleway"/>
 	<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans"/>
 </head>
+<body class="body-login">
+	<header data-js="toolbar" class="toolbar invisivel"></header>
 
-<body class="body-login">	
-	<header data-js="toolbar" class="toolbar invisivel"></header>	
-	<main id="conteudo"></main>		
+	<main id="conteudo"></main>
+
 	<div data-js="growl" class="growl fixo alinhado-ao-topo fundo-verde branco invisivel"></div>
-    <script data-main="{% static "app/app.js" %}" src="{% static "app/lib/requirejs/require.js" %}"></script>
+
+	<script data-main="{% static "app/app.js" %}" src="{% static "app/lib/requirejs/require.js" %}"></script>
 </body>
 </html>

@@ -83,9 +83,7 @@ p {
   background-color: $amarelo-secundario;
   padding: 8px 0;
   margin-bottom: 2em;
-
-  position:fixed {}
-
+  position: fixed;
   top: 0;
   width: 100%;
   right: 0;
@@ -179,6 +177,10 @@ p {
   }
 }
 
+main {
+  margin-top: 88px;
+}
+
 .conteudo {
   @include box-sizing;
 
@@ -200,16 +202,13 @@ p {
 
     .img-apreciador {
       @include avatarPequeno;
-
-      z-index: 99999;
-
-      position:absolute {}
-
-      margin: 2rem;
+      position: absolute;
+      margin: 2.7rem;
     }
 
     .img-reconhecido {
       @include avatarMedio;
+      @include border-radius(143px);
     }
   }
 
@@ -266,9 +265,10 @@ p {
 }
 
 #perfilColaborador {
-  .alterarFoto {
-    @include displayInlineBlock;
+  display: flex;
+  align-items: center;
 
+  .alterar-foto {
     .ion-camera {
       font-size: 2em;
       color: #fff;
@@ -286,7 +286,6 @@ p {
   }
 
   .foto-colaborador {
-    @include displayInlineBlock;
     @include avatarGrande;
 
     margin: 0 2em 0 0;
@@ -294,7 +293,6 @@ p {
 }
 
 .informacoes-colaborador {
-  @include displayInlineBlock;
 
   .nome-colaborador {
     display: block;
@@ -303,35 +301,69 @@ p {
 
   #iconeValoresRecebido {
     @include displayInlineBlock;
-
     margin: 1.2em 0;
   }
 }
 
 #valoresRecebidosComComentarios {
-  display: block;
   margin: 3em 0;
+  display: flex;
+  flex-wrap: wrap;
+
+  .min-width {
+    width: 15%;
+  }
+
+  .max-width {
+    width: 40%;
+  }
 
   section {
-    margin-top: 20px;
+    margin: 10px;
+    width: 30%;
+    text-align: center;
+    position: relative;
 
     .icone-valor {
-      width: 80px;
+      width: 100%;
+      display: block;
+      margin: 0 auto;
     }
 
     .foto {
       @include avatarPequeno;
-
       position: relative;
     }
 
     .valor {
-      @include displayInlineBlock;
+      width: 70%;
+      display: inline-block;
+    }
 
+    .quantidade-de-reconhecimentos {
+      display: inline-block;
+      vertical-align: top;
+      color: white;
+      background-color: rgba(137, 51, 140, 0.7);
+      font-weight: bold;
+      font-size: 2em;
+      min-width: 45px;
+      min-height: 45px;
+      @include border-radius(145px);
+      left: 70%;
+      position: absolute;
+    }
+
+    .valor-por-reconhecimento {
+      @include displayInlineBlock;
       height: 50px;
-      width: 85%;
+      width: 83%;
       padding-top: 10px;
       font-size: 2em;
+
+      .nome-do-valor {
+        font-size: 48%;
+      }
     }
 
     .reconhecedores {

@@ -8,13 +8,12 @@ class Funcionario(models.Model):
 	foto = models.TextField(default=None, null=True)
 
 	@property
-	def nome_compacto(self):
-		return Funcionario.obter_nome_compacto(self.nome)
+	def primeiro_nome(self):
+		return Funcionario.obter_primeiro_nome(self.nome)
 
 	@staticmethod
-	def obter_nome_compacto(nome):
-		nomes = nome.split(' ')
-		return "{0} {1}".format(nomes[0], nomes[-1])
+	def obter_primeiro_nome(nome):
+		return nome.split(' ')[0]
 
 	def alterar_foto(self, nova_foto_em_base64):
 		if not nova_foto_em_base64.strip():
