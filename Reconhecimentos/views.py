@@ -56,3 +56,10 @@ def reconhecimentos_por_reconhecedor(requisicao, id_do_reconhecido):
 		reconhecedor['reconhecedor__nome'] = Funcionario.obter_primeiro_nome(reconhecedor['reconhecedor__nome'])
 
 	return JsonResponse({'reconhecedores': list(reconhecedores)})
+
+def reconhecimentos_por_valor(requisicao, id_do_colaborador, id_do_valor):
+	colaborador = Funcionario.objects.get(id=id_do_colaborador)
+	reconhecimentos = colaborador.reconhecimentos_por_valor(id_do_valor).values(
+		'justificativa', 'reconhecedor__nome')
+
+	return JsonResponse({'reconhecimentos': list(reconhecimentos)})

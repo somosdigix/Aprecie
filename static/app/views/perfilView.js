@@ -3,9 +3,10 @@ define([
 	'template',
 	'text!partials/perfilTemplate.html',
 	'app/views/reconhecimentosPorReconhecedorView',
+	'app/views/reconhecimentosPorValorView',
 	'sessaoDeUsuario',
 	'app/views/iconesDosValoresHelpers'
-], function($, template, perfilTemplate, reconhecimentosPorReconhecedorView, sessaoDeUsuario) {
+], function($, template, perfilTemplate, reconhecimentosPorReconhecedorView, reconhecimentosPorValorView, sessaoDeUsuario) {
 	'use strict';
 
 	var perfilView = {};
@@ -20,8 +21,10 @@ define([
 
 			if (sessaoDeUsuario.id !== colaboradorId)
 				$('#conteudo')
-					.on('click', 'section[data-js="abrir-justificativa"]', abrirJustificativa)
+					.on('click', 'button[data-js="abrir-justificativa"]', abrirJustificativa)
+					.on('click', 'section[data-js="exibir-reconhecimentos"]', exibirReconhecimentos)
 					.on('click', 'button[data-js="fecharJustificativa"]', fecharJustificativa);
+
 			else {
 				$('span.ion-camera').show();
 				$('#conteudo').on('click', 'div[data-js="foto"]', enviarFoto);
@@ -37,7 +40,6 @@ define([
 
 		require(['growl'], function(growl) {
 			var valorId = objetoClicado.data('valor-id');
-
 			$('#valorId').val(valorId);
 
 			$('div[data-js="justificativa"]').dialog({
@@ -51,6 +53,13 @@ define([
 				}
 			});
 		});
+	}
+
+	function exibirReconhecimentos() {
+		var objetoClicado = $(this);
+		var valorId = objetoClicado.data('valor-id');
+		var colaboradorId = $("#reconhecidoId").val();
+		reconhecimentosPorValorView.exibir(colaboradorId, valorId);
 	}
 
 	function reconhecer() {

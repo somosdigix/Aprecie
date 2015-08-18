@@ -10,7 +10,8 @@ define([
 		var rotas = {
 			'/login': [middlewareDeAutenticacao, middlewareDeToolbar, login],
 			'/paginaInicial': [middlewareDeAutenticacao, middlewareDeToolbar, paginaInicial],
-			'/perfil/:colaboradorId': [middlewareDeAutenticacao, middlewareDeToolbar, perfil]
+			'/perfil/:colaboradorId': [middlewareDeAutenticacao, middlewareDeToolbar, perfil],
+			'/perfil/reconhecimentos/valorId:': []
 		};
 
 		function login() {
