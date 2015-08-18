@@ -2,7 +2,6 @@
 
 <div class="conteudo">
 	<input type="hidden" id="reconhecidoId" value="{{this.id}}" />
-	<input type="hidden" id="valorId" />
 
 	<div id="perfilColaborador">
 		<div data-js="foto" class="alterar-foto">
@@ -14,6 +13,8 @@
 			<h2 class="nome-colaborador">{{this.nome}}</h2>
 		</div>
 	</div>
+
+	<button data-js="abrir-justificativa">Reconhecer</button>
 
 	<div id="valoresRecebidosComComentarios">
 		{{#each this.valores}}
@@ -29,9 +30,14 @@
 		{{/each}}
 	</div>
 
-	<button data-js="abrir-justificativa">Reconhecer</button>
-
 	<div data-js="justificativa" class="invisivel">
+
+		<select id="valorId">
+		{{#each this.valores}}
+			<option value="{{ this.id }}">{{ this.nome }}</option>
+		{{/each}}
+		</select>
+
 		<p>
 			<label for="justificativa"></label>
 			<textarea id="justificativa" cols="30" rows="5"></textarea>

@@ -5,7 +5,6 @@ import unittest
 
 class TesteDeFumaca(TestCase):
 
-	@unittest.skip("Não está funcionando ainda")
 	def testa_a_disponibilidade_da_pagina_inicial(self):
 		conexao = http.client.HTTPConnection(settings.URL_DO_AMBIENTE)
 		conexao.request("GET", "")

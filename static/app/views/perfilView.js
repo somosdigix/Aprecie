@@ -16,13 +16,13 @@ define([
 			template.exibir(perfilTemplate, reconhecimentosDoColaborador);
 
 			$('#conteudo').off()
-				.on('click', 'button[data-js="reconhecer"]', reconhecer)
+				.on('click', 'section[data-js="exibir-reconhecimentos"]', exibirReconhecimentos)
 				.on('click', 'button[data-js="fecharJustificativa"]', fecharJustificativa);
 
 			if (sessaoDeUsuario.id !== colaboradorId)
 				$('#conteudo')
+					.on('click', 'button[data-js="reconhecer"]', reconhecer)
 					.on('click', 'button[data-js="abrir-justificativa"]', abrirJustificativa)
-					.on('click', 'section[data-js="exibir-reconhecimentos"]', exibirReconhecimentos)
 					.on('click', 'button[data-js="fecharJustificativa"]', fecharJustificativa);
 
 			else {
@@ -36,12 +36,7 @@ define([
 	};
 
 	function abrirJustificativa() {
-		var objetoClicado = $(this);
-
 		require(['growl'], function(growl) {
-			var valorId = objetoClicado.data('valor-id');
-			$('#valorId').val(valorId);
-
 			$('div[data-js="justificativa"]').dialog({
 				title: 'Justificativa',
 				width: 320,
