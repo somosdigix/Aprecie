@@ -2,7 +2,6 @@
 
 <div class="conteudo">
 	<input type="hidden" id="reconhecidoId" value="{{this.id}}" />
-	<input type="hidden" id="valorId" />
 
 	<div id="perfilColaborador">
 		<div data-js="foto" class="alterar-foto">
@@ -15,9 +14,11 @@
 		</div>
 	</div>
 
+	<button data-js="abrir-justificativa">Reconhecer</button>
+
 	<div id="valoresRecebidosComComentarios">
 		{{#each this.valores}}
-		<section data-js="abrir-reconhecimentos" data-valor-id="{{this.id}}">
+		<section data-js="exibir-reconhecimentos" data-valor-id="{{this.id}}">
 			<div class="valor">
 				<img src="{{iconeDoValor this}}" alt="{{this.nome}}" class="icone-valor" />
 			</div>
@@ -28,4 +29,25 @@
 		</section>
 		{{/each}}
 	</div>
+
+	<div data-js="justificativa" class="invisivel">
+
+		<select id="valorId">
+			{{#each this.valores}}
+			<option value="{{ this.id }}">{{ this.nome }}</option>
+			{{/each}}
+		</select>
+
+		<p>
+			<label for="justificativa"></label>
+			<textarea id="justificativa" cols="30" rows="5"></textarea>
+		</p>
+
+		<p>
+			<button data-js="reconhecer">Confirmar</button>
+			<button data-js="fecharJustificativa">Cancelar</button>
+		</p>
+	</div>
+
+	<div data-js="abrir-reconhecimentos"></div>
 </div>

@@ -3,9 +3,10 @@ define([
 	'template',
 	'text!partials/perfilTemplate.html',
 	'app/views/reconhecimentosPorReconhecedorView',
+	'app/views/reconhecimentosPorValorView',
 	'sessaoDeUsuario',
 	'app/views/iconesDosValoresHelpers'
-], function($, template, perfilTemplate, reconhecimentosPorReconhecedorView, sessaoDeUsuario) {
+], function($, template, perfilTemplate, reconhecimentosPorReconhecedorView, reconhecimentosPorValorView, sessaoDeUsuario) {
 	'use strict';
 
 	var perfilView = {};
@@ -15,10 +16,14 @@ define([
 			template.exibir(perfilTemplate, reconhecimentosDoColaborador);
 
 			$('#conteudo').off()
-				.on('click', 'button[data-js="reconhecer"]', reconhecer);
+				.on('click', 'section[data-js="exibir-reconhecimentos"]', exibirReconhecimentos);
 
 			if (sessaoDeUsuario.id !== colaboradorId)
-				$('#conteudo').on('click', 'section[data-js="abrir-reconhecimentos"]', abrirReconhecimentos);
+				$('#conteudo')
+				.on('click', 'section[data-js="abrir-reconhecimentos"]', abrirReconhecimentos)
+				.on('click', 'button[data-js="reconhecer"]', reconhecer)
+				.on('click', 'button[data-js="abrir-justificativa"]', abrirJustificativa)
+				.on('click', 'button[data-js="fecharJustificativa"]', fecharJustificativa);
 			else {
 				$('span.ion-camera').show();
 				$('#conteudo').on('click', 'div[data-js="foto"]', enviarFoto);
@@ -34,6 +39,28 @@ define([
 			var valorId = objetoClicado.data('valor-id');
 			roteador.navegarPara('/reconhecimentosPorValor/' + valorId);
 		});
+	}
+
+	function abrirJustificativa() {
+		require(['growl'], function(growl) {
+			$('div[data-js="justificativa"]').dialog({
+				title: 'Justificativa',
+				width: 320,
+				autoOpen: true,
+				appendTo: '#conteudo',
+				modal: true,
+				close: function() {
+					growl.esconder();
+				}
+			});
+		});
+	}
+
+	function exibirReconhecimentos() {
+		var objetoClicado = $(this);
+		var valorId = objetoClicado.data('valor-id');
+		var colaboradorId = $("#reconhecidoId").val();
+		reconhecimentosPorValorView.exibir(colaboradorId, valorId);
 	}
 
 	function reconhecer() {

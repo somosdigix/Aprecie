@@ -2,14 +2,13 @@ from django.http import JsonResponse
 import pytz
 from django.utils import timezone
 from django.conf import settings
+from Aprecie.base import ExcecaoDeDominio
 
 class ProcessadorDeExcecao(object):
 
 	def process_exception(self, requisicao, excecao):
-		return JsonResponse({
-			'sucesso': False,
-			'mensagem': excecao.args[0]
-		}, status=403)
+		if type(excecao) is ExcecaoDeDominio:
+			return JsonResponse({'sucesso': False, 'mensagem': excecao.args[0]}, status=403)
 
 class TimezoneMiddleware(object):
 	def process_request(self, requisicao):

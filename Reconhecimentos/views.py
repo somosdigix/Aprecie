@@ -5,7 +5,6 @@ from Reconhecimentos.models import Valor, Reconhecimento
 from Reconhecimentos.statics import ValoresDaDigithoBrasil
 from django.db.models import Count
 import json
-import locale
 
 def reconhecer(requisicao):
 	id_do_reconhecedor = requisicao.POST['id_do_reconhecedor']
@@ -22,8 +21,6 @@ def reconhecer(requisicao):
 	return JsonResponse({})
 
 def ultimos_reconhecimentos(requisicao):
-	locale.setlocale(locale.LC_TIME, 'ptb')
-
 	reconhecimentos = Reconhecimento.objects.all().order_by('-data')[:10]
 
 	reconhecimentos_mapeados = list(map(lambda reconhecimento: {
@@ -59,3 +56,10 @@ def reconhecimentos_por_reconhecedor(requisicao, id_do_reconhecido):
 		reconhecedor['reconhecedor__nome'] = Funcionario.obter_primeiro_nome(reconhecedor['reconhecedor__nome'])
 
 	return JsonResponse({'reconhecedores': list(reconhecedores)})
+
+def reconhecimentos_por_valor(requisicao, id_do_colaborador, id_do_valor):
+	colaborador = Funcionario.objects.get(id=id_do_colaborador)
+	reconhecimentos = colaborador.reconhecimentos_por_valor(id_do_valor).values(
+		'justificativa', 'reconhecedor__nome')
+
+	return JsonResponse({'reconhecimentos': list(reconhecimentos)})

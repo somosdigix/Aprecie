@@ -1,0 +1,2 @@
+class ExcecaoDeDominio(Exception):
+	pass

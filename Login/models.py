@@ -1,4 +1,5 @@
 from django.db import models
+from Aprecie.base import ExcecaoDeDominio
 
 class Funcionario(models.Model):
 	nome = models.CharField(max_length='200')
@@ -16,16 +17,16 @@ class Funcionario(models.Model):
 
 	def alterar_foto(self, nova_foto_em_base64):
 		if not nova_foto_em_base64.strip():
-			raise Exception('Foto deve ser informada')
+			raise ExcecaoDeDominio('Foto deve ser informada')
 			
 		self.foto = nova_foto_em_base64
 
 	def reconhecer(self, reconhecedor, valor, justificativa):
 		if reconhecedor == self:
-			raise Exception('O colaborador nao pode reconher a si próprio')
+			raise ExcecaoDeDominio('O colaborador nao pode reconher a si próprio')
 
 		if not justificativa.strip():
-			raise Exception('A sua justificativa deve ser informada')
+			raise ExcecaoDeDominio('A sua justificativa deve ser informada')
 
 		self.reconhecido.create(reconhecedor=reconhecedor, valor=valor, justificativa=justificativa)
 

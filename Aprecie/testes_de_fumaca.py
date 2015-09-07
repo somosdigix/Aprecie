@@ -1,6 +1,7 @@
 from django.test import TestCase
 from django.conf import settings
 import http.client
+import unittest
 
 class TesteDeFumaca(TestCase):
 
