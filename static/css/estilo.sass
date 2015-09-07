@@ -1,0 +1,270 @@
+@import _mixins
+
+*
+  margin: 0
+  padding: 0
+
+body
+  font-family: $font-padrao
+
+img
+  max-width: 100%
+
+p
+  font-size: 1rem
+
+.body-login
+  background-color: $amarelo-terciario
+
+.body-app
+  background-color: $amarelo-terciario
+
+.invisivel
+  display: none
+
+.login, .reconhecer
+  margin: 0 auto
+  max-width: 300px
+  padding: 18px
+  .logo
+    display: block
+    margin-bottom: 19px
+  label
+    display: block
+    font-size: 0.8rem
+    color: #959595
+    margin-bottom: 5px
+  input
+    +box-sizing
+    background-color: transparent
+    border: none
+    border-bottom: 1px solid #9e9e9e
+    height: 2rem
+    width: 100%
+    font-size: 1rem
+    margin: 0 0 15px 0
+    padding: 0
+    transition: all 0.3s
+    color: #747474
+    outline: none
+  button
+    background-color: $rosa-primario
+    font-size: 1rem
+    font-weight: bold
+    text-transform: uppercase
+    color: white
+    width: 100%
+    height: 42px
+    +border-radius(3px)
+    +box-shadow(1px, 1px, 1px, rgba(28, 18, 16, 0.75))
+    border: none
+
+.toolbar
+  background-color: $amarelo-secundario
+  padding: 8px 0
+  margin-bottom: 2em
+  position: fixed
+  top: 0
+  width: 100%
+  right: 0
+  left: 0
+  z-index: 2
+  .logoInterna
+    vertical-align: top
+    display: inline-block
+    width: 10%
+    cursor: pointer
+  .busca
+    width: 50%
+    display: inline-block
+    vertical-align: top
+    margin: 0 2em 0 0
+    border: 1px solid #F4A400
+    input
+      background-color: rgba(255, 230, 171, 0.8)
+      width: 100%
+      color: rgb(173, 121, 13)
+      font-size: 1.2rem
+      padding: 0.5em
+      +box-sizing
+    #colaborador::-webkit-input-placeholder
+      +placeholderInputColaborador
+    #colaborador:-moz-placeholder
+      +placeholderInputColaborador
+    #colaborador::-moz-placeholder
+      +placeholderInputColaborador
+    #colaborador:-ms-input-placeholder
+      +placeholderInputColaborador
+  #linksToolbar
+    width: 31%
+    +displayInlineBlock
+    .menus
+      &:focus
+        display: block
+      .menu-responsivo
+        display: none
+      .meuPerfil, .sair
+        +displayInlineBlock
+      .meuPerfil
+        cursor: pointer
+        width: 80%
+        text-align: right
+        img
+          +displayInlineBlock
+          +avatarPequeno
+        span
+          margin: 0.8em 0.3em
+          display: inline-block
+          color: white
+      .sair
+        width: 5%
+        cursor: pointer
+        color: white
+        margin: 0.8em 0.3em
+
+main
+  margin-top: 88px
+
+.conteudo
+  +box-sizing
+  width: 100%
+  max-width: 800px
+  margin: 0 auto
+  padding: 10px
+
+.feed-reconhecimentos
+  margin-top: 2em
+  background-color: #fafadd
+  padding: 1.2em
+  .fotos
+    width: 14%
+    +displayInlineBlock
+    .img-apreciador
+      +avatarPequeno
+      position: absolute
+      margin: 2.7rem
+    .img-reconhecido
+      +avatarMedio
+      +border-radius(143px)
+  .informacoes
+    +displayInlineBlock
+    width: 84%
+    margin-top: 1rem
+    .texto
+      display: inline-block
+      vertical-align: middle
+      font-size: 0.8rem
+      word-spacing: 0.3rem
+      .apreciador
+        +displayInlineBlock
+        font-size: 1rem
+        color: #A57400
+      strong
+        cursor: pointer
+        font-size: 1.2rem
+      .nome
+        cursor: pointer
+        color: #916806
+        font-size: 1rem
+      .valor
+        display: inline-block
+        font-size: 1rem
+        color: #916806
+        font-weight: bold
+    .data
+      font-size: 0.7rem
+      color: #9197a3
+      font-family: $font-secundaria
+      margin-top: 0.5em
+  p
+    margin-top: 0.6em
+    font-size: 0.9rem
+
+#perfilColaborador
+  display: flex
+  align-items: center
+  .alterar-foto
+    .ion-camera
+      font-size: 2em
+      color: #fff
+      position: absolute
+      vertical-align: bottom
+    .editar input
+      display: none
+    .editar:active input
+      display: block
+  .foto-colaborador
+    +avatarGrande
+    margin: 0 2em 0 0
+
+.informacoes-colaborador
+  .nome-colaborador
+    display: block
+    font-size: 2.2em
+  #iconeValoresRecebido
+    +displayInlineBlock
+    margin: 1.2em 0
+
+#valoresRecebidosComComentarios
+  margin: 3em 0
+  display: flex
+  flex-wrap: wrap
+  .min-width
+    width: 15%
+  .max-width
+    width: 40%
+  section
+    margin: 10px
+    width: 30%
+    text-align: center
+    position: relative
+    .icone-valor
+      width: 100%
+      display: block
+      margin: 0 auto
+    .foto
+      +avatarPequeno
+      position: relative
+    .valor
+      width: 70%
+      display: inline-block
+    .quantidade-de-reconhecimentos
+      display: inline-block
+      vertical-align: top
+      color: white
+      background-color: rgba(137, 51, 140, 0.7)
+      font-weight: bold
+      font-size: 2em
+      min-width: 45px
+      min-height: 45px
+      +border-radius(145px)
+      left: 70%
+      position: absolute
+    .valor-por-reconhecimento
+      +displayInlineBlock
+      height: 50px
+      width: 83%
+      padding-top: 10px
+      font-size: 2em
+      .nome-do-valor
+        font-size: 48%
+    .reconhecedores
+      margin: 10px 0 0 20px
+      text-align: center
+      width: 70px
+      +displayInlineBlock
+      span
+        display: inline-block
+        vertical-align: bottom
+        position: absolute
+        background-color: $amarelo-secundario
+        font-size: 1.5em
+        font-weight: bold
+        color: black
+    .adicionar
+      font-size: 1.5em
+      float: right
+      background-color: $amarelo-secundario
+      width: 50px
+      height: 50px
+      text-align: center
