@@ -1,0 +1,317 @@
+input {
+  outline-color: #BA8517;
+  border: none; }
+
+button {
+  cursor: pointer; }
+
+* {
+  margin: 0;
+  padding: 0; }
+
+body {
+  font-family: "Raleway", sans-serif; }
+
+img {
+  max-width: 100%; }
+
+p {
+  font-size: 1rem; }
+
+.body-login {
+  background-color: #F4E7CA; }
+
+.body-app {
+  background-color: #F4E7CA; }
+
+.invisivel {
+  display: none; }
+
+.login, .reconhecer {
+  margin: 0 auto;
+  max-width: 300px;
+  padding: 18px; }
+  .login .logo, .reconhecer .logo {
+    display: block;
+    margin-bottom: 19px; }
+  .login label, .reconhecer label {
+    display: block;
+    font-size: 0.8rem;
+    color: #959595;
+    margin-bottom: 5px; }
+  .login input, .reconhecer input {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid #9e9e9e;
+    height: 2rem;
+    width: 100%;
+    font-size: 1rem;
+    margin: 0 0 15px 0;
+    padding: 0;
+    transition: all 0.3s;
+    color: #747474;
+    outline: none; }
+  .login button, .reconhecer button {
+    background-color: #dc0028;
+    font-size: 1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: white;
+    width: 100%;
+    height: 42px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -ms-border-radius: 3px;
+    border-radius: 3px;
+    box-shadow: 1px 1px 1px rgba(28, 18, 16, 0.75);
+    -webkit-box-shadow: 1px 1px 1px rgba(28, 18, 16, 0.75);
+    -moz-box-shadow: 1px 1px 1px rgba(28, 18, 16, 0.75);
+    border: none; }
+
+.toolbar {
+  background-color: #e6ae3a;
+  padding: 8px 0;
+  margin-bottom: 2em;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  right: 0;
+  left: 0;
+  z-index: 2; }
+  .toolbar .logoInterna {
+    vertical-align: top;
+    display: inline-block;
+    width: 10%;
+    cursor: pointer; }
+  .toolbar .busca {
+    width: 50%;
+    display: inline-block;
+    vertical-align: top;
+    margin: 0 2em 0 0;
+    border: 1px solid #F4A400; }
+    .toolbar .busca input {
+      background-color: rgba(255, 230, 171, 0.8);
+      width: 100%;
+      color: #ad790d;
+      font-size: 1.2rem;
+      padding: 0.5em;
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box; }
+    .toolbar .busca #colaborador::-webkit-input-placeholder {
+      color: #ad790d;
+      font: 1rem "Raleway", sans-serif;
+      font-weight: 600; }
+    .toolbar .busca #colaborador:-moz-placeholder {
+      color: #ad790d;
+      font: 1rem "Raleway", sans-serif;
+      font-weight: 600; }
+    .toolbar .busca #colaborador::-moz-placeholder {
+      color: #ad790d;
+      font: 1rem "Raleway", sans-serif;
+      font-weight: 600; }
+    .toolbar .busca #colaborador:-ms-input-placeholder {
+      color: #ad790d;
+      font: 1rem "Raleway", sans-serif;
+      font-weight: 600; }
+  .toolbar #linksToolbar {
+    width: 31%;
+    display: inline-block;
+    vertical-align: top; }
+    .toolbar #linksToolbar .menus:focus {
+      display: block; }
+    .toolbar #linksToolbar .menus .menu-responsivo {
+      display: none; }
+    .toolbar #linksToolbar .menus .meuPerfil, .toolbar #linksToolbar .menus .sair {
+      display: inline-block;
+      vertical-align: top; }
+    .toolbar #linksToolbar .menus .meuPerfil {
+      cursor: pointer;
+      width: 80%;
+      text-align: right; }
+      .toolbar #linksToolbar .menus .meuPerfil img {
+        display: inline-block;
+        vertical-align: top;
+        width: 42px;
+        height: 42px;
+        border-radius: 143px; }
+      .toolbar #linksToolbar .menus .meuPerfil span {
+        margin: 0.8em 0.3em;
+        display: inline-block;
+        color: white; }
+    .toolbar #linksToolbar .menus .sair {
+      width: 5%;
+      cursor: pointer;
+      color: white;
+      margin: 0.8em 0.3em; }
+
+main {
+  margin-top: 88px; }
+
+.conteudo {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 10px; }
+
+.feed-reconhecimentos {
+  margin-top: 2em;
+  background-color: #fafadd;
+  padding: 1.2em; }
+  .feed-reconhecimentos .fotos {
+    width: 14%;
+    display: inline-block;
+    vertical-align: top; }
+    .feed-reconhecimentos .fotos .img-apreciador {
+      width: 42px;
+      height: 42px;
+      border-radius: 143px;
+      position: absolute;
+      margin: 2.7rem; }
+    .feed-reconhecimentos .fotos .img-reconhecido {
+      width: 70px;
+      height: 70px;
+      border-radius: 143px;
+      -webkit-border-radius: 143px;
+      -moz-border-radius: 143px;
+      -ms-border-radius: 143px;
+      border-radius: 143px; }
+  .feed-reconhecimentos .informacoes {
+    display: inline-block;
+    vertical-align: top;
+    width: 84%;
+    margin-top: 1rem; }
+    .feed-reconhecimentos .informacoes .texto {
+      display: inline-block;
+      vertical-align: middle;
+      font-size: 0.8rem;
+      word-spacing: 0.3rem; }
+      .feed-reconhecimentos .informacoes .texto .apreciador {
+        display: inline-block;
+        vertical-align: top;
+        font-size: 1rem;
+        color: #A57400; }
+      .feed-reconhecimentos .informacoes .texto strong {
+        cursor: pointer;
+        font-size: 1.2rem; }
+      .feed-reconhecimentos .informacoes .texto .nome {
+        cursor: pointer;
+        color: #916806;
+        font-size: 1rem; }
+      .feed-reconhecimentos .informacoes .texto .valor {
+        display: inline-block;
+        font-size: 1rem;
+        color: #916806;
+        font-weight: bold; }
+    .feed-reconhecimentos .informacoes .data {
+      font-size: 0.7rem;
+      color: #9197a3;
+      font-family: "Open Sans", sans-serif;
+      margin-top: 0.5em; }
+  .feed-reconhecimentos p {
+    margin-top: 0.6em;
+    font-size: 0.9rem; }
+
+#perfilColaborador {
+  display: flex;
+  align-items: center; }
+  #perfilColaborador .alterar-foto .ion-camera {
+    font-size: 2em;
+    color: #fff;
+    position: absolute;
+    vertical-align: bottom; }
+  #perfilColaborador .alterar-foto .editar input {
+    display: none; }
+  #perfilColaborador .alterar-foto .editar:active input {
+    display: block; }
+  #perfilColaborador .foto-colaborador {
+    width: 150px;
+    height: 150px;
+    border-radius: 143px;
+    margin: 0 2em 0 0; }
+
+.informacoes-colaborador .nome-colaborador {
+  display: block;
+  font-size: 2.2em; }
+
+.informacoes-colaborador #iconeValoresRecebido {
+  display: inline-block;
+  vertical-align: top;
+  margin: 1.2em 0; }
+
+#valoresRecebidosComComentarios {
+  margin: 3em 0;
+  display: flex;
+  flex-wrap: wrap; }
+  #valoresRecebidosComComentarios .min-width {
+    width: 15%; }
+  #valoresRecebidosComComentarios .max-width {
+    width: 40%; }
+  #valoresRecebidosComComentarios section {
+    margin: 10px;
+    width: 30%;
+    text-align: center;
+    position: relative; }
+    #valoresRecebidosComComentarios section .icone-valor {
+      width: 100%;
+      display: block;
+      margin: 0 auto; }
+    #valoresRecebidosComComentarios section .foto {
+      width: 42px;
+      height: 42px;
+      border-radius: 143px;
+      position: relative; }
+    #valoresRecebidosComComentarios section .valor {
+      width: 70%;
+      display: inline-block; }
+    #valoresRecebidosComComentarios section .quantidade-de-reconhecimentos {
+      display: inline-block;
+      vertical-align: top;
+      color: white;
+      background-color: rgba(137, 51, 140, 0.7);
+      font-weight: bold;
+      font-size: 2em;
+      min-width: 45px;
+      min-height: 45px;
+      -webkit-border-radius: 145px;
+      -moz-border-radius: 145px;
+      -ms-border-radius: 145px;
+      border-radius: 145px;
+      left: 70%;
+      position: absolute; }
+    #valoresRecebidosComComentarios section .valor-por-reconhecimento {
+      display: inline-block;
+      vertical-align: top;
+      height: 50px;
+      width: 83%;
+      padding-top: 10px;
+      font-size: 2em; }
+      #valoresRecebidosComComentarios section .valor-por-reconhecimento .nome-do-valor {
+        font-size: 48%; }
+    #valoresRecebidosComComentarios section .reconhecedores {
+      margin: 10px 0 0 20px;
+      text-align: center;
+      width: 70px;
+      display: inline-block;
+      vertical-align: top; }
+      #valoresRecebidosComComentarios section .reconhecedores span {
+        display: inline-block;
+        vertical-align: bottom;
+        position: absolute;
+        background-color: #e6ae3a;
+        font-size: 1.5em;
+        font-weight: bold;
+        color: black; }
+    #valoresRecebidosComComentarios section .adicionar {
+      font-size: 1.5em;
+      float: right;
+      background-color: #e6ae3a;
+      width: 50px;
+      height: 50px;
+      text-align: center; }
