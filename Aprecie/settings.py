@@ -11,7 +11,7 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 INSTALLED_APPS = (
-    'django_gulp',
+    #'django_gulp',
     'django.contrib.contenttypes',
     'django.contrib.staticfiles',
     'Login',
