@@ -13,8 +13,6 @@ gulp.task('serve', ['sass'], function() {
 	gulp.watch('static/app/**/*.js').on('change', browserSync.reload);
 });
 
-gulp.task('compile', ['sass']);
-
 gulp.task('sass', function() {
 	gulp.src('static/css/**/*.sass')
 		.pipe(sourcemaps.init())
@@ -30,4 +28,4 @@ gulp.task('sass:watch', function() {
 	gulp.watch('static/css/**/*.sass', ['sass']);
 });
 
-gulp.task('default', ['compile']);
+gulp.task('default', ['serve']);
