@@ -8,13 +8,10 @@ define([
 
 	var reconhecimentosPorValorView = {};
 
-	// reconhecimentosPorValorView.exibir = function(valorId) {
-	// 	console.log(valorId);
-	// 	template.exibir(reconhecimentosPorValorTemplate);
-	// };
-	
 	reconhecimentosPorValorView.exibir = function(colaboradorId, valorId) {	
-		$('#conteudo').off()
+		$('#conteudo')
+			.off()
+			.on('click', 'button[data-js="reconhecer"]', reconhecer)
 			.on('click', 'a[data-js="voltar-ao-perfil"]', function () {
 				voltarParaPerfil(colaboradorId);
 			});
@@ -23,6 +20,27 @@ define([
 			template.exibir(reconhecimentosTemplate, resposta);
 		});
 	};
+
+	function reconhecer() {
+		require([
+			'app/models/reconhecerViewModel',
+			'growl',
+			'roteador'
+		], function(ReconhecerViewModel, growl, roteador) {
+			var reconhecerViewModel = new ReconhecerViewModel();
+			validarOperacao(reconhecerViewModel);
+
+			$.post('/reconhecimentos/reconhecer/', reconhecerViewModel, function() {
+				growl.deSucesso().exibir('Reconhecimento realizado com sucesso');
+				roteador.atualizar();
+			});
+		});
+	}
+
+	function validarOperacao(reconhecerViewModel) {
+		if (reconhecerViewModel.justificativa === '')
+			throw new ViolacaoDeRegra('Sua justificativa deve ser informada');
+	}
 
 	function voltarParaPerfil(reconhecidoId) {
 		require(['roteador'], function(roteador) {

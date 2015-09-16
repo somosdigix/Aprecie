@@ -4,6 +4,7 @@ define([
 ], function(Router, servicoDeAutenticacao) {
 	'use strict';
 
+	var router;
 	var roteador = {};
 
 	roteador.configurar = function() {
@@ -11,7 +12,7 @@ define([
 			'/login': [middlewareDeAutenticacao, middlewareDeToolbar, login],
 			'/paginaInicial': [middlewareDeAutenticacao, middlewareDeToolbar, paginaInicial],
 			'/perfil/:colaboradorId': [middlewareDeAutenticacao, middlewareDeToolbar, perfil],
-			'/reconhecimentosPorValor/:valorId': [middlewareDeAutenticacao, middlewareDeToolbar, reconhecimentosPorValor],
+			'/reconhecimentosPorValor/:colaboradorId/:valorId': [middlewareDeAutenticacao, middlewareDeToolbar, reconhecimentosPorValor],
 			'/perfil/reconhecimentos/valorId:': []
 		};
 
@@ -33,13 +34,13 @@ define([
 			});
 		}
 
-		function reconhecimentosPorValor(valorId) {
+		function reconhecimentosPorValor(colaboradorId, valorId) {
 			require(['app/views/reconhecimentosPorValorView'], function(reconhecimentosPorValorView) {
-				reconhecimentosPorValorView.exibir(valorId);
+				reconhecimentosPorValorView.exibir(colaboradorId, valorId);
 			});
 		}
 
-		var router = Router(rotas);
+		router = Router(rotas);
 		router.init();
 	};
 
@@ -52,6 +53,11 @@ define([
 		var posicaoDaRota = endereco.indexOf('#') + 1;
 
 		return endereco.substring(posicaoDaRota);
+	};
+
+	roteador.atualizar = function() {
+		var rotaAntiCache = roteador.paginaAtual() + '?' + new Date().getTime();
+		router.setRoute(rotaAntiCache);
 	};
 
 	function middlewareDeAutenticacao() {
