@@ -1,9 +1,8 @@
 define([
 	'jquery',
 	'template',
-	'text!partials/reconhecimentosPorValorTemplate.html',
 	'text!partials/reconhecimentosTemplate.html'
-], function($, template, reconhecimentosPorValorTemplate, reconhecimentosTemplate) {
+], function($, template, reconhecimentosTemplate) {
 	'use strict';
 
 	var reconhecimentosPorValorView = {};

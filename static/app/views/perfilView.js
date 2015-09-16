@@ -18,33 +18,13 @@ define([
 			$('#conteudo').off()
 				.on('click', 'section[data-js="exibir-reconhecimentos"]', exibirReconhecimentos);
 
-			if (sessaoDeUsuario.id !== colaboradorId)
-				$('#conteudo')
-					.on('click', 'button[data-js="reconhecer"]', reconhecer)
-					.on('click', 'button[data-js="abrir-justificativa"]', abrirJustificativa)
-					.on('click', 'button[data-js="fechar-justificativa"]', fecharJustificativa);
-			else {
+			if (sessaoDeUsuario.id === colaboradorId) {
 				$('span.ion-camera').show();
 				$('#conteudo').on('click', 'div[data-js="foto"]', enviarFoto);
 				$('input[data-js="alterar-foto"]').off().on('change', alterarFoto);
 			}
 		});
 	};
-
-	function abrirJustificativa() {
-		require(['growl'], function(growl) {
-			$('div[data-js="justificativa"]').dialog({
-				title: 'Justificativa',
-				width: 320,
-				autoOpen: true,
-				appendTo: '#conteudo',
-				modal: true,
-				close: function() {
-					growl.esconder();
-				}
-			});
-		});
-	}
 
 	function exibirReconhecimentos() {
 		var objetoClicado = $(this);
@@ -55,34 +35,6 @@ define([
 
 			roteador.navegarPara('/reconhecimentosPorValor/' + colaboradorId + '/' + valorId);
 		});
-	}
-
-	function reconhecer() {
-		require([
-			'app/models/reconhecerViewModel',
-			'growl',
-			'roteador'
-		], function(ReconhecerViewModel, growl, roteador) {
-			var reconhecerViewModel = new ReconhecerViewModel();
-			validarOperacao(reconhecerViewModel);
-
-			$.post('/reconhecimentos/reconhecer/', reconhecerViewModel, function() {
-				fecharJustificativa();
-				growl.deSucesso().exibir('Reconhecimento realizado com sucesso');
-
-				// TODO: Descobrir como atualiza a mesma página pelo roteador
-				perfilView.exibir(reconhecerViewModel.id_do_reconhecido)
-			});
-		});
-	}
-
-	function validarOperacao(reconhecerViewModel) {
-		if (reconhecerViewModel.justificativa === '')
-			throw new ViolacaoDeRegra('Sua justificativa deve ser informada');
-	}
-
-	function fecharJustificativa() {
-		$('div[data-js="justificativa"]').dialog('close');
 	}
 
 	function enviarFoto() {
