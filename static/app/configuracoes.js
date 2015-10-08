@@ -12,7 +12,10 @@ define([
 				return;
 
 			require(['growl'], function(growl) {
-				var mensagemDeErro = error.replace('Uncaught ViolacaoDeRegra: ', '');
+				var mensagemDeErro = error
+					.replace('ViolacaoDeRegra: ', '')
+					.replace('Uncaught ViolacaoDeRegra: ', '');
+					
 				growl.deErro().exibir(mensagemDeErro);
 			});
 		};
