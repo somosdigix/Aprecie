@@ -1,4 +1,3 @@
-<a href="#" data-js="voltar-ao-perfil">Voltar para o perfil</a>
 
 <div class="conteudo reconhecer">
 	<div id="perfilColaborador">
@@ -20,6 +19,7 @@
 		<button data-js="reconhecer">Reconhecer</button>
 	</p>
 
+
 	{{#each this.reconhecimentos}}
 		<section class="feed-reconhecimentos">
 			<span class="fotos">
@@ -34,4 +34,6 @@
 			<p>{{ this.justificativa }}</p>
 		</section>
 	{{/each}}
+	
+	<a class="botao-voltar" href="#" data-js="voltar-ao-perfil">Voltar para o perfil</a>
 </div>
