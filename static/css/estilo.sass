@@ -46,11 +46,20 @@ p
 .invisivel
 	display: none
 
+.reconhecer
+	margin: 0 auto
+	max-width: 300px
+	padding: 18px
+	border-radius:5px
+	margin-top: 193px
+.login
+	background-color: rgba(255, 255, 255, 0.49)
+
+
 .login, .reconhecer
 	margin: 0 auto
 	max-width: 300px
 	padding: 18px
-	background-color: rgba(255, 255, 255, 0.49)
 	border-radius:5px
 	margin-top: 193px
 
@@ -167,29 +176,36 @@ main
 	margin: 0 auto
 	padding: 10px	
 
+
 .feed-reconhecimentos
 	margin-top: 2em
 	padding: 1.2em
+
 	.fotos
 		width: 14%
 		+displayInlineBlock
-		margin-top: 48px
+		margin-top: 32px
+
 		.img-apreciador
 			+avatarPequeno
 			position: absolute
 			margin: 2.7rem
+
 		.img-reconhecido
 			+avatarMedio
 			+border-radius(143px)
+
 	.informacoes
 		+displayInlineBlock
 		width: 84%
 		margin-top: 1rem
+
 		.texto
 			display: inline-block
 			vertical-align: middle
 			font-size: 0.8rem
-			word-spacing: 0.3rem
+			margin: 20px
+
 			.apreciador
 				+displayInlineBlock
 				font-size: 1rem
@@ -206,14 +222,41 @@ main
 				font-size: 1rem
 				color: #916806
 				font-weight: bold
-		.data
-			font-size: 0.7rem
-			color: #9197a3
-			font-family: $font-secundaria
-			margin-top: 0.5em
-	p
-		margin-top: 0.6em
-		font-size: 0.9rem
+
+			.data
+				font-size: 0.7rem
+				color: #9197a3
+				font-family: $font-secundaria
+				margin-top: 0.5em
+			p
+				font-size: 0.9rem
+				color: #000
+				margin-bottom: 10px
+
+	.balao-reconhecimento
+		position: relative
+		background-color: #fff
+		border-radius: 10px
+		color: #000
+
+		&:after
+			content: ''
+			position: absolute
+			border: 27px solid
+			margin-left: -15px 
+			top: 38%
+			right: 100%
+			margin-top: -15px
+			display: inline-block
+			vertical-align: middle
+			width: 0 
+			height: 0 
+
+			border-top: 25px solid transparent
+			border-bottom: 25px solid transparent 
+			border-left: 25px solid transparent 
+			border-right: 25px solid #fff 
+
 
 #perfilColaborador
 	display: flex
@@ -321,29 +364,3 @@ main
 	text-align: right
 	color: #000			
 
-.balao-reconhecimento
-	position: relative
-	background-color: #fff
-	border-radius: 10px
-	height: 150px
-	line-height: 150px 
-	color: white
-	text-align: center	
-
-	&:after
-		content: ''
-		position: absolute
-		border: 27px solid
-		margin-left: -15px 
-		top: 38%
-		right: 100%
-		margin-top: -15px
-		display: inline-block
-		vertical-align: middle
-		width: 0 
-		height: 0 
-
-		border-top: 25px solid transparent
-		border-bottom: 25px solid transparent 
-		border-left: 25px solid transparent 
-		border-right: 25px solid #fff 
