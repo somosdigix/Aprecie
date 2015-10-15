@@ -1,25 +1,61 @@
+<div class="valores-digitho">
+	<h2>Já conhece os valores da DigithoBrasil? Lê ai</h2>
+	
+	<ul>
+		<li class="valores-itens">
+			<img src="static/img/alegria.png" alt="">
+			<div class="descricao">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ratione, ut numquam possimus?</div>
+		</li>
+
+		<li class="valores-itens">
+			<img src="static/img/colaboracao.png" alt="">
+			<div class="descricao">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ratione, ut numquam possimus?</div>
+		</li>
+		<li class="valores-itens">
+			<img src="static/img/excelencia.png" alt="">
+			<div class="descricao">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ratione, ut numquam possimus?</div>
+		</li>
+		<li class="valores-itens">
+			<img src="static/img/inquietude.png" alt="">
+			<div class="descricao">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ratione, ut numquam possimus?</div>
+		</li>
+		<li class="valores-itens">
+			<img src="static/img/responsabilidade.png" alt="">
+			<div class="descricao">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ratione, ut numquam possimus?</div>
+		</li>
+		<li class="valores-itens">
+			<img src="static/img/resultado.png" alt="">
+			<div class="descricao">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ratione, ut numquam possimus?</div>
+		</li>
+		<li class="valores-itens">
+			<img src="static/img/transparencia.png" alt="">
+			<div class="descricao">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ratione, ut numquam possimus?</div>
+		</li>
+	</ul>
+</div>
 <div class="conteudo">
-	<h2>Últimos reconhecimentos</h2>
+	
+	<h2>Quem apreciou quem, aprecie você também</h2>
 
 	{{#.}}
-	<section class="feed-reconhecimentos">	
+	<section class="feed-reconhecimentos caixa-feed">	
 		<span class="fotos">
 			<img class="img-apreciador" src="{{foto this.foto_do_reconhecedor}}" alt="" />
 			<img class="img-reconhecido" src="{{foto this.foto_do_reconhecido}}" alt="" />
 		</span>		
 
 		<div class="informacoes">			
-			<div class="texto">
+			<div class="dados-apreciados">
 				<strong data-id="{{this.id_do_reconhecedor}}" data-js="ir-ao-perfil" class="apreciador">{{this.nome_do_reconhecedor}}</strong>
 				<span> apreciou </span>
 				<strong data-id="{{this.id_do_reconhecido}}" data-js="ir-ao-perfil" class="nome">{{this.nome_do_reconhecido}}</strong> em <div class="valor">{{this.valor}}</div>
+				<div class="data">{{this.data}}</div>
+				<p>
+					{{this.justificativa}}
+				</p>
 			</div>	
-			<div class="data">{{this.data}}</div>
 		</div>	
 			
-		<p>
-			{{this.justificativa}}
-		</p>
 	</section>
 	{{else}}
 	<article>

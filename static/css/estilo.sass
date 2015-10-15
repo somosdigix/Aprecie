@@ -23,6 +23,12 @@ p
 .branco
 	color: white
 
+
+.caixa-feed
+	background-color: #F5F5F5
+	padding: 16px
+	border-radius: 10px
+
 .fixo
 	position: fixed
 	z-index: 99999
@@ -41,7 +47,7 @@ p
 	background:url(../img/bgLogin.jpg) top center
 
 .body-app
-	background-color: $rosa-primario
+	background-color: #fff
 
 .invisivel
 	display: none
@@ -179,12 +185,11 @@ main
 
 .feed-reconhecimentos
 	margin-top: 2em
-	padding: 1.2em
 
 	.fotos
 		width: 14%
 		+displayInlineBlock
-		margin-top: 32px
+		margin: 20px 0
 
 		.img-apreciador
 			+avatarPequeno
@@ -198,7 +203,38 @@ main
 	.informacoes
 		+displayInlineBlock
 		width: 84%
-		margin-top: 1rem
+
+		.dados-apreciados
+			display: inline-block
+			vertical-align: middle
+			font-size: 0.8rem
+			margin: 20px 0
+
+			.apreciador
+				+displayInlineBlock
+				font-size: 1rem
+				color: #A57400
+			strong
+				cursor: pointer
+				font-size: 1.2rem
+			.nome
+				cursor: pointer
+				color: #916806
+				font-size: 1rem
+			.valor
+				display: inline-block
+				font-size: 1rem
+				color: #916806
+				font-weight: bold
+			.data
+				font-size: 0.7rem
+				color: #9197a3
+				font-family: $font-secundaria
+				margin-top: 0.5em
+			p
+				font-size: 1rem
+				color: #000
+				margin: 10px 0
 
 		.texto
 			display: inline-block
@@ -235,7 +271,7 @@ main
 
 	.balao-reconhecimento
 		position: relative
-		background-color: #fff
+		background-color: #FFF1D3
 		border-radius: 10px
 		color: #000
 
@@ -255,7 +291,7 @@ main
 			border-top: 25px solid transparent
 			border-bottom: 25px solid transparent 
 			border-left: 25px solid transparent 
-			border-right: 25px solid #fff 
+			border-right: 25px solid #FFF1D3 
 
 
 #perfilColaborador
