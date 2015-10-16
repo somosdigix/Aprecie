@@ -1,8 +1,6 @@
 var configuracoes = {
 	baseUrl: 'static',
 
-	urlArgs: 'antiCache=' + (new Date()).getTime(),
-
 	deps: ['app/excecoes/violacaoDeRegra'],
 
 	paths: {
@@ -41,6 +39,9 @@ var configuracoes = {
 	}
 };
 
+var ehDebug = document.getElementById('ehDebug').value === 'True';
+configuracoes.urlArgs = ehDebug ? 'antiCache=' + (new Date()).getTime() : 'antiCache=1';
+
 require.config(configuracoes);
 
 require([
@@ -50,10 +51,11 @@ require([
 	'use strict';
 
 	roteador.configurar();
+	configuracoes.configurarDebug(ehDebug);
 	configuracoes.configurarErros();
 	configuracoes.configurarErrosDeRequisicao();
 	configuracoes.registrarHelpersGlobaisDoHandlebars();
 
-	if (window.location.toString().indexOf('#/') === -1)
+	if (configuracoes.ehDebug)
 		roteador.navegarPara('/login');
 });

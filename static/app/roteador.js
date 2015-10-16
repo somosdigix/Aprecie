@@ -12,8 +12,7 @@ define([
 			'/login': [middlewareDeAutenticacao, middlewareDeToolbar, login],
 			'/paginaInicial': [middlewareDeAutenticacao, middlewareDeToolbar, paginaInicial],
 			'/perfil/:colaboradorId': [middlewareDeAutenticacao, middlewareDeToolbar, perfil],
-			'/reconhecimentosPorValor/:colaboradorId/:valorId': [middlewareDeAutenticacao, middlewareDeToolbar, reconhecimentosPorValor],
-			'/perfil/reconhecimentos/valorId:': []
+			'/reconhecimentosPorValor/:colaboradorId/:valorId': [middlewareDeAutenticacao, middlewareDeToolbar, reconhecimentosPorValor]
 		};
 
 		function login() {

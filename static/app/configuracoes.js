@@ -5,6 +5,7 @@ define([
 	'use strict';
 	
 	var configuracoes = {};
+	var _ehDebug = false;
 
 	configuracoes.configurarErros = function() {
 		window.onerror = function(error) {
@@ -39,8 +40,12 @@ define([
 		});
 	};
 
+	configuracoes.configurarDebug = function(ehDebug) {
+		_ehDebug = ehDebug;
+	};
+
 	configuracoes.ehDebug = function() {
-		return window.location.toString().indexOf('localhost') > -1;
+		return _ehDebug;
 	};
 
 	return configuracoes;
