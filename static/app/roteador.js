@@ -30,13 +30,13 @@ define([
 
 		function perfil(colaboradorId) {
 			require(['app/views/perfilView'], function(perfilView) {
-				perfilView.exibir(colaboradorId);
+				perfilView.exibir(parseInt(colaboradorId));
 			});
 		}
 
 		function reconhecimentosPorValor(colaboradorId, valorId) {
 			require(['app/views/reconhecimentosPorValorView'], function(reconhecimentosPorValorView) {
-				reconhecimentosPorValorView.exibir(colaboradorId, valorId);
+				reconhecimentosPorValorView.exibir(parseInt(colaboradorId), parseInt(valorId));
 			});
 		}
 

@@ -1,22 +1,27 @@
 define([
 	'jquery',
 	'template',
-	'text!partials/reconhecimentosTemplate.html'
-], function($, template, reconhecimentosTemplate) {
+	'text!partials/reconhecimentosTemplate.html',
+	'sessaoDeUsuario'
+], function($, template, reconhecimentosTemplate, sessaoDeUsuario) {
 	'use strict';
 
 	var reconhecimentosPorValorView = {};
 
-	reconhecimentosPorValorView.exibir = function(colaboradorId, valorId) {	
+	reconhecimentosPorValorView.exibir = function(colaboradorId, valorId) {
 		$('#conteudo')
 			.off()
-			.on('click', 'button[data-js="reconhecer"]', reconhecer)
-			.on('click', 'a[data-js="voltar-ao-perfil"]', function () {
+			.on('click', 'a[data-js="voltar-ao-perfil"]', function() {
 				voltarParaPerfil(colaboradorId);
 			});
 
-		$.getJSON('/reconhecimentos/' + colaboradorId + '/' + valorId, {}, function (resposta) {
+		$.getJSON('/reconhecimentos/' + colaboradorId + '/' + valorId, {}, function(resposta) {
 			template.exibir(reconhecimentosTemplate, resposta);
+
+			if (sessaoDeUsuario.id === colaboradorId) {
+				$('#conteudo').on('click', 'button[data-js="reconhecer"]', reconhecer);
+				$('p[data-js="reconhecer"').hide();
+			}
 		});
 	};
 
