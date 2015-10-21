@@ -5,7 +5,7 @@ from django.conf import settings
 def index(requisicao):
 	template = loader.get_template('index.html')
 	context = RequestContext(requisicao, {
-		'eh_debug': settings.DEBUG
+		'eh_debug': not settings.ON_OPENSHIFT
 	})
 
 	return HttpResponse(template.render(context))

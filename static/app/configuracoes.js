@@ -36,6 +36,7 @@ define([
 
 	configuracoes.registrarHelpersGlobaisDoHandlebars = function() {
 		Handlebars.registerHelper('foto', function(base64) {
+			console.log(base64);
 			return base64 ? base64 : 'static/img/sem-foto.png';
 		});
 	};
