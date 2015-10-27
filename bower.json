@@ -18,10 +18,11 @@
     "tests"
   ],
   "dependencies": {
+    "blockUI": "blockui#*",
     "handlebars": "~3.0.3",
     "jquery": "~2.1.4",
+    "jquery.inputmask": "~3.1.63",
     "requirejs": "~2.1.18",
-    "requirejs-text": "~2.0.14",
-    "jquery.inputmask": "~3.1.63"
+    "requirejs-text": "~2.0.14"
   }
 }

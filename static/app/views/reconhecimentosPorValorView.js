@@ -18,10 +18,10 @@ define([
 		$.getJSON('/reconhecimentos/' + colaboradorId + '/' + valorId, {}, function(resposta) {
 			template.exibir(reconhecimentosTemplate, resposta);
 
-			if (sessaoDeUsuario.id === colaboradorId) {
-				$('#conteudo').on('click', 'button[data-js="reconhecer"]', reconhecer);
+			if (sessaoDeUsuario.id === colaboradorId)
 				$('p[data-js="reconhecer"').hide();
-			}
+			else
+				$('#conteudo').on('click', 'button[data-js="reconhecer"]', reconhecer);
 		});
 	};
 

@@ -1,9 +1,10 @@
 define([
 	'jquery',
-	'handlebars'
+	'handlebars',
+	'jquery.blockui'
 ], function($, Handlebars) {
 	'use strict';
-	
+
 	var configuracoes = {};
 	var _ehDebug = false;
 
@@ -14,16 +15,33 @@ define([
 
 			require(['growl'], function(growl) {
 				var mensagemDeErro = error
-					.replace('ViolacaoDeRegra: ', '')
-					.replace('Uncaught ViolacaoDeRegra: ', '');
-					
+					.replace('Uncaught ViolacaoDeRegra: ', '')
+					.replace('ViolacaoDeRegra: ', '');
+
 				growl.deErro().exibir(mensagemDeErro);
 			});
 		};
 	};
 
 	configuracoes.configurarErrosDeRequisicao = function() {
-		$(document).ajaxError(function(evento, jqueryRequest) {
+		var tempo;
+
+		$(document)
+
+		.ajaxStart(function() {
+			tempo = setTimeout(function() {
+				$.blockUI({
+					message: 'Carregando, aguarde...'
+				});
+			}, 200);
+		})
+
+		.ajaxStop(function() {
+			$.unblockUI();
+			clearTimeout(tempo);
+		})
+
+		.ajaxError(function(evento, jqueryRequest) {
 			var statusCode = jqueryRequest.status;
 			var erro = JSON.parse(jqueryRequest.responseText);
 
@@ -36,7 +54,6 @@ define([
 
 	configuracoes.registrarHelpersGlobaisDoHandlebars = function() {
 		Handlebars.registerHelper('foto', function(base64) {
-			console.log(base64);
 			return base64 ? base64 : 'static/img/sem-foto.png';
 		});
 	};

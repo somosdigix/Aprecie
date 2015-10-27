@@ -73,10 +73,14 @@ define([
 
 	function middlewareDeToolbar() {
 		require(['app/views/toolbarView'], function(toolbarView) {
-			if (servicoDeAutenticacao.jaEstaAutenticado() && roteador.paginaAtual() !== '/login')
+			if (servicoDeAutenticacao.jaEstaAutenticado() && roteador.paginaAtual() !== '/login') {
 				toolbarView.exibir();
-			else
+				$('body').removeClass('body-login').addClass('body-app');
+			}
+			else {
 				toolbarView.esconder();
+				$('body').removeClass('body-app').addClass('body-login');
+			}
 		});
 	}
 

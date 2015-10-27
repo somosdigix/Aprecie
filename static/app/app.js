@@ -8,6 +8,7 @@ var configuracoes = {
 		'jquery': 'app/lib/jquery/dist/jquery',
 		'jquery-ui': 'app/lib/jquery-ui/jquery-ui',
 		'jquery.inputmask': 'app/lib/jquery.inputmask/dist/jquery.inputmask.bundle',
+		'jquery.blockui': 'app/lib/blockUI/jquery.blockUI',
 		'handlebars': 'app/lib/handlebars/handlebars.amd',
 		'director': 'app/lib/director/build/director',
 		'roteador': 'app/roteador',
@@ -55,7 +56,4 @@ require([
 	configuracoes.configurarErros();
 	configuracoes.configurarErrosDeRequisicao();
 	configuracoes.registrarHelpersGlobaisDoHandlebars();
-
-	if (configuracoes.ehDebug)
-		roteador.navegarPara('/login');
 });
