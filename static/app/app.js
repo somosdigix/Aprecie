@@ -41,7 +41,7 @@ var configuracoes = {
 };
 
 var ehDebug = document.getElementById('ehDebug').value === 'True';
-configuracoes.urlArgs = ehDebug ? 'antiCache=' + (new Date()).getTime() : 'antiCache=1';
+configuracoes.urlArgs = ehDebug ? 'antiCache=' + (new Date()).getTime() : 'antiCache=2';
 
 require.config(configuracoes);
 
@@ -56,4 +56,7 @@ require([
 	configuracoes.configurarErros();
 	configuracoes.configurarErrosDeRequisicao();
 	configuracoes.registrarHelpersGlobaisDoHandlebars();
+
+	if (roteador.paginaAtual() === '')
+		roteador.navegarPara('/login');
 });

@@ -51,6 +51,9 @@ define([
 		var endereco = window.location.toString();
 		var posicaoDaRota = endereco.indexOf('#') + 1;
 
+		if (posicaoDaRota === 0)
+			return '';
+
 		return endereco.substring(posicaoDaRota);
 	};
 
