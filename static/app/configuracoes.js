@@ -32,7 +32,7 @@ define([
 					$.blockUI({
 						message: 'Carregando, aguarde...'
 					});
-				}, 200);
+				}, 100);
 			})
 			.ajaxStop(desbloquearInterface)
 			.ajaxError(function(evento, jqueryRequest) {

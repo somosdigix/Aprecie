@@ -9,11 +9,15 @@ define([
 
 	roteador.configurar = function() {
 		var rotas = {
-			'/login': [middlewareDeAutenticacao, middlewareDeToolbar, login],
-			'/paginaInicial': [middlewareDeAutenticacao, middlewareDeToolbar, paginaInicial],
-			'/perfil/:colaboradorId': [middlewareDeAutenticacao, middlewareDeToolbar, perfil],
-			'/reconhecimentosPorValor/:colaboradorId/:valorId': [middlewareDeAutenticacao, middlewareDeToolbar, reconhecimentosPorValor]
+			'/login': [middlewareDeAutenticacao, middlewareDeToolbar, limparTela, login],
+			'/paginaInicial': [middlewareDeAutenticacao, middlewareDeToolbar, limparTela, paginaInicial],
+			'/perfil/:colaboradorId': [middlewareDeAutenticacao, middlewareDeToolbar, limparTela, perfil],
+			'/reconhecimentosPorValor/:colaboradorId/:valorId': [middlewareDeAutenticacao, middlewareDeToolbar, limparTela, reconhecimentosPorValor]
 		};
+
+		function limparTela() {
+			$('#conteudo').empty();
+		}
 
 		function login() {
 			require(['app/views/loginView'], function(loginView) {
