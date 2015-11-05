@@ -27,29 +27,30 @@ define([
 		var tempo;
 
 		$(document)
+			.ajaxStart(function() {
+				tempo = setTimeout(function() {
+					$.blockUI({
+						message: 'Carregando, aguarde...'
+					});
+				}, 200);
+			})
+			.ajaxStop(desbloquearInterface)
+			.ajaxError(function(evento, jqueryRequest) {
+				var statusCode = jqueryRequest.status;
+				var erro = JSON.parse(jqueryRequest.responseText);
 
-		.ajaxStart(function() {
-			tempo = setTimeout(function() {
-				$.blockUI({
-					message: 'Carregando, aguarde...'
-				});
-			}, 200);
-		})
+				desbloquearInterface();
 
-		.ajaxStop(function() {
+				if (statusCode === 500)
+					throw new Error(erro.mensagem);
+
+				throw new ViolacaoDeRegra(erro.mensagem);
+			});
+
+		function desbloquearInterface() {
 			$.unblockUI();
 			clearTimeout(tempo);
-		})
-
-		.ajaxError(function(evento, jqueryRequest) {
-			var statusCode = jqueryRequest.status;
-			var erro = JSON.parse(jqueryRequest.responseText);
-
-			if (statusCode === 500)
-				throw new Error(erro.mensagem);
-
-			throw new ViolacaoDeRegra(erro.mensagem);
-		});
+		}
 	};
 
 	configuracoes.registrarHelpersGlobaisDoHandlebars = function() {
