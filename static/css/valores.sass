@@ -1,12 +1,17 @@
 @import _mixins
 
 .valores-digitho
-
+	h2
+		font-size: 15px
+		text-align: center
+		margin: 10px 0
 	ul
 		li
-			padding: 12px
-			list-style:none
-			+displayInlineBlock
+			padding: 4px
+			list-style: none
+			display: inline-block
+			vertical-align: top
+			width: 13%
 
 			img
 				+displayInlineBlock
@@ -20,6 +25,8 @@
 				width: 71%
 
 				
+			&:hover
+				background-color: red		
 				
 .alegria	
 	margin-top: 10px

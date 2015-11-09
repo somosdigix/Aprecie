@@ -2,7 +2,7 @@ define(function() {
 	var sessaoDeUsuario = {};
 
 	sessaoDeUsuario.preencherDados = function(colaborador) {
-		sessaoDeUsuario.id = colaborador.id_do_colaborador;
+		sessaoDeUsuario.id = parseInt(colaborador.id_do_colaborador);
 		sessaoDeUsuario.nome = colaborador.nome_do_colaborador;
 		sessaoDeUsuario.foto = null;
 	};

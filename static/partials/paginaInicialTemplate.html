@@ -1,12 +1,13 @@
-<div class="valores-digitho">
+<div class="conteudo valores-digitho">
 	<h2>Já conhece os valores da DigithoBrasil? Lê ai</h2>
 	
 	<ul>
 		<li class="valores-itens">
 			<img src="static/img/alegria.png" alt="">
-			<div class="descricao alegria">Gostamos do que fazemos e como fazemos;<br>
-			Buscamos proporcionar bem star e sensacao de plenitude as pessoas;<br>
-			Contagiamos a todos com nosso entusiasmo e jeito de ser;	
+			<div class="descricao alegria">
+				Gostamos do que fazemos e como fazemos;
+				Buscamos proporcionar bem star e sensacao de plenitude as pessoas;
+				Contagiamos a todos com nosso entusiasmo e jeito de ser;	
 			</div>
 		</li>
 
@@ -41,8 +42,15 @@
 	
 	<h2>Quem apreciou quem, aprecie você também</h2>
 
+	<div class="por-data">
+		<div class="dia">Hoje</div>		
+		<span></span>
+	</div>
+
 	{{#.}}
 	<section class="feed-reconhecimentos caixa-feed">	
+		<div class="data">{{this.data}}</div>
+
 		<span class="fotos">
 			<img class="img-apreciador" src="{{foto this.foto_do_reconhecedor}}" alt="" />
 			<img class="img-reconhecido" src="{{foto this.foto_do_reconhecido}}" alt="" />
@@ -53,7 +61,6 @@
 				<strong data-id="{{this.id_do_reconhecedor}}" data-js="ir-ao-perfil" class="apreciador">{{this.nome_do_reconhecedor}}</strong>
 				<span> apreciou </span>
 				<strong data-id="{{this.id_do_reconhecido}}" data-js="ir-ao-perfil" class="nome">{{this.nome_do_reconhecido}}</strong> em <div class="valor">{{this.valor}}</div>
-				<div class="data">{{this.data}}</div>
 				<p>
 					{{this.justificativa}}
 				</p>
