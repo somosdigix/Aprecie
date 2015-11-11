@@ -41,7 +41,7 @@ var configuracoes = {
 };
 
 var ehDebug = document.getElementById('ehDebug').value === 'True';
-configuracoes.urlArgs = ehDebug ? 'antiCache=' + (new Date()).getTime() : 'antiCache=2';
+configuracoes.urlArgs = ehDebug ? 'antiCache=' + (new Date()).getTime() : 'antiCache=3';
 
 require.config(configuracoes);
 
