@@ -40,6 +40,7 @@ define([
 			.ajaxComplete(desbloquearInterface)
 			.ajaxError(function(evento, jqueryRequest) {
 				var statusCode = jqueryRequest.status;
+				desbloquearInterface();
 
 				if (statusCode === 500)
 					throw new ErroInesperado('Ih, deu ruim! Por favor, avise o RH. :(');
