@@ -11,9 +11,17 @@ class Funcionario(models.Model):
 	def primeiro_nome(self):
 		return Funcionario.obter_primeiro_nome(self.nome)
 
+	@property
+	def nome_abreviado(self):
+		return Funcionario.obter_primeiro_nome(self.nome) + ' ' + Funcionario.obter_ultimo_nome(self.nome)
+
 	@staticmethod
 	def obter_primeiro_nome(nome):
 		return nome.split(' ')[0]
+
+	@staticmethod
+	def obter_ultimo_nome(nome):
+		return nome.split(' ')[-1]
 
 	def alterar_foto(self, nova_foto_em_base64):
 		if not nova_foto_em_base64.strip():
