@@ -7,6 +7,6 @@ class ServicoDeAutenticacao:
 		funcionario = Funcionario.objects.filter(cpf=cpf, data_de_nascimento=data_de_nascimento)
 
 		if not funcionario:
-			raise ExcecaoDeDominio('Colaborador não encontrado, confirme seus dados e tente novamente')
+			raise ExcecaoDeDominio('Oi! Seus dados não foram encontrados. Confira tente novamente. :)')
 
 		return funcionario[0]
