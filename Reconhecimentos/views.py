@@ -25,10 +25,10 @@ def ultimos_reconhecimentos(requisicao):
 
 	reconhecimentos_mapeados = list(map(lambda reconhecimento: {
 		'id_do_reconhecedor': reconhecimento.reconhecedor.id,
-		'nome_do_reconhecedor': reconhecimento.reconhecedor.nome,
+		'nome_do_reconhecedor': reconhecimento.reconhecedor.nome_abreviado,
 		'foto_do_reconhecedor': reconhecimento.reconhecedor.foto,
 		'id_do_reconhecido': reconhecimento.reconhecido.id,
-		'nome_do_reconhecido': reconhecimento.reconhecido.nome,
+		'nome_do_reconhecido': reconhecimento.reconhecido.nome_abreviado,
 		'foto_do_reconhecido': reconhecimento.reconhecido.foto,
 		'valor': reconhecimento.valor.nome,
 		'justificativa': reconhecimento.justificativa,
@@ -65,7 +65,7 @@ def reconhecimentos_por_valor(requisicao, id_do_reconhecido, id_do_valor):
 		'id_do_valor': valor.id,
 		'nome_do_valor': valor.nome,
 		'id_do_reconhecido': reconhecido.id,
-		'nome_do_reconhecido': reconhecido.nome,
+		'nome_do_reconhecido': reconhecido.nome_abreviado,
 		'foto_do_reconhecido': reconhecido.foto,
 		'reconhecimentos': list(reconhecimentos)
 	}

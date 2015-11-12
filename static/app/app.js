@@ -1,7 +1,10 @@
 var configuracoes = {
 	baseUrl: 'static',
 
-	deps: ['app/excecoes/violacaoDeRegra'],
+	deps: [
+		'app/excecoes/violacaoDeRegra',
+		'app/excecoes/erroInesperado'
+	],
 
 	paths: {
 		'text': 'app/lib/requirejs-text/text',

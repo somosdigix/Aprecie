@@ -1,11 +1,5 @@
-from django.http import HttpResponse
-from django.template import RequestContext, loader
-from django.conf import settings
+from Aprecie import settings
+from django.shortcuts import render
 
 def index(requisicao):
-	template = loader.get_template('index.html')
-	context = RequestContext(requisicao, {
-		'eh_debug': not settings.ON_OPENSHIFT
-	})
-
-	return HttpResponse(template.render(context))
+	return render(requisicao, 'index.html', dict(eh_debug=not settings.ON_OPENSHIFT))

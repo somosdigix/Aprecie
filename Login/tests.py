@@ -84,3 +84,8 @@ class TesteDeColaborador(TestCase):
 		colaborador = FuncionarioFactory()
 
 		self.assertEqual('Alberto', colaborador.primeiro_nome)
+
+	def testa_que_deve_abreviar_o_nome_da_pessoa(self):
+		colaborador = FuncionarioFactory()
+
+		self.assertEqual('Alberto Roberto', colaborador.nome_abreviado)

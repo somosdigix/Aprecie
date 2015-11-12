@@ -27,7 +27,7 @@ def alterar_foto(requisicao):
 
 def obter_funcionarios(requisicao):
 	colaboradores = {
-		'colaboradores': list(Funcionario.objects.all().values('id', 'nome'),)
+		'colaboradores': list(Funcionario.objects.all().values('id', 'nome'))
 	}
 
 	return JsonResponse(colaboradores)
