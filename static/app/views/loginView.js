@@ -14,7 +14,7 @@ define([
 		$('body').removeClass('body-app').addClass('body-login');
 		$('#conteudo').off().on('click', 'button[data-js="autenticar"]', autenticar);
 
-		$('#cpf').inputmask('999.999.999-99').focus();
+		$('#cpf').inputmask('999.999.999-99').focus().on('keyup', focarDataDeNascimento);
 		$('#dataDeNascimento').inputmask('d/m/y');
 
 		if (configuracoes.ehDebug()) {
@@ -22,6 +22,14 @@ define([
 			$('#dataDeNascimento').val('01/01/2015');
 		}
 	};
+
+	function focarDataDeNascimento() {
+		var textoSemMascara = this.value.removerMascaras();
+		var tamanhoDoTextoDigitado = textoSemMascara.length;
+		
+		if (tamanhoDoTextoDigitado === 11)
+			$('#dataDeNascimento').focus();
+	}
 
 	function autenticar(evento) {
 		evento.preventDefault();

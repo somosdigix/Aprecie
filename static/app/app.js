@@ -3,7 +3,8 @@ var configuracoes = {
 
 	deps: [
 		'app/excecoes/violacaoDeRegra',
-		'app/excecoes/erroInesperado'
+		'app/excecoes/erroInesperado',
+		'app/helpers/string',
 	],
 
 	paths: {
