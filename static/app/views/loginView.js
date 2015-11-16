@@ -24,7 +24,7 @@ define([
 	};
 
 	function focarDataDeNascimento() {
-		var textoSemMascara = this.value.removerMascaras();
+		var textoSemMascara = this.value.removerMascara();
 		var tamanhoDoTextoDigitado = textoSemMascara.length;
 		
 		if (tamanhoDoTextoDigitado === 11)
