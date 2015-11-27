@@ -54,7 +54,10 @@ require.config(configuracoes);
 
 require([
 	'roteador',
-	'configuracoes'
+	'configuracoes',
+
+	// TODO: Colocar no "deps" do RequireJS
+	'jquery.inputmask'
 ], function(roteador, configuracoes) {
 	'use strict';
 

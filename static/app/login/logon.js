@@ -16,6 +16,7 @@ define(function() {
 	};
 
 	function ajustarCampos() {
+		// TODO: Transformar estes ajustes em WebComponents e tirá-los daqui
 		$('body').removeClass('body-app').addClass('body-login');
 		$('#cpf').inputmask('999.999.999-99').focus().on('keyup', focarDataDeNascimento);
 		$('#dataDeNascimento').inputmask('d/m/y');
