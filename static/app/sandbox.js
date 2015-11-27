@@ -1,8 +1,9 @@
 define([
 	'jquery',
+	'app/helpers/ajax',
 	'roteador',
 	'configuracoes'
-], function($, roteador, configuracoes) {
+], function($, ajax, roteador, configuracoes) {
 	'use strict';
 
 	function Sandbox(controlador) {
@@ -46,11 +47,7 @@ define([
 		};
 
 		self.post = function(url, dados) {
-			var acao = function(resolver, rejeitar) {
-				$.post(url, dados).done(resolver).fail(rejeitar);
-			};
-
-			return new Promise(acao);
+			return ajax.post(url, dados);
 		};
 
 		self.registrarEvento = function(evento, container, alvo, callback) {
