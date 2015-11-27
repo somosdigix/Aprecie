@@ -20,8 +20,9 @@ define([
 		}
 
 		function login() {
-			require(['app/views/loginView'], function(loginView) {
-				loginView.exibir();
+			require(['app/views/loginView', 'app/controllers/loginController'], function(loginView, loginController) {
+				// loginView.exibir();
+				loginController.exibir();
 			});
 		}
 

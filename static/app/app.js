@@ -15,6 +15,8 @@ var configuracoes = {
 		'jquery.blockui': 'app/lib/blockUI/jquery.blockUI',
 		'handlebars': 'app/lib/handlebars/handlebars.amd',
 		'director': 'app/lib/director/build/director',
+		'sandbox': 'app/sandbox',
+		'gerenciadorDeModulos': 'app/gerenciadorDeModulos',
 		'roteador': 'app/roteador',
 		'configuracoes': 'app/configuracoes',
 		'template': 'app/helpers/template',
@@ -44,8 +46,9 @@ var configuracoes = {
 	}
 };
 
+// TODO: Automatizar essa feiura na build
 var ehDebug = document.getElementById('ehDebug').value === 'True';
-configuracoes.urlArgs = ehDebug ? 'antiCache=' + (new Date()).getTime() : 'antiCache=3';
+configuracoes.urlArgs = ehDebug ? 'antiCache=' + (new Date()).getTime() : 'antiCache=4';
 
 require.config(configuracoes);
 
