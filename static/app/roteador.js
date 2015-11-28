@@ -6,11 +6,12 @@ define([
 
 	var router;
 	var roteador = {};
+	var _controllerAtivo;
 
 	roteador.configurar = function() {
 		var rotas = {
 			'/login': [middlewareDeAutenticacao, middlewareDeToolbar, limparTela, login],
-			'/paginaInicial': [middlewareDeAutenticacao, middlewareDeToolbar, limparTela, paginaInicial],
+			'/paginaInicial': [middlewareDeAutenticacao, middlewareDeTransicaoDeTela, middlewareDeToolbar, limparTela, paginaInicial],
 			'/perfil/:colaboradorId': [middlewareDeAutenticacao, middlewareDeToolbar, limparTela, perfil],
 			'/reconhecimentosPorValor/:colaboradorId/:valorId': [middlewareDeAutenticacao, middlewareDeToolbar, limparTela, reconhecimentosPorValor]
 		};
@@ -21,6 +22,7 @@ define([
 
 		function login() {
 			require(['app/controllers/loginController'], function(loginController) {
+				_controllerAtivo = loginController;
 				loginController.exibir();
 			});
 		}
@@ -76,6 +78,11 @@ define([
 		}
 
 		servicoDeAutenticacao.atualizarSessaoDeUsuario();
+	}
+
+	function middlewareDeTransicaoDeTela() {
+		if (_controllerAtivo)
+			_controllerAtivo.finalizar();
 	}
 
 	function middlewareDeToolbar() {

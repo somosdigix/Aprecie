@@ -9,6 +9,10 @@ define(function() {
 		_sandbox.escutar('autenticar', validarAutenticacao);
 	};
 
+	self.finalizar = function() {
+		_sandbox.removerEscuta('autenticar');
+	};
+
 	function validarAutenticacao(cpf, dataDeNascimento) {
 		var loginViewModel = new LoginViewModel();
 
@@ -18,11 +22,10 @@ define(function() {
 	}
 
 	function autenticar(colaborador) {
-		// TODO: Transformar em modulo e desacoplar esta dependência
-		require(['app/servicos/servicoDeAutenticacao'], function(servicoDeAutenticacao) {
-			servicoDeAutenticacao.autenticar(colaborador);
-			_sandbox.navegarPara('/paginaInicial');
-		});
+		_sandbox.preencherSessao(colaborador);
+		_sandbox.preencherCookie(colaborador);
+
+		_sandbox.navegarPara('/paginaInicial');
 	}
 
 	function validarOperacao(loginViewModel) {

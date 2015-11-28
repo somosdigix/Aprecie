@@ -7,11 +7,15 @@ define([
 
 	var self = {};
 
-	self.exibir = function () {
+	self.exibir = function() {
 		gerenciadorDeModulos.registrar('logon', logon);
 		gerenciadorDeModulos.registrar('autenticacao', autenticacao);
 
 		gerenciadorDeModulos.iniciarTodos();
+	};
+
+	self.finalizar = function() {
+		gerenciadorDeModulos.finalizarTodos();
 	};
 
 	return self;

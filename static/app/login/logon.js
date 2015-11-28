@@ -12,7 +12,8 @@ define(function() {
 	};
 
 	self.finalizar = function() {
-		_sandbox.removerEventos('#conteudo');
+		_sandbox.limpar('#conteudo');
+		_sandbox.removerEvento('#conteudo');
 	};
 
 	function ajustarCampos() {

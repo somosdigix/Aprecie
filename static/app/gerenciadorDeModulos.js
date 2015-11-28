@@ -39,6 +39,10 @@ define([
 		_eventos[nomeDoEvento] = callback;
 	};
 
+	self.removerEscuta = function(nomeDoEvento) {
+		delete _eventos[nomeDoEvento];
+	};
+
 	self.notificar = function(nomeDoEvento, dados) {
     	var parametros = Array.prototype.slice.call(arguments);
 		var nomeDoEvento = parametros[0];

@@ -2,14 +2,15 @@ define([
 	'jquery',
 	'app/helpers/ajax',
 	'roteador',
-	'configuracoes'
-], function($, ajax, roteador, configuracoes) {
+	'configuracoes',
+	'app/servicos/servicoDeAutenticacao'
+], function($, ajax, roteador, configuracoes, servicoDeAutenticacao) {
 	'use strict';
 
-	function Sandbox(controlador) {
+	function Sandbox(gerenciadorDeModulos) {
 		var self = this;
 		var eventos = {};
-		var _controlador = controlador;
+		var _gerenciadorDeModulos = gerenciadorDeModulos;
 
 		self.ehDebug = function() {
 			return configuracoes.ehDebug();
@@ -38,12 +39,20 @@ define([
 			return new Promise(acao);
 		};
 
+		self.limpar = function(seletor) {
+			$(seletor).empty();
+		};
+
 		self.escutar = function(nomeDoEvento, callback) {
-			_controlador.escutar(nomeDoEvento, callback);
+			_gerenciadorDeModulos.escutar(nomeDoEvento, callback);
+		};
+
+		self.removerEscuta = function(nomeDoEvento) {
+			_gerenciadorDeModulos.removerEscuta(nomeDoEvento);
 		};
 
 		self.notificar = function(nomeDoEvento, callback) {
-			_controlador.notificar.apply(this, arguments);
+			_gerenciadorDeModulos.notificar.apply(this, arguments);
 		};
 
 		self.post = function(url, dados) {
@@ -60,6 +69,17 @@ define([
 
 		self.alterarTexto = function(seletor, novoTexto) {
 			$(seletor).text(novoTexto);
+		};
+
+		self.preencherSessao = function(colaborador) {
+			require(['sessaoDeUsuario'], function(sessaoDeUsuario) {
+				// TODO: Feiamente dizendo, está sendo feito pelo autenticador abaixo
+				// sessaoDeUsuario.preencherDados(colaborador);
+			});
+		};
+
+		self.preencherCookie = function(colaborador) {
+			servicoDeAutenticacao.autenticar(colaborador);
 		};
 	}
 
