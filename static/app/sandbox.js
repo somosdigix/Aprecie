@@ -4,8 +4,9 @@ define([
 	'roteador',
 	'configuracoes',
 	'sessaoDeUsuario',
-	'app/servicos/servicoDeAutenticacao'
-], function($, ajax, roteador, configuracoes, sessaoDeUsuario, servicoDeAutenticacao) {
+	'app/servicos/servicoDeAutenticacao',
+	'template'
+], function($, ajax, roteador, configuracoes, sessaoDeUsuario, servicoDeAutenticacao, template) {
 	'use strict';
 
 	function Sandbox(gerenciadorDeModulos) {
@@ -22,22 +23,7 @@ define([
 		};
 
 		self.exibirTemplate = function(container, nomeDoTemplate, dados) {
-			var acao = function(resolver) {
-				var urlDoTemplate = 'text!partials/' + nomeDoTemplate;
-
-				require([
-					urlDoTemplate,
-					'handlebars'
-				], function(template, Handlebars) {
-					var jContainer = $(container);
-					var conteudo = Handlebars.compile(template)(dados);
-
-					jContainer.append(conteudo);
-					resolver();
-				});
-			};
-
-			return new Promise(acao);
+			return template.exibirComRequire(container, nomeDoTemplate, dados);
 		};
 
 		self.limpar = function(seletor) {
