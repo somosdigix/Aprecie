@@ -10,10 +10,10 @@ define([
 
 	roteador.configurar = function() {
 		var rotas = {
-			'/login': [middlewareDeAutenticacao, middlewareDeToolbar, limparTela, login],
+			'/login': [middlewareDeAutenticacao, middlewareDeTransicaoDeTela, middlewareDeToolbar, limparTela, login],
 			'/paginaInicial': [middlewareDeAutenticacao, middlewareDeTransicaoDeTela, middlewareDeToolbar, limparTela, paginaInicial],
-			'/perfil/:colaboradorId': [middlewareDeAutenticacao, middlewareDeToolbar, limparTela, perfil],
-			'/reconhecimentosPorValor/:colaboradorId/:valorId': [middlewareDeAutenticacao, middlewareDeToolbar, limparTela, reconhecimentosPorValor]
+			'/perfil/:colaboradorId': [middlewareDeAutenticacao, middlewareDeTransicaoDeTela, middlewareDeToolbar, limparTela, perfil],
+			'/reconhecimentosPorValor/:colaboradorId/:valorId': [middlewareDeAutenticacao, middlewareDeTransicaoDeTela, middlewareDeToolbar, limparTela, reconhecimentosPorValor]
 		};
 
 		function limparTela() {

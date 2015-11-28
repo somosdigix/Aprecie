@@ -7,7 +7,6 @@ define([
 	var servicoDeAutenticacao = {};
 
 	servicoDeAutenticacao.autenticar = function(colaborador) {
-		sessaoDeUsuario.preencherDados(colaborador);
 		cookie.criar('id', colaborador.id_do_colaborador);
 		cookie.criar('nome', colaborador.nome_do_colaborador);
 	};

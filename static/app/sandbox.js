@@ -3,8 +3,9 @@ define([
 	'app/helpers/ajax',
 	'roteador',
 	'configuracoes',
+	'sessaoDeUsuario',
 	'app/servicos/servicoDeAutenticacao'
-], function($, ajax, roteador, configuracoes, servicoDeAutenticacao) {
+], function($, ajax, roteador, configuracoes, sessaoDeUsuario, servicoDeAutenticacao) {
 	'use strict';
 
 	function Sandbox(gerenciadorDeModulos) {
@@ -72,10 +73,7 @@ define([
 		};
 
 		self.preencherSessao = function(colaborador) {
-			require(['sessaoDeUsuario'], function(sessaoDeUsuario) {
-				// TODO: Feiamente dizendo, está sendo feito pelo autenticador abaixo
-				// sessaoDeUsuario.preencherDados(colaborador);
-			});
+			sessaoDeUsuario.preencherDados(colaborador);
 		};
 
 		self.preencherCookie = function(colaborador) {
