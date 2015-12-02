@@ -11,7 +11,9 @@ define([
 		var _sandbox;
 
 		beforeEach(function() {
+			configuracoes.configurarDebug(false);
 			_sandbox = new Sandbox();
+
 			$('body').addClass('body-app').append('<main id="conteudo"></main>');
 		});
 
@@ -71,9 +73,20 @@ define([
 			expect($('#dataDeNascimento').val()).toBe('01/01/2015');
 		});
 
+		it('deve vir com os dados de login vazios caso não esteja em modo debug', function() {
+			configuracoes.configurarDebug(false);
+
+			logon.inicializar(_sandbox);
+
+			expect($('#cpf').val()).toBe('');
+			expect($('#dataDeNascimento').val()).toBe('');
+		});
+
 		it('deve disparar evento de autenticação ao clicar para realizar login', function() {
 			spyOn(_sandbox, 'notificar');
 			logon.inicializar(_sandbox);
+			$('#cpf').val('00000000000');
+			$('#dataDeNascimento').val('01012015');
 
 			$('button[data-js="autenticar"]').click();
 
