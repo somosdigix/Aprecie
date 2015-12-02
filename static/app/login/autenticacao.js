@@ -14,11 +14,14 @@ define(function() {
 	};
 
 	function validarAutenticacao(cpf, dataDeNascimento) {
-		var loginViewModel = new LoginViewModel();
+		var parametros = {
+			cpf: cpf,
+			data_de_nascimento: dataDeNascimento
+		};
 
-		validarOperacao(loginViewModel);
+		validarOperacao(parametros);
 
-		_sandbox.post('/login/entrar/', loginViewModel).then(autenticar);
+		_sandbox.post('/login/entrar/', parametros).then(autenticar);
 	}
 
 	function autenticar(colaborador) {
@@ -28,19 +31,12 @@ define(function() {
 		_sandbox.navegarPara('/paginaInicial');
 	}
 
-	function validarOperacao(loginViewModel) {
-		if (loginViewModel.cpf === '')
+	function validarOperacao(parametros) {
+		if (parametros.cpf === '' || parametros.cpf === undefined)
 			throw new ViolacaoDeRegra('CPF deve ser informado');
 
-		if (loginViewModel.data_de_nascimento === '')
+		if (parametros.data_de_nascimento === '' || parametros.data_de_nascimento === undefined)
 			throw new ViolacaoDeRegra('Data de nascimento deve ser informada');
-	}
-
-	function LoginViewModel() {
-		var self = this;
-
-		self.cpf = $('#cpf').val().replace(/\./g, '').replace('-', '');
-		self.data_de_nascimento = $('#dataDeNascimento').val();
 	}
 
 	return self;

@@ -17,7 +17,9 @@ module.exports = function(config) {
 		files: [
 			'test-main.js',
 			'lib/promise-polyfill/Promise.js',
-			'app/helpers/string.js', {
+			'app/helpers/string.js',
+			'app/excecoes/violacaoDeRegra.js',
+			'app/excecoes/erroInesperado.js', {
 				pattern: 'partials/*.html',
 				included: false
 			}, {
