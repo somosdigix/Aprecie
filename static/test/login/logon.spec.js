@@ -92,5 +92,23 @@ define([
 
 			expect(_sandbox.notificar).toHaveBeenCalledWith('autenticar', '00000000000', '01/01/2015');
 		});
+
+		it('deve limpar o conteudo ao finalizar', function() {
+			logon.inicializar(_sandbox);
+
+			logon.finalizar();
+
+			expect($('#conteudo').html()).toBe('');
+		});
+
+		it('deve remover evento de autenticação ao finalizar', function() {
+			spyOn(_sandbox, 'notificar');
+			logon.inicializar(_sandbox);
+			
+			logon.finalizar();
+			$('button[data-js="autenticar"]').click();
+
+			expect(_sandbox.notificar).not.toHaveBeenCalled();
+		});
 	});
 });
