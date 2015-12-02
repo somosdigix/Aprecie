@@ -1,4 +1,6 @@
-define(function() {
+define([
+	'text!partials/loginTemplate.html'
+], function(loginTemplate) {
 	'use strict';
 
 	var self = {};
@@ -7,8 +9,10 @@ define(function() {
 	self.inicializar = function(sandbox) {
 		_sandbox = sandbox;
 
-		_sandbox.exibirTemplate('#conteudo', 'loginTemplate.html').then(ajustarCampos);
+		_sandbox.exibirTemplate('#conteudo', loginTemplate);
 		_sandbox.registrarEvento('click', '#conteudo', 'button[data-js="autenticar"]', autenticar);
+
+		ajustarCampos();
 	};
 
 	self.finalizar = function() {

@@ -1,6 +1,6 @@
 define([
 	'sessaoDeUsuario',
-	'cookie'
+	'app/helpers/cookie'
 ], function(sessaoDeUsuario, cookie) {
 	'use strict';
 

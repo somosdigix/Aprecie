@@ -5,7 +5,7 @@ define([
 	'configuracoes',
 	'sessaoDeUsuario',
 	'app/servicos/servicoDeAutenticacao',
-	'template'
+	'app/helpers/template'
 ], function($, ajax, roteador, configuracoes, sessaoDeUsuario, servicoDeAutenticacao, template) {
 	'use strict';
 
@@ -22,8 +22,8 @@ define([
 			roteador.navegarPara(endereco);
 		};
 
-		self.exibirTemplate = function(container, nomeDoTemplate, dados) {
-			return template.exibirComRequire(container, nomeDoTemplate, dados);
+		self.exibirTemplate = function(container, conteudo, dados) {
+			return template.exibirEm(container, conteudo, dados);
 		};
 
 		self.limpar = function(seletor) {

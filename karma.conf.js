@@ -15,7 +15,33 @@ module.exports = function(config) {
 
 		// list of files / patterns to load in the browser
 		files: [
-			'test-main.js', {
+			'test-main.js',
+			'lib/promise-polyfill/Promise.js',
+			'app/helpers/string.js', {
+				pattern: 'partials/*.html',
+				included: false
+			}, {
+				pattern: 'lib/requirejs-text/text.js',
+				included: false
+			}, {
+				pattern: 'lib/jquery/dist/jquery.js',
+				included: false
+			}, {
+				pattern: 'lib/jquery-ui/jquery-ui.js',
+				included: false
+			}, {
+				pattern: 'lib/jquery.inputmask/dist/jquery.inputmask.bundle.js',
+				included: false
+			}, {
+				pattern: 'lib/blockUI/jquery.blockUI.js',
+				included: false
+			}, {
+				pattern: 'lib/handlebars/handlebars.amd.js',
+				included: false
+			}, {
+				pattern: 'lib/director/build/director.js',
+				included: false
+			}, {
 				pattern: 'app/**/*.js',
 				included: false
 			}, {
@@ -24,10 +50,8 @@ module.exports = function(config) {
 			}
 		],
 
-
 		// list of files to exclude
-		exclude: ['app/lib/director/**/*.js'],
-
+		exclude: [],
 
 		// preprocess matching files before serving them to the browser
 		// available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
@@ -37,8 +61,14 @@ module.exports = function(config) {
 		// test results reporter to use
 		// possible values: 'dots', 'progress'
 		// available reporters: https://npmjs.org/browse/keyword/karma-reporter
-		reporters: ['dots'],
+		reporters: ['mocha'],
 
+		junitReporter: {
+			outputDir: '', // results will be saved as $outputDir/$browserName.xml
+			outputFile: undefined, // if included, results will be saved as $outputDir/$browserName/$outputFile
+			suite: '', // suite will become the package name attribute in xml testsuite element
+			useBrowserName: true // add browser name to report and classes names
+		},
 
 		// web server port
 		port: 9876,
