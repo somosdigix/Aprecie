@@ -42,10 +42,10 @@ define([
 			expect($('#cpf').val()).toBe('000.000.000-00');
 		});
 
-		xit('deve focar campo de CPF', function() {
+		it('deve focar campo de CPF', function() {
 			logon.inicializar(_sandbox);
-			
-			expect($('#cpf').is(':focus')).toBe(true);
+
+			expect(document.activeElement.id).toBe('cpf');
 		});
 
 		it('deve mascarar o campo de data de nascimento', function() {
@@ -56,12 +56,12 @@ define([
 			expect($('#dataDeNascimento').val()).toBe('10/10/2010');
 		});
 
-		xit('deve focar o campo de data de nascimento ao finalizar o preenchimento do CPF', function() {
+		it('deve focar o campo de data de nascimento ao finalizar o preenchimento do CPF', function() {
 			logon.inicializar(_sandbox);
 
 			$('#cpf').val('00000000000').trigger('keyup');
 
-			expect($('#dataDeNascimento').is(':focus')).toBe(true);
+			expect(document.activeElement.id).toBe('dataDeNascimento');
 		});
 
 		it('deve preencher os dados de login com dados falsos caso esteja em modo debug', function() {
