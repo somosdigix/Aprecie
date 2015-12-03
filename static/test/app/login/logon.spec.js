@@ -18,7 +18,7 @@ define([
 		});
 
 		afterEach(function() {
-			$('#conteudo').remove();
+			logon.finalizar();
 		});
 
 		it('deve exibir seu conteudo', function() {

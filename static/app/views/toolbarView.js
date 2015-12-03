@@ -74,7 +74,7 @@ define([
 
 	function sair() {
 		require([
-			'cookie',
+			'app/helpers/cookie',
 			'roteador'
 		], function(cookie, roteador) {
 			cookie.limpar();
