@@ -17,6 +17,8 @@ define([
 			};
 
 			spyOn(_sandbox, 'post').and.returnValue(new FakePromise(_dadosDeLogin));
+			spyOn(_sandbox, "preencherSessao");
+			spyOn(_sandbox, "preencherCookie");
 			spyOn(_sandbox, 'navegarPara');
 		});
 
@@ -73,7 +75,6 @@ define([
 		});
 
 		it('deve preencher a sessão com dados do usuario autenticado', function() {
-			spyOn(_sandbox, "preencherSessao");
 			autenticacao.inicializar(_sandbox);
 
 			_sandbox.notificar('autenticar', _dadosDeLogin.cpf, _dadosDeLogin.data_de_nascimento);
@@ -82,7 +83,6 @@ define([
 		});
 
 		it('deve preencher o cookie com dados do usuario autenticado', function() {
-			spyOn(_sandbox, "preencherCookie");
 			autenticacao.inicializar(_sandbox);
 
 			_sandbox.notificar('autenticar', _dadosDeLogin.cpf, _dadosDeLogin.data_de_nascimento);
