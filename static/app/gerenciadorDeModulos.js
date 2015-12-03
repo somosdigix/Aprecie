@@ -40,7 +40,10 @@ define([
 	};
 
 	self.removerEscuta = function(nomeDoEvento) {
-		delete _eventos[nomeDoEvento];
+		var evento = _eventos[nomeDoEvento];
+
+		if (evento)
+			delete _eventos[nomeDoEvento];
 	};
 
 	self.notificar = function(nomeDoEvento, dados) {

@@ -44,6 +44,9 @@ module.exports = function(config) {
 				pattern: 'lib/director/build/director.js',
 				included: false
 			}, {
+				pattern: 'test/helpers/*.js',
+				included: false
+			}, {
 				pattern: 'app/**/*.js',
 				included: false
 			}, {

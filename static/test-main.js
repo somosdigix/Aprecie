@@ -34,7 +34,8 @@ require.config({
 		'template': 'app/helpers/template',
 		'cookie': 'app/helpers/cookie',
 		'growl': 'app/helpers/growl',
-		'sessaoDeUsuario': 'app/models/sessaoDeUsuario'
+		'sessaoDeUsuario': 'app/models/sessaoDeUsuario',
+		'fakePromise': 'test/helpers/fakePromise'
 	},
 
 	shim: {
