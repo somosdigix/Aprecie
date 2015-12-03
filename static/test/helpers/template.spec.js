@@ -1,6 +1,6 @@
 define([
 	'jquery',
-	'app/helpers/template'
+	'template'
 ], function($, template) {
 	'use strict';
 

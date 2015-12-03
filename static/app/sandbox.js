@@ -5,7 +5,7 @@ define([
 	'configuracoes',
 	'sessaoDeUsuario',
 	'app/servicos/servicoDeAutenticacao',
-	'app/helpers/template'
+	'template'
 ], function($, ajax, roteador, configuracoes, sessaoDeUsuario, servicoDeAutenticacao, template) {
 	'use strict';
 
