@@ -15,6 +15,7 @@ define([
 	};
 
 	self.finalizar = function() {
+		// TODO: Unificar se for igual a todos os controllers
 		gerenciadorDeModulos.finalizarTodos();
 		gerenciadorDeModulos.removerTodos();
 	};
