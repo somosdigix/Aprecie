@@ -16,6 +16,7 @@ define([
 
 	self.finalizar = function() {
 		gerenciadorDeModulos.finalizarTodos();
+		gerenciadorDeModulos.removerTodos();
 	};
 
 	return self;

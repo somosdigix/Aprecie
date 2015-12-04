@@ -22,6 +22,11 @@ define([
 			modulo.finalizar();
 	};
 
+	self.remover = function(moduloId) {
+		if (_modulos[moduloId])
+			delete _modulos[moduloId];
+	};
+
 	self.iniciarTodos = function() {
 		for (var moduloId in _modulos)
 			self.iniciar(moduloId);
@@ -30,6 +35,11 @@ define([
 	self.finalizarTodos = function() {
 		for (var moduloId in _modulos)
 			self.finalizar(moduloId);
+	};
+
+	self.removerTodos = function() {
+		for (var moduloId in _modulos)
+			self.remover(moduloId);
 	};
 
 	self.escutar = function(nomeDoEvento, callback) {
