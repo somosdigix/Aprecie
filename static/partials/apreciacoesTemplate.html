@@ -1,0 +1,32 @@
+<div class="conteudo feed-principal">
+	<h2>Quem apreciou quem, aprecie você também</h2>
+
+	{{#.}}
+	<section class="feed-reconhecimentos caixa-feed">	
+		<div class="data">{{this.data}}</div>
+
+		<span class="fotos">
+			<img class="img-apreciador" src="{{foto this.foto_do_reconhecedor}}" alt="" />
+			<img class="img-reconhecido" src="{{foto this.foto_do_reconhecido}}" alt="" />
+		</span>
+
+		<div class="informacoes">			
+			<div class="dados-apreciados">
+				<strong data-id="{{this.id_do_reconhecedor}}" data-js="ir-ao-perfil" class="apreciador">{{this.nome_do_reconhecedor}}</strong>
+				<span> apreciou </span>
+				<strong data-id="{{this.id_do_reconhecido}}" data-js="ir-ao-perfil" class="nome">{{this.nome_do_reconhecido}}</strong> em <div class="valor">{{this.valor}}</div>
+				<p>
+					{{this.justificativa}}
+				</p>
+			</div>	
+		</div>	
+			
+	</section>
+	{{else}}
+	<article>
+		<p>
+			Não houveram reconhecimentos até o momento.
+		</p>
+	</article>
+	{{/.}}
+</div>

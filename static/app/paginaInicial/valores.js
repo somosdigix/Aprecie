@@ -9,7 +9,7 @@ define([
 	self.inicializar = function(sandbox) {
 		_sandbox = sandbox;
 
-		_sandbox.exibirTemplate('#conteudo', valoresDaEmpresaTemplate);
+		_sandbox.exibirTemplateEm('#conteudo', valoresDaEmpresaTemplate);
 	};
 
 	self.finalizar = function() {

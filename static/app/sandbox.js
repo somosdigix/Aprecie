@@ -22,8 +22,16 @@ define([
 			roteador.navegarPara(endereco);
 		};
 
-		self.exibirTemplate = function(container, conteudo, dados) {
-			return template.exibirEm(container, conteudo, dados);
+		self.exibirTemplate = function(conteudo, modelo) {
+			template.exibir(conteudo, modelo);
+		};
+
+		self.exibirTemplateEm = function(container, conteudo, modelo) {
+			template.exibirEm(container, conteudo, modelo);
+		};
+
+		self.acrescentarTemplateEm = function(container, conteudo, modelo) {
+			template.acrescentarEm(container, conteudo, modelo);
 		};
 
 		self.limpar = function(seletor) {
@@ -42,6 +50,10 @@ define([
 			_gerenciadorDeModulos.notificar.apply(this, arguments);
 		};
 
+		self.getJSON = function(url, parametros) {
+			return ajax.getJSON(url, parametros);
+		};
+
 		self.post = function(url, dados) {
 			return ajax.post(url, dados);
 		};
@@ -56,6 +68,10 @@ define([
 
 		self.alterarTexto = function(seletor, novoTexto) {
 			$(seletor).text(novoTexto);
+		};
+
+		self.data = function(seletor, nomeDoAtributo) {
+			return $(seletor).data(nomeDoAtributo)
 		};
 
 		self.preencherSessao = function(colaborador) {

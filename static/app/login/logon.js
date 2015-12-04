@@ -9,7 +9,7 @@ define([
 	self.inicializar = function(sandbox) {
 		_sandbox = sandbox;
 
-		_sandbox.exibirTemplate('#conteudo', loginTemplate);
+		_sandbox.exibirTemplateEm('#conteudo', loginTemplate);
 		_sandbox.registrarEvento('click', '#conteudo', 'button[data-js="autenticar"]', autenticar);
 
 		ajustarCampos();
