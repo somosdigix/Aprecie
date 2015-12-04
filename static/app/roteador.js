@@ -28,8 +28,7 @@ define([
 		}
 
 		function paginaInicial() {
-			require(['app/views/paginaInicialView', 'app/controllers/paginaInicialController'], function(paginaInicialView, paginaInicialController) {
-				// paginaInicialView.exibir();
+			require(['app/controllers/paginaInicialController'], function(paginaInicialController) {
 				paginaInicialController.exibir();
 			});
 		}
