@@ -48,7 +48,7 @@ var configuracoes = {
 
 // TODO: Automatizar essa feiura na build
 var ehDebug = document.getElementById('ehDebug').value === 'True';
-configuracoes.urlArgs = ehDebug ? 'antiCache=' + (new Date()).getTime() : 'antiCache=4';
+configuracoes.urlArgs = ehDebug ? 'antiCache=' + (new Date()).getTime() : 'antiCache=5';
 
 require.config(configuracoes);
 
