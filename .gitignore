@@ -52,6 +52,7 @@ db.sqlite3
 node_modules/
 !static/app/**/*ambienteDoValorometro/
 !static/lib/
+!static/**/lib/
 ambienteDoValorometro/
 static/CACHE/
 .sass-cache/
