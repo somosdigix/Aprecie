@@ -6,24 +6,30 @@ define([
 
 	var router;
 	var roteador = {};
+	var _controllerAtivo;
 
 	roteador.configurar = function() {
 		var rotas = {
-			'/login': [middlewareDeAutenticacao, middlewareDeToolbar, login],
-			'/paginaInicial': [middlewareDeAutenticacao, middlewareDeToolbar, paginaInicial],
-			'/perfil/:colaboradorId': [middlewareDeAutenticacao, middlewareDeToolbar, perfil],
-			'/reconhecimentosPorValor/:colaboradorId/:valorId': [middlewareDeAutenticacao, middlewareDeToolbar, reconhecimentosPorValor]
+			'/login': [middlewareDeAutenticacao, middlewareDeTransicaoDeTela, middlewareDeToolbar, limparTela, login],
+			'/paginaInicial': [middlewareDeAutenticacao, middlewareDeTransicaoDeTela, middlewareDeToolbar, limparTela, paginaInicial],
+			'/perfil/:colaboradorId': [middlewareDeAutenticacao, middlewareDeTransicaoDeTela, middlewareDeToolbar, limparTela, perfil],
+			'/reconhecimentosPorValor/:colaboradorId/:valorId': [middlewareDeAutenticacao, middlewareDeTransicaoDeTela, middlewareDeToolbar, limparTela, reconhecimentosPorValor]
 		};
 
+		function limparTela() {
+			$('#conteudo').empty();
+		}
+
 		function login() {
-			require(['app/views/loginView'], function(loginView) {
-				loginView.exibir();
+			require(['app/controllers/loginController'], function(loginController) {
+				_controllerAtivo = loginController;
+				loginController.exibir();
 			});
 		}
 
 		function paginaInicial() {
-			require(['app/views/paginaInicialView'], function(paginaInicialView) {
-				paginaInicialView.exibir();
+			require(['app/controllers/paginaInicialController'], function(paginaInicialController) {
+				paginaInicialController.exibir();
 			});
 		}
 
@@ -72,6 +78,11 @@ define([
 		}
 
 		servicoDeAutenticacao.atualizarSessaoDeUsuario();
+	}
+
+	function middlewareDeTransicaoDeTela() {
+		if (_controllerAtivo)
+			_controllerAtivo.finalizar();
 	}
 
 	function middlewareDeToolbar() {

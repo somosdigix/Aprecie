@@ -32,7 +32,7 @@ define([
 	function reiniciarTimer() {
 		clearTimeout(timer);
 
-		timer = setTimeout(growl.esconder, 3000);
+		timer = setTimeout(growl.esconder, 6000);
 	}
 
 	return growl;

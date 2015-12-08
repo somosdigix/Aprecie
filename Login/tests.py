@@ -24,7 +24,7 @@ class TesteDoServicoDeAutenticacao(TestCase):
 		with self.assertRaises(Exception) as contexto:
 			servicoDeAutenticacao.autenticar(cpf_invalido, data_de_nascimento_invalida)
 		
-		self.assertEqual('Colaborador não encontrado, confirme seus dados e tente novamente', contexto.exception.args[0])
+		self.assertEqual('Oi! Seus dados não foram encontrados. Confira tente novamente. :)', contexto.exception.args[0])
 
 class TesteDeAutenticacao(TestCase):
 
@@ -47,7 +47,7 @@ class TesteDeAutenticacao(TestCase):
 		
 		resposta_json = json.loads(resposta.content.decode())
 		self.assertEqual(403, resposta.status_code)
-		self.assertEqual('Colaborador não encontrado, confirme seus dados e tente novamente', resposta_json['mensagem'])
+		self.assertEqual('Oi! Seus dados não foram encontrados. Confira tente novamente. :)', resposta_json['mensagem'])
 
 	def testa_que_a_foto_do_colaborador_eh_alterada(self):
 		nova_foto = 'base64=???'
@@ -61,6 +61,14 @@ class TesteDeAutenticacao(TestCase):
 
 		colaborador.refresh_from_db()
 		self.assertEqual(nova_foto, colaborador.foto)
+
+	def testa_que_deve_retornar_a_lista_de_funcionarios_ja_com_nome_abreviado(self):
+		FuncionarioFactory()
+
+		resposta = self.client.get(reverse('obter_funcionarios'))
+
+		resposta_json = json.loads(resposta.content.decode())
+		self.assertEqual('Alberto Roberto', resposta_json['colaboradores'][0]['nome'])
 
 class TesteDeColaborador(TestCase):
 
@@ -84,3 +92,8 @@ class TesteDeColaborador(TestCase):
 		colaborador = FuncionarioFactory()
 
 		self.assertEqual('Alberto', colaborador.primeiro_nome)
+
+	def testa_que_deve_abreviar_o_nome_da_pessoa(self):
+		colaborador = FuncionarioFactory()
+
+		self.assertEqual('Alberto Roberto', colaborador.nome_abreviado)

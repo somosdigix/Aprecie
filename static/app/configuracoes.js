@@ -10,13 +10,16 @@ define([
 
 	configuracoes.configurarErros = function() {
 		window.onerror = function(error) {
-			if (error.indexOf('ViolacaoDeRegra') === -1)
+			if (error.indexOf('ViolacaoDeRegra') === -1 &&
+				error.indexOf('ErroInesperado') === -1)
 				return;
 
 			require(['growl'], function(growl) {
 				var mensagemDeErro = error
 					.replace('Uncaught ViolacaoDeRegra: ', '')
-					.replace('ViolacaoDeRegra: ', '');
+					.replace('ViolacaoDeRegra: ', '')
+					.replace('Uncaught ErroInesperado: ', '')
+					.replace('ErroInesperado: ', '');
 
 				growl.deErro().exibir(mensagemDeErro);
 			});
@@ -27,29 +30,30 @@ define([
 		var tempo;
 
 		$(document)
+			.ajaxStart(function() {
+				tempo = setTimeout(function() {
+					$.blockUI({
+						message: 'Carregando, aguarde...'
+					});
+				}, 100);
+			})
+			.ajaxComplete(desbloquearInterface)
+			.ajaxError(function(evento, jqueryRequest) {
+				var statusCode = jqueryRequest.status;
+				desbloquearInterface();
 
-		.ajaxStart(function() {
-			tempo = setTimeout(function() {
-				$.blockUI({
-					message: 'Carregando, aguarde...'
-				});
-			}, 200);
-		})
+				if (statusCode === 500)
+					throw new ErroInesperado('Ih, deu ruim! Por favor, avise o RH. :(');
 
-		.ajaxStop(function() {
+				var erro = JSON.parse(jqueryRequest.responseText);
+
+				throw new ViolacaoDeRegra(erro.mensagem);
+			});
+
+		function desbloquearInterface() {
 			$.unblockUI();
 			clearTimeout(tempo);
-		})
-
-		.ajaxError(function(evento, jqueryRequest) {
-			var statusCode = jqueryRequest.status;
-			var erro = JSON.parse(jqueryRequest.responseText);
-
-			if (statusCode === 500)
-				throw new Error(erro.mensagem);
-
-			throw new ViolacaoDeRegra(erro.mensagem);
-		});
+		}
 	};
 
 	configuracoes.registrarHelpersGlobaisDoHandlebars = function() {

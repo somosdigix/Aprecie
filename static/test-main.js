@@ -20,14 +20,22 @@ require.config({
 	deps: allTestFiles,
 
 	paths: {
-		'text': 'app/lib/requirejs-text/text',
-		'jquery': 'app/lib/jquery/dist/jquery',
-		'jquery-ui': 'app/lib/jquery-ui/jquery-ui',
-		'jquery.inputmask': 'app/lib/jquery.inputmask/dist/jquery.inputmask.bundle',
-		'handlebars': 'app/lib/handlebars/handlebars.amd',
+		'text': 'lib/requirejs-text/text',
+		'jquery': 'lib/jquery/dist/jquery',
+		'jquery-ui': 'lib/jquery-ui/jquery-ui',
+		'jquery.inputmask': 'lib/jquery.inputmask/dist/jquery.inputmask.bundle',
+		'jquery.blockui': 'lib/blockUI/jquery.blockUI',
+		'handlebars': 'lib/handlebars/handlebars.amd',
+		'director': 'lib/director/build/director',
+		'sandbox': 'app/sandbox',
+		'gerenciadorDeModulos': 'app/gerenciadorDeModulos',
+		'roteador': 'app/roteador',
 		'configuracoes': 'app/configuracoes',
+		'template': 'app/helpers/template',
+		'cookie': 'app/helpers/cookie',
 		'growl': 'app/helpers/growl',
-		'sessaoDeUsuario': 'app/models/sessaoDeUsuario'
+		'sessaoDeUsuario': 'app/models/sessaoDeUsuario',
+		'fakePromise': 'test/helpers/fakePromise'
 	},
 
 	shim: {

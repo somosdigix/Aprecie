@@ -13,9 +13,11 @@ deploy:
   user: renan.siravegna@gmail.com
   password:
     secure: qFocdaVrovBjfLpZd3W9fMM20DhC4ji83AztgQKkufxZtCVs8zsWK3Na/KDXVVMpzCQDqPJaWY7daiFjwoEFy9//zF8Y3lacuycfF8arTl5c/C3D1HlExBWOdsZFCBtFfAEJtgTWHc/jo9MNF3AXX4jiUh13tU/95WrCMZiuZFSni341tR9mtcfgmQQU/LJ5QS14y3mbm/iyjvM/XZrVg6/Ewg6DqFHW+0Cin+ftXPYP9KQuSpMBk5xpJWDjXtXk87RNAI4LvSk+YFqUjzvfgPc9Cfay9RqB02DnhRJX2GgmZVwnQgkKh3uMJG8JZECm9GGsd/ONoh9HvP5y1IaGsYf/6SI2c+6JcNEKJSQb1aIuPB+r35i9cesFuVVA6PexzR5V1bj9KbruzM7oBElYPWrC27uVIE5uzVj4vF9fg9ubi9vKoePevmrTbm+BOykhExXUCNBKV5qnE7uIiIBCmGukNL1k016pJIZWC9DU30pz83cnhSKuGG2rr2dKxFRxYQPSvKJxgw89vtcgOXucmm8ZDHZDpkNBbiZH1FFj2UAG/hrT3gHOQTFJeHzuZhBOf+hAz19r9wSUlKWVfzpEtTA64n1974ilbcJ6Di13cnJkGOuo9Ab8DZHmTnaXutTZmpzQfzyNSqTE016nMg66GSWApgsJPqZRnhpNr10tz+w=
-  app: Aprecie
+  app:
+    master: apreciestaging
+    release: aprecie
   domain: renansiravegna
   on:
-    repo: DigithoBrasil/Aprecie
+    all_branches: true
 after_deploy:
 - python manage.py test Aprecie.testes_de_fumaca
