@@ -32,7 +32,7 @@ def ultimos_reconhecimentos(requisicao):
 		'foto_do_reconhecido': reconhecimento.reconhecido.foto,
 		'valor': reconhecimento.valor.nome,
 		'justificativa': reconhecimento.justificativa,
-		'data': reconhecimento.data.strftime('%d de %B de %Y - %H:%M')
+		'data': reconhecimento.data.strftime('%d de %B de %Y')
 	}, reconhecimentos))
 
 	return JsonResponse(reconhecimentos_mapeados, safe=False)

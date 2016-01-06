@@ -9,4 +9,4 @@ class Reconhecimento(models.Model):
 	reconhecido = models.ForeignKey('Login.Funcionario', related_name='reconhecido')
 	valor = models.ForeignKey(Valor)
 	justificativa = models.CharField(max_length=200)
-	data = models.DateTimeField(default=django.utils.timezone.now)
+	data = models.DateField(auto_now_add=True)
