@@ -24,6 +24,12 @@
     "jquery.inputmask": "~3.1.63",
     "promise-polyfill": "~2.1.0",
     "requirejs": "~2.1.18",
-    "requirejs-text": "~2.0.14"
+    "requirejs-text": "~2.0.14",
+    "globalize": "~1.0.0",
+    "requirejs-plugins": "~1.0.3",
+    "director": "~1.2.8"
+  },
+  "devDependencies": {
+    "jquery-ui": "~1.11.4"
   }
 }

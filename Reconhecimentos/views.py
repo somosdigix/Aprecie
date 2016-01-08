@@ -32,7 +32,7 @@ def ultimos_reconhecimentos(requisicao):
 		'foto_do_reconhecido': reconhecimento.reconhecido.foto,
 		'valor': reconhecimento.valor.nome,
 		'justificativa': reconhecimento.justificativa,
-		'data': formats.date_format(reconhecimento.data)
+		'data': reconhecimento.data
 	}, reconhecimentos))
 
 	return JsonResponse(reconhecimentos_mapeados, safe=False)

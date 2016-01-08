@@ -11,6 +11,5 @@
   },
   "_source": "git://github.com/requirejs/text.git",
   "_target": "~2.0.14",
-  "_originalSource": "requirejs-text",
-  "_direct": true
+  "_originalSource": "requirejs-text"
 }

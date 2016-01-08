@@ -22,7 +22,11 @@ var configuracoes = {
 		'template': 'app/helpers/template',
 		'cookie': 'app/helpers/cookie',
 		'growl': 'app/helpers/growl',
-		'sessaoDeUsuario': 'app/models/sessaoDeUsuario'
+		'sessaoDeUsuario': 'app/models/sessaoDeUsuario',
+		"cldr": "lib/cldrjs/dist/cldr",
+		"cldr-data": "lib/cldr-data",
+		"json": "lib/requirejs-plugins/src/json",
+		"globalize": "lib/globalize/dist/globalize"
 	},
 
 	shim: {

@@ -47,6 +47,5 @@
   },
   "_source": "git://github.com/RobinHerbots/jquery.inputmask.git",
   "_target": "~3.1.63",
-  "_originalSource": "jquery.inputmask",
-  "_direct": true
+  "_originalSource": "jquery.inputmask"
 }

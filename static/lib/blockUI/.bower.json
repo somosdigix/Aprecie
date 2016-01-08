@@ -38,6 +38,5 @@
   },
   "_source": "git://github.com/malsup/blockui.git",
   "_target": "*",
-  "_originalSource": "blockui",
-  "_direct": true
+  "_originalSource": "blockui"
 }
