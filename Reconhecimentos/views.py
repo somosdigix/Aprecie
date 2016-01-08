@@ -1,10 +1,10 @@
 from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render
+from django.utils import formats
 from Login.models import Funcionario
 from Reconhecimentos.models import Valor, Reconhecimento
 from Reconhecimentos.statics import ValoresDaDigithoBrasil
 from django.db.models import Count
-import json
 
 def reconhecer(requisicao):
 	id_do_reconhecedor = requisicao.POST['id_do_reconhecedor']
@@ -32,7 +32,7 @@ def ultimos_reconhecimentos(requisicao):
 		'foto_do_reconhecido': reconhecimento.reconhecido.foto,
 		'valor': reconhecimento.valor.nome,
 		'justificativa': reconhecimento.justificativa,
-		'data': reconhecimento.data.strftime('%d de %B de %Y')
+		'data': formats.date_format(reconhecimento.data)
 	}, reconhecimentos))
 
 	return JsonResponse(reconhecimentos_mapeados, safe=False)
