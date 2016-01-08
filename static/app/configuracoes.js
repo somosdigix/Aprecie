@@ -2,22 +2,8 @@ define([
 	'jquery',
 	'handlebars',
 	'jquery.blockui',
-	"globalize",
-
-	// CLDR content.
-	'json!cldr-data/supplemental/likelySubtags.json',
-	'json!cldr-data/main/pt/numbers.json',
-	'json!cldr-data/supplemental/numberingSystems.json',
-	'json!cldr-data/main/pt/ca-gregorian.json',
-	'json!cldr-data/main/pt/timeZoneNames.json',
-	'json!cldr-data/supplemental/timeData.json',
-	'json!cldr-data/supplemental/weekData.json',
-
-	// Extend Globalize with Date and Number modules.
-	"globalize/date",
-	"globalize/number"
-
-], function($, Handlebars, blockUI, Globalize, likelySubtags, ptNumbers, numberingSystems, ptGregorian, ptTimezones, timeData, weekData) {
+	'localizacao'
+], function($, Handlebars, blockUI) {
 	'use strict';
 
 	var configuracoes = {};
@@ -72,15 +58,14 @@ define([
 	};
 
 	configuracoes.registrarHelpersGlobaisDoHandlebars = function() {
-		Globalize.load(likelySubtags, ptNumbers, numberingSystems, ptGregorian, ptTimezones, timeData, weekData);
-		var localidade = Globalize('pt');
+		var localizacao = require('localizacao');
 
 		Handlebars.registerHelper('foto', function(base64) {
 			return base64 ? base64 : 'static/img/sem-foto.png';
 		});
 
 		Handlebars.registerHelper('emDataLegivel', function(data) {
-			return localidade.formatDate(localidade.parseDate(data, {raw: 'yyyy-MM-dd'}));
+			return localizacao.formatarData(data);
 		});
 	};
 

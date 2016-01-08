@@ -18,6 +18,7 @@ var configuracoes = {
 		'sandbox': 'app/sandbox',
 		'gerenciadorDeModulos': 'app/gerenciadorDeModulos',
 		'roteador': 'app/roteador',
+		'localizacao': 'app/localizacao',
 		'configuracoes': 'app/configuracoes',
 		'template': 'app/helpers/template',
 		'cookie': 'app/helpers/cookie',
