@@ -26,10 +26,7 @@ def alterar_foto(requisicao):
 	return JsonResponse({})
 
 def obter_funcionarios(requisicao):
-	teste = []
 	colaboradores = Funcionario.objects.all()
-
-	for colaborador in colaboradores:
-		teste.append({ 'id': colaborador.id, 'nome': colaborador.nome_abreviado })
-
-	return JsonResponse({ 'colaboradores': teste })
+	transformacao = lambda colaborador: { 'id': colaborador.id, 'nome': colaborador.nome_abreviado }
+	colaboradores = map(transformacao, colaboradores)
+	return JsonResponse({ 'colaboradores': list(colaboradores) })

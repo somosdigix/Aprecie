@@ -38,8 +38,9 @@ define([
 
 	function converterParaAutocomplete(colaboradores) {
 		return colaboradores.map(function(colaborador) {
-			colaborador.value = colaborador.id;
+			colaborador.id = colaborador.id;
 			colaborador.label = colaborador.nome;
+			colaborador.value = colaborador.nome;
 
 			return colaborador;
 		});
