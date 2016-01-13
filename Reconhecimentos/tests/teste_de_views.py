@@ -44,7 +44,6 @@ class TesteDeApiDeReconhecimento(TestCase):
 		self.assertEqual(200, resposta.status_code)
 		self.assertEqual(self.reconhecido.id, resposta_json[0]['id_do_reconhecido'])
 		self.assertEqual(self.reconhecido.nome_abreviado, resposta_json[0]['nome_do_reconhecido'])
-		self.assertEqual(self.reconhecido.foto, resposta_json[0]['foto_do_reconhecido'])
 		self.assertEqual(self.justificativa, resposta_json[0]['justificativa'])
 		self.assertEqual(self.valor.nome, resposta_json[0]['valor'])
 

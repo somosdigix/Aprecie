@@ -60,8 +60,10 @@ define([
 	configuracoes.registrarHelpersGlobaisDoHandlebars = function() {
 		var localizacao = require('localizacao');
 
-		Handlebars.registerHelper('foto', function(base64) {
-			return base64 ? base64 : 'static/img/sem-foto.png';
+		Handlebars.registerHelper('foto', function(id, usar_miniatura) {
+			var eh_miniatura = eh_miniatura ? 1 : 0;
+			var url = 'login/foto/' + id + '?eh_miniatura=' + eh_miniatura;
+			return url;
 		});
 
 		Handlebars.registerHelper('emDataLegivel', function(data) {

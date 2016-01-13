@@ -26,10 +26,8 @@ def ultimos_reconhecimentos(requisicao):
 	reconhecimentos_mapeados = list(map(lambda reconhecimento: {
 		'id_do_reconhecedor': reconhecimento.reconhecedor.id,
 		'nome_do_reconhecedor': reconhecimento.reconhecedor.nome_abreviado,
-		'foto_do_reconhecedor': reconhecimento.reconhecedor.foto,
 		'id_do_reconhecido': reconhecimento.reconhecido.id,
 		'nome_do_reconhecido': reconhecimento.reconhecido.nome_abreviado,
-		'foto_do_reconhecido': reconhecimento.reconhecido.foto,
 		'valor': reconhecimento.valor.nome,
 		'justificativa': reconhecimento.justificativa,
 		'data': reconhecimento.data
@@ -45,11 +43,11 @@ def reconhecimentos_do_funcionario(requisicao, id_do_reconhecido):
 		'quantidade_de_reconhecimentos': len(reconhecido.reconhecimentos_por_valor(valor))
 	}, ValoresDaDigithoBrasil.todos))
 
-	return JsonResponse({ 'id': reconhecido.id, 'nome': reconhecido.nome_abreviado, 'foto': reconhecido.foto, 'valores': valores }, safe=False)
+	return JsonResponse({ 'id': reconhecido.id, 'nome': reconhecido.nome_abreviado, 'valores': valores }, safe=False)
 
 def reconhecimentos_por_reconhecedor(requisicao, id_do_reconhecido):
 	reconhecedores = Reconhecimento.objects.filter(reconhecido=id_do_reconhecido) \
-		.values('reconhecedor__nome', 'reconhecedor', 'reconhecedor__foto', 'valor__id') \
+		.values('reconhecedor__nome', 'reconhecedor', 'reconhecedor__id', 'valor__id') \
 		.annotate(quantidade_de_reconhecimentos=Count('reconhecedor'))
 
 	for reconhecedor in reconhecedores:
@@ -60,13 +58,12 @@ def reconhecimentos_por_reconhecedor(requisicao, id_do_reconhecido):
 def reconhecimentos_por_valor(requisicao, id_do_reconhecido, id_do_valor):
 	reconhecido = Funcionario.objects.get(id=id_do_reconhecido)
 	valor = Valor.objects.get(id=id_do_valor)
-	reconhecimentos = reconhecido.reconhecimentos_por_valor(id_do_valor).values('data', 'justificativa', 'reconhecedor__nome', 'reconhecedor__foto')
+	reconhecimentos = reconhecido.reconhecimentos_por_valor(id_do_valor).values('data', 'justificativa', 'reconhecedor__nome', 'reconhecedor__id')
 	resposta = {
 		'id_do_valor': valor.id,
 		'nome_do_valor': valor.nome,
 		'id_do_reconhecido': reconhecido.id,
 		'nome_do_reconhecido': reconhecido.nome_abreviado,
-		'foto_do_reconhecido': reconhecido.foto,
 		'reconhecimentos': list(reconhecimentos)
 	}
 
