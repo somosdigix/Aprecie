@@ -1,5 +1,7 @@
+from Aprecie.base import ExcecaoDeDominio
 from django.db import models
 import django
+from datetime import date
 
 class Valor(models.Model):
 	nome = models.CharField(max_length=200)
@@ -10,3 +12,11 @@ class Reconhecimento(models.Model):
 	valor = models.ForeignKey(Valor)
 	justificativa = models.CharField(max_length=200)
 	data = models.DateField(auto_now_add=True)
+
+	def alterar_justificativa(self, nova_justificativa):
+		# TODO: Falta autenticar se quem está alterando é realmente o reconhecedor
+
+		if self.data != date.today():
+			raise ExcecaoDeDominio('O reconhecimento só pode ser alterado no mesmo dia de sua realização')
+
+		self.justificativa = nova_justificativa

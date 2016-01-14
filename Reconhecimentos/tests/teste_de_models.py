@@ -6,7 +6,9 @@ from Reconhecimentos.models import Reconhecimento
 from Reconhecimentos.statics import ValoresDaDigithoBrasil
 from Reconhecimentos.views import reconhecer
 from Login.factories import FuncionarioFactory
+from Reconhecimentos.factories import ReconhecimentoFactory
 from Aprecie.base import ExcecaoDeDominio
+from datetime import date, datetime, timedelta
 
 class TesteDeReconhecimento(TestCase):
 
@@ -62,3 +64,24 @@ class TesteDeReconhecimento(TestCase):
 			self.reconhecido.reconhecer(self.reconhecedor, ValoresDaDigithoBrasil.inquietude, '   ')
 
 		self.assertEqual('A sua justificativa deve ser informada', contexto.exception.args[0])
+
+	def testa_alteracao_de_uma_justificativa(self):
+		justificativa = 'Foi legal'
+		self.reconhecido.reconhecer(self.reconhecedor, ValoresDaDigithoBrasil.inquietude, justificativa);
+		reconhecimento = self.reconhecido.reconhecimentos()[0]
+		nova_justificativa = 'Nova justificativa'
+
+		reconhecimento.alterar_justificativa(nova_justificativa)
+
+		self.assertEqual(nova_justificativa, reconhecimento.justificativa)
+
+	def testa_que_nao_permite_alteracao_de_justificativa_depois_de_1_dia(self):
+		ontem = datetime.now() - timedelta(days=1)
+		reconhecimento = ReconhecimentoFactory()
+		reconhecimento.data = ontem
+		nova_justificativa = 'Nova justificativa'
+
+		with self.assertRaises(Exception) as contexto:
+			reconhecimento.alterar_justificativa(nova_justificativa)
+
+		self.assertEqual('O reconhecimento só pode ser alterado no mesmo dia de sua realização', contexto.exception.args[0])
