@@ -66,22 +66,30 @@ class TesteDeReconhecimento(TestCase):
 		self.assertEqual('A sua justificativa deve ser informada', contexto.exception.args[0])
 
 	def testa_alteracao_de_uma_justificativa(self):
-		justificativa = 'Foi legal'
-		self.reconhecido.reconhecer(self.reconhecedor, ValoresDaDigithoBrasil.inquietude, justificativa);
-		reconhecimento = self.reconhecido.reconhecimentos()[0]
+		reconhecimento = ReconhecimentoFactory(reconhecedor=self.reconhecedor, justificativa="Foi legal")
 		nova_justificativa = 'Nova justificativa'
 
-		reconhecimento.alterar_justificativa(nova_justificativa)
+		reconhecimento.alterar_justificativa(nova_justificativa, self.reconhecedor)
 
 		self.assertEqual(nova_justificativa, reconhecimento.justificativa)
 
 	def testa_que_nao_permite_alteracao_de_justificativa_depois_de_1_dia(self):
+		reconhecimento = ReconhecimentoFactory(reconhecedor=self.reconhecedor)
 		ontem = datetime.now() - timedelta(days=1)
-		reconhecimento = ReconhecimentoFactory()
 		reconhecimento.data = ontem
 		nova_justificativa = 'Nova justificativa'
 
 		with self.assertRaises(Exception) as contexto:
-			reconhecimento.alterar_justificativa(nova_justificativa)
+			reconhecimento.alterar_justificativa(nova_justificativa, self.reconhecedor)
 
 		self.assertEqual('O reconhecimento só pode ser alterado no mesmo dia de sua realização', contexto.exception.args[0])
+
+	def testa_que_nao_permite_alteracao_quando_for_editado_por_outra_pessoa_exceto_reconhecedor(self):
+		reconhecimento = ReconhecimentoFactory()
+		nova_justificativa = 'Nova justificativa'
+		outro_reconhecedor = self.reconhecedor
+
+		with self.assertRaises(Exception) as contexto:
+			reconhecimento.alterar_justificativa(nova_justificativa, self.reconhecedor)
+
+		self.assertEqual('O reconhecimento só pode ser alterado por quem o elaborou', contexto.exception.args[0])
