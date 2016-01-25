@@ -7,28 +7,30 @@
 	background-size: 100%
 
 .login
-	background-color: rgba(255, 255, 255, 0.88)
-
+	background-color: rgba(255,255,255,.88)
+	box-shadow: 0 1px 0 rgba(60,48,97,.1)
 
 .login, .reconhecer
 	margin: 0 auto
-	max-width: 250px
-	padding: 18px
+	max-width: 286px
+	padding: 12px 35px 20px
 	+border-radius(5px)
 	margin-top: 193px
 
 	.logo
 		display: block
-		margin: 0 auto  
+		margin: 0 auto 20px  
 
 	p
-		font-size: 17px
-		color: #000
+		font-size: 16px
+		color: #2c2538
+		text-shadow: 0 1px 0 rgba(255,255,255,.1)
 		font-weight: bold
-		margin-bottom: 31px
+		margin-bottom: 35px
 
 	.campos-login
 		position: relative
+		margin: 8px 0
 
 
 	label
@@ -40,7 +42,6 @@
 		pointer-events: none
 		top: -3px
 
-
 	input
 		+box-sizing
 		background-color: transparent
@@ -48,25 +49,24 @@
 		border-bottom: 1px solid #9e9e9e
 		height: 2rem
 		width: 100%
-		font-size: 14px
+		font-size: 15px
 		margin: 0 0 15px 0
 		padding: 0
 		transition: all 0.3s
 		color: #747474
 		outline: none
-		font-weight: bold
 
 
 	input:focus
 		outline: none	
 
 	input:focus ~ label, input:valid ~label
-		top: -20px
-		font-size: 13px
+		top: -23px
+		font-size: 11px
 		color: #90603D
 
 	button
-		background-color: $amarelo-primario
+		background-color: $rosa-secundario
 		font-size: 1rem
 		font-weight: bold
 		text-transform: uppercase
@@ -77,8 +77,10 @@
 		+box-shadow(1px, 1px, 1px, rgba(28, 18, 16, 0.75))
 		border: none
 		outline: none
-
+		
+		&:hover
+			background-color: $rosa-terciario
 
 .logo-digitho
-	margin: 0 auto
+	margin: 25px auto
 	display: block
