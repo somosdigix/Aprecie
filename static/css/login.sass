@@ -6,37 +6,43 @@
 	position: fixed
 	background-size: 100%
 
-.login
-	background-color: rgba(255,255,255,.88)
-	box-shadow: 0 1px 0 rgba(60,48,97,.1)
 
-.login, .reconhecer
+.logo
+	display: block
+	margin: 25px 20px  
+
+
+.chamada
+	font-size: 15px
+	color: #fff
+	text-shadow: 0 1px 0 rgba(255,255,255,.1)
+	font-weight: bold
+	text-align: center
+	
+	h1
+		text-align: center
+
+.login
 	margin: 0 auto
-	max-width: 286px
+	max-width: 350px
 	padding: 12px 35px 20px
 	+border-radius(5px)
 	margin-top: 193px
 
-	.logo
-		display: block
-		margin: 0 auto 20px  
-
-	p
-		font-size: 16px
-		color: #2c2538
-		text-shadow: 0 1px 0 rgba(255,255,255,.1)
-		font-weight: bold
-		margin-bottom: 35px
-
+	.campos-cor	
+		background-color: rgba(187, 187, 187, 0.82)
+		padding: 15px 15px 0
+		margin: 15px 0
+		overflow: hidden
+		border-radius: 5px
+	
 	.campos-login
 		position: relative
-		margin: 8px 0
-
 
 	label
 		display: block
 		font-size: 15px
-		color: #616161
+		color: #000
 		margin: 8px 0
 		position:absolute
 		pointer-events: none
@@ -46,14 +52,14 @@
 		+box-sizing
 		background-color: transparent
 		border: none
-		border-bottom: 1px solid #9e9e9e
+		border-bottom: 3px solid #fff
 		height: 2rem
 		width: 100%
 		font-size: 15px
-		margin: 0 0 15px 0
+		margin: 10px 0 15px 0
 		padding: 0
 		transition: all 0.3s
-		color: #747474
+		color: #000
 		outline: none
 
 
@@ -62,11 +68,13 @@
 
 	input:focus ~ label, input:valid ~label
 		top: -23px
-		font-size: 11px
-		color: #90603D
+		font-size: 13px
+		color: #000
+		padding: 10px 0
+
 
 	button
-		background-color: $rosa-secundario
+		background-color: $amarelo-primario
 		font-size: 1rem
 		font-weight: bold
 		text-transform: uppercase
@@ -79,7 +87,7 @@
 		outline: none
 		
 		&:hover
-			background-color: $rosa-terciario
+			background-color: $amarelo-secundario
 
 .logo-digitho
 	margin: 25px auto
