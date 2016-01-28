@@ -4,8 +4,13 @@
 	margin: 0
 	padding: 0
 
+html, body, #conteudo
+	height: 100%
+
 body
 	font-family: $font-padrao
+
+
 
 img
 	max-width: 100%
@@ -22,6 +27,17 @@ p
 
 	span
 		color: #fff
+
+.sidebar
+	width: 15%
+	+displayInlineBlock
+	position: fixed
+	top: 0
+	height: 100%
+	background-color: $amarelo-secundario
+
+
+
 
 .brancos
 	color: white
@@ -99,15 +115,16 @@ p
     overflow: hidden
 
 .toolbar
-	background-color: $amarelo-secundario
+	background-color: #F3EAD4
 	padding: 8px 0
-	margin-bottom: 2em
+	// margin-bottom: 2em
 	position: fixed
 	top: 0
 	width: 100%
 	right: 0
-	left: 0
+	left: 15%
 	z-index: 2
+
 	.logoInterna
 		vertical-align: top
 		display: inline-block
