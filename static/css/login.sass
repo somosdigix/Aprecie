@@ -5,12 +5,14 @@
 	width: 100%
 	position: fixed
 	background-size: 100%
+	height: 100%
 
-
-.logo
-	display: block
-	margin: 25px 20px  
-
+	.conteudo-login
+		display: flex
+		display: -webkit-flex
+		justify-content: center
+		align-items: center
+		height: 100%
 
 .chamada
 	font-size: 15px
@@ -22,15 +24,19 @@
 	h1
 		text-align: center
 
-.login
-	margin: 0 auto
-	max-width: 350px
-	padding: 12px 35px 20px
-	+border-radius(5px)
-	margin-top: 193px
+.logo
+		position: absolute
+		height: 63px
+		top: 2%
+		left: 3%
 
+.login
+	min-width: 310px
+	padding: 12px 35px 20px
+	+border-radius(8px)
+	
 	.campos-cor	
-		background-color: rgba(187, 187, 187, 0.82)
+		background-color: #fff
 		padding: 15px 15px 0
 		margin: 15px 0
 		overflow: hidden
@@ -52,7 +58,6 @@
 		+box-sizing
 		background-color: transparent
 		border: none
-		border-bottom: 3px solid #fff
 		height: 2rem
 		width: 100%
 		font-size: 15px
@@ -74,7 +79,7 @@
 
 
 	button
-		background-color: $amarelo-primario
+		background-color: #FA4F56
 		font-size: 1rem
 		font-weight: bold
 		text-transform: uppercase
@@ -87,7 +92,7 @@
 		outline: none
 		
 		&:hover
-			background-color: $amarelo-secundario
+			background-color: #FA4F56
 
 .logo-digitho
 	margin: 25px auto
