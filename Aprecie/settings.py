@@ -21,7 +21,6 @@ INSTALLED_APPS = (
 )
 
 MIDDLEWARE_CLASSES = (
-
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
@@ -30,6 +29,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.security.SecurityMiddleware',
     'Aprecie.middlewares.ProcessadorDeExcecao',
     'Aprecie.middlewares.TimezoneMiddleware',
+    'Aprecie.middlewares.LoginObrigatorioMiddleware'
 )
 
 AUTH_USER_MODEL = 'Login.Colaborador'

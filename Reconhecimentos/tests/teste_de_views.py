@@ -7,11 +7,17 @@ import json
 
 class TesteDeApiDeReconhecimento(TestCase):
 
+	def logar(self, colaborador):
+		dados_da_requisicao = dict(cpf=colaborador.cpf, data_de_nascimento=colaborador.data_de_nascimento.strftime('%d/%m/%Y'))
+		resposta = self.client.post(reverse('entrar'), dados_da_requisicao)
+
 	def setUp(self):
 		self.reconhecido = ColaboradorFactory()
 		self.reconhecedor = ColaboradorFactory()
 		self.valor = ValoresDaDigithoBrasil.inquietude
 		self.justificativa = 'Você é legal'
+
+		self.logar(self.reconhecedor)
 
 		self.dados_do_reconhecimento = {
 			'id_do_reconhecido': self.reconhecido.id,

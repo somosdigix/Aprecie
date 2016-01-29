@@ -9,7 +9,9 @@ from PIL import Image
 import os
 from django.conf import settings
 import re
+from Aprecie.base import acesso_anonimo
 
+@acesso_anonimo
 def entrar(requisicao):
 	cpf = requisicao.POST['cpf']
 	data_de_nascimento = datetime.strptime(requisicao.POST['data_de_nascimento'], '%d/%m/%Y')

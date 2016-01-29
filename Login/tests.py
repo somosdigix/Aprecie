@@ -5,28 +5,11 @@ from django.core.urlresolvers import reverse
 from Aprecie.base import ExcecaoDeDominio
 import json
 
-class TesteDeAutenticacao(TestCase):
-
-	def testa_autenticacao_de_colaborador_existente(self):
+class TesteDeColaborador(TestCase):
+	def setUp(self):
 		colaborador = ColaboradorFactory()
 		dados_da_requisicao = dict(cpf=colaborador.cpf, data_de_nascimento=colaborador.data_de_nascimento.strftime('%d/%m/%Y'))
-
 		resposta = self.client.post(reverse('entrar'), dados_da_requisicao)
-
-		resposta_json = json.loads(resposta.content.decode())
-		self.assertEqual(colaborador.id, resposta_json['id_do_colaborador'])
-		self.assertEqual(colaborador.primeiro_nome, resposta_json['nome_do_colaborador'])
-
-	def testa_autenticacao_de_colaborador_inexistente(self):
-		cpf = 'um cpf qualquer'
-		data_de_nascimento = '02/01/3001'
-		dados_da_requisicao = dict(cpf=cpf, data_de_nascimento=data_de_nascimento)
-
-		resposta = self.client.post(reverse('entrar'), dados_da_requisicao)
-		
-		resposta_json = json.loads(resposta.content.decode())
-		self.assertEqual(403, resposta.status_code)
-		self.assertEqual('Oi! Seus dados não foram encontrados. Confira tente novamente. :)', resposta_json['mensagem'])
 
 	def testa_que_a_foto_do_colaborador_eh_alterada(self):
 		nova_foto = 'base64=???'
@@ -48,8 +31,6 @@ class TesteDeAutenticacao(TestCase):
 
 		resposta_json = json.loads(resposta.content.decode())
 		self.assertEqual('Alberto Roberto', resposta_json['colaboradores'][0]['nome'])
-
-class TesteDeColaborador(TestCase):
 
 	def testa_que_a_foto_deve_ser_alterada(self):
 		nova_foto = 'base64=????'
@@ -76,3 +57,27 @@ class TesteDeColaborador(TestCase):
 		colaborador = ColaboradorFactory()
 
 		self.assertEqual('Alberto Roberto', colaborador.nome_abreviado)
+
+
+class TesteDeAutenticacao(TestCase):
+
+	def testa_autenticacao_de_colaborador_existente(self):
+		colaborador = ColaboradorFactory()
+		dados_da_requisicao = dict(cpf=colaborador.cpf, data_de_nascimento=colaborador.data_de_nascimento.strftime('%d/%m/%Y'))
+
+		resposta = self.client.post(reverse('entrar'), dados_da_requisicao)
+
+		resposta_json = json.loads(resposta.content.decode())
+		self.assertEqual(colaborador.id, resposta_json['id_do_colaborador'])
+		self.assertEqual(colaborador.primeiro_nome, resposta_json['nome_do_colaborador'])
+
+	def testa_autenticacao_de_colaborador_inexistente(self):
+		cpf = 'um cpf qualquer'
+		data_de_nascimento = '02/01/3001'
+		dados_da_requisicao = dict(cpf=cpf, data_de_nascimento=data_de_nascimento)
+
+		resposta = self.client.post(reverse('entrar'), dados_da_requisicao)
+		
+		resposta_json = json.loads(resposta.content.decode())
+		self.assertEqual(403, resposta.status_code)
+		self.assertEqual('Oi! Seus dados não foram encontrados. Confira tente novamente. :)', resposta_json['mensagem'])
