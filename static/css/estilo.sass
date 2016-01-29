@@ -29,14 +29,23 @@ p
 		color: #fff
 
 .sidebar
-	width: 15%
+	width: 10%
 	+displayInlineBlock
 	position: fixed
 	top: 0
 	height: 100%
+	text-align: center
+	background-color: #F3EAD4
+	
+
+.logoInterna
 	background-color: $amarelo-secundario
-
-
+	vertical-align: top
+	display: inline-block
+	width: 10%
+	cursor: pointer
+	height: 64px         
+	display: block
 
 
 .brancos
@@ -117,19 +126,14 @@ p
 .toolbar
 	background-color: #F3EAD4
 	padding: 8px 0
-	// margin-bottom: 2em
 	position: fixed
 	top: 0
 	width: 100%
 	right: 0
-	left: 15%
 	z-index: 2
 
-	.logoInterna
-		vertical-align: top
-		display: inline-block
-		width: 10%
-		cursor: pointer
+	
+
 	.busca
 		width: 50%
 		display: inline-block
@@ -185,12 +189,6 @@ p
 	max-width: 980px
 	margin: 0 auto
 
-.conteudo-header
-	+box-sizing
-	width: 100%
-	max-width: 1200px
-	margin: 0 auto
-	padding: 10px	
 
 .feed-principal
 	margin-top: 45px 
