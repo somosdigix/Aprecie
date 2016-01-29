@@ -5,5 +5,5 @@ urlpatterns = [
     url(r'^entrar/$', views.entrar, name="entrar"),
     url(r'^alterar_foto/$', views.alterar_foto, name="alterar_foto"),
     url(r'^foto/([0-9]+)$', views.foto_do_perfil),
-	url(r'^obter_funcionarios/$', views.obter_funcionarios, name="obter_funcionarios"),
+	url(r'^obter_colaboradores/$', views.obter_colaboradores, name="obter_colaboradores"),
 ]

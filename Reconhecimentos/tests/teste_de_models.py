@@ -1,11 +1,11 @@
 from django.test import TestCase
 from django.utils import timezone
-from Login.models import Funcionario
+from Login.models import Colaborador
 from Reconhecimentos.models import Valor
 from Reconhecimentos.models import Reconhecimento
 from Reconhecimentos.statics import ValoresDaDigithoBrasil
 from Reconhecimentos.views import reconhecer
-from Login.factories import FuncionarioFactory
+from Login.factories import ColaboradorFactory
 from Reconhecimentos.factories import ReconhecimentoFactory
 from Aprecie.base import ExcecaoDeDominio
 from datetime import date, datetime, timedelta
@@ -13,8 +13,8 @@ from datetime import date, datetime, timedelta
 class TesteDeReconhecimento(TestCase):
 
 	def setUp(self):
-		self.reconhecido = FuncionarioFactory()
-		self.reconhecedor = FuncionarioFactory()
+		self.reconhecido = ColaboradorFactory()
+		self.reconhecedor = ColaboradorFactory()
 
 	def testa_o_reconhecimento_de_uma_habilidade(self):
 		justificativa = 'Foi legal'
@@ -33,9 +33,10 @@ class TesteDeReconhecimento(TestCase):
 		self.reconhecido.reconhecer(self.reconhecedor, ValoresDaDigithoBrasil.responsabilidade, justificativa);
 		reconhecimento = self.reconhecido.reconhecimentos()[0]
 
-		self.assertEqual(timezone.now().year, reconhecimento.data.year)
-		self.assertEqual(timezone.now().month, reconhecimento.data.month)
-		self.assertEqual(timezone.now().day, reconhecimento.data.day)
+		agora = timezone.now()
+		self.assertEqual(agora.year, reconhecimento.data.year)
+		self.assertEqual(agora.month, reconhecimento.data.month)
+		self.assertEqual(agora.day, reconhecimento.data.day)
 
 	def testa_a_listagem_de_reconhecimentos(self):
 		self.reconhecido.reconhecer(self.reconhecedor, ValoresDaDigithoBrasil.responsabilidade, 'Foi legal');

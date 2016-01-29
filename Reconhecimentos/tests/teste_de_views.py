@@ -1,6 +1,6 @@
 from django.test import TestCase
 from django.core.urlresolvers import reverse
-from Login.factories import FuncionarioFactory
+from Login.factories import ColaboradorFactory
 from Reconhecimentos.factories import ReconhecimentoFactory
 from Reconhecimentos.statics import ValoresDaDigithoBrasil
 import json
@@ -8,8 +8,8 @@ import json
 class TesteDeApiDeReconhecimento(TestCase):
 
 	def setUp(self):
-		self.reconhecido = FuncionarioFactory()
-		self.reconhecedor = FuncionarioFactory()
+		self.reconhecido = ColaboradorFactory()
+		self.reconhecedor = ColaboradorFactory()
 		self.valor = ValoresDaDigithoBrasil.inquietude
 		self.justificativa = 'Você é legal'
 
@@ -20,7 +20,7 @@ class TesteDeApiDeReconhecimento(TestCase):
 			'justificativa': self.justificativa
 		}
 
-	def testa_o_reconhecimento_de_um_valor_de_um_funcionario(self):
+	def testa_o_reconhecimento_de_um_valor_de_um_colaborador(self):
 		resposta = self.client.post(reverse('reconhecer'), self.dados_do_reconhecimento)
 
 		self.assertEqual(200, resposta.status_code)
@@ -61,9 +61,9 @@ class TesteDeApiDeReconhecimento(TestCase):
 			self.client.post(reverse('reconhecer'), self.dados_do_reconhecimento)
 
 	def testa_reconhecimentos_de_uma_pessoa_agrupados_por_reconhecedor(self):
-		reconhecido = FuncionarioFactory()
-		reconhecedor1 = FuncionarioFactory()
-		reconhecedor2 = FuncionarioFactory()
+		reconhecido = ColaboradorFactory()
+		reconhecedor1 = ColaboradorFactory()
+		reconhecedor2 = ColaboradorFactory()
 		reconhecimento1 = ReconhecimentoFactory(reconhecedor=reconhecedor1, reconhecido=reconhecido)
 		reconhecimento2 = ReconhecimentoFactory(reconhecedor=reconhecedor2, reconhecido=reconhecido)
 		reconhecimento3 = ReconhecimentoFactory(reconhecedor=reconhecedor2, reconhecido=reconhecido)

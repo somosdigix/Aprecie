@@ -11,6 +11,8 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 INSTALLED_APPS = (
+    'django.contrib.auth',
+    'django.contrib.sessions',
     'django.contrib.contenttypes',
     'django.contrib.staticfiles',
     'Login',
@@ -19,12 +21,19 @@ INSTALLED_APPS = (
 )
 
 MIDDLEWARE_CLASSES = (
+
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'Aprecie.middlewares.ProcessadorDeExcecao',
     'Aprecie.middlewares.TimezoneMiddleware',
 )
+
+AUTH_USER_MODEL = 'Login.Colaborador'
+AUTHENTICATION_BACKENDS = ['Aprecie.middlewares.AutenticadorDeColaborador']
 
 ROOT_URLCONF = 'Aprecie.urls'
 
