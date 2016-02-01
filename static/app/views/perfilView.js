@@ -12,7 +12,7 @@ define([
 	var perfilView = {};
 
 	perfilView.exibir = function(colaboradorId) {
-		$.getJSON('/reconhecimentos/funcionario/' + colaboradorId, {}, function(reconhecimentosDoColaborador) {
+		$.getJSON('/reconhecimentos/colaborador/' + colaboradorId, {}, function(reconhecimentosDoColaborador) {
 			template.exibir(perfilTemplate, reconhecimentosDoColaborador);
 
 			$('#conteudo').off()

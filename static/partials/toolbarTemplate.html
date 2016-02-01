@@ -1,24 +1,22 @@
-<div class="logoInterna" data-js="pagina-inicial">
-	<img src="static/img/simbolo-logo.png" alt="Aprecie.me" />
-</div>
+<div class="conteudo-header">
+	<div class="busca">
+		<input type="text" id="colaborador" placeholder="Busque um colaborador" />
+	</div>
 
-<div class="busca">
-	<input type="text" id="colaborador" placeholder="Busque um colaborador" />
-</div>
+	<nav id="linksToolbar">
+		<div data-js="menu-mobile" class="menus">
+			<div data-js="tratar-menu-mobile" class="menu-responsivo"></div>
 
-<nav id="linksToolbar">
-	<div data-js="menu-mobile" class="menus">
-		<div data-js="tratar-menu-mobile" class="menu-responsivo"></div>
+			<div class="item">
+				<div class="meuPerfil itens" data-js="meu-perfil">
+					<img src="{{ foto this.id }}" />
+					<span>{{this.nome}}  |</span>
+				</div>
 
-		<div class="item">
-			<div class="meuPerfil itens" data-js="meu-perfil">
-				<img src="{{ foto this.id }}" />
-				<span>{{this.nome}}  |</span>
-			</div>
-
-			<div class="sair itens" data-js="sair">
-				<span>Sair</span>
+				<div class="sair itens" data-js="sair">
+					<span>Sair</span>
+				</div>
 			</div>
 		</div>
-	</div>
-</nav>
+	</nav>
+</div>	

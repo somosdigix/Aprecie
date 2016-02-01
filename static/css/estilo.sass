@@ -28,6 +28,7 @@ p
 	span
 		color: #fff
 
+<<<<<<< HEAD
 .sidebar
 	width: 10%
 	+displayInlineBlock
@@ -48,6 +49,8 @@ p
 	display: block
 
 
+=======
+>>>>>>> 5a71144b4fc01eb8aa1eeb60c1f92db7ffd41298
 .brancos
 	color: white
 
@@ -119,11 +122,8 @@ p
 			background-color: $rosa-terciario
 
 
-.container
-	margin-top: 112px
-    overflow: hidden
-
 .toolbar
+<<<<<<< HEAD
 	background-color: #F3EAD4
 	padding: 8px 0
 	position: fixed
@@ -131,30 +131,47 @@ p
 	width: 100%
 	right: 0
 	z-index: 2
+=======
+	background-color: $amarelo-secundario
+	padding: 8px 77px
+	width: 87%
+	margin-left: 175px
+	+box-sizing
+
+	// position: fixed
+	// top: 0
+	// right: 0
+	// left: 13%
+	// z-index: 2
+>>>>>>> 5a71144b4fc01eb8aa1eeb60c1f92db7ffd41298
 
 	
 
 	.busca
 		width: 50%
-		display: inline-block
-		vertical-align: top
-		margin: 0 2em 0 0
-		border: 1px solid #F4A400
+		+displayInlineBlock
+
 		input
 			background-color: rgba(255, 230, 171, 0.8)
 			width: 100%
 			color: rgb(173, 121, 13)
 			font-size: 1.2rem
 			padding: 0.5em
+			border-radius: 3px
 			+box-sizing
+
 		#colaborador::-webkit-input-placeholder
 			+placeholderInputColaborador
+
 		#colaborador:-moz-placeholder
 			+placeholderInputColaborador
+
 		#colaborador::-moz-placeholder
 			+placeholderInputColaborador
+
 		#colaborador:-ms-input-placeholder
 			+placeholderInputColaborador
+
 	#linksToolbar
 		width: 31%
 		+displayInlineBlock
@@ -186,16 +203,26 @@ p
 .conteudo
 	+box-sizing
 	width: 100%
-	max-width: 980px
+	max-width: 837px
 	margin: 0 auto
+	margin-top: 57px 
 
+<<<<<<< HEAD
+=======
+
+// .conteudo-header
+// 	+box-sizing
+// 	width: 100%
+// 	max-width: 1200px
+// 	margin: 0 auto
+// 	padding: 10px	
+>>>>>>> 5a71144b4fc01eb8aa1eeb60c1f92db7ffd41298
 
 .feed-principal
-	margin-top: 45px 
 	
 	h2
 		margin: 30px 0
-		font-size: 18px
+		font-size: 30px
 
 	.por-data
 		color: #fff		
@@ -216,8 +243,39 @@ p
 
 .feed-reconhecimentos
 	margin: 2em 0
+	
+	.reconhecido
+		width: 100%
 
+		.img-reconhecido
+			+avatarMedio
+			+border-radius(143px)
+			+displayInlineBlock
+
+		.sobre-reconhecido
+			+displayInlineBlock
+			margin: 21px
+			font-size: 18px
+
+		.data
+			font-size: 15px		
+	
+	.bloco-reconhecimento
+		background-color: #f9f9f9
+		padding: 10px
+		margin: 12px 0 0
+		
+		.img-reconhecedor
+			+avatarPequeno
+			+displayInlineBlock
+		
+		.texto-reconhecimento
+			+displayInlineBlock
+			margin: 0 0 0 5px
+			
+		
 	.fotos
+		
 		width: 14%
 		+displayInlineBlock
 		margin: 20px 0
