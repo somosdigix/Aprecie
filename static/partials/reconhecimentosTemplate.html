@@ -13,25 +13,28 @@
 	</div>
 	
 	<p data-js="reconhecer" class="escrever-apreciacao">
-		<textarea id="justificativa" type="text" placeholder="Deseja me apreciar por {{ this.nome_do_valor }}? Então escreve ai!"></textarea>
-		<button data-js="reconhecer">Aprecie-me</button>
+		<textarea class="escrever-publicacao" id="justificativa" type="text" placeholder="Deseja me apreciar por {{ this.nome_do_valor }}? Então escreve ai!"></textarea>
 	</p>
+	<button class="botao-apreciar" data-js="reconhecer">Apreciar</button>
 
 
 	{{#each this.reconhecimentos}}
 		<section class="feed-reconhecimentos">
-			<span class="fotos">
-				<img class="img-reconhecido" src="{{ foto this.reconhecedor__id usar_miniatura=true}}" alt=""></span>
+			<div class="bloco-reconhecimento">
+				<span class="fotos">
+					<img class="img-reconhecido" src="{{ foto this.reconhecedor__id usar_miniatura=true}}" alt="">
+				</span>
 
-			<div class="informacoes balao-reconhecimento">
-				<div class="editar-reconhecimento ion-edit"></div>
-				<div class="texto">
-					<p>{{ this.justificativa }}</p>
+				<div class="texto-reconhecimento">
 					<strong data-id="1" data-js="ir-ao-perfil" class="apreciador">{{ this.reconhecedor__nome }}</strong>
+
+					<label for="justificativa-valor">
+						<input name="justificativa-valor" id="justificativa-valor" value="{{ this.justificativa }}"></input>
+						<a href="" class="editar-reconhecimento ion-edit"></a>
+					</label>	
 					<div class="data">{{ emDataLegivel this.data }}</div>
 				</div>
-			</div>
-
+			</div>	
 		</section>
 	{{/each}}
 	
