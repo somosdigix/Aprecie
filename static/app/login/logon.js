@@ -1,5 +1,5 @@
 define([
-	'text!partials/loginTemplate.html'
+	'text!app/login/loginTemplate.html'
 ], function(loginTemplate) {
 	'use strict';
 

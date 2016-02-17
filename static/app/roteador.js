@@ -21,14 +21,15 @@ define([
 		}
 
 		function login() {
-			require(['app/controllers/loginController'], function(loginController) {
+			require(['app/login/controller'], function(loginController) {
 				_controllerAtivo = loginController;
 				loginController.exibir();
 			});
 		}
 
 		function paginaInicial() {
-			require(['app/controllers/paginaInicialController'], function(paginaInicialController) {
+			require(['app/paginaInicial/controller'], function(paginaInicialController) {
+				_controllerAtivo = paginaInicialController;
 				paginaInicialController.exibir();
 			});
 		}

@@ -1,5 +1,5 @@
 define([
-	'text!partials/valoresDaEmpresaTemplate.html'
+	'text!app/paginaInicial/valoresDaEmpresaTemplate.html'
 ],	function(valoresDaEmpresaTemplate) {
 	'use strict';
 

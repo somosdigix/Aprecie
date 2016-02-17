@@ -1,5 +1,5 @@
 define([
-	'text!partials/apreciacoesTemplate.html'
+	'text!app/paginaInicial/apreciacoesTemplate.html'
 ], function(apreciacoesTemplate) {
 	'use strict';
 
