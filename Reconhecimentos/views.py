@@ -3,7 +3,6 @@ from django.shortcuts import render
 from django.utils import formats
 from Login.models import Colaborador
 from Reconhecimentos.models import Valor, Reconhecimento
-from Reconhecimentos.statics import ValoresDaDigithoBrasil
 from django.db.models import Count
 
 def reconhecer(requisicao):
@@ -41,7 +40,7 @@ def reconhecimentos_do_colaborador(requisicao, id_do_reconhecido):
 		'id': valor.id,
 		'nome': valor.nome,	
 		'quantidade_de_reconhecimentos': len(reconhecido.reconhecimentos_por_valor(valor))
-	}, ValoresDaDigithoBrasil.todos))
+	}, Valor.objects.all()))
 
 	return JsonResponse({ 'id': reconhecido.id, 'nome': reconhecido.nome_abreviado, 'valores': valores }, safe=False)
 

@@ -3,8 +3,8 @@ from Aprecie.base import ExcecaoDeDominio
 from django.contrib.auth.models import AbstractBaseUser
 
 class Colaborador(AbstractBaseUser):
-	cpf = models.CharField(max_length='11', unique=True)
-	nome = models.CharField(max_length='200')
+	cpf = models.CharField(max_length=11, unique=True)
+	nome = models.CharField(max_length=200)
 	data_de_nascimento = models.DateField()
 	foto = models.TextField(default=None, null=True)
 

@@ -2,9 +2,9 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-	<meta charset="utf-8" />
 	<title>Aprecie.me</title>
 
+	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width,  height=device-height, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 	<link rel="shortcut icon" href="{% static "favicon.ico" %}">
@@ -20,10 +20,12 @@
 </head>
 <body class="body-login">
 	<input id="ehDebug" type="hidden" value="{{ eh_debug }}" />
+
 	<section data-js="sidebar" class="sidebar invisivel">
 		<div class="logo-interna" data-js="pagina-inicial">
 			<img src="static/img/logo.png" alt="Aprecie.me">
 		</div>
+
 		<div class="conteudo valores-digitho">		
 			<ul>
 				<li>
@@ -86,13 +88,11 @@
 				</li>
 			</ul>
 		</div>
-
 	</section>		
 
+	<header data-js="toolbar" class="toolbar"></header>
 
-		<header data-js="toolbar" class="toolbar"></header>
-	<main id="conteudo">
-	</main>
+	<main id="conteudo"></main>
 
 	<div data-js="growl" class="growl fixo alinhado-ao-topo fundo-verde branco invisivel"><span></span></div>
 
