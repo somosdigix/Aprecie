@@ -1,5 +1,5 @@
 var configuracoes = {
-	baseUrl: 'static',
+	baseUrl: '../static',
 
 	deps: [
 		'app/excecoes/violacaoDeRegra',
@@ -53,7 +53,7 @@ var configuracoes = {
 
 // TODO: Automatizar essa feiura na build
 var ehDebug = document.getElementById('ehDebug').value === 'True';
-configuracoes.urlArgs = ehDebug ? 'antiCache=' + (new Date()).getTime() : 'antiCache=5';
+configuracoes.urlArgs = ehDebug ? 'antiCache=' + (new Date()).getTime() : 'antiCache=6';
 
 require.config(configuracoes);
 
@@ -73,5 +73,5 @@ require([
 	configuracoes.registrarHelpersGlobaisDoHandlebars();
 
 	if (roteador.paginaAtual() === '')
-		roteador.navegarPara('/login');
+		roteador.navegarPara('/paginaInicial');
 });

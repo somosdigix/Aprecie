@@ -62,7 +62,7 @@ define([
 
 		Handlebars.registerHelper('foto', function(id, usar_miniatura) {
 			var eh_miniatura = eh_miniatura ? 1 : 0;
-			var url = 'login/foto/' + id + '?eh_miniatura=' + eh_miniatura;
+			var url = '../login/foto/' + id + '?eh_miniatura=' + eh_miniatura;
 			return url;
 		});
 

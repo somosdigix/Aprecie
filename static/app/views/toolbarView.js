@@ -80,7 +80,7 @@ define([
 		], function(cookie, roteador) {
 			cookie.limpar();
 			toolbarView.esconder();
-			roteador.navegarPara('/login');
+			window.location = '/';
 		});
 	}
 

@@ -21,18 +21,79 @@
 <body class="body-login">
 	<input id="ehDebug" type="hidden" value="{{ eh_debug }}" />
 
-	<section data-js="sidebar" class="sidebar invisivel">
-		<div class="logo-interna" data-js="pagina-inicial">
-			<img src="static/img/logo.png" alt="Aprecie.me">
-		</div>
-	</section>		
-
-	<header data-js="toolbar" class="toolbar"></header>
-
 	<main id="conteudo"></main>
 
 	<div data-js="growl" class="growl fixo alinhado-ao-topo fundo-verde branco invisivel"><span></span></div>
 
-	<script data-main="{% static "app/app.js" %}" src="{% static "lib/requirejs/require.js" %}"></script>
+	<script src="{% static "lib/requirejs/require.js" %}"></script>
+
+	<script>
+		var opcoes = {
+			baseUrl: '../static',
+
+			deps: [
+				'app/excecoes/violacaoDeRegra',
+				'app/excecoes/erroInesperado',
+				'app/helpers/string',
+			],
+
+			paths: {
+				'text': 'lib/requirejs-text/text',
+				'jquery': 'lib/jquery/dist/jquery',
+				'jquery-ui': 'lib/jquery-ui/jquery-ui',
+				'jquery.inputmask': 'lib/jquery.inputmask/dist/jquery.inputmask.bundle',
+				'jquery.blockui': 'lib/blockUI/jquery.blockUI',
+				'handlebars': 'lib/handlebars/handlebars.amd',
+				'director': 'lib/director/build/director',
+				'sandbox': 'app/sandbox',
+				'gerenciadorDeModulos': 'app/gerenciadorDeModulos',
+				'roteador': 'app/roteador',
+				'localizacao': 'app/localizacao',
+				'configuracoes': 'app/configuracoes',
+				'template': 'app/helpers/template',
+				'cookie': 'app/helpers/cookie',
+				'growl': 'app/helpers/growl',
+				'sessaoDeUsuario': 'app/models/sessaoDeUsuario',
+				"cldr": "lib/cldrjs/dist/cldr",
+				"cldr-data": "lib/cldr-data",
+				"json": "lib/requirejs-plugins/src/json",
+				"globalize": "lib/globalize/dist/globalize"
+			},
+
+			shim: {
+				'jquery': {
+					exports: '$'
+				},
+
+				'jquery-ui': {
+					deps: ['jquery'],
+					exports: '$'
+				},
+
+				'jquery.inputmask': {
+					deps: ['jquery'],
+					exports: '$'
+				},
+
+				'director': {
+					exports: 'Router'
+				}
+			}
+		};
+
+		require.config(opcoes);
+
+		require([
+			'configuracoes',
+			'app/login/controller',
+			'jquery.inputmask'
+		], function(configuracoes, controller) {
+			configuracoes.configurarDebug(ehDebug);
+			configuracoes.configurarErros();
+			configuracoes.configurarErrosDeRequisicao();
+
+			controller.exibir();
+		});
+	</script>
 </body>
 </html>

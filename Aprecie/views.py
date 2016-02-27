@@ -8,4 +8,4 @@ def index(requisicao):
 
 @acesso_anonimo
 def login(requisicao):
-	return render(requisicao, 'login.html')
+	return render(requisicao, 'login.html', dict(eh_debug=not settings.ON_OPENSHIFT))

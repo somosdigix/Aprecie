@@ -51,7 +51,7 @@ define([
 	};
 
 	roteador.navegarPara = function(endereco) {
-		window.location = '/#' + endereco;
+		window.location = '#' + endereco;
 	};
 
 	roteador.paginaAtual = function() {

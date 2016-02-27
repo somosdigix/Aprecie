@@ -22,6 +22,10 @@ define([
 			roteador.navegarPara(endereco);
 		};
 
+		self.redirecionarPara = function(endereco) {
+			window.location = endereco;
+		};
+
 		self.exibirTemplate = function(conteudo, modelo) {
 			template.exibir(conteudo, modelo);
 		};

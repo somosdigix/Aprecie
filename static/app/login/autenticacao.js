@@ -28,7 +28,7 @@ define(function() {
 		_sandbox.preencherSessao(colaborador);
 		_sandbox.preencherCookie(colaborador);
 
-		_sandbox.navegarPara('/paginaInicial');
+		_sandbox.redirecionarPara('/app');
 	}
 
 	function validarOperacao(parametros) {
