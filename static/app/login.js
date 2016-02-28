@@ -1,17 +1,13 @@
 require.config(window.configuracoesRequirejs);
 
 require([
-	'roteador',
 	'configuracoes',
-
-	// TODO: Colocar no "deps" do RequireJS
+	'app/login/controller',
 	'jquery.inputmask'
-], function(roteador, configuracoes) {
-	'use strict';
-
-	roteador.configurar();
+], function(configuracoes, controller) {
 	configuracoes.configurarDebug(ehDebug);
 	configuracoes.configurarErros();
 	configuracoes.configurarErrosDeRequisicao();
-	configuracoes.registrarHelpersGlobaisDoHandlebars();
+
+	controller.exibir();
 });

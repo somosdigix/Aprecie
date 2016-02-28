@@ -5,7 +5,7 @@
 	<title>Aprecie.me</title>
 
 	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width,  height=device-height, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<meta name="viewport" content="width=device-width,  height=device-height, initial-scale=1, maximum-scale=1, user-scalable=no" />
 
 	<link rel="shortcut icon" href="{% static "favicon.ico" %}">
 	<link rel="stylesheet" href="{% static "css/responsivo.css" %}?v=2">
@@ -25,75 +25,7 @@
 
 	<div data-js="growl" class="growl fixo alinhado-ao-topo fundo-verde branco invisivel"><span></span></div>
 
-	<script src="{% static "lib/requirejs/require.js" %}"></script>
-
-	<script>
-		var opcoes = {
-			baseUrl: '../static',
-
-			deps: [
-				'app/excecoes/violacaoDeRegra',
-				'app/excecoes/erroInesperado',
-				'app/helpers/string',
-			],
-
-			paths: {
-				'text': 'lib/requirejs-text/text',
-				'jquery': 'lib/jquery/dist/jquery',
-				'jquery-ui': 'lib/jquery-ui/jquery-ui',
-				'jquery.inputmask': 'lib/jquery.inputmask/dist/jquery.inputmask.bundle',
-				'jquery.blockui': 'lib/blockUI/jquery.blockUI',
-				'handlebars': 'lib/handlebars/handlebars.amd',
-				'director': 'lib/director/build/director',
-				'sandbox': 'app/sandbox',
-				'gerenciadorDeModulos': 'app/gerenciadorDeModulos',
-				'roteador': 'app/roteador',
-				'localizacao': 'app/localizacao',
-				'configuracoes': 'app/configuracoes',
-				'template': 'app/helpers/template',
-				'cookie': 'app/helpers/cookie',
-				'growl': 'app/helpers/growl',
-				'sessaoDeUsuario': 'app/models/sessaoDeUsuario',
-				"cldr": "lib/cldrjs/dist/cldr",
-				"cldr-data": "lib/cldr-data",
-				"json": "lib/requirejs-plugins/src/json",
-				"globalize": "lib/globalize/dist/globalize"
-			},
-
-			shim: {
-				'jquery': {
-					exports: '$'
-				},
-
-				'jquery-ui': {
-					deps: ['jquery'],
-					exports: '$'
-				},
-
-				'jquery.inputmask': {
-					deps: ['jquery'],
-					exports: '$'
-				},
-
-				'director': {
-					exports: 'Router'
-				}
-			}
-		};
-
-		require.config(opcoes);
-
-		require([
-			'configuracoes',
-			'app/login/controller',
-			'jquery.inputmask'
-		], function(configuracoes, controller) {
-			configuracoes.configurarDebug(ehDebug);
-			configuracoes.configurarErros();
-			configuracoes.configurarErrosDeRequisicao();
-
-			controller.exibir();
-		});
-	</script>
+	<script src="{% static "app/configuracoesRequirejs.js" %}"></script>
+	<script data-main="{% static "app/login.js" %}" src="{% static "lib/requirejs/require.js" %}"></script>
 </body>
 </html>
