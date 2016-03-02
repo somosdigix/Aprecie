@@ -8,6 +8,7 @@ window.configuracoesRequirejs = (function() {
 		baseUrl: '/static',
 
 		deps: [
+			'semantic',
 			'app/excecoes/violacaoDeRegra',
 			'app/excecoes/erroInesperado',
 			'app/helpers/string',
@@ -19,6 +20,7 @@ window.configuracoesRequirejs = (function() {
 			'jquery-ui': 'lib/jquery-ui/jquery-ui',
 			'jquery.inputmask': 'lib/jquery.inputmask/dist/jquery.inputmask.bundle',
 			'jquery.blockui': 'lib/blockUI/jquery.blockUI',
+			'semantic': 'lib/semantic/dist/semantic',
 			'handlebars': 'lib/handlebars/handlebars.amd',
 			'director': 'lib/director/build/director',
 			'sandbox': 'app/sandbox',
@@ -49,6 +51,10 @@ window.configuracoesRequirejs = (function() {
 			'jquery.inputmask': {
 				deps: ['jquery'],
 				exports: '$'
+			},
+
+			'semantic': {
+				deps: ['jquery']
 			},
 
 			'director': {

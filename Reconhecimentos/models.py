@@ -5,6 +5,8 @@ from datetime import date
 
 class Valor(models.Model):
 	nome = models.CharField(max_length=200)
+	resumo = models.CharField(max_length=100)
+	descricao = models.CharField(max_length=500)
 
 class Reconhecimento(models.Model):
 	reconhecedor = models.ForeignKey('Login.Colaborador', related_name='reconhecedor')

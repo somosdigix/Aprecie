@@ -19,16 +19,13 @@ define([
 				select: selecionar
 			};
 
-			$('section[data-js="sidebar"]')
-				.off()
-				.on('click', 'div[data-js="pagina-inicial"]', paginaInicial);
-
 			$('header[data-js="toolbar"]')
 				.off()
 				.show()
+				.on('click', 'a[data-js="pagina-inicial"]', paginaInicial)
 				.on('click', 'div[data-js="meu-perfil"]', meuPerfil)
 				.on('click', 'div[data-js="tratar-menu-mobile"]', tratarMenuMobile)
-				.on('click', 'div[data-js="sair"]', sair);
+				.on('click', 'a[data-js="sair"]', sair);
 			$('#colaborador').off().autocomplete(configuracoesDoAutocomplete);
 
 			if (callback)

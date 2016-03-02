@@ -38,7 +38,8 @@ def reconhecimentos_do_colaborador(requisicao, id_do_reconhecido):
 	reconhecido = Colaborador.objects.get(id=id_do_reconhecido)
 	valores = list(map(lambda valor: {
 		'id': valor.id,
-		'nome': valor.nome,	
+		'nome': valor.nome,
+		'resumo': valor.resumo,
 		'quantidade_de_reconhecimentos': len(reconhecido.reconhecimentos_por_valor(valor))
 	}, Valor.objects.all()))
 

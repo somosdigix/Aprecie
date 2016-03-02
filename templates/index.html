@@ -8,6 +8,7 @@
 	<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, user-scalable=no" />
 
 	<link rel="shortcut icon" href="{% static "favicon.ico" %}">
+	<link rel="stylesheet" href="{% static "lib/semantic/dist/semantic.min.css" %}">
 	<link rel="stylesheet" href="{% static "css/responsivo.css" %}?v=3">
 	<link rel="stylesheet" href="{% static "css/estilo.css" %}" />
 	<link rel="stylesheet" href="{% static "css/login.css" %}" />
@@ -21,61 +22,7 @@
 <body class="body-login">
 	<input id="ehDebug" type="hidden" value="{{ eh_debug }}" />
 
-	<section data-js="sidebar" class="sidebar invisivel">
-		<div class="logo-interna" data-js="pagina-inicial">
-			<img src="../static/img/logo.png" alt="Aprecie.me">
-		</div>
-
-		<div class="conteudo valores-digitho">		
-			<ul>
-				<li>
-					<img src="../static/img/alegria.png" alt="" />
-					<div class="descricao alegria">
-						<p>- Gostamos do que fazemos e como fazemos;</p>
-					</div>
-				</li>
-		
-				<li>
-					<img src="../static/img/colaboracao.png" alt="" />
-					<div class="descricao colaboracao">
-						<p>- Acreditamos na colaboração como a melhor forma de desenvolver soluções eficientes;</p>
-					</div>
-				</li>
-				<li>
-					<img src="../static/img/excelencia.png" alt="" />
-					<div class="descricao excelencia">
-						<p>- Queremos ser e fazer melhor sempre;</p>
-					</div>
-				</li>
-				<li>
-					<img src="../static/img/inquietude.png" alt="" />
-					<div class="descricao inquietude">
-						<p>- Questionamos sempre para entender antes de executar;</p>
-					</div>
-				</li>
-				<li>
-					<img src="../static/img/responsabilidade.png" alt="" />
-					<div class="descricao responsabilidade">
-						<p>- Agimos como donos da empresa, sendo responsáveis pelo resultado coletivo;</p>
-					</div>
-				</li>
-				<li>
-					<img src="../static/img/resultado.png" alt="" />
-					<div class="descricao resultado">
-						<p>- Celebramos a conquista de cada objetivo alcançado;</p>
-					</div>
-				</li>
-				<li>
-					<img src="../static/img/transparencia.png" alt="" />
-					<div class="descricao transparencia">
-						<p>- Agimos conforme nosso discurso;</p>
-					</div>
-				</li>
-			</ul>
-		</div>
-	</section>		
-
-	<header data-js="toolbar" class="toolbar"></header>
+	<header data-js="toolbar"></header>
 
 	<main id="conteudo"></main>
 
