@@ -18,7 +18,7 @@ define([
 			console.log(reconhecimentosDoColaborador);
 
 			$('#conteudo').off()
-				.on('click', 'section[data-js="exibir-reconhecimentos"]', exibirReconhecimentos);
+				.on('click', 'div[data-js="exibir-reconhecimentos"]', exibirReconhecimentos);
 
 			if (sessaoDeUsuario.id === colaboradorId) {
 				$('span.ion-camera').show();
