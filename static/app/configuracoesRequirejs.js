@@ -20,7 +20,7 @@ window.configuracoesRequirejs = (function() {
 			'jquery-ui': 'lib/jquery-ui/jquery-ui',
 			'jquery.inputmask': 'lib/jquery.inputmask/dist/jquery.inputmask.bundle',
 			'jquery.blockui': 'lib/blockUI/jquery.blockUI',
-			'semantic': 'lib/semantic/dist/semantic',
+			'semantic': 'tema/dist/semantic',
 			'handlebars': 'lib/handlebars/handlebars.amd',
 			'director': 'lib/director/build/director',
 			'sandbox': 'app/sandbox',
