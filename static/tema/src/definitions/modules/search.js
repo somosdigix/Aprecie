@@ -1219,7 +1219,7 @@ $.fn.search.settings = {
         // message type
         if(type == 'empty') {
           html += ''
-            + '<div class="header">No Results</div class="header">'
+            + '<div class="header">Sem resultados</div class="header">'
             + '<div class="description">' + message + '</div class="description">'
           ;
         }

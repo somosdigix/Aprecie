@@ -1,15 +1,16 @@
-<div class="ui inverted menu small icon menu">
+<div class="ui brown inverted menu small icon menu">
 	<a class="header item" data-js="pagina-inicial">
-		<img src="../static/img/logo.png" alt="Aprecie.me">
+		<img src="../static/img/logo.png" alt="Aprecie.me" class="ui small image">
 	</a>
-
 	<div class="item">
-		<div class="ui transparent inverted left icon small input">
-			<input type="text" id="colaborador" placeholder="Busque um colaborador" />
-			<i class="search icon"></i>
+		<div data-js="buscaDeColaboradores" class="ui fluid search">
+			<div class="ui icon massive input">
+				<input class="prompt" placeholder="Busque um colaborador" type="text">
+				<i class="search icon"></i>
+			</div>
+			<div class="results"></div>
 		</div>
 	</div>
-
 	<div class="right menu">
 		<a class="item">
 			<div data-js="meu-perfil">
