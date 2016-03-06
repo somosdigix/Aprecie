@@ -15,8 +15,6 @@ define([
 		$.getJSON('/reconhecimentos/colaborador/' + colaboradorId, {}, function(reconhecimentosDoColaborador) {
 			template.exibir(perfilTemplate, reconhecimentosDoColaborador);
 
-			console.log(reconhecimentosDoColaborador);
-
 			$('#conteudo').off()
 				.on('click', 'div[data-js="exibir-reconhecimentos"]', exibirReconhecimentos);
 
