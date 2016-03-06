@@ -47,7 +47,6 @@ define([
 	}
 
 	function selecionar(colaborador) {
-		console.log(arguments);
 		require(['roteador'], function(roteador) {
 			$('#colaborador').val('').blur();
 
