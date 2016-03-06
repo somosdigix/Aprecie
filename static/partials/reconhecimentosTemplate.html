@@ -9,11 +9,33 @@
 			<h2 class="nome-colaborador">{{ this.nome_do_reconhecido }}</h2>
 		</div>
 	</div>
-	
+	<br>
+	<div class="ui brown segment">
+		<div class="ui grid">
+			<div class="three wide column">
+				<img src="{{iconeDoValor this.nome_do_valor}}" alt="{{this.nome_do_valor}}" class="ui small image">
+			</div>
+			<div class="twelve wide column">
+				<h3>Atuamos comprometidos com o resultado coletivo</h3>
+				<h3>Nossas lideranças estimulam e apoiam para que as pessoas sejam melhores do que elas</h3>
+				<h3>Reconhecemos atitudes comprometidas no lugar de desculpas</h3>
+				<h3>Queremos ser e fazer melhor sempre. INQUIETUDE</h3>
+			</div>
+		</div>
+	</div>
 	<p data-js="reconhecer" class="escrever-apreciacao invisivel">
-		<textarea class="escrever-publicacao" id="justificativa" type="text" placeholder="Deseja me apreciar por {{ this.nome_do_valor }}? Então escreve ai!"></textarea>
+		<textarea class="escrever-publicacao" id="justificativa" type="text" placeholder="E ai, atingi este valor? Então escreve ai!"></textarea>
 	</p>
-	<button class="botao-apreciar invisivel" data-js="reconhecer">Apreciar</button>
+	
+	<button type="button" class="ui labeled icon right floated orange button button" data-js="reconhecer">
+	<i class="star icon"></i>
+	Apreciar
+	</button>
+	<br>
+	<br>
+	<br>
+	<div class="ui divider"></div>
+	<h2>Reconhecimentos</h2>
 	
 	{{#each this.reconhecimentos}}
 	<section class="feed-reconhecimentos">
@@ -31,7 +53,17 @@
 			</div>
 		</div>
 	</section>
+	{{else}}
+	<div class="ui huge brown message">
+		Ainda não há reconhecimentos para <strong>{{ this.nome_do_valor }}</strong> :(
+	</div>
 	{{/each}}
 	
-	<a class="botao-voltar" href="#" data-js="voltar-ao-perfil">Voltar para o perfil</a>
+	<button type="button" class="ui labeled icon right floated orange button" data-js="voltar-ao-perfil">
+	<i class="left arrow icon"></i>
+	Voltar para o perfil
+	</button>
+	<br>
+	<br>
+	<br>
 </div>

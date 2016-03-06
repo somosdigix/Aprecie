@@ -2,7 +2,8 @@ define([
 	'jquery',
 	'template',
 	'text!partials/reconhecimentosTemplate.html',
-	'sessaoDeUsuario'
+	'sessaoDeUsuario',
+	'app/views/iconesDosValoresHelpers'
 ], function($, template, reconhecimentosTemplate, sessaoDeUsuario) {
 	'use strict';
 
@@ -11,7 +12,7 @@ define([
 	reconhecimentosPorValorView.exibir = function(colaboradorId, valorId) {
 		$('#conteudo')
 			.off()
-			.on('click', 'a[data-js="voltar-ao-perfil"]', function() {
+			.on('click', 'button[data-js="voltar-ao-perfil"]', function() {
 				voltarParaPerfil(colaboradorId);
 			});
 

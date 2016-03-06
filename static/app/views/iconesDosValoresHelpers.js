@@ -5,7 +5,7 @@ define([
 	
 	Handlebars.registerHelper('iconeDoValor', function(valor) {
 		var urlBase = '../static/img/';
-		var valor = valor.nome.toLocaleLowerCase();
+		var valor = valor.nome ? valor.nome.toLocaleLowerCase() : valor.toLocaleLowerCase();
 
 		return urlBase + valor + '.png';
 	});
