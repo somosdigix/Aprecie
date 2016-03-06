@@ -1,7 +1,6 @@
 import factory
 from Login.factories import ColaboradorFactory
-from Reconhecimentos.statics import ValoresDaDigithoBrasil
-from Reconhecimentos.models import Reconhecimento
+from Reconhecimentos.models import Reconhecimento, Valor
 
 class ReconhecimentoFactory(factory.django.DjangoModelFactory):
 
@@ -10,6 +9,6 @@ class ReconhecimentoFactory(factory.django.DjangoModelFactory):
 
 	reconhecedor = factory.SubFactory(ColaboradorFactory)
 	reconhecido = factory.SubFactory(ColaboradorFactory)
-	valor = ValoresDaDigithoBrasil.inquietude
+	valor = Valor.objects.get(nome='Alegria')
 	justificativa = "uma justificativa qualquer"
 	data = '2015-01-01'

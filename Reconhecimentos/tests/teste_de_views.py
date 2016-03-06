@@ -2,7 +2,7 @@ from django.test import TestCase
 from django.core.urlresolvers import reverse
 from Login.factories import ColaboradorFactory
 from Reconhecimentos.factories import ReconhecimentoFactory
-from Reconhecimentos.statics import ValoresDaDigithoBrasil
+from Reconhecimentos.models import Valor
 import json
 
 class TesteDeApiDeReconhecimento(TestCase):
@@ -14,7 +14,7 @@ class TesteDeApiDeReconhecimento(TestCase):
 	def setUp(self):
 		self.reconhecido = ColaboradorFactory()
 		self.reconhecedor = ColaboradorFactory()
-		self.valor = ValoresDaDigithoBrasil.inquietude
+		self.valor = Valor.objects.get(nome='Alegria')
 		self.justificativa = 'Você é legal'
 
 		self.logar(self.reconhecedor)
@@ -81,8 +81,8 @@ class TesteDeApiDeReconhecimento(TestCase):
 		self.assertEqual(2, len(reconhecedores))
 
 		self.assertEqual(reconhecedor1.primeiro_nome, reconhecedores[0]['reconhecedor__nome'])
-		self.assertEqual(ValoresDaDigithoBrasil.inquietude.id, reconhecedores[0]['valor__id'])
+		self.assertEqual(self.valor.id, reconhecedores[0]['valor__id'])
 		self.assertEqual(1, reconhecedores[0]['quantidade_de_reconhecimentos'])
 		self.assertEqual(reconhecedor2.primeiro_nome, reconhecedores[1]['reconhecedor__nome'])
-		self.assertEqual(ValoresDaDigithoBrasil.inquietude.id, reconhecedores[1]['valor__id'])
+		self.assertEqual(self.valor.id, reconhecedores[1]['valor__id'])
 		self.assertEqual(2, reconhecedores[1]['quantidade_de_reconhecimentos'])

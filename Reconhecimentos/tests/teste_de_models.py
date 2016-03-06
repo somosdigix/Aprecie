@@ -1,9 +1,7 @@
 from django.test import TestCase
 from django.utils import timezone
 from Login.models import Colaborador
-from Reconhecimentos.models import Valor
-from Reconhecimentos.models import Reconhecimento
-from Reconhecimentos.statics import ValoresDaDigithoBrasil
+from Reconhecimentos.models import Reconhecimento, Valor
 from Reconhecimentos.views import reconhecer
 from Login.factories import ColaboradorFactory
 from Reconhecimentos.factories import ReconhecimentoFactory
@@ -15,22 +13,24 @@ class TesteDeReconhecimento(TestCase):
 	def setUp(self):
 		self.reconhecido = ColaboradorFactory()
 		self.reconhecedor = ColaboradorFactory()
+		self.responsabilidade = Valor.objects.get(nome='Responsabilidade')
+		self.inquietude = Valor.objects.get(nome='Inquietude')
 
 	def testa_o_reconhecimento_de_uma_habilidade(self):
 		justificativa = 'Foi legal'
 
-		self.reconhecido.reconhecer(self.reconhecedor, ValoresDaDigithoBrasil.inquietude, justificativa);
+		self.reconhecido.reconhecer(self.reconhecedor, self.responsabilidade, justificativa);
 		reconhecimento = self.reconhecido.reconhecimentos()[0]
 
-		self.assertEqual(1, len(self.reconhecido.reconhecimentos_por_valor(ValoresDaDigithoBrasil.inquietude)))
+		self.assertEqual(1, len(self.reconhecido.reconhecimentos_por_valor(self.responsabilidade)))
 		self.assertEqual(self.reconhecedor, reconhecimento.reconhecedor)
-		self.assertEqual(ValoresDaDigithoBrasil.inquietude, reconhecimento.valor)
+		self.assertEqual(self.responsabilidade, reconhecimento.valor)
 		self.assertEqual(justificativa, reconhecimento.justificativa)
 
 	def testa_que_armazena_a_data_do_reconhecimento(self):
 		justificativa = 'Gostei!'
 
-		self.reconhecido.reconhecer(self.reconhecedor, ValoresDaDigithoBrasil.responsabilidade, justificativa);
+		self.reconhecido.reconhecer(self.reconhecedor, self.responsabilidade, justificativa);
 		reconhecimento = self.reconhecido.reconhecimentos()[0]
 
 		agora = timezone.now()
@@ -39,30 +39,30 @@ class TesteDeReconhecimento(TestCase):
 		self.assertEqual(agora.day, reconhecimento.data.day)
 
 	def testa_a_listagem_de_reconhecimentos(self):
-		self.reconhecido.reconhecer(self.reconhecedor, ValoresDaDigithoBrasil.responsabilidade, 'Foi legal');
-		self.reconhecido.reconhecer(self.reconhecedor, ValoresDaDigithoBrasil.inquietude, 'Voce realmente questiona as coisas');
+		self.reconhecido.reconhecer(self.reconhecedor, self.responsabilidade, 'Foi legal');
+		self.reconhecido.reconhecer(self.reconhecedor, self.responsabilidade, 'Voce realmente questiona as coisas');
 
-		valores_esperados = [ValoresDaDigithoBrasil.responsabilidade, ValoresDaDigithoBrasil.inquietude]
+		valores_esperados = [self.responsabilidade, self.responsabilidade]
 		valores_reconhecidos = map(lambda reconhecimento: reconhecimento.valor, self.reconhecido.reconhecimentos())
 		self.assertEqual(valores_esperados, list(valores_reconhecidos))
 		
 	def testa_a_listagem_de_reconhecimentos_por_valor(self):
-		self.reconhecido.reconhecer(self.reconhecedor, ValoresDaDigithoBrasil.responsabilidade, 'Foi legal');
-		self.reconhecido.reconhecer(self.reconhecedor, ValoresDaDigithoBrasil.inquietude, 'Voce realmente questiona as coisas');
-		self.reconhecido.reconhecer(self.reconhecedor, ValoresDaDigithoBrasil.responsabilidade, 'Parabens pela iniciativa');
+		self.reconhecido.reconhecer(self.reconhecedor, self.inquietude, 'Foi legal');
+		self.reconhecido.reconhecer(self.reconhecedor, self.responsabilidade, 'Voce realmente questiona as coisas');
+		self.reconhecido.reconhecer(self.reconhecedor, self.responsabilidade, 'Parabens pela iniciativa');
 
-		self.assertEqual(1, len(self.reconhecido.reconhecimentos_por_valor(ValoresDaDigithoBrasil.inquietude)))
-		self.assertEqual(2, len(self.reconhecido.reconhecimentos_por_valor(ValoresDaDigithoBrasil.responsabilidade)))
+		self.assertEqual(1, len(self.reconhecido.reconhecimentos_por_valor(self.inquietude)))
+		self.assertEqual(2, len(self.reconhecido.reconhecimentos_por_valor(self.responsabilidade)))
 
 	def testa_que_o_colaborador_nao_pode_se_reconher(self):
 		with self.assertRaises(Exception) as contexto:
-			self.reconhecido.reconhecer(self.reconhecido, ValoresDaDigithoBrasil.responsabilidade, 'Parabéns pela iniciativa')
+			self.reconhecido.reconhecer(self.reconhecido, self.responsabilidade, 'Parabéns pela iniciativa')
 
 		self.assertEqual('O colaborador nao pode reconher a si próprio', contexto.exception.args[0])
 
 	def testa_que_o_colaborador_nao_pode_reconhecer_com_justificativa_vazia(self):
 		with self.assertRaises(Exception) as contexto:
-			self.reconhecido.reconhecer(self.reconhecedor, ValoresDaDigithoBrasil.inquietude, '   ')
+			self.reconhecido.reconhecer(self.reconhecedor, self.responsabilidade, '   ')
 
 		self.assertEqual('A sua justificativa deve ser informada', contexto.exception.args[0])
 
