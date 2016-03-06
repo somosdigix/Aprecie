@@ -1,9 +1,8 @@
 define([
 	'jquery',
 	'handlebars',
-	'jquery.blockui',
 	'localizacao'
-], function($, Handlebars, blockUI) {
+], function($, Handlebars) {
 	'use strict';
 
 	var configuracoes = {};
@@ -33,9 +32,7 @@ define([
 		$(document)
 			.ajaxStart(function() {
 				tempo = setTimeout(function() {
-					$.blockUI({
-						message: 'Carregando, aguarde...'
-					});
+					$('div[data-js="carregando"]').toggleClass('disabled active');
 				}, 100);
 			})
 			.ajaxComplete(desbloquearInterface)
@@ -52,7 +49,7 @@ define([
 			});
 
 		function desbloquearInterface() {
-			$.unblockUI();
+			$('div[data-js="carregando"]').toggleClass('disabled active');
 			clearTimeout(tempo);
 		}
 	};
