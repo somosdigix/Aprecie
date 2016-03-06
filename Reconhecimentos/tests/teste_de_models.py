@@ -94,3 +94,10 @@ class TesteDeReconhecimento(TestCase):
 			reconhecimento.alterar_justificativa(nova_justificativa, self.reconhecedor)
 
 		self.assertEqual('O reconhecimento só pode ser alterado por quem o elaborou', contexto.exception.args[0])
+
+	def testa_que_valor_sabe_retornar_uma_lista_de_frases_que_o_descreve_detalhadamente(self):
+		valor = Valor(nome='Teste', resumo='Resumo', descricao='Frase 1|Frase 2|Frase 3')
+
+		detalhes = valor.frases_de_descricao
+
+		self.assertEqual(['Frase 1', 'Frase 2', 'Frase 3'], detalhes)

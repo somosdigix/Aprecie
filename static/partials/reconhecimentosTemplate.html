@@ -16,10 +16,9 @@
 				<img src="{{iconeDoValor this.nome_do_valor}}" alt="{{this.nome_do_valor}}" class="ui small image">
 			</div>
 			<div class="twelve wide column">
-				<h3>Atuamos comprometidos com o resultado coletivo</h3>
-				<h3>Nossas lideranças estimulam e apoiam para que as pessoas sejam melhores do que elas</h3>
-				<h3>Reconhecemos atitudes comprometidas no lugar de desculpas</h3>
-				<h3>Queremos ser e fazer melhor sempre. INQUIETUDE</h3>
+				{{#each this.frases_de_descricao}}
+				<h3>{{this}}</h3>
+				{{/each}}
 			</div>
 		</div>
 	</div>
@@ -27,7 +26,7 @@
 		<textarea class="escrever-publicacao" id="justificativa" type="text" placeholder="E ai, atingi este valor? Então escreve ai!"></textarea>
 	</p>
 	
-	<button type="button" class="ui labeled icon right floated orange button button" data-js="reconhecer">
+	<button type="button" class="ui labeled icon right floated orange button button" data-js="reconhecer" style="display: none;">
 	<i class="star icon"></i>
 	Apreciar
 	</button>

@@ -8,6 +8,10 @@ class Valor(models.Model):
 	resumo = models.CharField(max_length=100)
 	descricao = models.CharField(max_length=500)
 
+	@property
+	def frases_de_descricao(self):
+		return self.descricao.split('|')
+
 class Reconhecimento(models.Model):
 	reconhecedor = models.ForeignKey('Login.Colaborador', related_name='reconhecedor')
 	reconhecido = models.ForeignKey('Login.Colaborador', related_name='reconhecido')

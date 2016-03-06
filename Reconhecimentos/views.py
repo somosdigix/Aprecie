@@ -62,6 +62,7 @@ def reconhecimentos_por_valor(requisicao, id_do_reconhecido, id_do_valor):
 	resposta = {
 		'id_do_valor': valor.id,
 		'nome_do_valor': valor.nome,
+		'frases_de_descricao': valor.frases_de_descricao,
 		'id_do_reconhecido': reconhecido.id,
 		'nome_do_reconhecido': reconhecido.nome_abreviado,
 		'reconhecimentos': list(reconhecimentos)

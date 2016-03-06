@@ -57,7 +57,7 @@ define([
 
 			$.post('/login/alterar_foto/', data, function() {
 				$('img[data-js="foto"]').attr('src', reader.result);
-				$('img[data-js="foto-miniatura"]').attr('src', reader.result);
+				$('div[data-js="meu-perfil"] img').attr('src', reader.result);
 			});
 		};
 

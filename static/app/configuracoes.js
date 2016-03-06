@@ -32,8 +32,8 @@ define([
 		$(document)
 			.ajaxStart(function() {
 				tempo = setTimeout(function() {
-					$('div[data-js="carregando"]').toggleClass('disabled active');
-				}, 100);
+					$('div[data-js="carregando"]').removeClass('disabled').addClass('active');
+				}, 250);
 			})
 			.ajaxComplete(desbloquearInterface)
 			.ajaxError(function(evento, jqueryRequest) {
@@ -49,7 +49,7 @@ define([
 			});
 
 		function desbloquearInterface() {
-			$('div[data-js="carregando"]').toggleClass('disabled active');
+			$('div[data-js="carregando"]').removeClass('active').addClass('disabled');
 			clearTimeout(tempo);
 		}
 	};
