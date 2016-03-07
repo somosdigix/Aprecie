@@ -66,8 +66,8 @@ define([
 		});
 	};
 
-	configuracoes.configurarDebug = function(ehDebug) {
-		_ehDebug = ehDebug;
+	configuracoes.configurarDebug = function() {
+		_ehDebug = document.getElementById('ehDebug').value === 'True';
 	};
 
 	configuracoes.ehDebug = function() {

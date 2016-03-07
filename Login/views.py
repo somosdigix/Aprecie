@@ -21,7 +21,7 @@ def entrar(requisicao):
 	if colaborador_autenticado:
 		login(requisicao, colaborador_autenticado)
 	else:
-		raise ExcecaoDeDominio('Oi! Seus dados não foram encontrados. Confira tente novamente. :)')
+		raise ExcecaoDeDominio('Oi! Seus dados não foram encontrados. Confira e tente novamente. :)')
 
 	return JsonResponse({
 		'id_do_colaborador': colaborador_autenticado.id,

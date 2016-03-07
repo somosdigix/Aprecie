@@ -80,4 +80,4 @@ class TesteDeAutenticacao(TestCase):
 		
 		resposta_json = json.loads(resposta.content.decode())
 		self.assertEqual(403, resposta.status_code)
-		self.assertEqual('Oi! Seus dados não foram encontrados. Confira tente novamente. :)', resposta_json['mensagem'])
+		self.assertEqual('Oi! Seus dados não foram encontrados. Confira e tente novamente. :)', resposta_json['mensagem'])

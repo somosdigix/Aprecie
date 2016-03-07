@@ -8,13 +8,12 @@ __pycache__/
 .Python
 env/
 build/
+!**/tema/**
 develop-eggs/
 dist/
-!**/tema/dist/
 downloads/
 eggs/
 .eggs/
-lib/
 lib64/
 parts/
 sdist/
@@ -49,11 +48,6 @@ docs/_build/
 # PyBuilder
 target/
 db.sqlite3
-!static/app/**/*
 node_modules/
-!static/app/**/*ambienteDoValorometro/
-!static/**/lib/
-ambienteDoValorometro/
 static/CACHE/
 .sass-cache/
-static/lib/
