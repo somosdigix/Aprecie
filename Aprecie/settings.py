@@ -11,6 +11,8 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 INSTALLED_APPS = (
+    'django.contrib.auth',
+    'django.contrib.sessions',
     'django.contrib.contenttypes',
     'django.contrib.staticfiles',
     'Login',
@@ -19,12 +21,19 @@ INSTALLED_APPS = (
 )
 
 MIDDLEWARE_CLASSES = (
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'Aprecie.middlewares.ProcessadorDeExcecao',
     'Aprecie.middlewares.TimezoneMiddleware',
+    'Aprecie.middlewares.LoginObrigatorioMiddleware'
 )
+
+AUTH_USER_MODEL = 'Login.Colaborador'
+AUTHENTICATION_BACKENDS = ['Aprecie.middlewares.AutenticadorDeColaborador']
 
 ROOT_URLCONF = 'Aprecie.urls'
 
@@ -57,14 +66,12 @@ DATABASES = {
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
+USE_L10N = True
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'pt-br'
 
 TIME_ZONE = 'America/Campo_Grande'
 
-USE_I18N = True
-
-USE_L10N = True
 
 USE_TZ = False
 

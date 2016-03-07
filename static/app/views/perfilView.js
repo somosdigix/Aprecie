@@ -12,11 +12,11 @@ define([
 	var perfilView = {};
 
 	perfilView.exibir = function(colaboradorId) {
-		$.getJSON('/reconhecimentos/funcionario/' + colaboradorId, {}, function(reconhecimentosDoColaborador) {
+		$.getJSON('/reconhecimentos/colaborador/' + colaboradorId, {}, function(reconhecimentosDoColaborador) {
 			template.exibir(perfilTemplate, reconhecimentosDoColaborador);
 
 			$('#conteudo').off()
-				.on('click', 'section[data-js="exibir-reconhecimentos"]', exibirReconhecimentos);
+				.on('click', 'div[data-js="exibir-reconhecimentos"]', exibirReconhecimentos);
 
 			if (sessaoDeUsuario.id === colaboradorId) {
 				$('span.ion-camera').show();
@@ -57,7 +57,7 @@ define([
 
 			$.post('/login/alterar_foto/', data, function() {
 				$('img[data-js="foto"]').attr('src', reader.result);
-				$('img[data-js="foto-miniatura"]').attr('src', reader.result);
+				$('div[data-js="meu-perfil"] img').attr('src', reader.result);
 			});
 		};
 

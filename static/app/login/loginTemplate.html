@@ -1,0 +1,67 @@
+<div class="ui six wide column top ">
+    <img src="static/img/logo.png" alt="Aprecie" />
+
+	<form class="ui form segment">
+		<div class="ui campos-login">
+			<input id="cpf" type="text" required>
+      <label class="label" for="">Me diga, qual é o seu CPF?</label>
+		</div>
+
+		<div class="ui campos-login">
+			<input class="" id="dataDeNascimento" type="text" required>
+			<label class="label" for="">e o dia do seu nascimento?</label>
+		</div>
+
+		<button data-js="autenticar" type="button" class="ui cor-primaria orange fluid submit button">
+			entrar
+		</button>
+	</form>
+</div>
+
+<style>
+  .campos-login {
+    background-color: #fff;
+    overflow: hidden;
+    position: relative;
+    margin: 0 0;
+    padding: 20px 0;
+  }
+
+  input {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    background-color: transparent;
+    border: none !important;
+    height: 2rem;
+    width: 100%;
+    font-size: 15px;
+    transition: all 0.3s;
+    color: #000;
+    outline: none;
+    display: block !important;
+    border-bottom: 2px solid #000 !important;
+    border-radius: 0 !important;
+  }
+
+
+  .label {
+    font-size: 15px;
+    color: #000;
+    margin: 8px 0;
+    pointer-events: none;
+    top: 6px;
+    position: absolute;
+  }
+
+  input:focus {
+    outline: none;
+  }
+
+  input:focus ~ label, input:valid ~ label {
+    top: -18px;
+    font-size: 13px;
+    color: #000;
+    padding: 10px 0;
+  }
+</style>

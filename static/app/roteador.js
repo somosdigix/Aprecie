@@ -6,13 +6,14 @@ define([
 
 	var router;
 	var roteador = {};
+	var _controllerAtivo;
 
 	roteador.configurar = function() {
 		var rotas = {
-			'/login': [middlewareDeAutenticacao, middlewareDeToolbar, limparTela, login],
-			'/paginaInicial': [middlewareDeAutenticacao, middlewareDeToolbar, limparTela, paginaInicial],
-			'/perfil/:colaboradorId': [middlewareDeAutenticacao, middlewareDeToolbar, limparTela, perfil],
-			'/reconhecimentosPorValor/:colaboradorId/:valorId': [middlewareDeAutenticacao, middlewareDeToolbar, limparTela, reconhecimentosPorValor]
+			'/login': [middlewareDeAutenticacao, middlewareDeTransicaoDeTela, middlewareDeToolbar, limparTela, login],
+			'/paginaInicial': [middlewareDeAutenticacao, middlewareDeTransicaoDeTela, middlewareDeToolbar, limparTela, paginaInicial],
+			'/perfil/:colaboradorId': [middlewareDeAutenticacao, middlewareDeTransicaoDeTela, middlewareDeToolbar, limparTela, perfil],
+			'/reconhecimentosPorValor/:colaboradorId/:valorId': [middlewareDeAutenticacao, middlewareDeTransicaoDeTela, middlewareDeToolbar, limparTela, reconhecimentosPorValor]
 		};
 
 		function limparTela() {
@@ -20,14 +21,16 @@ define([
 		}
 
 		function login() {
-			require(['app/views/loginView'], function(loginView) {
-				loginView.exibir();
+			require(['app/login/controller'], function(loginController) {
+				_controllerAtivo = loginController;
+				loginController.exibir();
 			});
 		}
 
 		function paginaInicial() {
-			require(['app/views/paginaInicialView'], function(paginaInicialView) {
-				paginaInicialView.exibir();
+			require(['app/paginaInicial/controller'], function(paginaInicialController) {
+				_controllerAtivo = paginaInicialController;
+				paginaInicialController.exibir();
 			});
 		}
 
@@ -48,7 +51,7 @@ define([
 	};
 
 	roteador.navegarPara = function(endereco) {
-		window.location = '/#' + endereco;
+		window.location = '#' + endereco;
 	};
 
 	roteador.paginaAtual = function() {
@@ -76,6 +79,11 @@ define([
 		}
 
 		servicoDeAutenticacao.atualizarSessaoDeUsuario();
+	}
+
+	function middlewareDeTransicaoDeTela() {
+		if (_controllerAtivo)
+			_controllerAtivo.finalizar();
 	}
 
 	function middlewareDeToolbar() {

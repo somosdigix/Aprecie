@@ -10,6 +10,7 @@ env/
 build/
 develop-eggs/
 dist/
+!**/tema/dist/
 downloads/
 eggs/
 .eggs/
@@ -51,6 +52,8 @@ db.sqlite3
 !static/app/**/*
 node_modules/
 !static/app/**/*ambienteDoValorometro/
+!static/**/lib/
 ambienteDoValorometro/
 static/CACHE/
 .sass-cache/
+static/lib/

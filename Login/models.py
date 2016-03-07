@@ -1,19 +1,30 @@
 from django.db import models
 from Aprecie.base import ExcecaoDeDominio
+from django.contrib.auth.models import AbstractBaseUser
 
-class Funcionario(models.Model):
-	nome = models.CharField(max_length='200')
-	cpf = models.CharField(max_length='11', unique=True)
+class Colaborador(AbstractBaseUser):
+	cpf = models.CharField(max_length=11, unique=True)
+	nome = models.CharField(max_length=200)
 	data_de_nascimento = models.DateField()
 	foto = models.TextField(default=None, null=True)
 
+	USERNAME_FIELD = 'cpf'
+
 	@property
 	def primeiro_nome(self):
-		return Funcionario.obter_primeiro_nome(self.nome)
+		return Colaborador.obter_primeiro_nome(self.nome)
+
+	@property
+	def nome_abreviado(self):
+		return Colaborador.obter_primeiro_nome(self.nome) + ' ' + Colaborador.obter_ultimo_nome(self.nome)
 
 	@staticmethod
 	def obter_primeiro_nome(nome):
 		return nome.split(' ')[0]
+
+	@staticmethod
+	def obter_ultimo_nome(nome):
+		return nome.split(' ')[-1]
 
 	def alterar_foto(self, nova_foto_em_base64):
 		if not nova_foto_em_base64.strip():

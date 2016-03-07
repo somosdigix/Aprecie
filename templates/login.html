@@ -1,0 +1,79 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+	<title>Aprecie.me</title>
+
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width,  height=device-height, initial-scale=1, maximum-scale=1, user-scalable=no" />
+
+	<link rel="shortcut icon" href="{% static "favicon.ico" %}">
+	<link rel="stylesheet" href="{% static "tema/dist/semantic.min.css" %}">
+
+	<style>
+		.body-login {
+			background-color: #F1DFC7;
+		}
+
+		#conteudo{
+			height: 100%;
+			min-height: 100%;
+			display: -webkit-flex;
+			display: flex;
+			-webkit-align-items: center;
+			align-items: center;
+			-webkit-justify-content: center;
+			justify-content: center;	
+		}
+
+		.invisivel {
+			display: none;
+		}
+
+		.cor-primaria{
+			background-color: #f57b20
+		}
+
+		.fundo-verde {
+		    background-color: green;
+		}
+
+		.fundo-vermelho {
+    		background-color: #dc0028;
+		}
+
+		.alinhado-ao-topo {
+		    top: 0;
+		    right: 0;
+		}
+
+		.fixo {
+		    position: fixed;
+		    z-index: 99999;
+		}
+
+		.growl {
+		    max-width: 200px;
+		    padding: 15px 55px;
+		    border-radius: 10px;
+		    margin-top: 23px;
+		    margin-right: 32px;
+		}
+	</style>
+
+</head>
+<body class="body-login">
+	<div data-js="carregando" class="ui disabled dimmer">
+		<div class="ui large text loader">Carregando, segura a onda ai.</div>
+	</div>
+
+	<input id="ehDebug" type="hidden" value="{{ eh_debug }}" />
+
+	<main id="conteudo"></main>
+
+	<div data-js="growl" class="growl fixo alinhado-ao-topo fundo-verde branco invisivel"><span></span></div>
+
+	<script src="{% static "app/configuracoesRequirejs.js" %}"></script>
+	<script data-main="{% static "app/login.js" %}" src="{% static "lib/requirejs/require.js" %}"></script>
+</body>
+</html>

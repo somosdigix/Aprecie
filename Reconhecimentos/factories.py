@@ -1,15 +1,14 @@
 import factory
-from Login.factories import FuncionarioFactory
-from Reconhecimentos.statics import ValoresDaDigithoBrasil
-from Reconhecimentos.models import Reconhecimento
+from Login.factories import ColaboradorFactory
+from Reconhecimentos.models import Reconhecimento, Valor
 
 class ReconhecimentoFactory(factory.django.DjangoModelFactory):
 
 	class Meta:
 		model = Reconhecimento
 
-	reconhecedor = factory.SubFactory(FuncionarioFactory)
-	reconhecido = factory.SubFactory(FuncionarioFactory)
-	valor = ValoresDaDigithoBrasil.inquietude
+	reconhecedor = factory.SubFactory(ColaboradorFactory)
+	reconhecido = factory.SubFactory(ColaboradorFactory)
+	valor = Valor.objects.get(nome='Alegria')
 	justificativa = "uma justificativa qualquer"
 	data = '2015-01-01'

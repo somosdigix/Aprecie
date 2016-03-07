@@ -1,26 +1,24 @@
-<div class="conteudo-header">
-	<div class="logoInterna" data-js="pagina-inicial">
-		<img src="static/img/simbolo-logo.png" alt="Aprecie.me" />
-	</div>
-
-	<div class="busca">
-		<input type="text" id="colaborador" placeholder="Busque um colaborador" />
-	</div>
-
-	<nav id="linksToolbar">
-		<div data-js="menu-mobile" class="menus">
-			<div data-js="tratar-menu-mobile" class="menu-responsivo"></div>
-
-			<div class="item">
-				<div class="meuPerfil itens" data-js="meu-perfil">
-					<img src="{{ foto this.foto }}" />
-					<span>{{this.nome}}  |</span>
-				</div>
-
-				<div class="sair itens" data-js="sair">
-					<span>Sair</span>
-				</div>
+<div class="ui brown inverted menu small icon menu">
+	<a class="header item" data-js="pagina-inicial">
+		<img src="../static/img/logo.png" alt="Aprecie.me" class="ui small image">
+	</a>
+	<div class="item">
+		<div data-js="buscaDeColaboradores" class="ui fluid search">
+			<div class="ui icon massive input">
+				<input class="prompt" placeholder="Busque um colaborador" type="text">
+				<i class="search icon"></i>
 			</div>
+			<div class="results"></div>
 		</div>
-	</nav>
+	</div>
+	<div class="right menu">
+		<a class="item">
+			<div data-js="meu-perfil">
+				<img src="{{ foto this.id }}" class="ui tiny circular image" />
+			</div>
+		</a>
+		<a class="item" data-js="sair">
+			<i class="big power icon"></i>
+		</a>
+	</div>
 </div>

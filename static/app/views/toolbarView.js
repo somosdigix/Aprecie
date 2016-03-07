@@ -10,22 +10,24 @@ define([
 	var toolbarView = {};
 
 	toolbarView.exibir = function(callback) {
-		$.getJSON('/login/obter_funcionarios', function(data) {
+		$.getJSON('/login/obter_colaboradores', function(data) {
 			template.exibirEm('header[data-js="toolbar"]', toolbarTemplate, sessaoDeUsuario);
 
-			var configuracoesDoAutocomplete = {
-				source: converterParaAutocomplete(data.colaboradores),
-				minLength: 1,
-				select: selecionar
-			};
-
 			$('header[data-js="toolbar"]')
+				.off()
 				.show()
-				.on('click', 'div[data-js="pagina-inicial"]', paginaInicial)
+				.on('click', 'a[data-js="pagina-inicial"]', paginaInicial)
 				.on('click', 'div[data-js="meu-perfil"]', meuPerfil)
 				.on('click', 'div[data-js="tratar-menu-mobile"]', tratarMenuMobile)
-				.on('click', 'div[data-js="sair"]', sair);
-			$('#colaborador').off().autocomplete(configuracoesDoAutocomplete);
+				.on('click', 'a[data-js="sair"]', sair);
+
+			$('div[data-js="buscaDeColaboradores"]').search({
+				source: converterParaAutocomplete(data.colaboradores),
+				onSelect: selecionar,
+				error: {
+					noResults: 'Não encontrei ninguém :('
+				}
+			});
 
 			if (callback)
 				callback();
@@ -38,22 +40,18 @@ define([
 
 	function converterParaAutocomplete(colaboradores) {
 		return colaboradores.map(function(colaborador) {
-			colaborador.value = colaborador.id;
-			colaborador.label = colaborador.nome;
+			colaborador.title = colaborador.nome;
 
 			return colaborador;
 		});
 	}
 
-	function selecionar(evento, ui) {
+	function selecionar(colaborador) {
 		require(['roteador'], function(roteador) {
-			var colaborador = ui.item;
 			$('#colaborador').val('').blur();
 
 			roteador.navegarPara('/perfil/' + colaborador.id);
 		});
-
-		evento.preventDefault();
 	}
 
 	function paginaInicial() {
@@ -74,12 +72,12 @@ define([
 
 	function sair() {
 		require([
-			'cookie',
+			'app/helpers/cookie',
 			'roteador'
 		], function(cookie, roteador) {
 			cookie.limpar();
 			toolbarView.esconder();
-			roteador.navegarPara('/login');
+			window.location = '/';
 		});
 	}
 

@@ -1,11 +1,11 @@
-from django.http import HttpResponse
-from django.template import RequestContext, loader
-from django.conf import settings
+from Aprecie import settings
+from django.shortcuts import render
+from Aprecie.base import acesso_anonimo
 
+@acesso_anonimo
 def index(requisicao):
-	template = loader.get_template('index.html')
-	context = RequestContext(requisicao, {
-		'eh_debug': not settings.ON_OPENSHIFT
-	})
+	return render(requisicao, 'index.html', dict(eh_debug=not settings.ON_OPENSHIFT))
 
-	return HttpResponse(template.render(context))
+@acesso_anonimo
+def login(requisicao):
+	return render(requisicao, 'login.html', dict(eh_debug=not settings.ON_OPENSHIFT))

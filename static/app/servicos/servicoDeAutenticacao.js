@@ -1,13 +1,12 @@
 define([
 	'sessaoDeUsuario',
-	'cookie'
+	'app/helpers/cookie'
 ], function(sessaoDeUsuario, cookie) {
 	'use strict';
 
 	var servicoDeAutenticacao = {};
 
 	servicoDeAutenticacao.autenticar = function(colaborador) {
-		sessaoDeUsuario.preencherDados(colaborador);
 		cookie.criar('id', colaborador.id_do_colaborador);
 		cookie.criar('nome', colaborador.nome_do_colaborador);
 	};

@@ -18,11 +18,16 @@
     "tests"
   ],
   "dependencies": {
-    "blockUI": "blockui#*",
     "handlebars": "~3.0.3",
     "jquery": "~2.1.4",
     "jquery.inputmask": "~3.1.63",
+    "promise-polyfill": "~2.1.0",
     "requirejs": "~2.1.18",
-    "requirejs-text": "~2.0.14"
-  }
+    "requirejs-text": "~2.0.14",
+    "requirejs-plugins": "~1.0.3",
+    "director": "~1.2.8",
+    "jquery-ui": "~1.11.4",
+    "moment": "^2.11.2"
+  },
+  "devDependencies": {}
 }

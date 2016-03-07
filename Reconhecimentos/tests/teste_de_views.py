@@ -1,17 +1,23 @@
 from django.test import TestCase
 from django.core.urlresolvers import reverse
-from Login.factories import FuncionarioFactory
+from Login.factories import ColaboradorFactory
 from Reconhecimentos.factories import ReconhecimentoFactory
-from Reconhecimentos.statics import ValoresDaDigithoBrasil
+from Reconhecimentos.models import Valor
 import json
 
 class TesteDeApiDeReconhecimento(TestCase):
 
+	def logar(self, colaborador):
+		dados_da_requisicao = dict(cpf=colaborador.cpf, data_de_nascimento=colaborador.data_de_nascimento.strftime('%d/%m/%Y'))
+		resposta = self.client.post(reverse('entrar'), dados_da_requisicao)
+
 	def setUp(self):
-		self.reconhecido = FuncionarioFactory()
-		self.reconhecedor = FuncionarioFactory()
-		self.valor = ValoresDaDigithoBrasil.inquietude
+		self.reconhecido = ColaboradorFactory()
+		self.reconhecedor = ColaboradorFactory()
+		self.valor = Valor.objects.get(nome='Alegria')
 		self.justificativa = 'Você é legal'
+
+		self.logar(self.reconhecedor)
 
 		self.dados_do_reconhecimento = {
 			'id_do_reconhecido': self.reconhecido.id,
@@ -20,7 +26,7 @@ class TesteDeApiDeReconhecimento(TestCase):
 			'justificativa': self.justificativa
 		}
 
-	def testa_o_reconhecimento_de_um_valor_de_um_funcionario(self):
+	def testa_o_reconhecimento_de_um_valor_de_um_colaborador(self):
 		resposta = self.client.post(reverse('reconhecer'), self.dados_do_reconhecimento)
 
 		self.assertEqual(200, resposta.status_code)
@@ -43,8 +49,7 @@ class TesteDeApiDeReconhecimento(TestCase):
 		resposta_json = json.loads(resposta.content.decode())
 		self.assertEqual(200, resposta.status_code)
 		self.assertEqual(self.reconhecido.id, resposta_json[0]['id_do_reconhecido'])
-		self.assertEqual(self.reconhecido.nome, resposta_json[0]['nome_do_reconhecido'])
-		self.assertEqual(self.reconhecido.foto, resposta_json[0]['foto_do_reconhecido'])
+		self.assertEqual(self.reconhecido.nome_abreviado, resposta_json[0]['nome_do_reconhecido'])
 		self.assertEqual(self.justificativa, resposta_json[0]['justificativa'])
 		self.assertEqual(self.valor.nome, resposta_json[0]['valor'])
 
@@ -62,9 +67,9 @@ class TesteDeApiDeReconhecimento(TestCase):
 			self.client.post(reverse('reconhecer'), self.dados_do_reconhecimento)
 
 	def testa_reconhecimentos_de_uma_pessoa_agrupados_por_reconhecedor(self):
-		reconhecido = FuncionarioFactory()
-		reconhecedor1 = FuncionarioFactory()
-		reconhecedor2 = FuncionarioFactory()
+		reconhecido = ColaboradorFactory()
+		reconhecedor1 = ColaboradorFactory()
+		reconhecedor2 = ColaboradorFactory()
 		reconhecimento1 = ReconhecimentoFactory(reconhecedor=reconhecedor1, reconhecido=reconhecido)
 		reconhecimento2 = ReconhecimentoFactory(reconhecedor=reconhecedor2, reconhecido=reconhecido)
 		reconhecimento3 = ReconhecimentoFactory(reconhecedor=reconhecedor2, reconhecido=reconhecido)
@@ -76,8 +81,8 @@ class TesteDeApiDeReconhecimento(TestCase):
 		self.assertEqual(2, len(reconhecedores))
 
 		self.assertEqual(reconhecedor1.primeiro_nome, reconhecedores[0]['reconhecedor__nome'])
-		self.assertEqual(ValoresDaDigithoBrasil.inquietude.id, reconhecedores[0]['valor__id'])
+		self.assertEqual(self.valor.id, reconhecedores[0]['valor__id'])
 		self.assertEqual(1, reconhecedores[0]['quantidade_de_reconhecimentos'])
 		self.assertEqual(reconhecedor2.primeiro_nome, reconhecedores[1]['reconhecedor__nome'])
-		self.assertEqual(ValoresDaDigithoBrasil.inquietude.id, reconhecedores[1]['valor__id'])
+		self.assertEqual(self.valor.id, reconhecedores[1]['valor__id'])
 		self.assertEqual(2, reconhecedores[1]['quantidade_de_reconhecimentos'])

@@ -4,21 +4,26 @@ define([
 ], function($, Handlebars) {
 	'use strict';
 
-	var template = {};
+	var _self = {};
 
-	template.exibir = function(conteudo, modelo) {
-		template.exibirEm('#conteudo', conteudo, modelo);
+	_self.exibir = function(conteudo, modelo) {
+		_self.exibirEm('#conteudo', conteudo, modelo);
 	};
 
-	template.exibirEm = function(container, conteudo, modelo) {
+	_self.exibirEm = function(container, conteudo, modelo) {
+		var conteudo = _self.compilar(conteudo, modelo);
+		$(container).empty().append(conteudo);
+	};
+
+	_self.acrescentarEm = function(container, conteudo, modelo) {
+		var conteudo = _self.compilar(conteudo, modelo);
+		$(container).append(conteudo);
+	};
+
+	_self.compilar = function(conteudo, modelo) {
 		var conteudoCompilado = Handlebars.compile(conteudo);
-		$(container).empty().append(conteudoCompilado(modelo));
+		return conteudoCompilado(modelo);
 	};
 
-	template.acrescentarEm = function(container, conteudo, modelo) {
-		var conteudoCompilado = Handlebars.compile(conteudo);
-		$(container).append(conteudoCompilado(modelo));
-	};
-
-	return template;
+	return _self;
 });
