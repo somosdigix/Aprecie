@@ -1,7 +1,3 @@
 {
-  "directory": "static/lib",
-  "scripts": {
-    "preinstall": "npm install cldr-data-downloader",
-    "postinstall": "node ./node_modules/cldr-data-downloader/bin/download.js -i static/lib/cldr-data/index.json -o static/lib/cldr-data/"
-  }
+  "directory": "static/lib"
 }

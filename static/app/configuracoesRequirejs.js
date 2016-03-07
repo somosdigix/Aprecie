@@ -26,16 +26,12 @@ window.configuracoesRequirejs = (function() {
 			'sandbox': 'app/sandbox',
 			'gerenciadorDeModulos': 'app/gerenciadorDeModulos',
 			'roteador': 'app/roteador',
-			'localizacao': 'app/localizacao',
 			'configuracoes': 'app/configuracoes',
 			'template': 'app/helpers/template',
 			'cookie': 'app/helpers/cookie',
 			'growl': 'app/helpers/growl',
 			'sessaoDeUsuario': 'app/models/sessaoDeUsuario',
-			"cldr": "lib/cldrjs/dist/cldr",
-			"cldr-data": "lib/cldr-data",
-			"json": "lib/requirejs-plugins/src/json",
-			"globalize": "lib/globalize/dist/globalize"
+			'moment': 'lib/moment/moment'
 		},
 
 		shim: {
