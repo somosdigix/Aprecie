@@ -20,7 +20,6 @@ define([
 					.replace('ViolacaoDeRegra: ', '')
 					.replace('Uncaught ErroInesperado: ', '')
 					.replace('ErroInesperado: ', '');
-
 				growl.deErro().exibir(mensagemDeErro);
 			});
 		};
