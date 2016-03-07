@@ -10,7 +10,7 @@ define([
 		_sandbox = sandbox;
 
 		_sandbox.exibirTemplateEm('#conteudo', loginTemplate);
-		_sandbox.registrarEvento('click', '#conteudo', 'button[data-js="autenticar"]', autenticar);
+		_sandbox.registrarEvento('submit', 'main[data-js="conteudo"]', 'form', autenticar);
 
 		ajustarCampos();
 	};
@@ -45,6 +45,8 @@ define([
 		var dataDeNascimento = $('#dataDeNascimento').val();
 
 		_sandbox.notificar('autenticar', cpf, dataDeNascimento);
+
+		return false;
 	};
 
 	return self;

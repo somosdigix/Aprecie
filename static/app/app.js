@@ -10,7 +10,7 @@ require([
 	'use strict';
 
 	roteador.configurar();
-	configuracoes.configurarDebug(ehDebug);
+	configuracoes.configurarDebug();
 	configuracoes.configurarErros();
 	configuracoes.configurarErrosDeRequisicao();
 	configuracoes.registrarHelpersGlobaisDoHandlebars();

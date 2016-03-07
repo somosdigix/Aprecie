@@ -5,7 +5,7 @@ require([
 	'app/login/controller',
 	'jquery.inputmask'
 ], function(configuracoes, controller) {
-	configuracoes.configurarDebug(ehDebug);
+	configuracoes.configurarDebug();
 	configuracoes.configurarErros();
 	configuracoes.configurarErrosDeRequisicao();
 
