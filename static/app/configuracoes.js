@@ -1,8 +1,8 @@
 define([
 	'jquery',
 	'handlebars',
-	'localizacao'
-], function($, Handlebars) {
+	'moment'
+], function($, Handlebars, moment) {
 	'use strict';
 
 	var configuracoes = {};
@@ -55,8 +55,6 @@ define([
 	};
 
 	configuracoes.registrarHelpersGlobaisDoHandlebars = function() {
-		var localizacao = require('localizacao');
-
 		Handlebars.registerHelper('foto', function(id, usar_miniatura) {
 			var eh_miniatura = eh_miniatura ? 1 : 0;
 			var url = '../login/foto/' + id + '?eh_miniatura=' + eh_miniatura;
@@ -64,7 +62,7 @@ define([
 		});
 
 		Handlebars.registerHelper('emDataLegivel', function(data) {
-			return localizacao.formatarData(data);
+			return moment(data, 'YYYY-MM-DD').format('DD/MM/YYYY')
 		});
 	};
 
