@@ -12,7 +12,7 @@ define([
 	reconhecimentosPorValorView.exibir = function(colaboradorId, valorId) {
 		$('#conteudo')
 			.off()
-			.on('click', 'button[data-js="voltar-ao-perfil"]', function() {
+			.on('click', '[data-js="voltar-ao-perfil"]', function() {
 				voltarParaPerfil(colaboradorId);
 			});
 
