@@ -45,4 +45,4 @@ class Colaborador(AbstractBaseUser):
 		return self.reconhecido.all()
 
 	def reconhecimentos_por_valor(self, valor):
-		return self.reconhecido.filter(valor=valor)
+		return self.reconhecido.filter(valor=valor).order_by('-data')
