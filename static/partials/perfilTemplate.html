@@ -22,7 +22,7 @@
 					<div class="content sobre-valores">
 						<h2>{{this.resumo}}</h2>
 					</div>
-					<div class="extra content">
+					<div class="extra content {{#if this.possui_reconhecimentos}}possui-reconhecimento{{/if}}">
 						<span>
 							<i class="star icon"></i>
 							{{this.quantidade_de_reconhecimentos}} reconhecimento(s)
@@ -53,7 +53,7 @@
 
 .possui-reconhecimento{
 	font-weight: bold;
-    color: #D6740F;
+    color: #D6740F !important;
 }
 
 </style>

@@ -40,6 +40,7 @@ def reconhecimentos_do_colaborador(requisicao, id_do_reconhecido):
 		'id': valor.id,
 		'nome': valor.nome,
 		'resumo': valor.resumo,
+		'possui_reconhecimentos': len(reconhecido.reconhecimentos_por_valor(valor)) > 0,
 		'quantidade_de_reconhecimentos': len(reconhecido.reconhecimentos_por_valor(valor))
 	}, Valor.objects.all()))
 
