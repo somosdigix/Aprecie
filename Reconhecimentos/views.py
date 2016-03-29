@@ -20,7 +20,7 @@ def reconhecer(requisicao):
 	return JsonResponse({})
 
 def ultimos_reconhecimentos(requisicao):
-	reconhecimentos = Reconhecimento.objects.all().order_by('-data')[:10]
+	reconhecimentos = Reconhecimento.objects.all().order_by('-id')[:10]
 
 	reconhecimentos_mapeados = list(map(lambda reconhecimento: {
 		'id_do_reconhecedor': reconhecimento.reconhecedor.id,
