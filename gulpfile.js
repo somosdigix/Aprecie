@@ -4,7 +4,6 @@ var sourcemaps = require('gulp-sourcemaps');
 var sass = require('gulp-sass');
 
 gulp.task('serve', ['sass'], function() {
-	//
 	browserSync.init({
 		proxy: 'localhost:8000'
 	});
