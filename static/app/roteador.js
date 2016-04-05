@@ -42,8 +42,9 @@ define([
 		}
 
 		function reconhecimentosPorValor(colaboradorId, valorId) {
-			require(['app/views/reconhecimentosPorValorView'], function(reconhecimentosPorValorView) {
-				reconhecimentosPorValorView.exibir(parseInt(colaboradorId), parseInt(valorId));
+			require(['app/reconhecimentos/controller'], function(reconhecimentosController) {
+				_controllerAtivo = reconhecimentosController;
+				reconhecimentosController.exibir(parseInt(colaboradorId), parseInt(valorId));
 			});
 		}
 

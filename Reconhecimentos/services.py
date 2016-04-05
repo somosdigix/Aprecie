@@ -1,9 +1,10 @@
 import slackweb
+from Aprecie import settings
 
 class Notificacoes():
 	@staticmethod
 	def notificar_no_slack(reconhecedor, reconhecido, valor):
-		if not reconhecedor.usuario_no_slack or reconhecido.usuario_no_slack:
+		if not settings.ON_OPENSHIFT or not reconhecedor.usuario_no_slack or reconhecido.usuario_no_slack:
 			return
 
 		mensagem = '*{0}* acabou de ser reconhecido em *{1}* por *{2}*'.format(reconhecedor.usuario_no_slack, valor.nome, reconhecido.usuario_no_slack)

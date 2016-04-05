@@ -13,9 +13,10 @@ define([
 
 	self.iniciar = function(moduloId, parametrosAdicionais) {
 		var sandbox = new Sandbox(this);
-		parametrosAdicionais.unshift(sandbox);
+		var parametros = parametrosAdicionais.slice(0);
+		parametros.unshift(sandbox);
 
-		_modulos[moduloId].inicializar.apply(this, parametrosAdicionais);
+		_modulos[moduloId].inicializar.apply(this, parametros);
 	};
 
 	self.finalizar = function(moduloId) {
