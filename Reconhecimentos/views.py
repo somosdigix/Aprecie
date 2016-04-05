@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.utils import formats
 from Login.models import Colaborador
 from Reconhecimentos.models import Valor, Reconhecimento
+from Reconhecimentos.services import Notificacoes
 from django.db.models import Count
 
 def reconhecer(requisicao):
@@ -16,11 +17,12 @@ def reconhecer(requisicao):
 	valor = Valor.objects.get(id=id_do_valor)
 
 	reconhecido.reconhecer(reconhecedor, valor, justificativa)
+	Notificacoes.notificar_no_slack(reconhecedor, reconhecido, valor)
 
 	return JsonResponse({})
 
 def ultimos_reconhecimentos(requisicao):
-	reconhecimentos = Reconhecimento.objects.all().order_by('-data')[:10]
+	reconhecimentos = Reconhecimento.objects.all().order_by('-id')[:10]
 
 	reconhecimentos_mapeados = list(map(lambda reconhecimento: {
 		'id_do_reconhecedor': reconhecimento.reconhecedor.id,
@@ -40,6 +42,7 @@ def reconhecimentos_do_colaborador(requisicao, id_do_reconhecido):
 		'id': valor.id,
 		'nome': valor.nome,
 		'resumo': valor.resumo,
+		'possui_reconhecimentos': len(reconhecido.reconhecimentos_por_valor(valor)) > 0,
 		'quantidade_de_reconhecimentos': len(reconhecido.reconhecimentos_por_valor(valor))
 	}, Valor.objects.all()))
 

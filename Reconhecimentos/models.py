@@ -3,14 +3,18 @@ from django.db import models
 import django
 from datetime import date
 
+class DescricaoDoValor(models.Model):
+ 	descricao = models.CharField(max_length=100)
+
 class Valor(models.Model):
 	nome = models.CharField(max_length=200)
 	resumo = models.CharField(max_length=100)
-	descricao = models.CharField(max_length=500)
+	descricoes = models.ManyToManyField(DescricaoDoValor)
+	# descricao = models.CharField(max_length=500)
 
 	@property
 	def frases_de_descricao(self):
-		return self.descricao.split('|')
+		return list(self.descricoes.values_list('descricao', flat=True))
 
 class Reconhecimento(models.Model):
 	reconhecedor = models.ForeignKey('Login.Colaborador', related_name='reconhecedor')

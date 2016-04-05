@@ -1,24 +1,34 @@
-<div class="ui brown inverted menu small icon menu">
+<div class="ui yellow inverted menu  icon">
 	<a class="header item" data-js="pagina-inicial">
 		<img src="../static/img/logo.png" alt="Aprecie.me" class="ui small image">
 	</a>
-	<div class="item">
-		<div data-js="buscaDeColaboradores" class="ui fluid search">
-			<div class="ui icon massive input">
-				<input class="prompt" placeholder="Busque um colaborador" type="text">
+	<div class="item busca-colaboradores">
+		<div data-js="buscaDeColaboradores" class="ui fluid search largura-busca">
+			<div class="ui icon small input largura-busca">
+				<input class="prompt" class="largura-busca" placeholder="Busque um colaborador" type="text">
 				<i class="search icon"></i>
 			</div>
 			<div class="results"></div>
 		</div>
 	</div>
 	<div class="right menu">
-		<a class="item">
+		<a class="ui item avatar">
 			<div data-js="meu-perfil">
-				<img src="{{ foto this.id }}" class="ui tiny circular image" />
+				<img src="{{ foto this.id }}" class="ui mini circular image" />
 			</div>
 		</a>
 		<a class="item" data-js="sair">
-			<i class="big power icon"></i>
+			<i class="big power icon"></i>	
 		</a>
 	</div>
 </div>
+
+<style>
+
+.busca-colaboradores{
+	width: 500px;
+}
+	.largura-busca{
+		width: 100%
+	}
+</style>

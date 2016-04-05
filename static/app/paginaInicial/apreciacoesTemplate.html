@@ -1,30 +1,26 @@
 <div class="conteudo feed-principal">
-	<h2>Quem apreciou quem. Aprecie você também</h2>
-
+	<h2>Últimas apreciações</h2>
 	{{#.}}
-	<section class="feed-reconhecimentos">	
+	<section class="feed-reconhecimentos">
 		<div class="caixa-feed">
-			<div class="reconhecido">		
+			<div class="reconhecido">
 				<img class="img-reconhecido" src="{{foto this.id_do_reconhecido}}" alt="" />
-
 				<div class="sobre-reconhecido">
-					<strong data-id="{{this.id_do_reconhecido}}" data-js="ir-ao-perfil" class="nome">{{this.nome_do_reconhecido}} foi reconhecido em {{this.valor}}</strong> 
+					<strong data-id="{{this.id_do_reconhecido}}" data-js="ir-ao-perfil" class="nome cursor-pointer">{{this.nome_do_reconhecido}} foi reconhecido em {{this.valor}}</strong>
 					<div class="data">em {{emDataLegivel this.data}}</div>
-				</div>	
-			</div>					
-
-			<div class="bloco-reconhecimento">	
+				</div>
+			</div>
+			<div class="bloco-reconhecimento">
 				<img class="img-reconhecedor" src="{{foto this.id_do_reconhecedor}}" alt="" />
 				<div class="texto-reconhecimento">
-					<strong data-id="{{this.id_do_reconhecedor}}" data-js="ir-ao-perfil" class="apreciador">{{this.nome_do_reconhecedor}}</strong>
+					<strong data-id="{{this.id_do_reconhecedor}}" data-js="ir-ao-perfil" class="apreciador cursor-pointer">{{this.nome_do_reconhecedor}}</strong>
 					<p>
 						{{this.justificativa}}
 					</p>
-				</div>	
-			</div>	
-		</div>			
+				</div>
+			</div>
+		</div>
 	</section>
-
 	{{else}}
 	<article>
 		<p>
@@ -33,3 +29,8 @@
 	</article>
 	{{/.}}
 </div>
+<style>
+	.cursor-pointer{
+		cursor: pointer;
+	}
+</style>

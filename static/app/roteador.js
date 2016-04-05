@@ -35,14 +35,16 @@ define([
 		}
 
 		function perfil(colaboradorId) {
-			require(['app/views/perfilView'], function(perfilView) {
-				perfilView.exibir(parseInt(colaboradorId));
+			require(['app/perfil/controller'], function(perfilController) {
+				_controllerAtivo = perfilController;
+				perfilController.exibir(colaboradorId);
 			});
 		}
 
 		function reconhecimentosPorValor(colaboradorId, valorId) {
-			require(['app/views/reconhecimentosPorValorView'], function(reconhecimentosPorValorView) {
-				reconhecimentosPorValorView.exibir(parseInt(colaboradorId), parseInt(valorId));
+			require(['app/reconhecimentos/controller'], function(reconhecimentosController) {
+				_controllerAtivo = reconhecimentosController;
+				reconhecimentosController.exibir(parseInt(colaboradorId), parseInt(valorId));
 			});
 		}
 

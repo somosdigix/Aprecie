@@ -7,9 +7,9 @@ define([
 ], function($, template, reconhecimentosTemplate, sessaoDeUsuario) {
 	'use strict';
 
-	var reconhecimentosPorValorView = {};
+	var _self = {};
 
-	reconhecimentosPorValorView.exibir = function(colaboradorId, valorId) {
+	_self.inicializar = function(sandbox, colaboradorId, valorId) {
 		$('#conteudo')
 			.off()
 			.on('click', '[data-js="voltar-ao-perfil"]', function() {
@@ -53,5 +53,5 @@ define([
 		});
 	}
 
-	return reconhecimentosPorValorView;
+	return _self;
 });
