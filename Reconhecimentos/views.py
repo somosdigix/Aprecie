@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.utils import formats
 from Login.models import Colaborador
 from Reconhecimentos.models import Valor, Reconhecimento
+from Reconhecimentos.services import Notificacoes
 from django.db.models import Count
 
 def reconhecer(requisicao):
@@ -16,6 +17,7 @@ def reconhecer(requisicao):
 	valor = Valor.objects.get(id=id_do_valor)
 
 	reconhecido.reconhecer(reconhecedor, valor, justificativa)
+	Notificacoes.notificar_no_slack(reconhecedor, reconhecido, valor)
 
 	return JsonResponse({})
 

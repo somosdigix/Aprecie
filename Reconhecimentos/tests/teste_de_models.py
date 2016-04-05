@@ -4,7 +4,7 @@ from Login.models import Colaborador
 from Reconhecimentos.models import Reconhecimento, Valor
 from Reconhecimentos.views import reconhecer
 from Login.factories import ColaboradorFactory
-from Reconhecimentos.factories import ReconhecimentoFactory
+from Reconhecimentos.factories import ReconhecimentoFactory, ValorFactory, DescricaoDoValorFactory
 from Aprecie.base import ExcecaoDeDominio
 from datetime import date, datetime, timedelta
 
@@ -45,7 +45,7 @@ class TesteDeReconhecimento(TestCase):
 		valores_esperados = [self.responsabilidade, self.responsabilidade]
 		valores_reconhecidos = map(lambda reconhecimento: reconhecimento.valor, self.reconhecido.reconhecimentos())
 		self.assertEqual(valores_esperados, list(valores_reconhecidos))
-		
+
 	def testa_a_listagem_de_reconhecimentos_por_valor(self):
 		self.reconhecido.reconhecer(self.reconhecedor, self.inquietude, 'Foi legal');
 		self.reconhecido.reconhecer(self.reconhecedor, self.responsabilidade, 'Voce realmente questiona as coisas');
@@ -96,8 +96,10 @@ class TesteDeReconhecimento(TestCase):
 		self.assertEqual('O reconhecimento só pode ser alterado por quem o elaborou', contexto.exception.args[0])
 
 	def testa_que_valor_sabe_retornar_uma_lista_de_frases_que_o_descreve_detalhadamente(self):
-		valor = Valor(nome='Teste', resumo='Resumo', descricao='Frase 1|Frase 2|Frase 3')
+		descricao1 = DescricaoDoValorFactory(descricao="descricao1")
+		descricao2 = DescricaoDoValorFactory(descricao="descricao2")
+		valor = ValorFactory(descricoes=(descricao1, descricao2))
 
 		detalhes = valor.frases_de_descricao
 
-		self.assertEqual(['Frase 1', 'Frase 2', 'Frase 3'], detalhes)
+		self.assertEqual([descricao1.descricao, descricao2.descricao], detalhes)
