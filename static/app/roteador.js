@@ -35,8 +35,9 @@ define([
 		}
 
 		function perfil(colaboradorId) {
-			require(['app/views/perfilView'], function(perfilView) {
-				perfilView.exibir(parseInt(colaboradorId));
+			require(['app/perfil/controller'], function(perfilController) {
+				_controllerAtivo = perfilController;
+				perfilController.exibir(colaboradorId);
 			});
 		}
 

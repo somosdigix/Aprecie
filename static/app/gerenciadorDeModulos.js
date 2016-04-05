@@ -11,8 +11,11 @@ define([
 		_modulos[moduloId] = modulo;
 	};
 
-	self.iniciar = function(moduloId) {
-		_modulos[moduloId].inicializar(new Sandbox(this));
+	self.iniciar = function(moduloId, parametrosAdicionais) {
+		var sandbox = new Sandbox(this);
+		parametrosAdicionais.unshift(sandbox);
+
+		_modulos[moduloId].inicializar.apply(this, parametrosAdicionais);
 	};
 
 	self.finalizar = function(moduloId) {
@@ -28,8 +31,10 @@ define([
 	};
 
 	self.iniciarTodos = function() {
+		var parametrosAdicionais = Array.prototype.slice.call(arguments);
+
 		for (var moduloId in _modulos)
-			self.iniciar(moduloId);
+			self.iniciar(moduloId, parametrosAdicionais);
 	};
 
 	self.finalizarTodos = function() {
