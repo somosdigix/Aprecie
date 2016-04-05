@@ -5,3 +5,4 @@ django_compressor==1.5
 pytz==2015.4
 Pillow==3.1.0
 django_gulp==2.0.0
+slackweb==1.0.5
