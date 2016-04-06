@@ -1,9 +1,9 @@
 define([
 	'jquery',
 	'template',
-	'text!partials/perfilTemplate.html',
+	'text!app/perfil/perfilTemplate.html',
 	'sessaoDeUsuario',
-	'app/views/iconesDosValoresHelpers'
+	'app/helpers/iconesDosValoresHelpers'
 ], function($, template, perfilTemplate, sessaoDeUsuario) {
 	'use strict';
 
@@ -34,7 +34,7 @@ define([
 			var valorId = objetoClicado.data('valor-id');
 			var colaboradorId = $("#reconhecidoId").val();
 
-			roteador.navegarPara('/reconhecimentosPorValor/' + colaboradorId + '/' + valorId);
+			roteador.navegarPara('/reconhecimentos/' + colaboradorId + '/' + valorId);
 		});
 	}
 
