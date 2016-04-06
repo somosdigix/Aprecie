@@ -20,7 +20,6 @@ define([
 				.on('click', 'div[data-js="exibir-reconhecimentos"]', exibirReconhecimentos);
 
 			if (sessaoDeUsuario.id === colaboradorId) {
-				console.log($('span.ion-camera'));
 				$('span.ion-camera').show();
 				$('#conteudo').on('click', 'div[data-js="foto"]', enviarFoto);
 				$('input[data-js="alterar-foto"]').off().on('change', alterarFoto);
