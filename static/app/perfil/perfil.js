@@ -1,9 +1,9 @@
 define([
 	'jquery',
 	'template',
-	'text!partials/perfilTemplate.html',
+	'text!app/perfil/perfilTemplate.html',
 	'sessaoDeUsuario',
-	'app/views/iconesDosValoresHelpers'
+	'app/helpers/iconesDosValoresHelpers'
 ], function($, template, perfilTemplate, sessaoDeUsuario) {
 	'use strict';
 
@@ -20,6 +20,7 @@ define([
 				.on('click', 'div[data-js="exibir-reconhecimentos"]', exibirReconhecimentos);
 
 			if (sessaoDeUsuario.id === colaboradorId) {
+				console.log($('span.ion-camera'));
 				$('span.ion-camera').show();
 				$('#conteudo').on('click', 'div[data-js="foto"]', enviarFoto);
 				$('input[data-js="alterar-foto"]').off().on('change', alterarFoto);
@@ -34,7 +35,7 @@ define([
 			var valorId = objetoClicado.data('valor-id');
 			var colaboradorId = $("#reconhecidoId").val();
 
-			roteador.navegarPara('/reconhecimentosPorValor/' + colaboradorId + '/' + valorId);
+			roteador.navegarPara('/reconhecimentos/' + colaboradorId + '/' + valorId);
 		});
 	}
 

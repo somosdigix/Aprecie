@@ -1,7 +1,7 @@
 define([
 	'jquery',
 	'template',
-	'text!partials/toolbarTemplate.html',
+	'text!app/toolbar/toolbarTemplate.html',
 	'sessaoDeUsuario',
 	'jquery-ui'
 ], function($, template, toolbarTemplate, sessaoDeUsuario) {
