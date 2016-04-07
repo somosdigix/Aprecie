@@ -1,8 +1,7 @@
 define([
 	'gerenciadorDeModulos',
-	'app/reconhecimentos/reconhecer',
 	'app/reconhecimentos/reconhecimentos'
-], function(gerenciadorDeModulos, reconhecer, reconhecimentos) {
+], function(gerenciadorDeModulos, reconhecimentos) {
 	'use strict';
 
 	var _self = {};

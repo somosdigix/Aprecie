@@ -13,7 +13,7 @@ define([
 			'/login': [middlewareDeAutenticacao, middlewareDeTransicaoDeTela, middlewareDeToolbar, limparTela, login],
 			'/paginaInicial': [middlewareDeAutenticacao, middlewareDeTransicaoDeTela, middlewareDeToolbar, limparTela, paginaInicial],
 			'/perfil/:colaboradorId': [middlewareDeAutenticacao, middlewareDeTransicaoDeTela, middlewareDeToolbar, limparTela, perfil],
-			'/reconhecimentosPorValor/:colaboradorId/:valorId': [middlewareDeAutenticacao, middlewareDeTransicaoDeTela, middlewareDeToolbar, limparTela, reconhecimentosPorValor]
+			'/reconhecimentos/:colaboradorId/:valorId': [middlewareDeAutenticacao, middlewareDeTransicaoDeTela, middlewareDeToolbar, limparTela, reconhecimentos]
 		};
 
 		function limparTela() {
@@ -41,7 +41,7 @@ define([
 			});
 		}
 
-		function reconhecimentosPorValor(colaboradorId, valorId) {
+		function reconhecimentos(colaboradorId, valorId) {
 			require(['app/reconhecimentos/controller'], function(reconhecimentosController) {
 				_controllerAtivo = reconhecimentosController;
 				reconhecimentosController.exibir(parseInt(colaboradorId), parseInt(valorId));
@@ -89,13 +89,13 @@ define([
 	}
 
 	function middlewareDeToolbar() {
-		require(['app/views/toolbarView'], function(toolbarView) {
+		require(['app/toolbar/toolbar'], function(toolbar) {
 			if (servicoDeAutenticacao.jaEstaAutenticado() && roteador.paginaAtual() !== '/login') {
-				toolbarView.exibir();
+				toolbar.exibir();
 				$('body').removeClass('body-login').addClass('body-app');
 			}
 			else {
-				toolbarView.esconder();
+				toolbar.esconder();
 				$('body').removeClass('body-app').addClass('body-login');
 			}
 		});

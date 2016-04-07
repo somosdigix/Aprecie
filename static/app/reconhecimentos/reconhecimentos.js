@@ -1,9 +1,9 @@
 define([
 	'jquery',
 	'template',
-	'text!partials/reconhecimentosTemplate.html',
+	'text!app/reconhecimentos/reconhecimentosTemplate.html',
 	'sessaoDeUsuario',
-	'app/views/iconesDosValoresHelpers'
+	'app/helpers/iconesDosValoresHelpers'
 ], function($, template, reconhecimentosTemplate, sessaoDeUsuario) {
 	'use strict';
 
