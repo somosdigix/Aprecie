@@ -38,7 +38,7 @@ define([
 		});
 	}
 
-	// TODO: Modular esse envio de foto e aliar com webcomponent!
+	// TODO: Modular esse envio de foto e aliar com webcomponent
 	function enviarFoto() {
 		$('input[data-js="alterar-foto"]').trigger('click');
 	}
