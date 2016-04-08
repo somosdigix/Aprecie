@@ -1,0 +1,88 @@
+<div class="conteudo reconhecer">
+	<div id="perfilColaborador">
+		<input id="reconhecidoId" type="hidden" value="{{ this.id_do_reconhecido }}" />
+		<input id="valorId" type="hidden" value="{{ this.id_do_valor }}" />
+		<div data-js="foto" class="alterar-foto">
+			<span data-js="foto" class="editar ion-camera invisivel"></span>
+		<img data-js="foto" class="foto-colaborador" src="{{ foto this.id_do_reconhecido }}" alt="Foto" width="100" height="100"></div>
+
+		<div class="informacoes-colaborador">
+			<h2 class="nome-colaborador" data-js="voltar-ao-perfil">{{ this.nome_do_reconhecido }}</h2>
+		</div>
+	</div>
+	<br>
+	<div class="ui brown segment">
+		<div class="ui grid">
+			<div class="three wide column">
+				<img src="{{iconeDoValor this.nome_do_valor}}" alt="{{this.nome_do_valor}}" class="ui small image">
+			</div>
+			<div class="twelve wide column descricao-valores">
+				{{#each this.frases_de_descricao}}
+				<h3>{{this}}</h3>
+				{{/each}}
+			</div>
+		</div>
+	</div>
+	<p data-js="reconhecer" class="escrever-apreciacao invisivel">
+		<textarea class="escrever-publicacao" id="justificativa" type="text" placeholder="Mereço ser reconhecido por esse valor? Então escreve ai!"></textarea>
+	</p>
+	
+	<button type="button" class="ui labeled icon right floated orange button button" data-js="reconhecer" style="display: none;">
+	<i class="star icon"></i>
+	Apreciar
+	</button>
+	<br>
+	<br>
+	<br>
+	<div class="ui divider"></div>
+	<h2>Reconhecimentos</h2>
+	
+	{{#each this.reconhecimentos}}
+	<section class="feed-reconhecimentos">
+		<div class="bloco-reconhecimento">	
+			<img class="img-reconhecedor" src="{{ foto this.reconhecedor__id usar_miniatura=true}}" />
+
+			<div class="texto-reconhecimento">
+				<strong data-id="1" data-js="ir-ao-perfil" class="apreciador">{{ this.reconhecedor__nome }}</strong>
+				<div class="data-reconhecimento">{{ emDataLegivel this.data }}</div>
+
+				<p>
+					<label for="justificativa-valor">
+						<input name="justificativa-valor" id="justificativa-valor" value="{{ this.justificativa }}"></input>
+						<a href="" class="editar-reconhecimento ion-edit"></a>
+					</label>
+				</p>
+			</div>	
+		</div>	
+	</section>
+	{{else}}
+	<div class="ui yellow message">
+		Ainda não há reconhecimentos para <strong>{{ this.nome_do_valor }}</strong> :(
+	</div>
+	{{/each}}
+	
+	<button type="button" class="ui labeled icon right floated cinza button" data-js="voltar-ao-perfil">
+		<i class="left arrow icon"></i>
+		Voltar para o perfil
+	</button>
+	<br>
+	<br>
+	<br>
+</div>
+
+
+<style>
+	.nome-colaborador{
+		cursor: pointer;
+	}
+
+	.descricao-valores h3{
+		line-height: 22px;
+	    font-size: 15px;
+	    margin: 12px 0;
+	}
+	.data-reconhecimento{
+		font-size: 12px;
+		font-family: arial;
+	}
+</style>
