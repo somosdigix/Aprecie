@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from Aprecie.base import ExcecaoDeDominio
 from datetime import datetime
 from Login.models import Colaborador
