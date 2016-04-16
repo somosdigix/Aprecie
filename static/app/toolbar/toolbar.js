@@ -10,7 +10,7 @@ define([
 	var toolbarView = {};
 
 	toolbarView.exibir = function(callback) {
-		$.getJSON('/login/obter_colaboradores', function(data) {
+		$.getJSON('/login/obter_colaboradores/', function(data) {
 			template.exibirEm('header[data-js="toolbar"]', toolbarTemplate, sessaoDeUsuario);
 
 			$('header[data-js="toolbar"]')
