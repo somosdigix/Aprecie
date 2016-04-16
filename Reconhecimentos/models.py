@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from Aprecie.base import ExcecaoDeDominio
 from django.db import models
 import django

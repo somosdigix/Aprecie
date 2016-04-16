@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django.db import models
 from Aprecie.base import ExcecaoDeDominio
 from django.contrib.auth.models import AbstractBaseUser
@@ -8,6 +9,7 @@ class Colaborador(AbstractBaseUser):
 	data_de_nascimento = models.DateField()
 	foto = models.TextField(default=None, null=True)
 	usuario_no_slack = models.CharField(max_length=100, null=True)
+	teste = models.TextField(default=None, null=True)
 
 	USERNAME_FIELD = 'cpf'
 

@@ -110,9 +110,6 @@ if ON_OPENSHIFT:
     STATIC_ROOT = os.path.join(os.environ['OPENSHIFT_REPO_DIR'], 'wsgi', 'static')
     COMPRESS_ROOT = STATIC_ROOT
 
-if not ON_OPENSHIFT:
-    INSTALLED_APPS = ('django_gulp',) + INSTALLED_APPS
-
 STATICFILES_FINDERS = (
     "django.contrib.staticfiles.finders.FileSystemFinder",
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",
