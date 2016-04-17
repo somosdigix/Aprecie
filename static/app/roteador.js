@@ -12,6 +12,7 @@ define([
 		var rotas = {
 			'/login': [middlewareDeAutenticacao, middlewareDeTransicaoDeTela, middlewareDeToolbar, limparTela, login],
 			'/paginaInicial': [middlewareDeAutenticacao, middlewareDeTransicaoDeTela, middlewareDeToolbar, limparTela, paginaInicial],
+			'/estatisticas': [middlewareDeAutenticacao, middlewareDeTransicaoDeTela, middlewareDeToolbar, limparTela, estatisticas],
 			'/perfil/:colaboradorId': [middlewareDeAutenticacao, middlewareDeTransicaoDeTela, middlewareDeToolbar, limparTela, perfil],
 			'/reconhecimentos/:colaboradorId/:valorId': [middlewareDeAutenticacao, middlewareDeTransicaoDeTela, middlewareDeToolbar, limparTela, reconhecimentos]
 		};
@@ -28,23 +29,30 @@ define([
 		}
 
 		function paginaInicial() {
-			require(['app/paginaInicial/controller'], function(paginaInicialController) {
-				_controllerAtivo = paginaInicialController;
-				paginaInicialController.exibir();
+			require(['app/paginaInicial/controller'], function(controller) {
+				_controllerAtivo = controller;
+				controller.exibir();
+			});
+		}
+
+		function estatisticas() {
+			require(['app/estatisticas/controller'], function(controller) {
+				_controllerAtivo = controller;
+				controller.exibir();
 			});
 		}
 
 		function perfil(colaboradorId) {
-			require(['app/perfil/controller'], function(perfilController) {
-				_controllerAtivo = perfilController;
-				perfilController.exibir(parseInt(colaboradorId));
+			require(['app/perfil/controller'], function(controller) {
+				_controllerAtivo = controller;
+				controller.exibir(parseInt(colaboradorId));
 			});
 		}
 
 		function reconhecimentos(colaboradorId, valorId) {
-			require(['app/reconhecimentos/controller'], function(reconhecimentosController) {
-				_controllerAtivo = reconhecimentosController;
-				reconhecimentosController.exibir(parseInt(colaboradorId), parseInt(valorId));
+			require(['app/reconhecimentos/controller'], function(controller) {
+				_controllerAtivo = controller;
+				controller.exibir(parseInt(colaboradorId), parseInt(valorId));
 			});
 		}
 

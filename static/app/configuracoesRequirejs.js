@@ -12,6 +12,7 @@ window.configuracoesRequirejs = (function() {
 			'app/excecoes/violacaoDeRegra',
 			'app/excecoes/erroInesperado',
 			'app/helpers/string',
+			'https://www.gstatic.com/charts/loader.js'
 		],
 
 		paths: {

@@ -1,0 +1,126 @@
+<div class="conteudo feed-principal">
+	<h2>Estatísticas</h2>
+
+	<p>
+		<div class="buscar-relatorios" style="text-align: center;">
+			<button class="agentes-financeiros selecionado">Tudo</button>
+			<button class="agentes-financeiros">Hoje</button>
+			<button class="agentes-financeiros">Semana</button>
+			<button class="agentes-financeiros">Mês</button>
+		</div>
+	</p>
+
+	<br>
+
+	<div class="caixa-de-valor">
+		<p class="descricao">Apreciações</p>
+		<p class="valor">159</p>
+	</div>
+
+	<div class="caixa-de-valor">
+		<p class="descricao">Apreciados</p>
+		<p class="valor">52</p>
+	</div>
+
+	<div class="caixa-de-valor">
+		<p class="descricao">Apreciadores</p>
+		<p class="valor">31</p>
+	</div>
+
+	<br>
+	<br>
+	<br>
+
+	<div id="colaboradoresMaisApreciados"></div>
+
+	<br>
+	<br>
+	<br>
+
+	<div id="colaboradoresQueMaisApreciaram"></div>
+
+	<br>
+	<br>
+	<br>
+
+	<div id="quantidadeDeApreciacoesPorValor"></div>
+</div>
+
+<style>
+	.periodo {
+		width: 100%;
+		list-style: none;
+		text-align: center;
+	}
+
+	.periodo li {
+		display: inline-block;
+		width: 200px;
+	}
+
+	.caixa-de-valor {
+		border: 0px;
+		display: inline-block;
+		width: 275px;
+		height: 250px;
+		vertical-align: top;
+		text-align: center;
+		background-color: rgba(251, 154, 8, 0.47);
+	}
+
+	.caixa-de-valor .descricao {
+		width: 100%;
+		font-weight: bold;
+		font-size: 25pt;
+		margin-top: 10px;
+	}
+
+	.caixa-de-valor .valor {
+		width: 100%;
+		font-size: 50pt;
+		margin-top: 20px;
+	}
+
+	.buscar-relatorios {
+		font-size: 0;
+	}
+
+	.buscar-relatorios .agentes-financeiros {
+		color: #444444 ;
+		border-top-width: 1px;
+		border-right-width: 1px;
+		border-bottom-width: 1px;
+		border-left-width: 1px;
+		border-style: solid;
+		border-color: gainsboro;
+		font-weight: bold;
+		background: whitesmoke;
+		background: -moz-linear-gradient(top, whitesmoke 0%, #f1f1f1  100%);
+		background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, whitesmoke), color-stop(100%, #f1f1f1 ));
+		background: -webkit-linear-gradient(top, whitesmoke 0%, #f1f1f1  100%);
+		background: -o-linear-gradient(top, whitesmoke 0%, #f1f1f1  100%);
+		background: -ms-linear-gradient(top, whitesmoke 0%, #f1f1f1  100%);
+		background: linear-gradient(to bottom, whitesmoke 0%, #f1f1f1  100%);
+		border-radius: 0;
+		width: 195px;
+		margin-bottom: 12px;
+		font-size: 15px;
+		height: 40px;
+	}
+
+	.buscar-relatorios .selecionado {
+		border-top-width: 1px;
+		border-right-width: 1px;
+		border-bottom-width: 1px;
+		border-left-width: 1px;
+		border-style: solid;
+		border-color: #cccccc ;
+		background: #eeeeee ;
+		background: -moz-linear-gradient(top, #eeeeee  0%, #d6d6d6  100%);
+		background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #eeeeee ), color-stop(100%, #d6d6d6 ));
+		background: -webkit-linear-gradient(top, #eeeeee  0%, #d6d6d6  100%);
+		background: -o-linear-gradient(top, #eeeeee  0%, #d6d6d6  100%);
+		background: -ms-linear-gradient(top, #eeeeee  0%, #d6d6d6  100%);
+		background: linear-gradient(to bottom, #eeeeee  0%, #d6d6d6  100%);
+	}
+</style>
