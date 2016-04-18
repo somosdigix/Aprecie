@@ -10,21 +10,55 @@
 		</div>
 	</p>
 
+	<div class="caixa-de-valor">
+		<div class="textos">
+			<p class="valor">159</p>
+			<p class="descricao">Apreciações</p>
+		</div>
+		<div class="smile">
+			<img src="../static/img/smiles/icon-emocao.png">
+		</div>
+	</div>
+
+	<div class="caixa-de-valor">
+		<div class="textos">
+			<p class="valor">52</p>
+			<p class="descricao">Apreciados</p>
+		</div>
+		<div class="smile">
+			<img src="../static/img/smiles/icon-feliz.png">
+		</div>
+	</div>
+
+	<div class="caixa-de-valor">
+		<div class="textos">
+			<p class="valor">31</p>
+			<p class="descricao">Apreciadores</p>
+		</div>
+		<div class="smile">
+			<img src="../static/img/smiles/icon-triste.png">
+		</div>
+	</div>
+	<br>
 	<br>
 
-	<div class="caixa-de-valor">
-		<p class="descricao">Apreciações</p>
-		<p class="valor">159</p>
-	</div>
+	<div class="colaboradores-mais-apreciados">
+		<h1>Colaboradores mais apreciados</h1>
 
-	<div class="caixa-de-valor">
-		<p class="descricao">Apreciados</p>
-		<p class="valor">52</p>
-	</div>
-
-	<div class="caixa-de-valor">
-		<p class="descricao">Apreciadores</p>
-		<p class="valor">31</p>
+		<ul>
+			<li>
+				<div class="foto-colaborador">
+					<img src="../static/img/sem-foto.png" alt="">
+				</div>
+				<div class="div-lado">
+					<div class="nome">João de Oliveira</div>
+					<div class="numero-apreciacoes">
+						11 apreciações
+					</div>
+					<div class="grafico"></div>
+				</div>
+			</li>
+		</ul>
 	</div>
 
 	<br>
@@ -59,28 +93,50 @@
 	}
 
 	.caixa-de-valor {
+		height: 114px;
 		border: 0px;
 		display: inline-block;
-		width: 275px;
-		height: 250px;
+		width: 33%;
+		padding: 18px;		
 		vertical-align: top;
-		text-align: center;
-		background-color: rgba(251, 154, 8, 0.47);
+		background-color: rgba(255, 223, 176, 0.47);
 	}
 
-	.caixa-de-valor .descricao {
-		width: 100%;
-		font-weight: bold;
-		font-size: 25pt;
-		margin-top: 10px;
+	.caixa-de-valor .textos{
+		width: 63%;
+		display: inline-block;
+		vertical-align: top;
+	}
+	
+	.caixa-de-valor .textos p{
+		line-height: 20px;
+		margin: 0;
 	}
 
-	.caixa-de-valor .valor {
-		width: 100%;
-		font-size: 50pt;
+	.caixa-de-valor .textos .valor {
+		font-size: 45pt;
 		margin-top: 20px;
+		font-weight: bold;
+    	font-family: arial;
+    	color: #656565;
 	}
 
+	.caixa-de-valor .textos .descricao {
+		font-weight: bold;
+		font-size: 16pt;
+		margin-top: 15px;
+		color: #949494;
+	}
+
+	.caixa-de-valor .smile{
+		display: inline-block;
+		vertical-align: top;
+		width: 35%;
+	}
+
+	.caixa-de-valor .smile img{		
+		width: 100%;
+	}
 	.buscar-relatorios {
 		font-size: 0;
 	}
@@ -102,7 +158,7 @@
 		background: -ms-linear-gradient(top, whitesmoke 0%, #f1f1f1  100%);
 		background: linear-gradient(to bottom, whitesmoke 0%, #f1f1f1  100%);
 		border-radius: 0;
-		width: 195px;
+		width: 131px;
 		margin-bottom: 12px;
 		font-size: 15px;
 		height: 40px;
@@ -123,4 +179,43 @@
 		background: -ms-linear-gradient(top, #eeeeee  0%, #d6d6d6  100%);
 		background: linear-gradient(to bottom, #eeeeee  0%, #d6d6d6  100%);
 	}
+
+	.colaboradores-mais-apreciados{}
+	.colaboradores-mais-apreciados ul {}
+	.colaboradores-mais-apreciados ul li {
+		list-style: none;
+	}
+	.colaboradores-mais-apreciados ul .foto-colaborador {
+		width: 50px;
+	    height: 50px;
+	    border-radius: 155px;
+	    background-color: red;
+	    display: inline-block;
+		vertical-align: top;
+		margin-right: 13px;
+	}
+	.colaboradores-mais-apreciados ul .foto-colaborador img {}
+	.colaboradores-mais-apreciados ul .div-lado {
+		display: inline-block;
+		vertical-align: top;
+		width: 80%;
+	}
+	.colaboradores-mais-apreciados ul .div-lado .nome {
+		display: inline-block;
+		vertical-align: top;
+		font-size: 15px;
+    	font-weight: bold;
+	}
+
+	.colaboradores-mais-apreciados ul .div-lado .numero-apreciacoes {
+		display: inline-block;
+		vertical-align: top;	
+		float: right;	
+	}
+	.colaboradores-mais-apreciados ul .div-lado .grafico {
+		background-color: rgb(251, 154, 9);;
+		width: 100%;
+		height: 29px;
+	}
+
 </style>
