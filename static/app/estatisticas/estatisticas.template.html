@@ -55,13 +55,43 @@
 					<div class="numero-apreciacoes">
 						11 apreciações
 					</div>
-					<div class="grafico"></div>
+					<div class="grafico">
+						<div class="progresso" style="width: 100%;"></div>
+					</div>
+				</div>
+			</li>
+			<li>
+				<div class="foto-colaborador">
+					<img src="../static/img/sem-foto.png" alt="">
+				</div>
+				<div class="div-lado">
+					<div class="nome">João de Oliveira</div>
+					<div class="numero-apreciacoes">
+						11 apreciações
+					</div>
+					<div class="grafico">
+						<div class="progresso" style="width: 80%;"></div>
+					</div>
+				</div>
+			</li>
+			<li>
+				<div class="foto-colaborador">
+					<img src="../static/img/sem-foto.png" alt="">
+				</div>
+				<div class="div-lado">
+					<div class="nome">João de Oliveira</div>
+					<div class="numero-apreciacoes">
+						11 apreciações
+					</div>
+					<div class="grafico">
+						<div class="progresso" style="width: 50%;"></div>
+					</div>
 				</div>
 			</li>
 		</ul>
 	</div>
 
-	<br>
+	<!-- <br>
 	<br>
 	<br>
 
@@ -77,7 +107,7 @@
 	<br>
 	<br>
 
-	<div id="quantidadeDeApreciacoesPorValor"></div>
+	<div id="quantidadeDeApreciacoesPorValor"></div> -->
 </div>
 
 <style>
@@ -180,10 +210,13 @@
 		background: linear-gradient(to bottom, #eeeeee  0%, #d6d6d6  100%);
 	}
 
-	.colaboradores-mais-apreciados{}
+	.colaboradores-mais-apreciados h1{
+		margin: 20px 0;
+	}
 	.colaboradores-mais-apreciados ul {}
 	.colaboradores-mais-apreciados ul li {
 		list-style: none;
+		margin: 20px 0;
 	}
 	.colaboradores-mais-apreciados ul .foto-colaborador {
 		width: 50px;
@@ -192,13 +225,13 @@
 	    background-color: red;
 	    display: inline-block;
 		vertical-align: top;
-		margin-right: 13px;
+		margin: 6px;
 	}
 	.colaboradores-mais-apreciados ul .foto-colaborador img {}
 	.colaboradores-mais-apreciados ul .div-lado {
 		display: inline-block;
 		vertical-align: top;
-		width: 80%;
+		width: 92%;
 	}
 	.colaboradores-mais-apreciados ul .div-lado .nome {
 		display: inline-block;
@@ -212,10 +245,25 @@
 		vertical-align: top;	
 		float: right;	
 	}
+
 	.colaboradores-mais-apreciados ul .div-lado .grafico {
-		background-color: rgb(251, 154, 9);;
 		width: 100%;
 		height: 29px;
+		background-color: #ebebeb;	
 	}
+
+	.colaboradores-mais-apreciados ul .div-lado .grafico .progresso{
+		background-color: rgb(251, 154, 9);
+
+	}
+
+	.grafico > .progresso{
+		position: relative;
+ 		float: left;
+		height: 100%;
+		background-color: rgb(251, 154, 9);	
+	}
+	
+
 
 </style>
