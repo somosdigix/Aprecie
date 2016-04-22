@@ -25,7 +25,9 @@ define([
 
 	function desenharApreciados() {
 		var data = google.visualization.arrayToDataTable([
-			['Colaborador', 'Apreciações', { role: 'style' }],
+			['Colaborador', 'Apreciações', {
+				role: 'style'
+			}],
 			['João', 11, '#fb9a09'],
 			['José', 11, '#fb9a09'],
 			['Maria', 9, '#fb9a09']
@@ -45,14 +47,16 @@ define([
 				position: 'none'
 			}
 		};
-		
+
 		var chart = new google.visualization.BarChart(document.getElementById('colaboradoresMaisApreciados'));
 		chart.draw(data, options);
 	}
 
 	function desenharApreciadores() {
 		var data = google.visualization.arrayToDataTable([
-			['Colaborador', 'Apreciações', { role: 'style' }],
+			['Colaborador', 'Apreciações', {
+				role: 'style'
+			}],
 			['Huguinho', 19, '#fb9a09'],
 			['Zezinho', 11, '#fb9a09'],
 			['Luizinho', 10, '#fb9a09']
@@ -79,7 +83,9 @@ define([
 
 	function desenharValoresApreciados() {
 		var data = google.visualization.arrayToDataTable([
-			['Valor', 'Quantidade', { role: 'style' }],
+			['Valor', 'Quantidade', {
+				role: 'style'
+			}],
 			['Colaboração', 67, '#fb9a09'],
 			['Resultado', 44, '#fb9a09'],
 			['Inquietude', 25, '#fb9a09'],
