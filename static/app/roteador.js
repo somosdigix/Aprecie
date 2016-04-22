@@ -84,7 +84,7 @@ define([
 			return true;
 
 		if (!servicoDeAutenticacao.jaEstaAutenticado()) {
-			roteador.navegarPara('/login');
+			window.location.href = '/';
 			return false;
 		}
 
