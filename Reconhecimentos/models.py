@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from Aprecie.base import ExcecaoDeDominio
 from django.db import models
 import django
@@ -11,7 +10,6 @@ class Valor(models.Model):
 	nome = models.CharField(max_length=200)
 	resumo = models.CharField(max_length=100)
 	descricoes = models.ManyToManyField(DescricaoDoValor)
-	# descricao = models.CharField(max_length=500)
 
 	@property
 	def frases_de_descricao(self):
