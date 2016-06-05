@@ -33,14 +33,14 @@ class Colaborador(AbstractBaseUser):
 			
 		self.foto = nova_foto_em_base64
 
-	def reconhecer(self, reconhecedor, valor, justificativa):
+	def reconhecer(self, reconhecedor, valor, feedback):
 		if reconhecedor == self:
 			raise ExcecaoDeDominio('O colaborador nao pode reconher a si próprio')
 
-		if not justificativa.strip():
-			raise ExcecaoDeDominio('A sua justificativa deve ser informada')
+		if not feedback:
+			raise ExcecaoDeDominio('Feedback deve ser informado')
 
-		self.reconhecido.create(reconhecedor=reconhecedor, valor=valor, justificativa=justificativa)
+		self.reconhecido.create(reconhecedor=reconhecedor, valor=valor, feedback=feedback)
 
 	def reconhecimentos(self):
 		return self.reconhecido.all()

@@ -1,7 +1,7 @@
 from django.test import TestCase
 from django.core.urlresolvers import reverse
 from Login.factories import ColaboradorFactory
-from Reconhecimentos.factories import ReconhecimentoFactory
+from Reconhecimentos.factories import ReconhecimentoFactory, FeedbackFactory
 from Reconhecimentos.models import Valor
 import json
 
@@ -15,7 +15,7 @@ class TesteDeApiDeReconhecimento(TestCase):
 		self.reconhecido = ColaboradorFactory()
 		self.reconhecedor = ColaboradorFactory()
 		self.valor = Valor.objects.get(nome='Alegria')
-		self.justificativa = 'Você é legal'
+		self.feedback = FeedbackFactory()
 
 		self.logar(self.reconhecedor)
 
@@ -23,7 +23,9 @@ class TesteDeApiDeReconhecimento(TestCase):
 			'id_do_reconhecido': self.reconhecido.id,
 			'id_do_reconhecedor': self.reconhecedor.id,
 			'id_do_valor': self.valor.id,
-			'justificativa': self.justificativa
+			'situacao': self.feedback.situacao,
+			'comportamento': self.feedback.comportamento,
+			'impacto': self.feedback.impacto,
 		}
 
 	def testa_o_reconhecimento_de_um_valor_de_um_colaborador(self):
@@ -50,7 +52,9 @@ class TesteDeApiDeReconhecimento(TestCase):
 		self.assertEqual(200, resposta.status_code)
 		self.assertEqual(self.reconhecido.id, resposta_json[0]['id_do_reconhecido'])
 		self.assertEqual(self.reconhecido.nome_abreviado, resposta_json[0]['nome_do_reconhecido'])
-		self.assertEqual(self.justificativa, resposta_json[0]['justificativa'])
+		self.assertEqual(self.feedback.situacao, resposta_json[0]['situacao'])
+		self.assertEqual(self.feedback.comportamento, resposta_json[0]['comportamento'])
+		self.assertEqual(self.feedback.impacto, resposta_json[0]['impacto'])
 		self.assertEqual(self.valor.nome, resposta_json[0]['valor'])
 
 	def testa_que_apenas_10_reconhecimentos_sao_listados(self):
@@ -61,10 +65,6 @@ class TesteDeApiDeReconhecimento(TestCase):
 		resposta_json = json.loads(resposta.content.decode())
 		self.assertEqual(200, resposta.status_code)
 		self.assertEqual(10, len(resposta_json))
-
-	def criar_reconhecimentos(self, quantidade):
-		for num in range(0, quantidade):
-			self.client.post(reverse('reconhecer'), self.dados_do_reconhecimento)
 
 	def testa_reconhecimentos_de_uma_pessoa_agrupados_por_reconhecedor(self):
 		reconhecido = ColaboradorFactory()
@@ -86,3 +86,7 @@ class TesteDeApiDeReconhecimento(TestCase):
 		self.assertEqual(reconhecedor2.primeiro_nome, reconhecedores[1]['reconhecedor__nome'])
 		self.assertEqual(self.valor.id, reconhecedores[1]['valor__id'])
 		self.assertEqual(2, reconhecedores[1]['quantidade_de_reconhecimentos'])
+
+	def criar_reconhecimentos(self, quantidade):
+		for num in range(0, quantidade):
+			self.client.post(reverse('reconhecer'), self.dados_do_reconhecimento)

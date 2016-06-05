@@ -2,7 +2,7 @@ from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render
 from django.utils import formats
 from Login.models import Colaborador
-from Reconhecimentos.models import Valor, Reconhecimento
+from Reconhecimentos.models import Valor, Reconhecimento, Feedback
 from Reconhecimentos.services import Notificacoes
 from django.db.models import Count
 
@@ -10,13 +10,16 @@ def reconhecer(requisicao):
 	id_do_reconhecedor = requisicao.POST['id_do_reconhecedor']
 	id_do_reconhecido = requisicao.POST['id_do_reconhecido']
 	id_do_valor = requisicao.POST['id_do_valor']
-	justificativa = requisicao.POST['justificativa']
+	situacao = requisicao.POST['situacao']
+	comportamento = requisicao.POST['comportamento']
+	impacto = requisicao.POST['impacto']
 
 	reconhecido = Colaborador.objects.get(id=id_do_reconhecido)
 	reconhecedor = Colaborador.objects.get(id=id_do_reconhecedor)
 	valor = Valor.objects.get(id=id_do_valor)
+	feedback = Feedback.objects.create(situacao=situacao, comportamento=comportamento, impacto=impacto)
 
-	reconhecido.reconhecer(reconhecedor, valor, justificativa)
+	reconhecido.reconhecer(reconhecedor, valor, feedback)
 	Notificacoes.notificar_no_slack(reconhecedor, reconhecido, valor)
 
 	return JsonResponse({})
@@ -30,7 +33,9 @@ def ultimos_reconhecimentos(requisicao):
 		'id_do_reconhecido': reconhecimento.reconhecido.id,
 		'nome_do_reconhecido': reconhecimento.reconhecido.nome_abreviado,
 		'valor': reconhecimento.valor.nome,
-		'justificativa': reconhecimento.justificativa,
+		'situacao': reconhecimento.feedback.situacao,
+		'comportamento': reconhecimento.feedback.comportamento,
+		'impacto': reconhecimento.feedback.impacto,
 		'data': reconhecimento.data
 	}, reconhecimentos))
 
