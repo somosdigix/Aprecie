@@ -20,10 +20,10 @@ deploy:
   app: apreciestaging
   domain: renansiravegna
   tags: false
-  all_branches: true
   on:
     repo: DigithoBrasil/Aprecie
     branch: master
+    all_branches: true
 
   provider: openshift
   user: renan.siravegna@gmail.com
