@@ -60,7 +60,6 @@ class TesteDeColaborador(TestCase):
 
 
 class TesteDeAutenticacao(TestCase):
-
 	def testa_autenticacao_de_colaborador_existente(self):
 		colaborador = ColaboradorFactory()
 		dados_da_requisicao = dict(cpf=colaborador.cpf, data_de_nascimento=colaborador.data_de_nascimento.strftime('%d/%m/%Y'))

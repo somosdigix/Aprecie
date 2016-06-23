@@ -25,7 +25,8 @@ class Reconhecimento(models.Model):
 	def alterar_feedback(self, novo_feedback, reconhecedor):
 		if self.reconhecedor != reconhecedor:
 			raise ExcecaoDeDominio('O reconhecimento só pode ser alterado por quem o elaborou')
-		elif self.data != date.today():
+			
+		if self.data != date.today():
 			raise ExcecaoDeDominio('O reconhecimento só pode ser alterado no mesmo dia de sua realização')
 
 		self.feedback = novo_feedback

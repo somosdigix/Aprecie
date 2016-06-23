@@ -1,12 +1,11 @@
+import json
 from django.test import TestCase
 from django.core.urlresolvers import reverse
 from Login.factories import ColaboradorFactory
 from Reconhecimentos.factories import ReconhecimentoFactory, FeedbackFactory
-from Reconhecimentos.models import Valor
-import json
+from Reconhecimentos.models import Valor, Reconhecimento
 
 class TesteDeApiDeReconhecimento(TestCase):
-
 	def logar(self, colaborador):
 		dados_da_requisicao = dict(cpf=colaborador.cpf, data_de_nascimento=colaborador.data_de_nascimento.strftime('%d/%m/%Y'))
 		resposta = self.client.post(reverse('entrar'), dados_da_requisicao)
@@ -14,8 +13,8 @@ class TesteDeApiDeReconhecimento(TestCase):
 	def setUp(self):
 		self.reconhecido = ColaboradorFactory()
 		self.reconhecedor = ColaboradorFactory()
-		self.valor = Valor.objects.get(nome='Alegria')
 		self.feedback = FeedbackFactory()
+		self.valor = Valor.objects.get(nome='Alegria')
 
 		self.logar(self.reconhecedor)
 
@@ -30,9 +29,10 @@ class TesteDeApiDeReconhecimento(TestCase):
 
 	def testa_o_reconhecimento_de_um_valor_de_um_colaborador(self):
 		resposta = self.client.post(reverse('reconhecer'), self.dados_do_reconhecimento)
+		ultimo_reconhecimento = self.mapear_reconhecimentos(Reconhecimento.objects.all())[0]
 
 		self.assertEqual(200, resposta.status_code)
-		self.assertEqual(1, len(self.reconhecido.reconhecimentos_por_valor(self.valor)))
+		self.assertEqual(self.dados_do_reconhecimento, ultimo_reconhecimento)
 
 	def testa_a_listagem_dos_ultimos_reconhecimentos_realizados(self):
 		self.criar_reconhecimentos(2)
@@ -42,20 +42,6 @@ class TesteDeApiDeReconhecimento(TestCase):
 		resposta_json = json.loads(resposta.content.decode())
 		self.assertEqual(200, resposta.status_code)
 		self.assertEqual(2, len(resposta_json))
-
-	def testa_os_detalhes_exibidos_do_ultimo_reconhecimento(self):
-		self.criar_reconhecimentos(1)
-
-		resposta = self.client.post(reverse('ultimos_reconhecimentos'))
-
-		resposta_json = json.loads(resposta.content.decode())
-		self.assertEqual(200, resposta.status_code)
-		self.assertEqual(self.reconhecido.id, resposta_json[0]['id_do_reconhecido'])
-		self.assertEqual(self.reconhecido.nome_abreviado, resposta_json[0]['nome_do_reconhecido'])
-		self.assertEqual(self.feedback.situacao, resposta_json[0]['situacao'])
-		self.assertEqual(self.feedback.comportamento, resposta_json[0]['comportamento'])
-		self.assertEqual(self.feedback.impacto, resposta_json[0]['impacto'])
-		self.assertEqual(self.valor.nome, resposta_json[0]['valor'])
 
 	def testa_que_apenas_10_reconhecimentos_sao_listados(self):
 		self.criar_reconhecimentos(15)
@@ -86,6 +72,16 @@ class TesteDeApiDeReconhecimento(TestCase):
 		self.assertEqual(reconhecedor2.primeiro_nome, reconhecedores[1]['reconhecedor__nome'])
 		self.assertEqual(self.valor.id, reconhecedores[1]['valor__id'])
 		self.assertEqual(2, reconhecedores[1]['quantidade_de_reconhecimentos'])
+
+	def mapear_reconhecimentos(self, reconhecimentos):
+		return list(map(lambda reconhecimento: {
+			'id_do_reconhecido': reconhecimento.reconhecido.id,
+			'id_do_reconhecedor': reconhecimento.reconhecedor.id,
+			'id_do_valor': reconhecimento.valor.id,
+			'situacao': reconhecimento.feedback.situacao,
+			'comportamento': reconhecimento.feedback.comportamento,
+			'impacto': reconhecimento.feedback.impacto,
+		}, reconhecimentos))
 
 	def criar_reconhecimentos(self, quantidade):
 		for num in range(0, quantidade):
