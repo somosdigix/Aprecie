@@ -43,8 +43,14 @@ define([
 	}
 
 	function validarOperacao(reconhecerViewModel) {
-		if (reconhecerViewModel.justificativa === '')
-			throw new ViolacaoDeRegra('Sua justificativa deve ser informada');
+		if (reconhecerViewModel.situacao === '')
+			throw new ViolacaoDeRegra('A situação deve ser informada');
+
+		if (reconhecerViewModel.comportamento === '')
+			throw new ViolacaoDeRegra('O comportamento que a pessoa exibiu deve ser informado');
+
+		if (reconhecerViewModel.impacto === '')
+			throw new ViolacaoDeRegra('O impacto que isso gerou deve ser informado');
 	}
 
 	function voltarParaPerfil(reconhecidoId) {

@@ -23,14 +23,26 @@
 			</div>
 		</div>
 	</div>
-	<p data-js="reconhecer" class="escrever-apreciacao invisivel">
-		<textarea class="escrever-publicacao" id="justificativa" type="text" placeholder="Mereço ser reconhecido por esse valor? Então escreve ai!" maxlength="1000"></textarea>
-	</p>
 	
+	<div class="escrever-apreciacao">
+		<textarea class="escrever-publicacao" id="situacao" placeholder="Qual foi a situação que te levou a chegar até aqui para reconhecer essa pessoa?" maxlength="1000"></textarea>
+	</div>
+	
+	<div class="escrever-apreciacao">
+		<textarea class="escrever-publicacao" id="comportamento" placeholder="Qual foi o comportamento que você pôde observar?" maxlength="1000"></textarea>
+	</div>
+
+	<div class="escrever-apreciacao">
+		<textarea class="escrever-publicacao" id="impacto" placeholder="Finalize agora descrevendo o impacto que esta ação gerou, no seu ponto de vista." maxlength="1000"></textarea>
+	</div>
+	
+	<br>
+
 	<button type="button" class="ui labeled icon right floated orange button button" data-js="reconhecer" style="display: none;">
-	<i class="star icon"></i>
-	Apreciar
+		<i class="star icon"></i>
+		Apreciar
 	</button>
+
 	<br>
 	<br>
 	<br>
@@ -47,9 +59,24 @@
 				<div class="data-reconhecimento">{{ emDataLegivel this.data }}</div>
 
 				<p>
-					<label for="justificativa-valor">
-						<span name="justificativa-valor" id="justificativa-valor">{{ this.justificativa }}</span>
-					</label>
+					{{#if this.feedback__situacao}}
+						<div>
+							<b>Situação:</b>
+							<span>{{this.feedback__situacao}}</span>
+						</div>
+						<div>
+							<b>Comportamento:</b>
+							<span>{{this.feedback__comportamento}}</span>
+						</div>
+						<div>
+							<b>Impacto:</b>
+							<span>{{this.feedback__impacto}}</span>
+						</div>
+					{{else}}
+						<p>
+							{{this.feedback__impacto}}
+						</p>
+					{{/if}}
 				</p>
 			</div>	
 		</div>	
