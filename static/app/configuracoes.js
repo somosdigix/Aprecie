@@ -9,19 +9,13 @@ define([
 	var _ehDebug = false;
 
 	configuracoes.configurarErros = function() {
-		window.onerror = function(error) {
-			if (error.indexOf('ViolacaoDeRegra') === -1 &&
-				error.indexOf('ErroInesperado') === -1)
+		window.onerror = function(mensagem, fonte, linha, coluna, erro) {
+			if (mensagem.indexOf('ViolacaoDeRegra') === -1 &&
+				mensagem.indexOf('ErroInesperado') === -1)
 				return;
 
 			require(['growl'], function(growl) {
-				var mensagemDeErro = error
-					.replace('Uncaught ViolacaoDeRegra: ', '')
-					.replace('ViolacaoDeRegra: ', '')
-					.replace('Uncaught ErroInesperado: ', '')
-					.replace('ErroInesperado: ', '');
-
-				growl.deErro().exibir(mensagemDeErro);
+				growl.deErro().exibir(erro.message);
 			});
 		};
 	};

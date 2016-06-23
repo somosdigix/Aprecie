@@ -40,13 +40,13 @@ define([
 			$('#dataDeNascimento').focus();
 	}
 
-	function autenticar() {
+	function autenticar(evento) {
+		evento.preventDefault();
+		
 		var cpf = $('#cpf').val().replace(/\./g, '').replace('-', '');
 		var dataDeNascimento = $('#dataDeNascimento').val();
 
 		_sandbox.notificar('autenticar', cpf, dataDeNascimento);
-
-		return false;
 	};
 
 	return self;

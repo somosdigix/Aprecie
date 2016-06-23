@@ -2,9 +2,12 @@ define([
 	'jquery',
 	'template',
 	'text!app/reconhecimentos/reconhecimentosTemplate.html',
+	'app/models/reconhecerViewModel',
+	'growl',
+	'roteador',
 	'sessaoDeUsuario',
 	'app/helpers/iconesDosValoresHelpers'
-], function($, template, reconhecimentosTemplate, sessaoDeUsuario) {
+], function($, template, reconhecimentosTemplate, ReconhecerViewModel, growl, roteador, sessaoDeUsuario) {
 	'use strict';
 
 	var _self = {};
@@ -27,18 +30,12 @@ define([
 	};
 
 	function reconhecer() {
-		require([
-			'app/models/reconhecerViewModel',
-			'growl',
-			'roteador'
-		], function(ReconhecerViewModel, growl, roteador) {
-			var reconhecerViewModel = new ReconhecerViewModel();
-			validarOperacao(reconhecerViewModel);
+		var reconhecerViewModel = new ReconhecerViewModel();
+		validarOperacao(reconhecerViewModel);
 
-			$.post('/reconhecimentos/reconhecer/', reconhecerViewModel, function() {
-				growl.deSucesso().exibir('Reconhecimento realizado com sucesso');
-				roteador.atualizar();
-			});
+		$.post('/reconhecimentos/reconhecer/', reconhecerViewModel, function() {
+			growl.deSucesso().exibir('Reconhecimento realizado com sucesso');
+			roteador.atualizar();
 		});
 	}
 
@@ -54,9 +51,7 @@ define([
 	}
 
 	function voltarParaPerfil(reconhecidoId) {
-		require(['roteador'], function(roteador) {
-			roteador.navegarPara('/perfil/' + reconhecidoId);
-		});
+		roteador.navegarPara('/perfil/' + reconhecidoId);
 	}
 
 	return _self;

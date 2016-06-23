@@ -67,7 +67,7 @@ def reconhecimentos_por_reconhecedor(requisicao, id_do_reconhecido):
 def reconhecimentos_por_valor(requisicao, id_do_reconhecido, id_do_valor):
 	reconhecido = Colaborador.objects.get(id=id_do_reconhecido)
 	valor = Valor.objects.get(id=id_do_valor)
-	reconhecimentos = reconhecido.reconhecimentos_por_valor(id_do_valor).values('data', 'feedback__situacao', 'feedback__comportamento', 'feedback__impacto', 'reconhecedor__nome', 'reconhecedor__id')
+	reconhecimentos = reconhecido.reconhecimentos_por_valor(id_do_valor).values('data', 'feedback__situacao', 'feedback__comportamento', 'feedback__impacto', 'reconhecedor__nome', 'reconhecedor__id').order_by('-data')
 	resposta = {
 		'id_do_valor': valor.id,
 		'nome_do_valor': valor.nome,

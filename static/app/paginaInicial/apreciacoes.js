@@ -18,7 +18,6 @@ define([
 	};
 
 	function exibirTemplate(ultimosReconhecimentos) {
-		console.log(ultimosReconhecimentos);
 		_sandbox.acrescentarTemplateEm('#conteudo', apreciacoesTemplate, ultimosReconhecimentos);
 	}
 
