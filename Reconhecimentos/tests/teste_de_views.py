@@ -56,22 +56,59 @@ class TesteDeApiDeReconhecimento(TestCase):
 		reconhecido = ColaboradorFactory()
 		reconhecedor1 = ColaboradorFactory()
 		reconhecedor2 = ColaboradorFactory()
-		reconhecimento1 = ReconhecimentoFactory(reconhecedor=reconhecedor1, reconhecido=reconhecido)
-		reconhecimento2 = ReconhecimentoFactory(reconhecedor=reconhecedor2, reconhecido=reconhecido)
-		reconhecimento3 = ReconhecimentoFactory(reconhecedor=reconhecedor2, reconhecido=reconhecido)
+		ReconhecimentoFactory(reconhecedor=reconhecedor1, reconhecido=reconhecido)
+		ReconhecimentoFactory(reconhecedor=reconhecedor2, reconhecido=reconhecido)
+		ReconhecimentoFactory(reconhecedor=reconhecedor2, reconhecido=reconhecido)
 
 		resposta = self.client.get(reverse('reconhecimentos_por_reconhecedor', args=[reconhecido.id]))
-
 		resultado = json.loads(resposta.content.decode())
 		reconhecedores = resultado.get('reconhecedores')
-		self.assertEqual(2, len(reconhecedores))
 
+		self.assertEqual(2, len(reconhecedores))
 		self.assertEqual(reconhecedor1.primeiro_nome, reconhecedores[0]['reconhecedor__nome'])
 		self.assertEqual(self.valor.id, reconhecedores[0]['valor__id'])
 		self.assertEqual(1, reconhecedores[0]['quantidade_de_reconhecimentos'])
 		self.assertEqual(reconhecedor2.primeiro_nome, reconhecedores[1]['reconhecedor__nome'])
 		self.assertEqual(self.valor.id, reconhecedores[1]['valor__id'])
 		self.assertEqual(2, reconhecedores[1]['quantidade_de_reconhecimentos'])
+
+	def testa_que_deve_listar_os_detalhes_do_valor_ao_soliticar_os_reconhecimentos_de_um_determinado_valor(self):
+		reconhecido = ColaboradorFactory()
+
+		resposta = self.client.get(reverse('reconhecimentos_por_valor', args=[reconhecido.id, self.valor.id]))
+		resposta_json = json.loads(resposta.content.decode())
+
+		self.assertEqual(self.valor.id, resposta_json['id_do_valor'])
+		self.assertEqual(self.valor.nome, resposta_json['nome_do_valor'])
+
+	def testa_que_deve_listar_apenas_os_reconhecimentos_de_um_determinado_valor(self):
+		reconhecido = ColaboradorFactory()
+		reconhecedor = ColaboradorFactory()
+		valor_diferente = Valor.objects.get(nome='Responsabilidade')
+		ReconhecimentoFactory(reconhecedor=reconhecedor, reconhecido=reconhecido)
+		ReconhecimentoFactory(reconhecedor=reconhecedor, reconhecido=reconhecido)
+		ReconhecimentoFactory(reconhecedor=reconhecedor, reconhecido=reconhecido, valor=valor_diferente)
+
+		resposta = self.client.get(reverse('reconhecimentos_por_valor', args=[reconhecido.id, self.valor.id]))
+		resposta_json = json.loads(resposta.content.decode())
+
+		self.assertEqual(self.valor.id, resposta_json['id_do_valor'])
+		self.assertEqual(2, len(resposta_json['reconhecimentos']))
+
+	def testa_que_deve_listar_os_detalhes_do_reconhecimento_ao_soliticar_os_reconhecimentos_de_um_determinado_valor(self):
+		reconhecido = ColaboradorFactory()
+		reconhecedor = ColaboradorFactory()
+		reconhecimento = ReconhecimentoFactory(reconhecedor=reconhecedor, reconhecido=reconhecido)
+
+		resposta = self.client.get(reverse('reconhecimentos_por_valor', args=[reconhecido.id, self.valor.id]))
+		resposta_json = json.loads(resposta.content.decode())
+
+		self.assertEqual(str(reconhecimento.data), resposta_json['reconhecimentos'][0]['data'])
+		self.assertEqual(reconhecedor.id, resposta_json['reconhecimentos'][0]['reconhecedor__id'])
+		self.assertEqual(reconhecedor.nome, resposta_json['reconhecimentos'][0]['reconhecedor__nome'])
+		self.assertEqual(reconhecimento.feedback.situacao, resposta_json['reconhecimentos'][0]['feedback__situacao'])
+		self.assertEqual(reconhecimento.feedback.comportamento, resposta_json['reconhecimentos'][0]['feedback__comportamento'])
+		self.assertEqual(reconhecimento.feedback.impacto, resposta_json['reconhecimentos'][0]['feedback__impacto'])
 
 	def mapear_reconhecimentos(self, reconhecimentos):
 		return list(map(lambda reconhecimento: {

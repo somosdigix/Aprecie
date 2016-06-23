@@ -13,5 +13,5 @@ class ColaboradorFactory(factory.django.DjangoModelFactory):
 		model = Colaborador
 
 	cpf = factory.Sequence(lambda i: str(random.randint(10000000000, 99999999999)))
-	nome = "Alberto José Roberto"
+	nome = "Alberto Roberto"
 	data_de_nascimento = factory.Sequence(lambda i: gerar_data_aleatoria())
