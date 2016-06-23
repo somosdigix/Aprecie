@@ -1,17 +1,13 @@
 language: python
-
 python:
 - '3.3'
-
 script:
 - python manage.py makemigrations
 - python manage.py migrate
 - python manage.py test Login Reconhecimentos
-
 notifications:
   slack:
     secure: sGNzCxPD2NPZJiZ2zYda0tJfaRjQck5wUiK2uQmR5uVWkB5S9+iWPnl2pQkJt3LjlcuRzDAfRm44MNa8WL/VKiwUneEOmCk7dwooRmXavxLkh01UgkcRvXSr7xt+gW2mQNH4d/Q2JW6eAhHr/n3ffhDu8ZlzZfBpN9OljE/BeZRYGWqjaQ4dsbabFbidF+r44pLXN38Q7r5bkmCTm8hijQEUtrtnCcI8gZ1xOFAk/hmsxxTVFgiqgiExsyphdEJ5re+lmg9aDnsGk0iXsMgaFjaPpqqU1Eqyd45TFjKkmWPa4Dx4H7thlbbazObFUB539ygYqdG9PFJ5/llpsRYcLkp+jx8YJD6OcGnlavA8+aoWH9yZiJECb8hZVmNSuLyHx8WYpOvIHp6F7+rhwqOBTp8H8C0U5IDEACyV6LpGwvjPs8Fkh/MWaqKlHG/SFaqsoIDQbzufnxg959Rb2Jld0mQa6+IDrGC+e8xFVe2v1u4x5xthJWDzrAmB0t0HdtgSNb/+tRCMgDiCM0yIFNHoLxsFX02eXX2SRGLjmmRQY5jiMby1cH0jc6bnqgDpaBIvFG1uvTLrrP318v9UpZoCJVcjXVgp5DE0cJ4/PWL9PYgiuWVxl+D9i9nbrGvYviF9gdRDAsRX4ygUJb1wfHgtMWQKp+rtNI4LoltnmH4Sg7k=
-
 deploy:
   provider: openshift
   user: renan.siravegna@gmail.com
@@ -19,23 +15,7 @@ deploy:
     secure: K1SdvQN1SNrsS/6OpmtxQzW/0brJd4rpxMWJWN9Rl+b8PqnrwtniNX8M0Onmo6swp3d/V78wx0caWDULXxSNnevlcJyux5A5zjT+qyh21w0IYxxGvWxpI+TiOI/6CwB4m/QvZ2tdhHrLqkUAZ2fJvfsnbtRG58l+0SpmSq7fIGJfGVg1rTzfFBu9OAKUcTL8107okH2pWGBRCFFG6o37I+xhO0dqk7Kinhb5VIJuEIfAtiQQgCjxat//1UH9GwwZM4qvQbIcTNmdOOPYwPxS0CaJ6euO5smfKfkvxawPHZN+Vn1sK1HL9NksBifEciz+DwLj0H3Y8n7ryoOqWxF1UykubYQQsalv7YDlouPL+z9ILc7WylQ6mT45grfa7l6UUBjsmZdpG0jO9/gjsebnzPqV/dAyDE9Hvx+kaqmY+BAB+tlsbYCwh/m+2es/NzDUfAeAay7+0BzgloN0nDWvSz3BY/RkpwBq5SG9txGZ7R79vUNlWPr6WHpC4ygpbS1Tk8ue6cQTa+Q2qcX6INwyX3p005tgomG9Akc+z1k0/Q0FLaIZnHmGlRyJXgOYw3IYlYrMHUcGdI4BnQfIF/Ab3D0F6/V3GibJxk+AnXxYXdExDTBHPkp15brZ5P9B1oF5KC4RqLkOPPYc7J4rIi69Gsz/zYQ+on+zJwcTdfXj8Ho=
   app: apreciestaging
   domain: renansiravegna
-  tags: false
   on:
     repo: DigithoBrasil/Aprecie
-    branch: master
-    all_branches: true
-
-  provider: openshift
-  user: renan.siravegna@gmail.com
-  password:
-    secure: K1SdvQN1SNrsS/6OpmtxQzW/0brJd4rpxMWJWN9Rl+b8PqnrwtniNX8M0Onmo6swp3d/V78wx0caWDULXxSNnevlcJyux5A5zjT+qyh21w0IYxxGvWxpI+TiOI/6CwB4m/QvZ2tdhHrLqkUAZ2fJvfsnbtRG58l+0SpmSq7fIGJfGVg1rTzfFBu9OAKUcTL8107okH2pWGBRCFFG6o37I+xhO0dqk7Kinhb5VIJuEIfAtiQQgCjxat//1UH9GwwZM4qvQbIcTNmdOOPYwPxS0CaJ6euO5smfKfkvxawPHZN+Vn1sK1HL9NksBifEciz+DwLj0H3Y8n7ryoOqWxF1UykubYQQsalv7YDlouPL+z9ILc7WylQ6mT45grfa7l6UUBjsmZdpG0jO9/gjsebnzPqV/dAyDE9Hvx+kaqmY+BAB+tlsbYCwh/m+2es/NzDUfAeAay7+0BzgloN0nDWvSz3BY/RkpwBq5SG9txGZ7R79vUNlWPr6WHpC4ygpbS1Tk8ue6cQTa+Q2qcX6INwyX3p005tgomG9Akc+z1k0/Q0FLaIZnHmGlRyJXgOYw3IYlYrMHUcGdI4BnQfIF/Ab3D0F6/V3GibJxk+AnXxYXdExDTBHPkp15brZ5P9B1oF5KC4RqLkOPPYc7J4rIi69Gsz/zYQ+on+zJwcTdfXj8Ho=
-  app: aprecie
-  domain: renansiravegna
-  tags: false
-  all_branches: true
-  on:
-    repo: DigithoBrasil/Aprecie
-    branch: release
-
 after_deploy:
 - python manage.py test Aprecie.testes_de_fumaca
