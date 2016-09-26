@@ -1,6 +1,7 @@
 from django.db import models
-from Aprecie.base import ExcecaoDeDominio
 from django.contrib.auth.models import AbstractBaseUser
+
+from Aprecie.base import ExcecaoDeDominio
 
 class Colaborador(AbstractBaseUser):
 	cpf = models.CharField(max_length=11, unique=True)

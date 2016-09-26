@@ -1,13 +1,18 @@
 require.config(window.configuracoesRequirejs);
 
 require([
+  'core',
+  'roteador',
 	'configuracoes',
-	'app/login/controller',
 	'jquery.inputmask'
-], function(configuracoes, controller) {
-	configuracoes.configurarDebug();
-	configuracoes.configurarErros();
-	configuracoes.configurarErrosDeRequisicao();
+], function(Core, roteador, configuracoes) {
+ //  roteador.configurar();
+	// configuracoes.configurarDebug();
+	// configuracoes.configurarErros();
+	// configuracoes.configurarErrosDeRequisicao();
 
-	controller.exibir();
+  // roteador.navegarPara('/');
+
+  Core.registrar('login', function() {
+  });
 });

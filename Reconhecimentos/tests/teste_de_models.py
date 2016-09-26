@@ -1,6 +1,7 @@
 from datetime import date, datetime, timedelta
 from django.test import TestCase
 from django.utils import timezone
+
 from Aprecie.base import ExcecaoDeDominio
 from Login.models import Colaborador
 from Login.factories import ColaboradorFactory
@@ -15,62 +16,6 @@ class TesteDeReconhecimento(TestCase):
 		self.reconhecedor = ColaboradorFactory()
 		self.responsabilidade = Valor.objects.get(nome='Responsabilidade')
 		self.inquietude = Valor.objects.get(nome='Inquietude')
-
-	def testa_o_reconhecimento_de_uma_habilidade(self):
-		self.reconhecido.reconhecer(self.reconhecedor, self.responsabilidade, self.feedback);
-		reconhecimento = self.reconhecido.reconhecimentos()[0]
-
-		self.assertEqual(1, len(self.reconhecido.reconhecimentos_por_valor(self.responsabilidade)))
-		self.assertEqual(self.reconhecedor, reconhecimento.reconhecedor)
-		self.assertEqual(self.responsabilidade, reconhecimento.valor)
-
-	def testa_o_template_sci_no_reconhecimento(self):
-		self.reconhecido.reconhecer(self.reconhecedor, self.responsabilidade, self.feedback)
-		reconhecimento = self.reconhecido.reconhecimentos()[0]
-
-		self.assertEqual(self.feedback.situacao, reconhecimento.feedback.situacao)
-		self.assertEqual(self.feedback.comportamento, reconhecimento.feedback.comportamento)
-		self.assertEqual(self.feedback.impacto, reconhecimento.feedback.impacto)
-
-	def testa_que_armazena_a_data_do_reconhecimento(self):
-		self.reconhecido.reconhecer(self.reconhecedor, self.responsabilidade, self.feedback);
-		reconhecimento = self.reconhecido.reconhecimentos()[0]
-
-		agora = timezone.now()
-		self.assertEqual(agora.year, reconhecimento.data.year)
-		self.assertEqual(agora.month, reconhecimento.data.month)
-		self.assertEqual(agora.day, reconhecimento.data.day)
-
-	def testa_a_listagem_de_reconhecimentos(self):
-		self.reconhecido.reconhecer(self.reconhecedor, self.responsabilidade, self.feedback);
-		self.reconhecido.reconhecer(self.reconhecedor, self.responsabilidade, self.feedback);
-
-		valores_esperados = [self.responsabilidade, self.responsabilidade]
-		valores_reconhecidos = map(lambda reconhecimento: reconhecimento.valor, self.reconhecido.reconhecimentos())
-		self.assertEqual(valores_esperados, list(valores_reconhecidos))
-
-	def testa_a_listagem_de_reconhecimentos_por_valor(self):
-		self.reconhecido.reconhecer(self.reconhecedor, self.inquietude, self.feedback);
-		self.reconhecido.reconhecer(self.reconhecedor, self.responsabilidade, self.feedback);
-		self.reconhecido.reconhecer(self.reconhecedor, self.responsabilidade, self.feedback);
-
-		self.assertEqual(1, len(self.reconhecido.reconhecimentos_por_valor(self.inquietude)))
-		self.assertEqual(2, len(self.reconhecido.reconhecimentos_por_valor(self.responsabilidade)))
-
-	def testa_que_o_colaborador_nao_pode_se_reconher(self):
-		with self.assertRaises(Exception) as contexto:
-			self.reconhecido.reconhecer(self.reconhecido, self.responsabilidade, self.feedback)
-
-		self.assertEqual('O colaborador nao pode reconher a si próprio', contexto.exception.args[0])
-
-	def testa_que_o_colaborador_nao_pode_reconhecer_com_justificativa_vazia(self):
-		with self.assertRaises(Exception) as contexto:
-			self.reconhecido.reconhecer(self.reconhecedor, self.responsabilidade, None)
-
-		self.assertEqual('Feedback deve ser informado', contexto.exception.args[0])
-
-	def testa_que_existe_um_feedback(self):
-		pass
 
 	def testa_alteracao_de_um_feedback(self):
 		reconhecimento = ReconhecimentoFactory(reconhecedor=self.reconhecedor)
@@ -101,6 +46,7 @@ class TesteDeReconhecimento(TestCase):
 
 		self.assertEqual('O reconhecimento só pode ser alterado por quem o elaborou', contexto.exception.args[0])
 
+class TesteDeValor(TestCase):
 	def testa_que_valor_sabe_retornar_uma_lista_de_frases_que_o_descreve_detalhadamente(self):
 		descricao1 = DescricaoDoValorFactory(descricao="descricao1")
 		descricao2 = DescricaoDoValorFactory(descricao="descricao2")

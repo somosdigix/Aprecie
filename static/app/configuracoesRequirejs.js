@@ -1,10 +1,10 @@
 window.configuracoesRequirejs = (function() {
 	// TODO: Automatizar essa feiura na build
 	var ehDebug = document.getElementById('ehDebug').value === 'True';
-	var deveUsarAntiCache = ehDebug ? 'antiCache=' + (new Date()).getTime() : 'antiCache=10';
+	var argumentosDaUrl = ehDebug ? 'antiCache=' + (new Date()).getTime() : 'antiCache=10';
 
 	return {
-		urlArgs: deveUsarAntiCache,
+		urlArgs: argumentosDaUrl,
 		baseUrl: '/static',
 
 		deps: [
@@ -24,6 +24,7 @@ window.configuracoesRequirejs = (function() {
 			'semantic': 'tema/dist/semantic',
 			'handlebars': 'lib/handlebars/handlebars.amd',
 			'director': 'lib/director/build/director',
+			'core': 'app/core',
 			'sandbox': 'app/sandbox',
 			'gerenciadorDeModulos': 'app/gerenciadorDeModulos',
 			'roteador': 'app/roteador',

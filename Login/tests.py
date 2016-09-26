@@ -1,32 +1,36 @@
-from django.test import TestCase
-from datetime import datetime
-from Login.factories import ColaboradorFactory
-from django.core.urlresolvers import reverse
-from Aprecie.base import ExcecaoDeDominio
 import json
+from datetime import datetime
+from django.test import TestCase
+from django.utils import timezone
+from django.core.urlresolvers import reverse
+
+from Aprecie.base import ExcecaoDeDominio
+from Login.factories import ColaboradorFactory
+from Reconhecimentos.models import Reconhecimento, Valor, Feedback
+from Reconhecimentos.factories import ReconhecimentoFactory, FeedbackFactory
 
 class TesteDeColaborador(TestCase):
 	def setUp(self):
-		colaborador = ColaboradorFactory()
-		dados_da_requisicao = dict(cpf=colaborador.cpf, data_de_nascimento=colaborador.data_de_nascimento.strftime('%d/%m/%Y'))
-		resposta = self.client.post(reverse('entrar'), dados_da_requisicao)
+		self.colaborador = ColaboradorFactory()
+		self.reconhecedor = ColaboradorFactory()
+		
+		self.valor = Valor.objects.get(nome='Responsabilidade')
+		self.outroValor = Valor.objects.get(nome='Inquietude')
+		self.feedback = FeedbackFactory()
 
 	def testa_que_a_foto_do_colaborador_eh_alterada(self):
 		nova_foto = 'base64=???'
-		colaborador = ColaboradorFactory()
 		dados_da_requisicao = {
 			'nova_foto': nova_foto,
-			'id_do_colaborador': colaborador.id
+			'id_do_colaborador': self.colaborador.id
 		}
 
 		resposta = self.client.post(reverse('alterar_foto'), dados_da_requisicao)
 
-		colaborador.refresh_from_db()
-		self.assertEqual(nova_foto, colaborador.foto)
+		self.colaborador.refresh_from_db()
+		self.assertEqual(nova_foto, self.colaborador.foto)
 
 	def testa_que_deve_retornar_a_lista_de_colaboradores_ja_com_nome_abreviado(self):
-		ColaboradorFactory()
-
 		resposta = self.client.get(reverse('obter_colaboradores'))
 
 		resposta_json = json.loads(resposta.content.decode())
@@ -34,30 +38,75 @@ class TesteDeColaborador(TestCase):
 
 	def testa_que_a_foto_deve_ser_alterada(self):
 		nova_foto = 'base64=????'
-		colaborador = ColaboradorFactory()
 
-		colaborador.alterar_foto(nova_foto)
+		self.colaborador.alterar_foto(nova_foto)
 
-		self.assertEqual(nova_foto, colaborador.foto)
+		self.assertEqual(nova_foto, self.colaborador.foto)
 
 	def testa_que_nao_deve_trocar_para_uma_foto_inexistente(self):
-		colaborador = ColaboradorFactory()
-
 		with self.assertRaises(ExcecaoDeDominio) as contexto:
-			colaborador.alterar_foto(' ')
+			self.colaborador.alterar_foto(' ')
 
 		self.assertEqual('Foto deve ser informada', contexto.exception.args[0])
 
 	def testa_que_deve_exibir_somente_o_primeiro_nome(self):
-		colaborador = ColaboradorFactory()
-
-		self.assertEqual('Alberto', colaborador.primeiro_nome)
+		self.assertEqual('Alberto', self.colaborador.primeiro_nome)
 
 	def testa_que_deve_abreviar_o_nome_da_pessoa(self):
-		colaborador = ColaboradorFactory()
+		self.assertEqual('Alberto Roberto', self.colaborador.nome_abreviado)
 
-		self.assertEqual('Alberto Roberto', colaborador.nome_abreviado)
+	def testa_que_o_colaborador_nao_pode_reconhecer_sem_informar_seu_feedback(self):
+		with self.assertRaises(Exception) as contexto:
+			self.colaborador.reconhecer(self.reconhecedor, self.valor, None)
 
+		self.assertEqual('Feedback deve ser informado', contexto.exception.args[0])
+
+	def testa_o_reconhecimento_de_uma_habilidade(self):
+		self.colaborador.reconhecer(self.reconhecedor, self.valor, self.feedback);
+		reconhecimento = self.colaborador.reconhecimentos()[0]
+
+		self.assertEqual(1, len(self.colaborador.reconhecimentos_por_valor(self.valor)))
+		self.assertEqual(self.reconhecedor, reconhecimento.reconhecedor)
+		self.assertEqual(self.valor, reconhecimento.valor)
+
+	def testa_que_feedback_esta_no_formato_sci(self):
+		self.colaborador.reconhecer(self.reconhecedor, self.valor, self.feedback)
+		reconhecimento = self.colaborador.reconhecimentos()[0]
+
+		self.assertEqual(self.feedback.situacao, reconhecimento.feedback.situacao)
+		self.assertEqual(self.feedback.comportamento, reconhecimento.feedback.comportamento)
+		self.assertEqual(self.feedback.impacto, reconhecimento.feedback.impacto)
+
+	def testa_que_armazena_a_data_do_reconhecimento(self):
+		self.colaborador.reconhecer(self.reconhecedor, self.valor, self.feedback);
+		reconhecimento = self.colaborador.reconhecimentos()[0]
+
+		agora = timezone.now()
+		self.assertEqual(agora.year, reconhecimento.data.year)
+		self.assertEqual(agora.month, reconhecimento.data.month)
+		self.assertEqual(agora.day, reconhecimento.data.day)
+
+	def testa_a_listagem_de_reconhecimentos(self):
+		self.colaborador.reconhecer(self.reconhecedor, self.valor, self.feedback);
+		self.colaborador.reconhecer(self.reconhecedor, self.valor, self.feedback);
+
+		valores_esperados = [self.valor, self.valor]
+		valores_reconhecidos = map(lambda reconhecimento: reconhecimento.valor, self.colaborador.reconhecimentos())
+		self.assertEqual(valores_esperados, list(valores_reconhecidos))
+
+	def testa_a_listagem_de_reconhecimentos_por_valor(self):
+		self.colaborador.reconhecer(self.reconhecedor, self.outroValor, self.feedback);
+		self.colaborador.reconhecer(self.reconhecedor, self.valor, self.feedback);
+		self.colaborador.reconhecer(self.reconhecedor, self.valor, self.feedback);
+
+		self.assertEqual(1, len(self.colaborador.reconhecimentos_por_valor(self.outroValor)))
+		self.assertEqual(2, len(self.colaborador.reconhecimentos_por_valor(self.valor)))
+
+	def testa_que_o_colaborador_nao_pode_se_reconher(self):
+		with self.assertRaises(Exception) as contexto:
+			self.colaborador.reconhecer(self.colaborador, self.valor, self.feedback)
+
+		self.assertEqual('O colaborador nao pode reconher a si próprio', contexto.exception.args[0])
 
 class TesteDeAutenticacao(TestCase):
 	def testa_autenticacao_de_colaborador_existente(self):
