@@ -6,13 +6,10 @@ require([
 	'configuracoes',
 	'jquery.inputmask'
 ], function(Core, roteador, configuracoes) {
- //  roteador.configurar();
-	// configuracoes.configurarDebug();
-	// configuracoes.configurarErros();
-	// configuracoes.configurarErrosDeRequisicao();
+	roteador.configurar();
+	configuracoes.configurarDebug();
+	configuracoes.configurarErros();
+	configuracoes.configurarErrosDeRequisicao();
 
-  // roteador.navegarPara('/');
-
-  Core.registrar('login', function() {
-  });
+	roteador.navegarPara('/');
 });
