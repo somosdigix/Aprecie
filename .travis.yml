@@ -1,4 +1,4 @@
-language: python
+﻿language: python
 python:
 - '3.3'
 script:
@@ -14,7 +14,7 @@ deploy:
   password:
     secure: K1SdvQN1SNrsS/6OpmtxQzW/0brJd4rpxMWJWN9Rl+b8PqnrwtniNX8M0Onmo6swp3d/V78wx0caWDULXxSNnevlcJyux5A5zjT+qyh21w0IYxxGvWxpI+TiOI/6CwB4m/QvZ2tdhHrLqkUAZ2fJvfsnbtRG58l+0SpmSq7fIGJfGVg1rTzfFBu9OAKUcTL8107okH2pWGBRCFFG6o37I+xhO0dqk7Kinhb5VIJuEIfAtiQQgCjxat//1UH9GwwZM4qvQbIcTNmdOOPYwPxS0CaJ6euO5smfKfkvxawPHZN+Vn1sK1HL9NksBifEciz+DwLj0H3Y8n7ryoOqWxF1UykubYQQsalv7YDlouPL+z9ILc7WylQ6mT45grfa7l6UUBjsmZdpG0jO9/gjsebnzPqV/dAyDE9Hvx+kaqmY+BAB+tlsbYCwh/m+2es/NzDUfAeAay7+0BzgloN0nDWvSz3BY/RkpwBq5SG9txGZ7R79vUNlWPr6WHpC4ygpbS1Tk8ue6cQTa+Q2qcX6INwyX3p005tgomG9Akc+z1k0/Q0FLaIZnHmGlRyJXgOYw3IYlYrMHUcGdI4BnQfIF/Ab3D0F6/V3GibJxk+AnXxYXdExDTBHPkp15brZ5P9B1oF5KC4RqLkOPPYc7J4rIi69Gsz/zYQ+on+zJwcTdfXj8Ho=
   app:
-    master: apreciestaging
+    staging: apreciestaging
     release: aprecie
   domain: renansiravegna
   on:
