@@ -1,0 +1,47 @@
+﻿<div class="conteudo">
+  <h1>Histórico de reconhecimentos</h1>
+	{{#.}}
+    <section class="feed-reconhecimentos">
+      <div class="bloco-reconhecimento">  
+        <img class="img-reconhecedor" src="{{ foto this.id_do_reconhecedor usar_miniatura=true}}" />
+
+        <div class="texto-reconhecimento">
+          <a href="#/perfil/{{this.id_do_reconhecedor}}" class="apreciador cursor-pointer">{{this.nome_do_reconhecedor}}</a>
+          <div class="data-reconhecimento">por {{this.valor}} em {{ emDataLegivel this.data }}</div>
+
+          <p>
+            {{#if this.situacao}}
+              <div>
+                <b>Situação:</b>
+                <span>{{this.situacao}}</span>
+              </div>
+              <div>
+                <b>Comportamento:</b>
+                <span>{{this.comportamento}}</span>
+              </div>
+              <div>
+                <b>Impacto:</b>
+                <span>{{this.impacto}}</span>
+              </div>
+            {{else}}
+              <p>
+                {{this.impacto}}
+              </p>
+            {{/if}}
+          </p>
+        </div>  
+      </div>  
+    </section>
+  {{else}}
+  <article>
+    <p>
+      Não houveram reconhecimentos.
+    </p>
+  </article>
+  {{/.}}
+
+  <button type="button" class="ui labeled icon right floated cinza button" data-js="voltar-ao-perfil">
+    <i class="left arrow icon"></i>
+    Voltar para o perfil
+  </button>
+</div>

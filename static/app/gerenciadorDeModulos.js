@@ -1,4 +1,4 @@
-define([
+﻿define([
 	'sandbox'
 ], function(Sandbox) {
 	'use strict';
