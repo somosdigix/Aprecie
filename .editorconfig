@@ -5,16 +5,6 @@ charset = utf-8-bom
 end_of_line = lf
 insert_final_newline = true
 
-[*.{js,html}]
-charset = utf-8
-indent_style = space
-indent_size = 2
-
-[*.{py}]
-charset = utf-8
-indent_style = tab
-indent_size = 2
-
-[{package.json,.travis.yml}]
+[*.{js, py, html}, {package.json, .travis.yml}]
 indent_style = space
 indent_size = 2
