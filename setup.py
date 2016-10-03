@@ -1,10 +1,10 @@
-from setuptools import setup
+﻿from setuptools import setup
 
-setup(name='YourAppName',
+setup(name='Aprecie.me',
       version='1.0',
-      description='OpenShift App',
-      author='Your Name',
-      author_email='example@example.com',
-      url='http://www.python.org/sigs/distutils-sig/',
+      description='Mini rede-social para estímulo de reconhecimentos baseados nos valores da DígithoBrasil.',
+      author='DígithoBrasil',
+      author_email='sistemas@digithobrasil.com.br',
+      url='http://www.digithobrasil.com.br/',
 #      install_requires=['Django>=1.3'],
      )
