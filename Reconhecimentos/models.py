@@ -3,6 +3,13 @@ from datetime import date
 from django.db import models
 from Aprecie.base import ExcecaoDeDominio
 
+class Pilar(models.Model):
+  nome = models.CharField(max_length=200)
+  descricao = models.CharField(max_length=1000)
+
+  def __eq__(self, other):
+    return self.nome == other.nome
+
 class DescricaoDoValor(models.Model):
   descricao = models.CharField(max_length=100)
 

@@ -5,8 +5,8 @@ from django.utils import timezone
 from Aprecie.base import ExcecaoDeDominio
 from Login.models import Colaborador
 from Login.factories import ColaboradorFactory
-from Reconhecimentos.models import Reconhecimento, ReconhecimentoHistorico, Valor, Feedback
-from Reconhecimentos.factories import ReconhecimentoFactory, ValorFactory, DescricaoDoValorFactory, FeedbackFactory
+from Reconhecimentos.models import *
+from Reconhecimentos.factories import *
 
 class TesteDeReconhecimento(TestCase):
   def setUp(self):
@@ -110,3 +110,26 @@ class TesteDeFeedback(TestCase):
 
     self.assertEqual(feedback, outroFeedbackIgual)
     self.assertNotEqual(feedback, outroFeedbackDiferente)
+
+class TesteDoPilar(TestCase):
+  def testa_que_deve_possuir_um_nome(self):
+    nome = 'Colaborar sempre'
+
+    pilar = Pilar.objects.create(nome = nome)
+
+    self.assertEqual(pilar.nome, nome)
+
+  def testa_que_deve_possuir_uma_descricao(self):
+    descricao = 'Utilizar a colaboração para criar relacionamentos com foco em resultados para todos'
+
+    pilar = Pilar.objects.create(descricao = descricao)
+
+    self.assertEqual(pilar.descricao, descricao)
+
+  def testa_que_deve_comparar_dois_pilares_pelo_nome(self):
+    pilar = Pilar.objects.create(nome = 'Pilar')
+    outroPilarIgual = Pilar.objects.create(nome = 'Pilar')
+    outroPilarDiferente = Pilar.objects.create(nome = 'Pilar diferente')
+
+    self.assertEqual(pilar, outroPilarIgual)
+    self.assertNotEqual(pilar, outroPilarDiferente)
