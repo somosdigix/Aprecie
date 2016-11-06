@@ -1,6 +1,6 @@
 ﻿import factory
 from Login.factories import ColaboradorFactory
-from Reconhecimentos.models import Reconhecimento, ReconhecimentoHistorico, Valor, DescricaoDoValor, Feedback
+from Reconhecimentos.models import *
 
 class DescricaoDoValorFactory(factory.django.DjangoModelFactory):
   class Meta:
@@ -34,7 +34,7 @@ class ReconhecimentoFactory(factory.django.DjangoModelFactory):
 
   reconhecedor = factory.SubFactory(ColaboradorFactory)
   reconhecido = factory.SubFactory(ColaboradorFactory)
-  valor = Valor.objects.get(nome='Alegria')
+  pilar = Pilar.objects.get(nome='Colaborar sempre')
   feedback = factory.SubFactory('Reconhecimentos.factories.FeedbackFactory')
   data = '2015-01-01'
 

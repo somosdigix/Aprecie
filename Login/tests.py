@@ -1,4 +1,4 @@
-import json
+﻿import json
 from datetime import datetime
 from django.test import TestCase
 from django.utils import timezone
@@ -6,7 +6,7 @@ from django.core.urlresolvers import reverse
 
 from Aprecie.base import ExcecaoDeDominio
 from Login.factories import ColaboradorFactory
-from Reconhecimentos.models import Reconhecimento, Valor, Feedback
+from Reconhecimentos.models import Reconhecimento, Pilar, Feedback
 from Reconhecimentos.factories import ReconhecimentoFactory, FeedbackFactory
 
 class TesteDeColaborador(TestCase):
@@ -14,8 +14,8 @@ class TesteDeColaborador(TestCase):
 		self.colaborador = ColaboradorFactory()
 		self.reconhecedor = ColaboradorFactory()
 		
-		self.valor = Valor.objects.get(nome='Responsabilidade')
-		self.outroValor = Valor.objects.get(nome='Inquietude')
+		self.pilar = Pilar.objects.get(nome='Colaborar sempre')
+		self.outroPilar = Pilar.objects.get(nome='Fazer diferente')
 		self.feedback = FeedbackFactory()
 
 	def testa_que_a_foto_do_colaborador_eh_alterada(self):
@@ -57,20 +57,20 @@ class TesteDeColaborador(TestCase):
 
 	def testa_que_o_colaborador_nao_pode_reconhecer_sem_informar_seu_feedback(self):
 		with self.assertRaises(Exception) as contexto:
-			self.colaborador.reconhecer(self.reconhecedor, self.valor, None)
+			self.colaborador.reconhecer(self.reconhecedor, self.pilar, None)
 
 		self.assertEqual('Feedback deve ser informado', contexto.exception.args[0])
 
 	def testa_o_reconhecimento_de_uma_habilidade(self):
-		self.colaborador.reconhecer(self.reconhecedor, self.valor, self.feedback);
+		self.colaborador.reconhecer(self.reconhecedor, self.pilar, self.feedback);
 		reconhecimento = self.colaborador.reconhecimentos()[0]
 
-		self.assertEqual(1, len(self.colaborador.reconhecimentos_por_valor(self.valor)))
+		self.assertEqual(1, len(self.colaborador.reconhecimentos_por_pilar(self.pilar)))
 		self.assertEqual(self.reconhecedor, reconhecimento.reconhecedor)
-		self.assertEqual(self.valor, reconhecimento.valor)
+		self.assertEqual(self.pilar, reconhecimento.pilar)
 
 	def testa_que_feedback_esta_no_formato_sci(self):
-		self.colaborador.reconhecer(self.reconhecedor, self.valor, self.feedback)
+		self.colaborador.reconhecer(self.reconhecedor, self.pilar, self.feedback)
 		reconhecimento = self.colaborador.reconhecimentos()[0]
 
 		self.assertEqual(self.feedback.situacao, reconhecimento.feedback.situacao)
@@ -78,7 +78,7 @@ class TesteDeColaborador(TestCase):
 		self.assertEqual(self.feedback.impacto, reconhecimento.feedback.impacto)
 
 	def testa_que_armazena_a_data_do_reconhecimento(self):
-		self.colaborador.reconhecer(self.reconhecedor, self.valor, self.feedback);
+		self.colaborador.reconhecer(self.reconhecedor, self.pilar, self.feedback);
 		reconhecimento = self.colaborador.reconhecimentos()[0]
 
 		agora = timezone.now()
@@ -87,24 +87,24 @@ class TesteDeColaborador(TestCase):
 		self.assertEqual(agora.day, reconhecimento.data.day)
 
 	def testa_a_listagem_de_reconhecimentos(self):
-		self.colaborador.reconhecer(self.reconhecedor, self.valor, self.feedback);
-		self.colaborador.reconhecer(self.reconhecedor, self.valor, self.feedback);
+		self.colaborador.reconhecer(self.reconhecedor, self.pilar, self.feedback);
+		self.colaborador.reconhecer(self.reconhecedor, self.pilar, self.feedback);
 
-		valores_esperados = [self.valor, self.valor]
-		valores_reconhecidos = map(lambda reconhecimento: reconhecimento.valor, self.colaborador.reconhecimentos())
-		self.assertEqual(valores_esperados, list(valores_reconhecidos))
+		pilares_esperados = [self.pilar, self.pilar]
+		pilar_reconhecidos = map(lambda reconhecimento: reconhecimento.pilar, self.colaborador.reconhecimentos())
+		self.assertEqual(pilares_esperados, list(pilar_reconhecidos))
 
-	def testa_a_listagem_de_reconhecimentos_por_valor(self):
-		self.colaborador.reconhecer(self.reconhecedor, self.outroValor, self.feedback);
-		self.colaborador.reconhecer(self.reconhecedor, self.valor, self.feedback);
-		self.colaborador.reconhecer(self.reconhecedor, self.valor, self.feedback);
+	def testa_a_listagem_de_reconhecimentos_por_pilar(self):
+		self.colaborador.reconhecer(self.reconhecedor, self.outroPilar, self.feedback);
+		self.colaborador.reconhecer(self.reconhecedor, self.pilar, self.feedback);
+		self.colaborador.reconhecer(self.reconhecedor, self.pilar, self.feedback);
 
-		self.assertEqual(1, len(self.colaborador.reconhecimentos_por_valor(self.outroValor)))
-		self.assertEqual(2, len(self.colaborador.reconhecimentos_por_valor(self.valor)))
+		self.assertEqual(1, len(self.colaborador.reconhecimentos_por_pilar(self.outroPilar)))
+		self.assertEqual(2, len(self.colaborador.reconhecimentos_por_pilar(self.pilar)))
 
 	def testa_que_o_colaborador_nao_pode_se_reconher(self):
 		with self.assertRaises(Exception) as contexto:
-			self.colaborador.reconhecer(self.colaborador, self.valor, self.feedback)
+			self.colaborador.reconhecer(self.colaborador, self.pilar, self.feedback)
 
 		self.assertEqual('O colaborador nao pode reconher a si próprio', contexto.exception.args[0])
 

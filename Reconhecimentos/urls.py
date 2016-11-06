@@ -7,5 +7,5 @@ urlpatterns = [
     url(r'^colaborador/([0-9]+)$', views.reconhecimentos_do_colaborador, name="reconhecimentos_do_colaborador"),
     url(r'^historico/([0-9]+)$', views.reconhecimentos_historicos_do_colaborador, name="reconhecimentos_historicos_do_colaborador"),
     url(r'^por_reconhecedor/([0-9]+)$', views.reconhecimentos_por_reconhecedor, name="reconhecimentos_por_reconhecedor"),
-    url(r'^([0-9]+)/([0-9]+)$', views.reconhecimentos_por_valor, name="reconhecimentos_por_valor"),
+    url(r'^([0-9]+)/([0-9]+)$', views.reconhecimentos_por_pilar, name="reconhecimentos_por_pilar"),
 ]

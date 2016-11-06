@@ -26,7 +26,7 @@ class Reconhecimento(models.Model):
   reconhecedor = models.ForeignKey('Login.Colaborador', related_name='reconhecedor')
   reconhecido = models.ForeignKey('Login.Colaborador', related_name='reconhecido')
   feedback = models.ForeignKey('Feedback', related_name='feedback')
-  valor = models.ForeignKey(Valor)
+  pilar = models.ForeignKey(Pilar)
   data = models.DateField(auto_now_add=True)
 
   def alterar_feedback(self, novo_feedback, reconhecedor):
