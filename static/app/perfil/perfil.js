@@ -39,10 +39,10 @@
     var objetoClicado = $(this);
 
     require(['roteador'], function(roteador) {
-      var valorId = objetoClicado.data('valor-id');
+      var pilarId = objetoClicado.data('pilar-id');
       var colaboradorId = $("#reconhecidoId").val();
 
-      roteador.navegarPara('/reconhecimentos/' + colaboradorId + '/' + valorId);
+      roteador.navegarPara('/reconhecimentos/' + colaboradorId + '/' + pilarId);
     });
   }
 

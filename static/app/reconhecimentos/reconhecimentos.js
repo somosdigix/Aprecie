@@ -1,4 +1,4 @@
-define([
+﻿define([
 	'jquery',
 	'template',
 	'text!app/reconhecimentos/reconhecimentosTemplate.html',
@@ -12,14 +12,15 @@ define([
 
 	var _self = {};
 
-	_self.inicializar = function(sandbox, colaboradorId, valorId) {
+	_self.inicializar = function(sandbox, colaboradorId, pilarId) {
 		$('#conteudo')
 			.off()
 			.on('click', '[data-js="voltar-ao-perfil"]', function() {
 				voltarParaPerfil(colaboradorId);
 			});
 
-		$.getJSON('/reconhecimentos/' + colaboradorId + '/' + valorId, {}, function(resposta) {
+		$.getJSON('/reconhecimentos/' + colaboradorId + '/' + pilarId, {}, function(resposta) {
+      console.log(resposta);
 			template.exibir(reconhecimentosTemplate, resposta);
 
 			if (sessaoDeUsuario.id !== colaboradorId) {
