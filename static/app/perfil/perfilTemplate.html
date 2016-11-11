@@ -1,4 +1,4 @@
-﻿<div class="conteudo">
+﻿<div class="conteudo perfil-colaborador">
 	<input data-js="alterar-foto" type="file" class="invisivel" />
 	<div class="conteudo">
 		<input type="hidden" id="reconhecidoId" value="{{this.id}}" />
@@ -13,26 +13,31 @@
 		</div>
 		<br>
     
-    <div data-js="reconhecimentos" class="ui three column grid pilares">
+    <ul class="pilares" data-js="reconhecimentos" >
       {{#each this.pilares}}
-      <div class="column">
-        <div class="ui link card" data-pilar-id="{{this.id}}" data-js="exibir-reconhecimentos">
-          <div class="image">
-            {{this.nome}}
-          </div>
-          <div class="content sobre-pilares">
-            <h2>{{this.descricao}}</h2>
+      <li class="itens">
+        <div data-pilar-id="{{this.id}}" data-js="exibir-reconhecimentos">
+          <div class="descricao">      
+            <div class="titulo">
+              {{this.nome}}
+            </div>
+            <div class="content sobre-pilares">
+              <h2>{{this.descricao}}</h2>
+            </div>
           </div>
           <div class="extra content {{#if this.possui_reconhecimentos}}possui-reconhecimento{{/if}}">
             <span>
+              <span class="quantidade-reconhecimentos">{{this.quantidade_de_reconhecimentos}} 
+              </span>
+             <span class="texto">
               <i class="star icon"></i>
-              {{this.quantidade_de_reconhecimentos}} reconhecimento(s)
+              reconhecimento(s)</span>
             </span>
           </div>
         </div>
-      </div>
+      </li>
       {{/each}}
-    </div>
+    </ul>
 
 		<div data-js="reconhecimentos-historicos" class="ui three column grid pilares" style="display: none;">
 		</div>
@@ -48,11 +53,77 @@
 .sobre-pilares{
 	height: 60px;
 }
-	.pilares h2{
-		font-size: 16px;
+
+  .pilares{
+    list-style: none;
+  }
+
+  .pilares .itens{
+    width: 100%;
+    overflow: hidden;
+    border: 1px solid #dadfea;
+    border-radius: 6px;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    margin-bottom: 20px;
+    cursor: pointer;
+    padding: 20px;
+
+  }
+
+  .pilares .itens:hover{
+    background-color: #fff;
+  }
+
+  .pilares .itens .descricao{
+    width: 67%;
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  .pilares .itens .titulo{
+    font-size: 27px;
+    color: #0BC0D3;
+    line-height: 45px;
+    display: inline-block;
+  }
+
+	.pilares .itens h2{
+		  font-size: 15px;
     	color: #6A6A6A;
-    	text-align: center;
+      font-weight: normal;
 	}
+
+  .pilares .itens .extra{
+    width: 28%;
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 4%;
+    text-align: right;
+
+  }
+
+    .pilares .itens .extra .quantidade-reconhecimentos{
+      font-size: 46px;
+      line-height: 45px;
+      display: inline-block;
+      color: #D34AF4;
+
+    }
+    
+    .pilares .itens .extra .texto{
+      font-size: 13px;
+      line-height: 15px;
+      text-align: left;
+      display: inline-block;
+          color: #6f7d95;
+    }
+
+    .pilares .itens .extra .texto .star{
+      display: block;
+      color: #D34AF4;
+
+    }
 
 	.tamanho-icone-pilares{
 		width: 150px !important;
@@ -64,5 +135,10 @@
 	font-weight: bold;
     color: #D6740F !important;
 }
+
+.perfil-colaborador {
+  margin-bottom: 20px;
+}
+
 
 </style>
