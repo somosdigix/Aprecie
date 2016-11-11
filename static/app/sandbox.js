@@ -1,4 +1,4 @@
-define([
+﻿define([
 	'jquery',
 	'app/helpers/ajax',
 	'roteador',
@@ -50,7 +50,7 @@ define([
 			_gerenciadorDeModulos.removerEscuta(nomeDoEvento);
 		};
 
-		self.notificar = function(nomeDoEvento, callback) {
+		self.notificar = function() {
 			_gerenciadorDeModulos.notificar.apply(this, arguments);
 		};
 

@@ -1,4 +1,4 @@
-<div class="conteudo">
+﻿<div class="conteudo">
 	<input data-js="alterar-foto" type="file" class="invisivel" />
 	<div class="conteudo">
 		<input type="hidden" id="reconhecidoId" value="{{this.id}}" />
@@ -12,40 +12,49 @@
 			</div>
 		</div>
 		<br>
-		<div class="ui three column grid valores">
-			{{#each this.valores}}
-			<div class="column ">
-				<div class="ui link card" data-valor-id="{{this.id}}" data-js="exibir-reconhecimentos">
-					<div class="image">
-						<img src="{{iconeDoValor this}}" alt="{{thi.snome}}" class="ui small image tamanho-icone-valores">
-					</div>
-					<div class="content sobre-valores">
-						<h2>{{this.resumo}}</h2>
-					</div>
-					<div class="extra content {{#if this.possui_reconhecimentos}}possui-reconhecimento{{/if}}">
-						<span>
-							<i class="star icon"></i>
-							{{this.quantidade_de_reconhecimentos}} reconhecimento(s)
-						</span>
-					</div>
-				</div>
-			</div>
-			{{/each}}
+    
+    <div data-js="reconhecimentos" class="ui three column grid pilares">
+      {{#each this.pilares}}
+      <div class="column">
+        <div class="ui link card" data-pilar-id="{{this.id}}" data-js="exibir-reconhecimentos">
+          <div class="image">
+            {{this.nome}}
+          </div>
+          <div class="content sobre-pilares">
+            <h2>{{this.descricao}}</h2>
+          </div>
+          <div class="extra content {{#if this.possui_reconhecimentos}}possui-reconhecimento{{/if}}">
+            <span>
+              <i class="star icon"></i>
+              {{this.quantidade_de_reconhecimentos}} reconhecimento(s)
+            </span>
+          </div>
+        </div>
+      </div>
+      {{/each}}
+    </div>
+
+		<div data-js="reconhecimentos-historicos" class="ui three column grid pilares" style="display: none;">
 		</div>
+
+    <button type="button" class="ui labeled icon right floated cinza button" data-js="exibir-reconhecimentos-historicos">
+      <i class="history icon"></i>
+      Reconhecimentos anteriores
+    </button>
 	</div>
 </div>
 
 <style>
-.sobre-valores{
+.sobre-pilares{
 	height: 60px;
 }
-	.valores h2{
+	.pilares h2{
 		font-size: 16px;
     	color: #6A6A6A;
     	text-align: center;
 	}
 
-	.tamanho-icone-valores{
+	.tamanho-icone-pilares{
 		width: 150px !important;
 		margin: 8% auto;
 	}

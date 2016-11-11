@@ -1,113 +1,114 @@
-define([
-	'director',
-	'app/servicos/servicoDeAutenticacao'
+﻿define([
+  'director',
+  'app/servicos/servicoDeAutenticacao'
 ], function(Router, servicoDeAutenticacao) {
-	'use strict';
+  'use strict';
 
-	var router;
-	var roteador = {};
-	var _controllerAtivo;
+  var router;
+  var roteador = {};
+  var _controllerAtivo;
 
-	roteador.configurar = function() {
-		var rotas = {
-			'/login': [middlewareDeAutenticacao, middlewareDeTransicaoDeTela, middlewareDeToolbar, limparTela, login],
-			'/paginaInicial': [middlewareDeAutenticacao, middlewareDeTransicaoDeTela, middlewareDeToolbar, limparTela, paginaInicial],
-			'/estatisticas': [middlewareDeAutenticacao, middlewareDeTransicaoDeTela, middlewareDeToolbar, limparTela, estatisticas],
-			'/perfil/:colaboradorId': [middlewareDeAutenticacao, middlewareDeTransicaoDeTela, middlewareDeToolbar, limparTela, perfil],
-			'/reconhecimentos/:colaboradorId/:valorId': [middlewareDeAutenticacao, middlewareDeTransicaoDeTela, middlewareDeToolbar, limparTela, reconhecimentos]
-		};
+  roteador.configurar = function() {
+    var rotas = {
+      '/': [middlewareDeTransicaoDeTela, limparTela, login],
+      '/login': [middlewareDeAutenticacao, middlewareDeToolbar, middlewareDeTransicaoDeTela, limparTela, login],
+      '/paginaInicial': [middlewareDeAutenticacao, middlewareDeToolbar, middlewareDeTransicaoDeTela, limparTela, paginaInicial],
+      '/estatisticas': [middlewareDeAutenticacao, middlewareDeToolbar, middlewareDeTransicaoDeTela, limparTela, estatisticas],
+      '/perfil/:colaboradorId': [middlewareDeAutenticacao, middlewareDeToolbar, middlewareDeTransicaoDeTela, limparTela, perfil],
+      '/reconhecimentos/:colaboradorId/:valorId': [middlewareDeAutenticacao, middlewareDeToolbar, middlewareDeTransicaoDeTela, limparTela, reconhecimentos]
+    };
 
-		function limparTela() {
-			$('#conteudo').empty();
-		}
+    function limparTela() {
+      $('#conteudo').empty();
+    }
 
-		function login() {
-			require(['app/login/controller'], function(loginController) {
-				_controllerAtivo = loginController;
-				loginController.exibir();
-			});
-		}
+    function login() {
+      require(['app/login/controller'], function(loginController) {
+        _controllerAtivo = loginController;
+        loginController.exibir();
+      });
+    }
 
-		function paginaInicial() {
-			require(['app/paginaInicial/controller'], function(controller) {
-				_controllerAtivo = controller;
-				controller.exibir();
-			});
-		}
+    function paginaInicial() {
+      require(['app/paginaInicial/controller'], function(controller) {
+        _controllerAtivo = controller;
+        controller.exibir();
+      });
+    }
 
-		function estatisticas() {
-			require(['app/estatisticas/controller'], function(controller) {
-				_controllerAtivo = controller;
-				controller.exibir();
-			});
-		}
+    function estatisticas() {
+      require(['app/estatisticas/controller'], function(controller) {
+        _controllerAtivo = controller;
+        controller.exibir();
+      });
+    }
 
-		function perfil(colaboradorId) {
-			require(['app/perfil/controller'], function(controller) {
-				_controllerAtivo = controller;
-				controller.exibir(parseInt(colaboradorId));
-			});
-		}
+    function perfil(colaboradorId) {
+      require(['app/perfil/controller'], function(controller) {
+        _controllerAtivo = controller;
+        controller.exibir(parseInt(colaboradorId));
+      });
+    }
 
-		function reconhecimentos(colaboradorId, valorId) {
-			require(['app/reconhecimentos/controller'], function(controller) {
-				_controllerAtivo = controller;
-				controller.exibir(parseInt(colaboradorId), parseInt(valorId));
-			});
-		}
+    function reconhecimentos(colaboradorId, valorId) {
+      require(['app/reconhecimentos/controller'], function(controller) {
+        _controllerAtivo = controller;
+        controller.exibir(parseInt(colaboradorId), parseInt(valorId));
+      });
+    }
 
-		router = Router(rotas);
-		router.init();
-	};
+    router = Router(rotas);
+    router.init();
+  };
 
-	roteador.navegarPara = function(endereco) {
-		window.location = '#' + endereco;
-	};
+  roteador.navegarPara = function(endereco) {
+    window.location = '#' + endereco;
+  };
 
-	roteador.paginaAtual = function() {
-		var endereco = window.location.toString();
-		var posicaoDaRota = endereco.indexOf('#') + 1;
+  roteador.paginaAtual = function() {
+    var endereco = window.location.toString();
+    var posicaoDaRota = endereco.indexOf('#') + 1;
 
-		if (posicaoDaRota === 0)
-			return '';
+    if (posicaoDaRota === 0)
+      return '';
 
-		return endereco.substring(posicaoDaRota);
-	};
+    return endereco.substring(posicaoDaRota);
+  };
 
-	roteador.atualizar = function() {
-		var rotaAntiCache = roteador.paginaAtual() + '?' + new Date().getTime();
-		router.setRoute(rotaAntiCache);
-	};
+  roteador.atualizar = function() {
+    var rotaAntiCache = roteador.paginaAtual() + '?' + new Date().getTime();
+    router.setRoute(rotaAntiCache);
+  };
 
-	function middlewareDeAutenticacao() {
-		if (roteador.paginaAtual() === '/login' && !servicoDeAutenticacao.jaEstaAutenticado())
-			return true;
+  function middlewareDeAutenticacao() {
+    if (roteador.paginaAtual() === '/login' && !servicoDeAutenticacao.jaEstaAutenticado())
+      return true;
 
-		if (!servicoDeAutenticacao.jaEstaAutenticado()) {
-			window.location.href = '/';
-			return false;
-		}
+    if (!servicoDeAutenticacao.jaEstaAutenticado()) {
+      window.location.href = '/';
+      return false;
+    }
 
-		servicoDeAutenticacao.atualizarSessaoDeUsuario();
-	}
+    servicoDeAutenticacao.atualizarSessaoDeUsuario();
+  }
 
-	function middlewareDeTransicaoDeTela() {
-		if (_controllerAtivo)
-			_controllerAtivo.finalizar();
-	}
+  function middlewareDeTransicaoDeTela() {
+    if (_controllerAtivo)
+      _controllerAtivo.finalizar();
+  }
 
-	function middlewareDeToolbar() {
-		require(['app/toolbar/toolbar'], function(toolbar) {
-			if (servicoDeAutenticacao.jaEstaAutenticado() && roteador.paginaAtual() !== '/login') {
-				toolbar.exibir();
-				$('body').removeClass('body-login').addClass('body-app');
-			}
-			else {
-				toolbar.esconder();
-				$('body').removeClass('body-app').addClass('body-login');
-			}
-		});
-	}
+  function middlewareDeToolbar() {
+    require(['app/toolbar/toolbar'], function(toolbar) {
+      if (servicoDeAutenticacao.jaEstaAutenticado() && roteador.paginaAtual() !== '/login') {
+        toolbar.exibir();
+        $('body').removeClass('body-login').addClass('body-app');
+      }
+      else {
+        toolbar.esconder();
+        $('body').removeClass('body-app').addClass('body-login');
+      }
+    });
+  }
 
-	return roteador;
+  return roteador;
 });

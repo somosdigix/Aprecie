@@ -1,13 +1,15 @@
-define([
+﻿define([
 	'gerenciadorDeModulos',
-	'app/perfil/perfil'
-], function(gerenciadorDeModulos, perfil) {
+  'app/perfil/perfil',
+	'app/perfil/reconhecimentosHistoricos',
+], function(gerenciadorDeModulos, perfil, reconhecimentosHistoricos) {
 	'use strict';
 
 	var _self = {};
 
 	_self.exibir = function(colaboradorId) {
-		gerenciadorDeModulos.registrar('perfil', perfil);
+    gerenciadorDeModulos.registrar('perfil', perfil);
+		gerenciadorDeModulos.registrar('reconhecimentosHistoricos', reconhecimentosHistoricos);
 		gerenciadorDeModulos.iniciarTodos(colaboradorId);
 	};
 

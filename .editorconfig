@@ -1,0 +1,10 @@
+﻿root = true
+
+[*]
+charset = utf-8-bom
+end_of_line = lf
+insert_final_newline = true
+
+[*.{js,py,html}]
+indent_style = space
+indent_size = 2
