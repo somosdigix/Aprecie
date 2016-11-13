@@ -1,8 +1,9 @@
-﻿<h1>Meu perfil</h1>
-
+﻿
 <div class="conteudo perfil-colaborador">
 	<input data-js="alterar-foto" type="file" class="invisivel" />
 	<div class="conteudo">
+  <h1>Meu perfil</h1>
+
 		<input type="hidden" id="reconhecidoId" value="{{this.id}}" />
 		<div id="perfilColaborador">
 			<div data-js="foto" class="alterar-foto">
@@ -12,6 +13,10 @@
 			<div class="informacoes-colaborador">
 				<h2 class="nome-colaborador">{{this.nome}}</h2>
 			</div>
+      <button type="button" class="ui labeled icon right floated cinza button reconhecimentos-anteriores" data-js="exibir-reconhecimentos-historicos">
+      <i class="history icon"></i>
+      Reconhecimentos anteriores
+    </button>
 		</div>
     
     <ul class="pilares" data-js="reconhecimentos" >
@@ -43,10 +48,7 @@
 		<div data-js="reconhecimentos-historicos" class="ui three column grid pilares" style="display: none;">
 		</div>
 
-    <button type="button" class="ui labeled icon right floated cinza button reconhecimentos-anteriores" data-js="exibir-reconhecimentos-historicos">
-      <i class="history icon"></i>
-      Reconhecimentos anteriores
-    </button>
+    
 	</div>
 </div>
 
@@ -59,7 +61,7 @@
     list-style: none;
     display: inline-block;
     vertical-align: top;
-    width: 70%;
+    width: 67%;
     margin-left: 4%;
 
   }
@@ -75,7 +77,6 @@
     padding: 20px;
     background-color: #fff;
     border: 1px solid #e2e2e2;
-
   }
 
   .pilares .itens:hover{
@@ -83,7 +84,7 @@
   }
 
   .pilares .itens .descricao{
-    width: 67%;
+    width: 60%;
     display: inline-block;
     vertical-align: middle;
   }
@@ -102,7 +103,7 @@
 	}
 
   .pilares .itens .extra{
-    width: 28%;
+    width: 34%;
     display: inline-block;
     vertical-align: middle;
     margin-left: 4%;
@@ -123,7 +124,7 @@
       line-height: 15px;
       text-align: left;
       display: inline-block;
-          color: #6f7d95;
+      color: #6f7d95;
     }
 
     .pilares .itens .extra .texto .star{
