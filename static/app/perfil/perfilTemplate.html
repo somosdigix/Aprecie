@@ -1,4 +1,6 @@
-﻿<div class="conteudo perfil-colaborador">
+﻿<h1>Meu perfil</h1>
+
+<div class="conteudo perfil-colaborador">
 	<input data-js="alterar-foto" type="file" class="invisivel" />
 	<div class="conteudo">
 		<input type="hidden" id="reconhecidoId" value="{{this.id}}" />
@@ -11,7 +13,6 @@
 				<h2 class="nome-colaborador">{{this.nome}}</h2>
 			</div>
 		</div>
-		<br>
     
     <ul class="pilares" data-js="reconhecimentos" >
       {{#each this.pilares}}
@@ -56,18 +57,24 @@
 
   .pilares{
     list-style: none;
+    display: inline-block;
+    vertical-align: top;
+    width: 70%;
+    margin-left: 4%;
+
   }
 
   .pilares .itens{
     width: 100%;
     overflow: hidden;
-    border: 1px solid #dadfea;
     border-radius: 6px;
     -moz-border-radius: 6px;
     -webkit-border-radius: 6px;
     margin-bottom: 20px;
     cursor: pointer;
     padding: 20px;
+    background-color: #fff;
+    border: 1px solid #e2e2e2;
 
   }
 
