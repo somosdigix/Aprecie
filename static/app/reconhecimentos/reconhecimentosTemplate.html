@@ -11,8 +11,7 @@
 			<h2 class="nome-colaborador" data-js="voltar-ao-perfil">{{ this.nome_do_reconhecido }}</h2>
 		</div>
 	</div>
-	<br>
-	<div class="ui brown segment">
+	<div class="bloco-pilares">
 		<div class="ui grid">
 			<div class="three wide column">
 				{{this.nome_do_pilar}}
@@ -21,26 +20,28 @@
         <h3>{{this.descricao_do_pilar}}</h3>
 			</div>
 		</div>
-	</div>
 	
-	<div class="escrever-apreciacao">
-		<textarea class="escrever-publicacao" id="situacao" placeholder="Qual foi a situação que te levou a chegar até aqui para reconhecer essa pessoa?" maxlength="1000"></textarea>
-	</div>
-	
-	<div class="escrever-apreciacao">
-		<textarea class="escrever-publicacao" id="comportamento" placeholder="Qual foi o comportamento que você pôde observar?" maxlength="1000"></textarea>
-	</div>
+		
+		<div class="escrever-apreciacao">
+			<textarea class="escrever-publicacao" id="situacao" placeholder="Qual foi a situação que te levou a chegar até aqui para reconhecer essa pessoa?" maxlength="1000"></textarea>
+		</div>
+		
+		<div class="escrever-apreciacao">
+			<textarea class="escrever-publicacao" id="comportamento" placeholder="Qual foi o comportamento que você pôde observar?" maxlength="1000"></textarea>
+		</div>
 
-	<div class="escrever-apreciacao">
-		<textarea class="escrever-publicacao" id="impacto" placeholder="Finalize agora descrevendo o impacto que esta ação gerou, no seu ponto de vista." maxlength="1000"></textarea>
-	</div>
-	
-	<br>
+		<div class="escrever-apreciacao">
+			<textarea class="escrever-publicacao" id="impacto" placeholder="Finalize agora descrevendo o impacto que esta ação gerou, no seu ponto de vista." maxlength="1000"></textarea>
+		</div>
+		
+		<br>
 
-	<button type="button" class="ui labeled icon right floated orange button button" data-js="reconhecer" style="display: none;">
-		<i class="star icon"></i>
-		Apreciar
-	</button>
+		<button type="button" class="ui labeled icon right floated orange button button" data-js="reconhecer" style="display: none;">
+			<i class="star icon"></i>
+			Apreciar
+		</button>
+
+	</div>
 
 	<br>
 	<br>
@@ -49,7 +50,7 @@
 	<h2>Reconhecimentos</h2>
 	
 	{{#each this.reconhecimentos}}
-	<section class="feed-reconhecimentos">
+	<section class="feed-reconhecimentos caixa-feed">
 		<div class="bloco-reconhecimento">	
 			<img class="img-reconhecedor" src="{{ foto this.reconhecedor__id usar_miniatura=true}}" />
 
@@ -97,6 +98,16 @@
 
 
 <style>
+
+ .bloco-pilares{
+ 	background-color: #fff;
+    display: inline-block;
+    vertical-align: top;
+    width: 67%;
+    margin-left: 4%;
+    padding: 20px;
+  }
+
 	.nome-colaborador{
 		cursor: pointer;
 	}
