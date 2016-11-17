@@ -1,0 +1,39 @@
+{
+  "name": "aprecie.me",
+  "version": "1.0.0",
+  "description": "Mini rede-social para estímulo de reconhecimentos baseados nos valores da DígithoBrasil.",
+  "main": "app.js",
+  "scripts": {
+    "build": "node ./node_modules/rollup/bin/rollup -c",
+    "build:watch": "node ./node_modules/rollup/bin/rollup -c -w",
+    "browsersync": "node node_modules/browser-sync/bin/browser-sync.js start --server --files '**/*.html, dist/**'",
+    "dev": "node node_modules/npm-run-all/bin/npm-run-all/index.js --parallel build:watch browsersync",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DigithoBrasil/Aprecie.git"
+  },
+  "author": "DígithoBrasil",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DigithoBrasil/Aprecie/issues"
+  },
+  "homepage": "https://github.com/DigithoBrasil/Aprecie#readme",
+  "devDependencies": {
+    "browser-sync": "^2.17.5",
+    "cssnano": "^3.8.0",
+    "debug": "^2.3.0",
+    "npm-run-all": "^3.1.1",
+    "postcss-cssnext": "^2.8.0",
+    "postcss-nested": "^1.0.0",
+    "postcss-simple-vars": "^3.0.0",
+    "rollup": "^0.36.3",
+    "rollup-plugin-commonjs": "^5.0.5",
+    "rollup-plugin-eslint": "^3.0.0",
+    "rollup-plugin-node-resolve": "^2.0.0",
+    "rollup-plugin-postcss": "^0.2.0",
+    "rollup-plugin-uglify": "^1.0.1",
+    "rollup-watch": "^2.5.0"
+  }
+}
