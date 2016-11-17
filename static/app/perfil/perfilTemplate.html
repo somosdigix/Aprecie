@@ -41,35 +41,75 @@
         </button>
     </div>   
   </div>
-  
-  <ul class="pilares" data-js="reconhecimentos" >
-    {{#each this.pilares}}
-    <li class="itens">
-      <div data-pilar-id="{{this.id}}" data-js="exibir-reconhecimentos">
-        <div class="descricao">      
-          <div class="titulo">
-            {{this.nome}}
+  <div class="bloco-apreciacoes">  
+    <ul class="pilares" data-js="reconhecimentos" >
+      {{#each this.pilares}}
+      <li class="itens">
+        <div data-pilar-id="{{this.id}}" data-js="exibir-reconhecimentos">
+          <div class="descricao">      
+            <div class="titulo">
+              {{this.nome}}
+            </div>
+            <div class="content sobre-pilares">
+              <h2>{{this.descricao}}</h2>
+            </div>
           </div>
-          <div class="content sobre-pilares">
-            <h2>{{this.descricao}}</h2>
-          </div>
-        </div>
-        <div class="extra content {{#if this.possui_reconhecimentos}}possui-reconhecimento{{/if}}">
-          <span>
-            <span class="quantidade-reconhecimentos">{{this.quantidade_de_reconhecimentos}} 
+          <div class="extra content {{#if this.possui_reconhecimentos}}possui-reconhecimento{{/if}}">
+            <span>
+              <span class="quantidade-reconhecimentos">{{this.quantidade_de_reconhecimentos}} 
+              </span>
+             <span class="texto">
+              <i class="star icon"></i>
+              reconhecimento(s)</span>
             </span>
-           <span class="texto">
-            <i class="star icon"></i>
-            reconhecimento(s)</span>
-          </span>
+          </div>
         </div>
-      </div>
-    </li>
-    {{/each}}
-  </ul>
+      </li>
+      {{/each}}
+    </ul>
 
-		<div data-js="reconhecimentos-historicos" class="ui three column grid pilares" style="display: none;">
-		</div>    
+    <div class="apreciacoes-recebidas">
+      <h2>Minhas apreciações</h2>
+      {{#each this.reconhecimentos}}
+      <section class="feed-reconhecimentos caixa-feed">
+        <div class="bloco-reconhecimento">  
+          <img class="img-reconhecedor" src="{{ foto this.reconhecedor__id usar_miniatura=true}}" />
+
+          <div class="texto-reconhecimento">
+            <strong data-id="1" data-js="ir-ao-perfil" class="apreciador">{{ this.reconhecedor__nome }}</strong>
+            <div class="data-reconhecimento">{{ emDataLegivel this.data }}</div>
+
+            <p>
+              {{#if this.feedback__situacao}}
+                <div>
+                  <b>Situação:</b>
+                  <span>{{this.feedback__situacao}}</span>
+                </div>
+                <div>
+                  <b>Comportamento:</b>
+                  <span>{{this.feedback__comportamento}}</span>
+                </div>
+                <div>
+                  <b>Impacto:</b>
+                  <span>{{this.feedback__impacto}}</span>
+                </div>
+              {{else}}
+                <p>
+                  {{this.feedback__impacto}}
+                </p>
+              {{/if}}
+            </p>
+          </div>  
+        </div>  
+      </section>
+      {{else}}
+      <div class="ui yellow message">
+        Ainda não há reconhecimentos para <strong>{{ this.nome_do_valor }}</strong> :(
+      </div>
+      {{/each}}
+    </div>
+  </div>
+	<div data-js="reconhecimentos-historicos" class="ui three column grid pilares" style="display: none;"></div>    
 </div>
 
 <style>
@@ -77,7 +117,8 @@
 	height: 60px;
 }
 
-  .pilares{
+
+  .bloco-apreciacoes{
     list-style: none;
     display: inline-block;
     vertical-align: top;
@@ -215,6 +256,10 @@ button.reconhecimentos-anteriores:hover{
   height: 100px;
   outline: none;
   border-radius: 5px;
+}
+
+.apreciacoes-recebidas{
+  margin:2% 2%;
 }
 
 </style>
