@@ -1,13 +1,18 @@
-<div class="ui six wide column top ">
+<div class="bloco-mensagem">
     <img src="static/img/logo.png" alt="Aprecie" />
+    <div class="frase">
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vitae in quidem voluptatum cupiditate, tenetur numquam rerum dicta consequatur facere eius fuga pariatur iste laudantium. Sapiente architecto, quibusdam cupiditate quisquam libero.
+    </div>
+</div>
 
-	<form class="ui form segment">
-		<div class="ui campos-login">
+<div class="bloco-login">
+	<form class="formulario">
+		<div class="campos-login">
 			<input id="cpf" type="text" required>
       <label class="label" for="">Me diga, qual é o seu CPF?</label>
 		</div>
 
-		<div class="ui campos-login">
+		<div class="campos-login">
 			<input class="" id="dataDeNascimento" type="text" required>
 			<label class="label" for="">e a data do seu nascimento?</label>
 		</div>
@@ -19,12 +24,35 @@
 </div>
 
 <style>
+  .bloco-mensagem{
+    width: 50%;
+  }  
+
+  .bloco-mensagem .frase{
+    color: #fff;
+  }  
+  
+  .bloco-login{
+    width: 27%;
+    margin-left: 8%;    
+
+  }
+  
+  .formulario{
+    margin: 1rem 0;
+    padding: 1em;
+    border-radius: .28571429rem;
+    border: 1px solid rgba(34,36,38,.15);
+  }
+
+  
   .campos-login {
     background-color: #fff;
     overflow: hidden;
     position: relative;
-    margin: 0 0;
-    padding: 20px 0;
+    margin: 20px 0;
+    padding: 14px 20px 10px 20px;
+    border-radius: 6px;
   }
 
   input {
@@ -40,9 +68,9 @@
     color: #000;
     outline: none;
     display: block !important;
-    border-bottom: 2px solid #000 !important;
     border-radius: 0 !important;
     min-height: 35px;
+    margin-top: 6px;
   }
 
 
@@ -60,7 +88,7 @@
   }
 
   input:focus ~ label, input:valid ~ label {
-    top: -18px;
+    top: -12px;
     font-size: 13px;
     color: #000;
     padding: 10px 0;
