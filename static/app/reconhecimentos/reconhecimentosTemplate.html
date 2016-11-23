@@ -1,4 +1,4 @@
-﻿<div class="conteudo reconhecer">
+﻿<div class="conteudo perfil-colaborador">
 	<div id="perfilColaborador">
 		<input id="reconhecidoId" type="hidden" value="{{ this.id_do_reconhecido }}" />
 		<input id="pilarId" type="hidden" value="{{ this.id_do_pilar }}" />
@@ -10,82 +10,93 @@
 		<div class="informacoes-colaborador">
 			<h2 class="nome-colaborador" data-js="voltar-ao-perfil">{{ this.nome_do_reconhecido }}</h2>
 		</div>
+
+    <button type="button" class="reconhecimentos-anteriores" data-js="exibir-reconhecimentos-historicos">
+      <i class="history icon"></i>
+      Reconhecimentos anteriores
+    </button>
+
+     <div class="escrever-apreciacao">
+          <h2>Me aprecie</h2>
+          <div class="selecione-o-pilar">
+             <div class="campos">
+              <input id="colaborarSempre" type="radio">
+              <label for="colaborarSempre">Colaborar sempre</label> 
+            </div>
+             <div class="campos">
+              <input id="fazerDiferente" type="radio">
+              <label for="fazerDiferente">Fazer diferente</label> 
+            </div>
+            <div class="campos">
+              <input id="focarNasPessoas" type="radio">
+              <label for="focarNasPessoas">Focar nas pessoas</label> 
+            </div>
+             <div class="campos">
+              <input id="planejar" type="radio"> 
+              <label for="planejar">Planejar, entregar e aprender</label> 
+            </div>
+          </div>
+          <textarea id="situacao" placeholder="Qual foi a situação que te levou a chegar até aqui para reconhecer essa pessoa?" maxlength="1000"></textarea>         
+          <textarea id="comportamento" placeholder="Qual foi o comportamento que você pôde observar?" maxlength="1000"></textarea>
+        
+          <textarea id="impacto" placeholder="Finalize agora descrevendo o impacto que esta ação gerou, no seu ponto de vista." maxlength="1000"></textarea>
+
+          <button type="button" class="ui labeled icon right floated orange button button" data-js="reconhecer" style="">
+            <i class="star icon"></i>
+            Apreciar
+          </button>
+      </div>  
 	</div>
-	<div class="bloco-pilares">
-		<div class="ui grid">
-			<div class="three wide column">
+	<div class="bloco-apreciacoes visualizar-apreciacoes-por-pilares">
+		<div class="nome-pilar">
 				{{this.nome_do_pilar}}
-			</div>
-			<div class="twelve wide column descricao-valores">
         <h3>{{this.descricao_do_pilar}}</h3>
-			</div>
-		</div>
-	
-		
-		<div class="escrever-apreciacao">
-			<textarea class="escrever-publicacao" id="situacao" placeholder="Qual foi a situação que te levou a chegar até aqui para reconhecer essa pessoa?" maxlength="1000"></textarea>
-		</div>
-		
-		<div class="escrever-apreciacao">
-			<textarea class="escrever-publicacao" id="comportamento" placeholder="Qual foi o comportamento que você pôde observar?" maxlength="1000"></textarea>
 		</div>
 
-		<div class="escrever-apreciacao">
-			<textarea class="escrever-publicacao" id="impacto" placeholder="Finalize agora descrevendo o impacto que esta ação gerou, no seu ponto de vista." maxlength="1000"></textarea>
-		</div>
-		
-		<br>
+    <h2>Reconhecimentos</h2>
+      
+    {{#each this.reconhecimentos}}
+    <section class="feed-reconhecimentos caixa-feed">
+      <div class="bloco-reconhecimento">  
+        <img class="img-reconhecedor" src="{{ foto this.reconhecedor__id usar_miniatura=true}}" />
 
-		<button type="button" class="ui labeled icon right floated orange button button" data-js="reconhecer" style="display: none;">
-			<i class="star icon"></i>
-			Apreciar
-		</button>
+        <div class="texto-reconhecimento">
+          <strong data-id="1" data-js="ir-ao-perfil" class="apreciador">{{ this.reconhecedor__nome }}</strong>
+          <div class="data-reconhecimento">{{ emDataLegivel this.data }}</div>
+
+          <p>
+            {{#if this.feedback__situacao}}
+              <div>
+                <b>Situação:</b>
+                <span>{{this.feedback__situacao}}</span>
+              </div>
+              <div>
+                <b>Comportamento:</b>
+                <span>{{this.feedback__comportamento}}</span>
+              </div>
+              <div>
+                <b>Impacto:</b>
+                <span>{{this.feedback__impacto}}</span>
+              </div>
+            {{else}}
+              <p>
+                {{this.feedback__impacto}}
+              </p>
+            {{/if}}
+          </p>
+        </div>  
+      </div>  
+    </section>
+    {{else}}
+    <div class="ui yellow message">
+      Ainda não há apreciações para <strong>{{ this.nome_do_valor }}</strong> :(
+    </div>
+    {{/each}}
 
 	</div>
 
-	<br>
-	<br>
-	<br>
 	<div class="ui divider"></div>
-	<h2>Reconhecimentos</h2>
 	
-	{{#each this.reconhecimentos}}
-	<section class="feed-reconhecimentos caixa-feed">
-		<div class="bloco-reconhecimento">	
-			<img class="img-reconhecedor" src="{{ foto this.reconhecedor__id usar_miniatura=true}}" />
-
-			<div class="texto-reconhecimento">
-				<strong data-id="1" data-js="ir-ao-perfil" class="apreciador">{{ this.reconhecedor__nome }}</strong>
-				<div class="data-reconhecimento">{{ emDataLegivel this.data }}</div>
-
-				<p>
-					{{#if this.feedback__situacao}}
-						<div>
-							<b>Situação:</b>
-							<span>{{this.feedback__situacao}}</span>
-						</div>
-						<div>
-							<b>Comportamento:</b>
-							<span>{{this.feedback__comportamento}}</span>
-						</div>
-						<div>
-							<b>Impacto:</b>
-							<span>{{this.feedback__impacto}}</span>
-						</div>
-					{{else}}
-						<p>
-							{{this.feedback__impacto}}
-						</p>
-					{{/if}}
-				</p>
-			</div>	
-		</div>	
-	</section>
-	{{else}}
-	<div class="ui yellow message">
-		Ainda não há apreciações para <strong>{{ this.nome_do_valor }}</strong> :(
-	</div>
-	{{/each}}
 	
 	<button type="button" class="ui labeled icon right floated cinza button" data-js="voltar-ao-perfil">
 		<i class="left arrow icon"></i>
@@ -98,9 +109,74 @@
 
 
 <style>
+  button.reconhecimentos-anteriores{
+    margin: 29px 0;
+    cursor: pointer;
+    min-height: 1em;
+    outline: none;
+    border: none;
+    background: #E0E1E2;
+    color: rgba(0,0,0,.6);
+    padding: .78571429em 1.5em;
+    font-weight: 700;
+    line-height: 1em;
+    font-style: normal;
+    text-align: center;
+    border-radius: .28571429rem;
+    box-shadow: 0 0 0 1px transparent inset,0 0 0 0 rgba(34,36,38,.15) inset;
+  }
+
+  button.reconhecimentos-anteriores:hover{
+    background: #c8cbce;
+  }
+
+
+  .escrever-apreciacao{
+    text-align: left;
+  }
+  .escrever-apreciacao h2{
+    font-size: 18px;
+  }
+
+  .escrever-apreciacao .selecione-o-pilar{
+    text-align: left;
+  }
+
+  .escrever-apreciacao .selecione-o-pilar .campos{
+      color: #616161;
+      cursor: pointer;    
+      padding: 3px 5px;
+      text-align: center;
+      border-radius: 25px;
+      margin: 10px 0;
+      border: 1px solid #0BC0D3;
+  }
+
+  .escrever-apreciacao .selecione-o-pilar .campos:hover{
+      background-color:  #0BC0D3;
+      color: #fff;
+  }
+
+  .escrever-apreciacao .selecione-o-pilar .campos input{
+      display: none;
+  }
+
+  .escrever-apreciacao textarea{
+    width: 100%;
+    margin: 13px 0 0 0;
+    padding: 12px;
+    height: 100px;
+    outline: none;
+    border-radius: 5px;
+  }
+
+  .apreciacoes-recebidas{
+    margin:2% 2%;
+  }
+
 
  .bloco-pilares{
- 	background-color: #fff;
+  background-color: #fff;
     display: inline-block;
     vertical-align: top;
     width: 67%;
@@ -108,19 +184,32 @@
     padding: 20px;
   }
 
-	.nome-colaborador{
-		cursor: pointer;
-	}
+  .nome-colaborador{
+    cursor: pointer;
+  }
 
-	.descricao-valores h3{
-		line-height: 22px;
-	    font-size: 15px;
-	    margin: 12px 0;
-	}
-	.data-reconhecimento{
-		font-size: 12px;
-		font-family: arial;
-	}
+  .descricao-valores h3{
+    line-height: 22px;
+      font-size: 15px;
+      margin: 12px 0;
+  }
+  .data-reconhecimento{
+    font-size: 12px;
+    font-family: arial;
+  }
 
   
+
+   .bloco-apreciacoes{
+      list-style: none;
+      display: inline-block;
+      vertical-align: top;
+      width: 64%;
+      margin-left: 2%;
+    }
+
+    .visualizar-apreciacoes-por-pilares{
+      background-color: #fff;
+      padding: 30px;
+    }
 </style>

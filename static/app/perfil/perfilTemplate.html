@@ -17,17 +17,21 @@
     <div class="escrever-apreciacao">
         <h2>Me aprecie</h2>
         <div class="selecione-o-pilar">
+           <div class="campos">
+            <input id="colaborarSempre" type="radio">
+            <label for="colaborarSempre">Colaborar sempre</label> 
+          </div>
+           <div class="campos">
+            <input id="fazerDiferente" type="radio">
+            <label for="fazerDiferente">Fazer diferente</label> 
+          </div>
           <div class="campos">
-            <input type="radio"> <label for="">Foco nas pessoas</label> 
+            <input id="focarNasPessoas" type="radio">
+            <label for="focarNasPessoas">Focar nas pessoas</label> 
           </div>
            <div class="campos">
-            <input type="radio"> <label for="">Foco nas pessoas</label> 
-          </div>
-           <div class="campos">
-            <input type="radio"> <label for="">Foco nas pessoas</label> 
-          </div>
-           <div class="campos">
-            <input type="radio"> <label for="">Foco nas pessoas</label> 
+            <input id="planejar" type="radio"> 
+            <label for="planejar">Planejar, entregar e aprender</label> 
           </div>
         </div>
         <textarea id="situacao" placeholder="Qual foi a situação que te levou a chegar até aqui para reconhecer essa pessoa?" maxlength="1000"></textarea>         
@@ -249,6 +253,26 @@ button.reconhecimentos-anteriores:hover{
 .escrever-apreciacao .selecione-o-pilar{
   text-align: left;
 }
+
+.escrever-apreciacao .selecione-o-pilar .campos{
+    color: #616161;
+    cursor: pointer;    
+    padding: 3px 5px;
+    text-align: center;
+    border-radius: 25px;
+    margin: 10px 0;
+    border: 1px solid #0BC0D3;
+}
+
+.escrever-apreciacao .selecione-o-pilar .campos:hover{
+    background-color:  #0BC0D3;
+    color: #fff;
+}
+
+.escrever-apreciacao .selecione-o-pilar .campos input{
+    display: none;
+}
+
 .escrever-apreciacao textarea{
   width: 100%;
   margin: 13px 0 0 0;
