@@ -15,7 +15,6 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.contenttypes',
     'django.contrib.staticfiles',
-    'corsheaders',
     'Login',
     'Reconhecimentos',
     'compressor'
@@ -25,8 +24,6 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
-    'django.middleware.common.CommonMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
@@ -116,7 +113,8 @@ if ON_OPENSHIFT:
     COMPRESS_ROOT = STATIC_ROOT
     
 if not ON_OPENSHIFT:
-    INSTALLED_APPS = ('django_gulp',) + INSTALLED_APPS
+  INSTALLED_APPS = ('django_gulp', 'corsheaders',) + INSTALLED_APPS
+  MIDDLEWARE_CLASSES = ('corsheaders.middleware.CorsMiddleware',) + MIDDLEWARE_CLASSES
 
 STATICFILES_FINDERS = (
     "django.contrib.staticfiles.finders.FileSystemFinder",
