@@ -1,0 +1,53 @@
+<div class="conteudo feed-principal">
+  <h2>Últimas apreciações</h2>
+
+  <!-- ko if: reconhecimentos.length -->
+  <section class="feed-reconhecimentos" data-bind="foreach: reconhecimentos">
+    <div class="caixa-feed">
+      <div class="reconhecido">
+        <img class="img-reconhecido" alt="" />
+        <div class="sobre-reconhecido">
+          <strong>
+            <a class="nome cursor-pointer" data-bind="attr: { href: `#/perfil/${id_do_reconhecido}` }, text: `${nome_do_reconhecido} foi reconhecido em ${pilar}`"></a>
+          </strong>
+          <div class="data" data-bind="text: `em ${data}`"></div>
+        </div>
+      </div>
+      <div class="bloco-reconhecimento">
+        <img class="img-reconhecedor" alt="" />
+        <div class="texto-reconhecimento">
+          <strong>
+            <a class="apreciador cursor-pointer" data-bind="attr: { href: `#/perfil/${id_do_reconhecedor}` }, text: `${nome_do_reconhecedor}`"></a>
+          </strong>
+            <!-- ko if: situacao -->
+            <div>
+              <b>Situação:</b>
+              <span data-bind="text: situacao"></span>
+            </div>
+            <div>
+              <b>Comportamento:</b>
+              <span data-bind="text: comportamento"></span>
+            </div>
+            <div>
+              <b>Impacto:</b>
+              <span data-bind="text: impacto"></span>
+            </div>
+            <!-- /ko -->
+
+            <!-- ko ifnot: situacao -->
+            <p data-bind="text: impacto"></p>
+            <!-- /ko -->
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- /ko -->
+
+  <!-- ko ifnot: reconhecimentos.length -->
+  <article>
+    <p>
+      Não houveram reconhecimentos até o momento.
+    </p>
+  </article>
+  <!-- /ko -->  
+</div>

@@ -1,15 +1,25 @@
-import './styles/index.css';
+import './styles/estilo.css';
+import './styles/perfil.css';
+import Roteador from './roteador';
+import './errors/violacaoDeRegra';
 
-import debug from 'debug';
-const log = debug('app:log');
+Roteador.configurar();
 
-debug.enable('*');
-log('Log ok');
+// TODO: Criar um configurador de funções globais
+localStorage.debug = '';
+NodeList.prototype.forEach = Array.prototype.forEach;
 
-class Animal {
-  constructor() {
-    this.name = 'asd';
+Object.defineProperty(String.prototype, 'removerMascara', {
+  enumerable: false,
+  value: function () {
+    return this.replace(/-/g, '').replace(/\./g, '').replace(/_/g, '');
   }
-}
+});
 
-new Animal();
+window.onerror = function(mensagem, fonte, linha, coluna, erro) {
+  if (erro.constructor.name !== 'ViolacaoDeRegra' &&
+    erro.constructor.name !== 'ErroInesperado')
+    return;
+
+  alert(erro.message);
+};

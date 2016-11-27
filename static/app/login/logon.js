@@ -1,4 +1,4 @@
-define([
+﻿define([
 	'text!app/login/loginTemplate.html'
 ], function(loginTemplate) {
 	'use strict';

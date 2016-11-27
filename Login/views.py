@@ -1,4 +1,4 @@
-from Aprecie.base import ExcecaoDeDominio
+﻿from Aprecie.base import ExcecaoDeDominio
 from datetime import datetime
 from Login.models import Colaborador
 from django.http import JsonResponse, HttpResponse

@@ -1,10 +1,49 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
-  <title></title>
+  <title>Aprecie.me</title>
+
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,  height=device-height, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <style>
+    .body {
+      background-color: #2C006A;
+    }
+
+    #conteudo{
+      padding: 0 6%;
+      height: 100%;
+      min-height: 100%;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-align-items: center;
+      align-items: center;
+    }
+
+    .growl {
+        max-width: 200px;
+        padding: 15px 22px;
+        border-radius: 10px;
+        margin-top: 23px;
+        margin-right: 32px;
+        color: #fff;
+    }
+
+    .invisivel {
+      display: none;
+    }
+  </style>
+
 </head>
-<body>
-  <h2>Title</h2>
-  <script type="text/javascript" src="dist/app.dist.js"></script>
+<body class="body-app">
+  <div data-js="carregando">
+    <div class="invisivel">Carregando, segura a onda ai.</div>
+  </div>
+
+  <main id="conteudo" data-js="conteudo"></main>
+
+  <div data-js="growl" class="growl invisivel"><span></span></div>
+
+  <script src="dist/app.dist.js"></script>
 </body>
 </html>

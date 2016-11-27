@@ -1,10 +1,9 @@
-var gulp = require('gulp');
+﻿var gulp = require('gulp');
 var browserSync = require('browser-sync').create();
 var sourcemaps = require('gulp-sourcemaps');
 var sass = require('gulp-sass');
 
 gulp.task('serve', ['sass'], function() {
-	//
 	browserSync.init({
 		proxy: 'localhost:8000',
 		notify: false

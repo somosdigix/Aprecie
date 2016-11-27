@@ -1,7 +1,7 @@
 ﻿import eslint from 'rollup-plugin-eslint';
 import resolve from 'rollup-plugin-node-resolve';
 import commonjs from 'rollup-plugin-commonjs';
-import uglify from 'rollup-plugin-uglify';
+import string from 'rollup-plugin-string';
 
 import postcss from 'rollup-plugin-postcss';
 import simplevars from 'postcss-simple-vars';
@@ -35,10 +35,14 @@ export default {
 
     eslint({
       exclude: [
-        './styles/*.css'
+        './styles/*.css',
+        './**/*.html'
       ]
     }),
 
-    uglify()
+    string({
+      include: '**/*.html',
+      exclude: ['**/index.html']
+    })
   ]
 };

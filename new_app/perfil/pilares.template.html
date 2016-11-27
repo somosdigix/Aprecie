@@ -1,0 +1,128 @@
+<div class="bloco-apreciacoes">
+  <ul class="pilares" data-bind="foreach: pilares">
+    <li class="itens">
+      <div data-pilar-id="1">
+        <div class="descricao">      
+          <div class="titulo" data-bind="text: nome"></div>
+          <div class="content sobre-pilares">
+            <h2 data-bind="text: descricao"></h2>
+          </div>
+        </div>
+        <div class="extra content possui-reconhecimento">
+          <span>
+            <span class="quantidade-reconhecimentos" data-bind="text: quantidade_de_reconhecimentos"></span>
+           <span class="texto">
+            <i class="star icon"></i>
+            reconhecimento(s)</span>
+          </span>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>
+
+<style>
+  button.reconhecimentos-anteriores{
+    margin: 29px 0;
+    cursor: pointer;
+    min-height: 1em;
+    outline: none;
+    border: none;
+    background: #E0E1E2;
+    color: rgba(0,0,0,.6);
+    padding: .78571429em 1.5em;
+    font-weight: 700;
+    line-height: 1em;
+    font-style: normal;
+    text-align: center;
+    border-radius: .28571429rem;
+    box-shadow: 0 0 0 1px transparent inset,0 0 0 0 rgba(34,36,38,.15) inset;
+  }
+
+  button.reconhecimentos-anteriores:hover{
+    background: #c8cbce;
+  }
+
+
+  .escrever-apreciacao{
+    text-align: left;
+  }
+  .escrever-apreciacao h2{
+    font-size: 18px;
+  }
+
+  .escrever-apreciacao .selecione-o-pilar{
+    text-align: left;
+  }
+
+  .escrever-apreciacao .selecione-o-pilar .campos{
+      color: #616161;
+      cursor: pointer;    
+      padding: 3px 5px;
+      text-align: center;
+      border-radius: 25px;
+      margin: 10px 0;
+      border: 1px solid #0BC0D3;
+  }
+
+  .escrever-apreciacao .selecione-o-pilar .campos:hover{
+      background-color:  #0BC0D3;
+      color: #fff;
+  }
+
+  .escrever-apreciacao .selecione-o-pilar .campos input{
+      display: none;
+  }
+
+  .escrever-apreciacao textarea{
+    width: 100%;
+    margin: 13px 0 0 0;
+    padding: 12px;
+    height: 100px;
+    outline: none;
+    border-radius: 5px;
+  }
+
+  .apreciacoes-recebidas{
+    margin:2% 2%;
+  }
+
+
+ .bloco-pilares{
+  background-color: #fff;
+    display: inline-block;
+    vertical-align: top;
+    width: 67%;
+    margin-left: 4%;
+    padding: 20px;
+  }
+
+  .nome-colaborador{
+    cursor: pointer;
+  }
+
+  .descricao-valores h3{
+    line-height: 22px;
+      font-size: 15px;
+      margin: 12px 0;
+  }
+  .data-reconhecimento{
+    font-size: 12px;
+    font-family: arial;
+  }
+
+  
+
+   .bloco-apreciacoes{
+      list-style: none;
+      display: inline-block;
+      vertical-align: top;
+      width: 64%;
+      margin-left: 2%;
+    }
+
+    .visualizar-apreciacoes-por-pilares{
+      background-color: #fff;
+      padding: 30px;
+    }
+</style>

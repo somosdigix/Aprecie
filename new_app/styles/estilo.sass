@@ -1,0 +1,505 @@
+﻿@import _mixins
+
+*
+	margin: 0
+	padding: 0
+
+html, body, #conteudo
+	height: 98% !important
+
+body
+	font-family: $font-padrao
+
+
+img
+	max-width: 100%
+
+p
+	font-size: 1rem
+
+
+.growl
+	max-width: 200px
+	padding: 15px 55px
+	border-radius: 10px
+	margin-top: 23px
+	margin-right: 32px
+
+	span
+		color: #fff
+
+
+.logoInterna
+	background-color: $amarelo-secundario
+	vertical-align: top
+	display: inline-block
+	width: 10%
+	cursor: pointer
+	height: 64px         
+	display: block
+
+.brancos
+	color: white
+
+
+.caixa-feed
+	background-color: #fff
+	border: 1px solid #e2e2e2
+	padding: 16px
+	border-radius: 6px
+
+.fixo
+	position: fixed
+	z-index: 99999
+
+.alinhado-ao-topo
+	top: 0
+	right: 0
+
+.fundo-verde
+	background-color: green
+
+.fundo-vermelho
+	background-color: #dc0028
+
+
+.body-app
+	background-color: #f5f5f5
+
+.invisivel
+	display: none
+
+.reconhecer
+	max-width: 980px !important
+
+	.escrever-apreciacao
+		margin-top: 45px
+		border: 1px solid #E2E1E1
+		padding: 12px 15px
+		background-color: #FDF3DF
+
+		textarea.escrever-publicacao
+			width: 100%
+			border: none
+			background: transparent
+			outline: none	
+			font-size: 17px;
+			font-family: $font-padrao
+			height: 65px
+
+		::-webkit-input-placeholder
+			color: #8F8F8F	
+			line-height: 25px
+
+	button, .botao-apreciar
+		margin: 13px 0
+		background-color: $rosa-secundario
+		font-size: 1rem
+		font-weight: bold
+		text-transform: uppercase
+		color: white
+		height: 42px
+		+border-radius(3px)
+		+box-shadow(1px, 1px, 1px, rgba(28, 18, 16, 0.75))
+		border: none
+		outline: none
+		
+		&:hover
+			background-color: $rosa-terciario
+	
+	.texto-reconhecimento
+		width: 82%
+
+		label
+			margin: 10px 0 0
+			display: block
+
+
+			#justificativa-valor
+				background-color: transparent
+				outline: none
+				border: none
+				width: 100%
+
+.toolbar
+	background-color: $amarelo-secundario
+	padding: 8px 77px
+	width: 91%
+	margin-left: 175px
+	+box-sizing
+
+	.busca
+		width: 50%
+		+displayInlineBlock
+
+		input
+			background-color: rgba(255, 230, 171, 0.8)
+			width: 100%
+			color: rgb(173, 121, 13)
+			font-size: 1.2rem
+			padding: 0.5em
+			border-radius: 3px
+			+box-sizing
+
+		#colaborador::-webkit-input-placeholder
+			+placeholderInputColaborador
+
+		#colaborador:-moz-placeholder
+			+placeholderInputColaborador
+
+		#colaborador::-moz-placeholder
+			+placeholderInputColaborador
+
+		#colaborador:-ms-input-placeholder
+			+placeholderInputColaborador
+
+	#linksToolbar
+		width: 31%
+		+displayInlineBlock
+		.menus
+			&:focus
+				display: block
+			.menu-responsivo
+				display: none
+			.meuPerfil, .sair
+				+displayInlineBlock
+			.meuPerfil
+				cursor: pointer
+				width: 80%
+				text-align: right
+				img
+					+displayInlineBlock
+					+avatarPequeno
+				span
+					margin: 0.8em 0.3em
+					display: inline-block
+					color: white
+			.sair
+				width: 5%
+				cursor: pointer
+				color: white
+				margin: 0.8em 0.3em
+
+
+.conteudo
+	+box-sizing
+	width: 100%
+	max-width: 970px
+	margin: 0 auto
+	margin-top: 57px 
+
+.feed-principal
+	
+	h2
+		margin: 30px 0
+		font-size: 30px
+
+	.por-data
+		color: #fff		
+		text-align: center
+		display: inline-block
+		margin: 15px 0 0 0
+		
+		.dia
+			background-color: #e6ae3a
+			padding: 4px 38px
+			border-radius: 15px
+		span
+			height: 48px
+			width: 1px
+			background-color: rgb(228, 228, 228)
+			display: inherit
+
+
+.feed-reconhecimentos
+	margin: 2em 0
+	
+	.reconhecido
+		width: 100%
+		border-bottom: 1px solid #f1f1f1
+		padding-bottom: 16px
+
+		.img-reconhecido
+			+avatarPequeno
+			+border-radius(143px)
+			+displayInlineBlock
+
+		.sobre-reconhecido
+			+displayInlineBlock
+			margin: 3px 11px
+			font-size: 16px
+
+		.data
+			font-size: 15px		
+	
+	.bloco-reconhecimento
+		padding: 10px
+		margin: 12px 0 0
+		
+		.img-reconhecedor
+			+avatarPequeno
+			+displayInlineBlock
+		
+		.texto-reconhecimento
+			+displayInlineBlock
+			margin: 0 0 0 5px
+			width: 93%
+
+		p
+			word-wrap: break-word
+
+		
+		
+	.fotos
+		
+		width: 14%
+		+displayInlineBlock
+		margin: 20px 0
+
+		.img-apreciador
+			+avatarPequeno
+			position: absolute
+			margin: 2.7rem
+
+		.img-reconhecido
+			+avatarMedio
+			+border-radius(143px)
+
+	.informacoes
+		+displayInlineBlock
+		width: 84%
+
+		.dados-apreciados
+			display: inline-block
+			vertical-align: middle
+			font-size: 0.8rem
+			margin: 20px 0
+
+			.apreciador
+				+displayInlineBlock
+				font-size: 1rem
+				color: #A57400
+			strong
+				cursor: pointer
+				font-size: 1.2rem
+			.nome
+				cursor: pointer
+				color: #916806
+				font-size: 1rem
+			.valor
+				display: inline-block
+				font-size: 1rem
+				color: #916806
+				font-weight: bold
+			.data
+				font-size: 0.7rem
+				color: #9197a3
+				font-family: $font-secundaria
+				margin-top: 0.5em
+			p
+				font-size: 1rem
+				color: #000
+				margin: 10px 0
+
+		.texto
+			display: inline-block
+			vertical-align: middle
+			font-size: 0.8rem
+			margin: 20px
+
+			.apreciador
+				+displayInlineBlock
+				font-size: 1rem
+				color: #A57400
+			strong
+				cursor: pointer
+				font-size: 1.2rem
+			.nome
+				cursor: pointer
+				color: #916806
+				font-size: 1rem
+			.valor
+				display: inline-block
+				font-size: 1rem
+				color: #916806
+				font-weight: bold
+
+			.data
+				font-size: 0.7rem
+				color: #9197a3
+				font-family: $font-secundaria
+				margin-top: 0.5em
+			p
+				font-size: 0.9rem
+				color: #000
+				margin-bottom: 10px
+
+	// .balao-reconhecimento
+	// 	position: relative
+	// 	background-color: #FFF1D3
+	// 	border-radius: 10px
+	// 	color: #000
+	// 	padding: 12px
+			
+		
+	// 	&:after
+	// 		content: ''
+	// 		position: absolute
+	// 		border: 27px solid
+	// 		margin-left: -15px 
+	// 		top: 38%
+	// 		right: 100%
+	// 		margin-top: -15px
+	// 		display: inline-block
+	// 		vertical-align: middle
+	// 		width: 0 
+	// 		height: 0 
+
+	// 		border-top: 25px solid transparent
+	// 		border-bottom: 25px solid transparent 
+	// 		border-left: 25px solid transparent 
+	// 		border-right: 25px solid #FFF1D3 
+
+
+	// 	&:hover .editar-reconhecimento
+	// 		color: #E9A718
+	// 		font-size: 13px	
+	// 		float: right
+	// 		margin: 15px
+		
+	// 	textarea
+	// 		width: 100%
+
+
+
+#perfilColaborador
+	display: inline-block
+	background-color: #fff
+	border: 1px solid #e2e2e2
+	padding: 20px 20px
+	width: 33%
+	text-align: center
+	border-radius: 6px
+    -moz-border-radius: 6px
+    -webkit-border-radius: 6px
+
+	.alterar-foto
+		position:relative
+		cursor: pointer
+
+		.ion-camera
+			font-size: 1.5em
+			color: #fff
+			position: absolute
+			vertical-align: bottom
+    		left: 24%
+    		top: 40%
+
+		.editar input
+			display: none
+
+		.editar:active input
+			display: block
+
+	.foto-colaborador
+		+avatarMedio
+		margin-bottom: 10px
+
+.informacoes-colaborador
+	.nome-colaborador
+		display: block
+		font-size: 20px
+		color: #2c3e50
+
+
+	#iconeValoresRecebido
+		+displayInlineBlock
+		margin: 1.2em 0
+
+#valoresRecebidosComComentarios
+	margin: 3em 0
+	display: flex
+	flex-wrap: wrap
+	.min-width
+		width: 15%
+	.max-width
+		width: 40%
+	section
+		margin: 10px
+		width: 22%
+		text-align: center
+		position: relative
+		.icone-valor
+			width: 100%
+			display: block
+			margin: 0 auto
+			cursor: pointer
+		.foto
+			+avatarPequeno
+			position: relative
+		.valor
+			width: 70%
+			display: inline-block
+		.quantidade-de-reconhecimentos
+			display: inline-block
+			vertical-align: top
+			color: white
+			background-color: rgba(137, 51, 140, 0.7)
+			font-weight: bold
+			font-size: 2em
+			min-width: 45px
+			min-height: 45px
+			+border-radius(145px)
+			left: 70%
+			position: absolute
+		.valor-por-reconhecimento
+			+displayInlineBlock
+			height: 50px
+			width: 83%
+			padding-top: 10px
+			font-size: 2em
+			.nome-do-valor
+				font-size: 48%
+				
+		.reconhecedores
+			margin: 10px 0 0 20px
+			text-align: center
+			width: 70px
+			+displayInlineBlock
+			span
+				display: inline-block
+				vertical-align: bottom
+				position: absolute
+				background-color: $amarelo-secundario
+				font-size: 1.5em
+				font-weight: bold
+				color: black
+
+		.adicionar
+			font-size: 1.5em
+			float: right
+			background-color: $amarelo-secundario
+			width: 50px
+			height: 50px
+			text-align: center
+
+.botao-voltar
+	text-decoration: none
+	display: block
+	margin: 27px 0
+	text-align: right
+	color: #000
+
+
+
+header div.cor-do-menu
+	background-color: #2C006A !important
+	border-radius: 0 !important
+
+
+header div.menu .icone-sair
+	color: #fff !important
+
+
+.meu-perfil img
+	+avatarPequeno
