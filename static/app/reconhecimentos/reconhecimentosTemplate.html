@@ -11,41 +11,7 @@
 			<h2 class="nome-colaborador" data-js="voltar-ao-perfil">{{ this.nome_do_reconhecido }}</h2>
 		</div>
 
-    <button type="button" class="reconhecimentos-anteriores" data-js="exibir-reconhecimentos-historicos">
-      <i class="history icon"></i>
-      Reconhecimentos anteriores
-    </button>
-
-     <div class="escrever-apreciacao">
-          <h2>Me aprecie</h2>
-          <div class="selecione-o-pilar">
-             <div class="campos">
-              <input id="colaborarSempre" type="radio">
-              <label for="colaborarSempre">Colaborar sempre</label> 
-            </div>
-             <div class="campos">
-              <input id="fazerDiferente" type="radio">
-              <label for="fazerDiferente">Fazer diferente</label> 
-            </div>
-            <div class="campos">
-              <input id="focarNasPessoas" type="radio">
-              <label for="focarNasPessoas">Focar nas pessoas</label> 
-            </div>
-             <div class="campos">
-              <input id="planejar" type="radio"> 
-              <label for="planejar">Planejar, entregar e aprender</label> 
-            </div>
-          </div>
-          <textarea id="situacao" placeholder="Qual foi a situação que te levou a chegar até aqui para reconhecer essa pessoa?" maxlength="1000"></textarea>         
-          <textarea id="comportamento" placeholder="Qual foi o comportamento que você pôde observar?" maxlength="1000"></textarea>
-        
-          <textarea id="impacto" placeholder="Finalize agora descrevendo o impacto que esta ação gerou, no seu ponto de vista." maxlength="1000"></textarea>
-
-          <button type="button" class="ui labeled icon right floated orange button button" data-js="reconhecer" style="">
-            <i class="star icon"></i>
-            Apreciar
-          </button>
-      </div>  
+     <div data-js="apreciacao" class="escrever-apreciacao"></div>
 	</div>
 	<div class="bloco-apreciacoes visualizar-apreciacoes-por-pilares">
 		<div class="nome-pilar">
@@ -53,7 +19,7 @@
         <h3>{{this.descricao_do_pilar}}</h3>
 		</div>
 
-    <h2>Reconhecimentos</h2>
+    <h2>Apreciações</h2>
       
     {{#each this.reconhecimentos}}
     <section class="feed-reconhecimentos caixa-feed">
@@ -89,7 +55,7 @@
     </section>
     {{else}}
     <div class="ui yellow message">
-      Ainda não há apreciações para <strong>{{ this.nome_do_valor }}</strong> :(
+      Ainda não tenho apreciações neste pilar :(
     </div>
     {{/each}}
 

@@ -17,6 +17,7 @@ define([
   };
 
   _self.finalizar = function() {
+    _sandbox.removerEscuta('exibir-espaco-para-apreciar');
   };
 
   function exibir(colaboradorId, reconhecimentosDoColaborador) {
