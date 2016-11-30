@@ -20,7 +20,6 @@
 			});
 
 		$.getJSON('/reconhecimentos/' + colaboradorId + '/' + pilarId, {}, function(resposta) {
-      console.log(resposta);
 			template.exibir(reconhecimentosTemplate, resposta);
 
 			if (sessaoDeUsuario.id !== colaboradorId) {

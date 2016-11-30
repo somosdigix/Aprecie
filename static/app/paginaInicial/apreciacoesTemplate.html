@@ -1,46 +1,46 @@
 ﻿<div class="conteudo feed-principal">
-  <div class="bloco-lado-direito">
-      <div class="escrever-apreciacao">
-        <h2>Aprecie alguem</h2>
-        <div class="item busca-colaboradores">
-          <div data-js="buscaDeColaboradores" class="ui fluid search largura-busca">
-            <div class="ui icon small input largura-busca">
-              <input class="prompt" class="largura-busca" placeholder="Busque um colaborador" type="text">
-              <i class="search icon"></i>
-            </div>
-            <div class="results"></div>
+<!--   <div class="bloco-lado-esquerdo">
+    <div class="escrever-apreciacao">
+      <h2>Aprecie</h2>
+      <div class="item busca-colaboradores">
+        <div data-js="buscaDeColaboradores" class="ui fluid search largura-busca">
+          <div class="ui icon small input largura-busca">
+            <input class="prompt" class="largura-busca" placeholder="Busque um colaborador" type="text">
+            <i class="search icon"></i>
           </div>
-      </div>
-        <div class="selecione-o-pilar">
-           <div class="campos">
-            <input id="colaborarSempre" type="radio">
-            <label for="colaborarSempre">Colaborar sempre</label> 
-          </div>
-           <div class="campos">
-            <input id="fazerDiferente" type="radio">
-            <label for="fazerDiferente">Fazer diferente</label> 
-          </div>
-          <div class="campos">
-            <input id="focarNasPessoas" type="radio">
-            <label for="focarNasPessoas">Focar nas pessoas</label> 
-          </div>
-           <div class="campos">
-            <input id="planejar" type="radio"> 
-            <label for="planejar">Planejar, entregar e aprender</label> 
-          </div>
+          <div class="results"></div>
         </div>
-        <textarea id="situacao" placeholder="Qual foi a situação que te levou a chegar até aqui para reconhecer essa pessoa?" maxlength="1000"></textarea>         
-        <textarea id="comportamento" placeholder="Qual foi o comportamento que você pôde observar?" maxlength="1000"></textarea>
-      
-        <textarea id="impacto" placeholder="Finalize agora descrevendo o impacto que esta ação gerou, no seu ponto de vista." maxlength="1000"></textarea>
+      </div>
+      <div class="selecione-o-pilar">
+        <div class="campos">
+          <input id="colaborarSempre" type="radio">
+          <label for="colaborarSempre">Colaborar sempre</label> 
+        </div>
+         <div class="campos">
+          <input id="fazerDiferente" type="radio">
+          <label for="fazerDiferente">Fazer diferente</label> 
+        </div>
+        <div class="campos">
+          <input id="focarNasPessoas" type="radio">
+          <label for="focarNasPessoas">Focar nas pessoas</label> 
+        </div>
+         <div class="campos">
+          <input id="planejar" type="radio"> 
+          <label for="planejar">Planejar, entregar e aprender</label> 
+        </div>
+      </div>
+      <textarea id="situacao" placeholder="Qual foi a situação que te levou a chegar até aqui para reconhecer essa pessoa?" maxlength="1000"></textarea>         
+      <textarea id="comportamento" placeholder="Qual foi o comportamento que você pôde observar?" maxlength="1000"></textarea>
+    
+      <textarea id="impacto" placeholder="Finalize agora descrevendo o impacto que esta ação gerou, no seu ponto de vista." maxlength="1000"></textarea>
 
-        <button type="button" class="ui labeled icon right floated orange button button" data-js="reconhecer" style="">
-          <i class="star icon"></i>
-          Apreciar
-        </button>
+      <button type="button" class="ui labeled icon right floated orange button button" data-js="reconhecer" style="">
+        <i class="star icon"></i>
+        Apreciar
+      </button>
     </div>   
-  </div>
-  <div class="bloco-lado-esquerdo">
+  </div> -->
+  <div class="bloco-lado-direito">
   	<h2>Últimas apreciações</h2>
   	{{#.}}
   	<section class="feed-reconhecimentos">
@@ -58,8 +58,9 @@
   				<img class="img-reconhecedor" src="{{foto this.id_do_reconhecedor}}" alt="" />
   				<div class="texto-reconhecimento">
   					<strong>
-  						<a href="#/perfil/{{this.id_do_reconhecedor}}" class="apreciador cursor-pointer">{{this.nome_do_reconhecedor}}</a>
+  						<a href="#/perfil/{{this.id_do_reconhecedor}}" class="apreciador cursor-pointer">{{this.nome_do_reconhecedor}}</a> 
   					</strong>
+            disse:
   					{{#if this.situacao}}
   						<div>
   							<b>Situação:</b>
@@ -91,42 +92,76 @@
   	{{/.}}
   </div>
 </div>
+
+
 <style>
 
-  .bloco-lado-direito,.bloco-lado-esquerdo {
-    display: inline-block;
-    vertical-align: top;
-  }
+.bloco-lado-direito,.bloco-lado-esquerdo {
+  display: inline-block;
+  vertical-align: top;
+}
 
-  .bloco-lado-direito{
-      background-color: #fff;
-      border: 1px solid #e2e2e2;
-      padding: 20px 20px;
-      width: 33%;
+.bloco-lado-esquerdo{
+    background-color: #fff;
+    border: 1px solid #e2e2e2;
+    padding: 20px 20px;
+    width: 33%;
 
-  }
-  
-  .bloco-lado-direito .largura-busca{
-    width: 75%;
-  }
+}
 
-  .bloco-lado-esquerdo{
-    list-style: none;
-    display: inline-block;
-    vertical-align: top;
-    width: 64%;
-    margin-left: 2%;
-  }
+.bloco-lado-esquerdo .busca-colaboradores{
+  width: 279px;
+}
 
-	.cursor-pointer{
-		cursor: pointer;
-	}
+.bloco-lado-esquerdo .busca-colaboradores input{
+      border: 1px solid #0BC0D3;
+}
+.escrever-apreciacao h2{
+    font-size: 20px;
+} 
 
-	a {
-		color: rgba(0,0,0,.87);
-	}
+.selecionado,
+.escrever-apreciacao .selecione-o-pilar .campos:hover {
+background-color:  #0BC0D3;
+color: #fff;
+}
 
-	a:hover {
-		color: rgb(177, 148, 65);
-	}
+.escrever-apreciacao .selecione-o-pilar .campos input{
+  display: none;
+}
+
+.escrever-apreciacao textarea{
+  width: 100%;
+  margin: 13px 0 0 0;
+  padding: 12px;
+  height: 100px;
+  outline: none;
+  border-radius: 5px;
+}
+
+.apreciacoes-recebidas{
+margin:2% 2%;
+}
+
+
+.bloco-lado-direito{
+  list-style: none;
+  display: inline-block;
+  vertical-align: top;
+/*  width: 64%;
+  margin-left: 2%;*/
+  width: 100%;
+}
+
+.cursor-pointer{
+	cursor: pointer;
+}
+
+a {
+	color: rgba(0,0,0,.87);
+}
+
+a:hover {
+	color: rgb(177, 148, 65);
+}
 </style>
