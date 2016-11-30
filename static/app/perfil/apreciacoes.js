@@ -19,8 +19,7 @@ define([
 
   function exibirTodasAsApreciacoes() {
     $.getJSON('/reconhecimentos/todos/' + _colaboradorId, function(apreciacoes) {
-      var conteudo = template.compilar(apreciacoesTemplate, apreciacoes);
-      $('div[data-js="todas-as-apreciacoes"]').empty().append(conteudo);
+      template.exibirEm('div[data-js="todas-as-apreciacoes"]', apreciacoesTemplate, apreciacoes);
     });
   }
 

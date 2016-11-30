@@ -15,32 +15,7 @@
 			<h2 class="nome-colaborador">{{this.nome}}</h2>
 		</div>
 
-    <button type="button" class="reconhecimentos-anteriores" data-js="exibir-reconhecimentos-historicos">
-      <i class="history icon"></i>
-      Reconhecimentos anteriores
-    </button>
-
-    <div data-js="apreciacao" class="escrever-apreciacao">
-        <h2>Me aprecie</h2>
-
-        <div class="selecione-o-pilar">
-          {{#each this.pilares}}
-          <div class="campos">
-            <input id="pilar_{{this.id}}" name="pilar" type="radio" value="{{this.id}}">
-            <label for="pilar_{{this.id}}">{{this.nome}}</label> 
-          </div>
-          {{/each}}
-        </div>
-
-        <textarea id="situacao" placeholder="Qual foi a situação que te levou a chegar até aqui para reconhecer essa pessoa?" maxlength="1000"></textarea>         
-        <textarea id="comportamento" placeholder="Qual foi o comportamento que você pôde observar?" maxlength="1000"></textarea>
-        <textarea id="impacto" placeholder="Finalize agora descrevendo o impacto que esta ação gerou, no seu ponto de vista." maxlength="1000"></textarea>
-
-        <button type="button" class="ui labeled icon right floated orange button button" data-js="reconhecer" style="">
-          <i class="star icon"></i>
-          Apreciar
-        </button>
-    </div>   
+    <div data-js="apreciacao" class="escrever-apreciacao"></div>
   </div>
   
   <div class="bloco-apreciacoes">  
@@ -70,8 +45,7 @@
       {{/each}}
     </ul>
 
-    <div data-js="todas-as-apreciacoes" class="apreciacoes-recebidas">
-    </div>
+    <div data-js="todas-as-apreciacoes" class="apreciacoes-recebidas"></div>
   </div>
 	<div data-js="reconhecimentos-historicos" class="ui three column grid pilares" style="display: none;"></div>
 </div>

@@ -17,8 +17,7 @@
       template.exibir(perfilTemplate, reconhecimentosDoColaborador);
 
       $('#conteudo')
-        .on('click', 'div[data-js="exibir-reconhecimentos"]', exibirReconhecimentos)
-        .on('click', 'button[data-js="exibir-reconhecimentos-historicos"]', exibirReconhecimentosHistoricos);
+        .on('click', 'div[data-js="exibir-reconhecimentos"]', exibirReconhecimentos);
 
       if (sessaoDeUsuario.id === colaboradorId) {
         $('span.ion-camera').show();
@@ -30,14 +29,13 @@
         $('div[data-js="foto"]').removeClass('alterar-foto');
       }
 
-      _sandbox.escutar('reexibir-perfil', reexibirPerfil);
+      _sandbox.notificar('exibir-espaco-para-apreciar', colaboradorId, reconhecimentosDoColaborador);
       _sandbox.notificar('exibir-apreciacoes');
     });
   };
 
   _self.finalizar = function() {
     $('#conteudo').off();
-    _sandbox.removerEscuta('reexibir-perfil');
   }
 
   function exibirReconhecimentos() {
@@ -49,17 +47,6 @@
 
       roteador.navegarPara('/reconhecimentos/' + colaboradorId + '/' + pilarId);
     });
-  }
-
-  function exibirReconhecimentosHistoricos() {
-    $('div[data-js="reconhecimentos"], button[data-js="exibir-reconhecimentos-historicos"]').hide()
-    var colaboradorId = $("#reconhecidoId").val();
-
-    _sandbox.notificar('exibir-reconhecimentos-historicos', colaboradorId);
-  }
-
-  function reexibirPerfil() {
-    $('div[data-js="reconhecimentos"], button[data-js="exibir-reconhecimentos-historicos"]').show();
   }
 
   // TODO: Modular esse envio de foto e aliar com webcomponent
