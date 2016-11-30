@@ -6,7 +6,7 @@
 	'growl',
 	'roteador',
 	'sessaoDeUsuario',
-	'app/helpers/iconesDosValoresHelpers'
+	'app/helpers/fotoDoPilarHelper'
 ], function($, template, reconhecimentosTemplate, ReconhecerViewModel, growl, roteador, sessaoDeUsuario) {
 	'use strict';
 
