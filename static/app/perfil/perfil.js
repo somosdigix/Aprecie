@@ -25,8 +25,13 @@
         $('#conteudo').on('click', 'div[data-js="foto"]', enviarFoto);
         $('input[data-js="alterar-foto"]').off().on('change', alterarFoto);
       }
+      else {
+        $('div[data-js="apreciacao"]').show();
+        $('div[data-js="foto"]').removeClass('alterar-foto');
+      }
 
       _sandbox.escutar('reexibir-perfil', reexibirPerfil);
+      _sandbox.notificar('exibir-apreciacoes');
     });
   };
 

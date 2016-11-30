@@ -20,7 +20,7 @@
       Reconhecimentos anteriores
     </button>
 
-    <div class="escrever-apreciacao">
+    <div data-js="apreciacao" class="escrever-apreciacao">
         <h2>Me aprecie</h2>
 
         <div class="selecione-o-pilar">
@@ -70,45 +70,7 @@
       {{/each}}
     </ul>
 
-    <div class="apreciacoes-recebidas">
-      <h2>Minhas apreciações</h2>
-      {{#each this.reconhecimentos}}
-      <section class="feed-reconhecimentos caixa-feed">
-        <div class="bloco-reconhecimento">  
-          <img class="img-reconhecedor" src="{{ foto this.reconhecedor__id usar_miniatura=true}}" />
-
-          <div class="texto-reconhecimento">
-            <strong data-id="1" data-js="ir-ao-perfil" class="apreciador">{{ this.reconhecedor__nome }}</strong>
-            <div class="data-reconhecimento">{{ emDataLegivel this.data }}</div>
-
-            <p>
-              {{#if this.feedback__situacao}}
-                <div>
-                  <b>Situação:</b>
-                  <span>{{this.feedback__situacao}}</span>
-                </div>
-                <div>
-                  <b>Comportamento:</b>
-                  <span>{{this.feedback__comportamento}}</span>
-                </div>
-                <div>
-                  <b>Impacto:</b>
-                  <span>{{this.feedback__impacto}}</span>
-                </div>
-              {{else}}
-                <p>
-                  {{this.feedback__impacto}}
-                </p>
-              {{/if}}
-            </p>
-          </div>  
-        </div>  
-      </section>
-      {{else}}
-      <div class="ui yellow message">
-        Ainda não há reconhecimentos para <strong>{{ this.nome_do_valor }}</strong> :(
-      </div>
-      {{/each}}
+    <div data-js="todas-as-apreciacoes" class="apreciacoes-recebidas">
     </div>
   </div>
 	<div data-js="reconhecimentos-historicos" class="ui three column grid pilares" style="display: none;"></div>
@@ -243,6 +205,7 @@ button.reconhecimentos-anteriores:hover{
 
 .escrever-apreciacao{
   text-align: left;
+  display: none;
 }
 .escrever-apreciacao h2{
   font-size: 18px;

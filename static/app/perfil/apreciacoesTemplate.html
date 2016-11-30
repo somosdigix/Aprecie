@@ -1,0 +1,43 @@
+<h2>Minhas apreciações</h2>
+{{#each this.reconhecimentos}}
+<section class="feed-reconhecimentos caixa-feed">
+  <div class="bloco-reconhecimento">  
+    <img class="img-reconhecedor" src="{{ foto this.reconhecedor__id usar_miniatura=true}}" />
+
+    <div class="texto-reconhecimento">
+      {{#if this.pilar__nome}}
+        <strong data-id="1" data-js="ir-ao-perfil" class="apreciador">{{ this.reconhecedor__nome }} em {{ this.pilar__nome }}</strong>
+      {{else}}
+        <strong data-id="1" data-js="ir-ao-perfil" class="apreciador">{{ this.reconhecedor__nome }} em {{ this.valor__nome }}</strong>
+      {{/if}}
+      
+      <div class="data-reconhecimento">{{ emDataLegivel this.data }}</div>
+
+      <p>
+        {{#if this.feedback__situacao}}
+          <div>
+            <b>Situação:</b>
+            <span>{{this.feedback__situacao}}</span>
+          </div>
+          <div>
+            <b>Comportamento:</b>
+            <span>{{this.feedback__comportamento}}</span>
+          </div>
+          <div>
+            <b>Impacto:</b>
+            <span>{{this.feedback__impacto}}</span>
+          </div>
+        {{else}}
+          <p>
+            {{this.feedback__impacto}}
+          </p>
+        {{/if}}
+      </p>
+    </div>  
+  </div>  
+</section>
+{{else}}
+<div class="ui yellow message">
+  Ainda não há reconhecimentos para <strong>{{ this.nome_do_valor }}</strong> :(
+</div>
+{{/each}}
