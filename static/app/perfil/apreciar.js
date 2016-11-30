@@ -40,6 +40,8 @@ define([
     var reconhecerViewModel = new ReconhecerViewModel();
     validarOperacao(reconhecerViewModel);
 
+    $('#conteudo button[data-js="reconhecer"]').attr('disabled', true);
+
     $.post('/reconhecimentos/reconhecer/', reconhecerViewModel, function() {
       growl.deSucesso().exibir('Reconhecimento realizado com sucesso');
       roteador.atualizar();
