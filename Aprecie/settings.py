@@ -54,8 +54,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'Aprecie.wsgi.application'
 
-CORS_ORIGIN_ALLOW_ALL = True
-
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
@@ -113,8 +111,7 @@ if ON_OPENSHIFT:
     COMPRESS_ROOT = STATIC_ROOT
     
 if not ON_OPENSHIFT:
-  INSTALLED_APPS = ('django_gulp', 'corsheaders',) + INSTALLED_APPS
-  MIDDLEWARE_CLASSES = ('corsheaders.middleware.CorsMiddleware',) + MIDDLEWARE_CLASSES
+    INSTALLED_APPS = ('django_gulp',) + INSTALLED_APPS
 
 STATICFILES_FINDERS = (
     "django.contrib.staticfiles.finders.FileSystemFinder",
