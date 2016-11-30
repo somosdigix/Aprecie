@@ -100,6 +100,11 @@ def todas_as_apreciacoes(requisicao, id_do_reconhecido):
 
   return JsonResponse(resposta)
 
+def todos_os_pilares(requisicao):
+  resposta = Pilar.objects.all()
+
+  return JsonResponse(resposta)
+
 
 def reconhecimentos_por_pilar(requisicao, id_do_reconhecido, id_do_pilar):
   reconhecido = Colaborador.objects.get(id=id_do_reconhecido)
