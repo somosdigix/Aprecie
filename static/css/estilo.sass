@@ -1,9 +1,5 @@
 ﻿@import _mixins
 
- @font-face 
-  	font-family: 'Campton-SemiBold'
-  	src: url('fonts/Campton-SemiBold.ttf') format('truetype')
- 
 
 *
 	margin: 0
@@ -22,6 +18,18 @@ img
 p
 	font-size: 1rem
 
+
+h1, h2, .pilares .itens .titulo 
+	font-family: 'Campton-SemiBold'
+
+.pilares .itens h2 
+    font-family: $font-padrao
+    margin: 20px 0
+
+.botao-laranja 
+    background-color: #FC671D !important
+    color: #fff !important
+    margin: 10px 0 !important
 
 .growl
 	max-width: 200px
@@ -411,10 +419,17 @@ p
 		margin-bottom: 10px
 
 .informacoes-colaborador
+	.chamada-apreciar
+		font-size: 18px
+		color: #D34AF4
+		margin: 5px 0
+		font-weight: bold
+
 	.nome-colaborador
 		display: block
-		font-size: 20px
-		color: #2c3e50
+		font-size: 24px
+		color: #2C006A 
+		margin: 0 0 20px 0
 
 
 	#iconeValoresRecebido
