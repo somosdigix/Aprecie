@@ -9,7 +9,7 @@
 
 		self.id_do_reconhecedor = sessaoDeUsuario.id;
 		self.id_do_reconhecido = $('#reconhecidoId').val();
-		self.id_do_pilar = $('#pilarId').val();
+		self.id_do_pilar = $('div.selecione-o-pilar :radio:checked').val();
 		self.situacao = $('#situacao').val();
 		self.comportamento = $('#comportamento').val();
 		self.impacto = $('#impacto').val();
