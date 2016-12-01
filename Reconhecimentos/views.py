@@ -83,19 +83,19 @@ def reconhecimentos_por_reconhecedor(requisicao, id_do_reconhecido):
 
 def todas_as_apreciacoes(requisicao, id_do_reconhecido):
   reconhecido = Colaborador.objects.get(id=id_do_reconhecido)
-  reconhecimentos = reconhecido.reconhecimentos() \
+  apreciacoes = reconhecido.reconhecimentos() \
     .values('data', 'pilar__nome', 'feedback__situacao', 'feedback__comportamento', \
             'feedback__impacto', 'reconhecedor__nome', 'reconhecedor__id') \
     .order_by('-data', '-id')
 
-  reconhecimentos_historicos = ReconhecimentoHistorico.objects \
+  apreciacoes_historicas = ReconhecimentoHistorico.objects \
     .filter(reconhecido=id_do_reconhecido) \
     .values('data', 'valor__nome', 'feedback__situacao', 'feedback__comportamento', \
             'feedback__impacto', 'reconhecedor__nome', 'reconhecedor__id') \
     .order_by('-id')
     
   resposta = {
-    'reconhecimentos': list(reconhecimentos)
+    'apreciacoes': list(apreciacoes) + list(apreciacoes_historicas)
   }
 
   return JsonResponse(resposta)

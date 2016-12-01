@@ -1,5 +1,5 @@
 <h2>Minhas apreciações</h2>
-{{#each this.reconhecimentos}}
+{{#each this.apreciacoes}}
 <section class="feed-reconhecimentos caixa-feed">
   <div class="bloco-reconhecimento">  
     <img class="img-reconhecedor" src="{{ foto this.reconhecedor__id usar_miniatura=true}}" />
@@ -38,6 +38,6 @@
 </section>
 {{else}}
 <div class="ui yellow message">
-  Ainda não há reconhecimentos para <strong>{{ this.nome_do_valor }}</strong> :(
+  Ainda não possuo nenhuma apreciação :(
 </div>
 {{/each}}
