@@ -1,7 +1,7 @@
 window.configuracoesRequirejs = (function() {
 	// TODO: Automatizar essa feiura na build
 	var ehDebug = document.getElementById('ehDebug').value === 'True';
-	var argumentosDaUrl = ehDebug ? 'antiCache=' + (new Date()).getTime() : 'antiCache=10';
+	var argumentosDaUrl = ehDebug ? 'antiCache=' + (new Date()).getTime() : 'antiCache=11';
 
 	return {
 		urlArgs: argumentosDaUrl,
