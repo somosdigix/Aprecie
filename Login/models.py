@@ -12,7 +12,7 @@ class Colaborador(AbstractBaseUser):
 
   USERNAME_FIELD = 'cpf'
 
-  @property
+  @property 
   def primeiro_nome(self):
     return Colaborador.obter_primeiro_nome(self.nome)
 
@@ -41,7 +41,13 @@ class Colaborador(AbstractBaseUser):
     if not feedback:
       raise ExcecaoDeDominio('Feedback deve ser informado')
 
+    if self.jaPossuiReconhecimentoDaMesmaPessoaPelosMesmosMotivos(reconhecedor, feedback):
+      raise ExcecaoDeDominio('Não é possível reconhecer uma pessoa duas vezes pelos mesmos motivos')
+
     self.reconhecido.create(reconhecedor = reconhecedor, pilar = pilar, feedback = feedback)
+
+  def jaPossuiReconhecimentoDaMesmaPessoaPelosMesmosMotivos(self, reconhecedor, feedback):
+    return self.reconhecido.filter(reconhecedor = reconhecedor, feedback = feedback).exists()
 
   def reconhecimentos(self):
     return self.reconhecido.all()

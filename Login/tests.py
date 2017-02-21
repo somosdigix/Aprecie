@@ -15,7 +15,6 @@ class TesteDeColaborador(TestCase):
 		self.reconhecedor = ColaboradorFactory()
 		
 		self.pilar = Pilar.objects.get(nome='Colaborar sempre')
-		self.outroPilar = Pilar.objects.get(nome='Fazer diferente')
 		self.feedback = FeedbackFactory()
 
 	def testa_que_a_foto_do_colaborador_eh_alterada(self):
@@ -62,7 +61,7 @@ class TesteDeColaborador(TestCase):
 		self.assertEqual('Feedback deve ser informado', contexto.exception.args[0])
 
 	def testa_o_reconhecimento_de_uma_habilidade(self):
-		self.colaborador.reconhecer(self.reconhecedor, self.pilar, self.feedback);
+		self.colaborador.reconhecer(self.reconhecedor, self.pilar, self.feedback)
 		reconhecimento = self.colaborador.reconhecimentos()[0]
 
 		self.assertEqual(1, len(self.colaborador.reconhecimentos_por_pilar(self.pilar)))
@@ -78,7 +77,7 @@ class TesteDeColaborador(TestCase):
 		self.assertEqual(self.feedback.impacto, reconhecimento.feedback.impacto)
 
 	def testa_que_armazena_a_data_do_reconhecimento(self):
-		self.colaborador.reconhecer(self.reconhecedor, self.pilar, self.feedback);
+		self.colaborador.reconhecer(self.reconhecedor, self.pilar, self.feedback)
 		reconhecimento = self.colaborador.reconhecimentos()[0]
 
 		agora = timezone.now()
@@ -87,19 +86,25 @@ class TesteDeColaborador(TestCase):
 		self.assertEqual(agora.day, reconhecimento.data.day)
 
 	def testa_a_listagem_de_reconhecimentos(self):
-		self.colaborador.reconhecer(self.reconhecedor, self.pilar, self.feedback);
-		self.colaborador.reconhecer(self.reconhecedor, self.pilar, self.feedback);
+		segundoFeedback = FeedbackFactory(situacao = 'Situação 2')
 
-		pilares_esperados = [self.pilar, self.pilar]
+		self.colaborador.reconhecer(self.reconhecedor, self.pilar, self.feedback)
+		self.colaborador.reconhecer(self.reconhecedor, self.pilar, segundoFeedback)
+
+		pilares_esperados = [ self.pilar, self.pilar ]
 		pilar_reconhecidos = map(lambda reconhecimento: reconhecimento.pilar, self.colaborador.reconhecimentos())
 		self.assertEqual(pilares_esperados, list(pilar_reconhecidos))
 
 	def testa_a_listagem_de_reconhecimentos_por_pilar(self):
-		self.colaborador.reconhecer(self.reconhecedor, self.outroPilar, self.feedback);
-		self.colaborador.reconhecer(self.reconhecedor, self.pilar, self.feedback);
-		self.colaborador.reconhecer(self.reconhecedor, self.pilar, self.feedback);
+		outroPilar = Pilar.objects.get(nome='Fazer diferente')
+		segundoFeedback = FeedbackFactory(situacao = 'Situação 2')
+		terceiroFeedback = FeedbackFactory(situacao = 'Situação 3')
 
-		self.assertEqual(1, len(self.colaborador.reconhecimentos_por_pilar(self.outroPilar)))
+		self.colaborador.reconhecer(self.reconhecedor, outroPilar, self.feedback)
+		self.colaborador.reconhecer(self.reconhecedor, self.pilar, segundoFeedback)
+		self.colaborador.reconhecer(self.reconhecedor, self.pilar, terceiroFeedback)
+
+		self.assertEqual(1, len(self.colaborador.reconhecimentos_por_pilar(outroPilar)))
 		self.assertEqual(2, len(self.colaborador.reconhecimentos_por_pilar(self.pilar)))
 
 	def testa_que_o_colaborador_nao_pode_se_reconher(self):
@@ -107,6 +112,14 @@ class TesteDeColaborador(TestCase):
 			self.colaborador.reconhecer(self.colaborador, self.pilar, self.feedback)
 
 		self.assertEqual('O colaborador nao pode reconher a si próprio', contexto.exception.args[0])
+
+	def testa_que_o_colaborador_nao_pode_receber_um_reconhecimento_duplicado(self):
+		self.colaborador.reconhecer(self.reconhecedor, self.pilar, self.feedback)
+
+		with self.assertRaises(Exception) as contexto:
+			self.colaborador.reconhecer(self.reconhecedor, self.pilar, self.feedback)
+
+		self.assertEqual('Não é possível reconhecer uma pessoa duas vezes pelos mesmos motivos', contexto.exception.args[0])
 
 class TesteDeAutenticacao(TestCase):
 	def testa_autenticacao_de_colaborador_existente(self):
