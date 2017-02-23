@@ -11,11 +11,11 @@
   roteador.configurar = function() {
     var rotas = {
       '/': [middlewareDeTransicaoDeTela, limparTela, login],
-      '/login': [middlewareDeAutenticacao, middlewareDeToolbar, middlewareDeTransicaoDeTela, limparTela, login],
-      '/paginaInicial': [middlewareDeAutenticacao, middlewareDeToolbar, middlewareDeTransicaoDeTela, limparTela, paginaInicial],
-      '/estatisticas': [middlewareDeAutenticacao, middlewareDeToolbar, middlewareDeTransicaoDeTela, limparTela, estatisticas],
-      '/perfil/:colaboradorId': [middlewareDeAutenticacao, middlewareDeToolbar, middlewareDeTransicaoDeTela, limparTela, perfil],
-      '/reconhecimentos/:colaboradorId/:valorId': [middlewareDeAutenticacao, middlewareDeToolbar, middlewareDeTransicaoDeTela, limparTela, reconhecimentos]
+      '/login': [middlewareDeAutenticacao, middlewareDeAtualizacaoComGoogleAnalytics, middlewareDeToolbar, middlewareDeTransicaoDeTela, limparTela, login],
+      '/paginaInicial': [middlewareDeAutenticacao, middlewareDeAtualizacaoComGoogleAnalytics, middlewareDeToolbar, middlewareDeTransicaoDeTela, limparTela, paginaInicial],
+      '/estatisticas': [middlewareDeAutenticacao, middlewareDeAtualizacaoComGoogleAnalytics, middlewareDeToolbar, middlewareDeTransicaoDeTela, limparTela, estatisticas],
+      '/perfil/:colaboradorId': [middlewareDeAutenticacao, middlewareDeAtualizacaoComGoogleAnalytics, middlewareDeToolbar, middlewareDeTransicaoDeTela, limparTela, perfil],
+      '/reconhecimentos/:colaboradorId/:valorId': [middlewareDeAutenticacao, middlewareDeAtualizacaoComGoogleAnalytics, middlewareDeToolbar, middlewareDeTransicaoDeTela, limparTela, reconhecimentos]
     };
 
     function limparTela() {
@@ -108,6 +108,21 @@
         $('body').removeClass('body-app').addClass('body-login');
       }
     });
+  }
+
+  function middlewareDeAtualizacaoComGoogleAnalytics() {
+    var posicaoDaPrimeiraBarraDaUrl = roteador.paginaAtual().substring(1).indexOf('/');
+    var enderecoSemParametrosDeUrl = posicaoDaPrimeiraBarraDaUrl === -1
+      ? roteador.paginaAtual()
+      : roteador.paginaAtual().substring(0, posicaoDaPrimeiraBarraDaUrl + 1);
+
+    var ga = window.ga;
+
+    if (!ga)
+      return true;
+
+    ga('set', 'page', enderecoSemParametrosDeUrl);
+    ga('send', 'pageview');
   }
 
   return roteador;
