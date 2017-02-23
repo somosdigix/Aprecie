@@ -12,14 +12,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/DigithoBrasil/Aprecie.git"
+    "url": "git+https://github.com/digix/Aprecie.git"
   },
   "author": "DígithoBrasil",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/DigithoBrasil/Aprecie/issues"
+    "url": "https://github.com/digix/Aprecie/issues"
   },
-  "homepage": "https://github.com/DigithoBrasil/Aprecie#readme",
+  "homepage": "https://github.com/digix/Aprecie#readme",
   "devDependencies": {
     "browser-sync": "^2.17.5",
     "cssnano": "^3.8.0",
