@@ -34,6 +34,12 @@ class TesteDeApiDeReconhecimento(TestCase):
     self.assertEqual(200, resposta.status_code)
     self.assertEqual(self.dados_do_reconhecimento, ultimo_reconhecimento)
 
+  def testa_que_nao_eh_possivel_reconhecer_duas_vezes_a_mesma_pessoa_pelos_mesmos_motivos(self):
+    resposta = self.client.post(reverse('reconhecer'), self.dados_do_reconhecimento)
+
+    self.assertEqual(200, resposta.status_code)
+    self.assertEqual(1, len(Reconhecimento.objects.all()))
+
   def testa_a_listagem_dos_ultimos_reconhecimentos_realizados(self):
     self.criar_reconhecimentos(2)
 
@@ -178,4 +184,13 @@ class TesteDeApiDeReconhecimento(TestCase):
 
   def criar_reconhecimentos(self, quantidade):
     for num in range(0, quantidade):
-      self.client.post(reverse('reconhecer'), self.dados_do_reconhecimento)
+      dados_deste_reconhecimento = {
+        'id_do_reconhecido': self.reconhecido.id,
+        'id_do_reconhecedor': self.reconhecedor.id,
+        'id_do_pilar': self.pilar.id,
+        'situacao': self.feedback.situacao + str(num),
+        'comportamento': self.feedback.comportamento + str(num),
+        'impacto': self.feedback.impacto + str(num),
+      }
+
+      self.client.post(reverse('reconhecer'), dados_deste_reconhecimento)

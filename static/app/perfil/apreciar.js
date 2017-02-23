@@ -45,6 +45,9 @@ define([
     $.post('/reconhecimentos/reconhecer/', reconhecerViewModel, function() {
       growl.deSucesso().exibir('Reconhecimento realizado com sucesso');
       roteador.atualizar();
+    })
+    .fail(function() {
+      $('#conteudo button[data-js="reconhecer"]').removeAttr('disabled');
     });
   }
 

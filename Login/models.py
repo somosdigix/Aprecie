@@ -41,13 +41,19 @@ class Colaborador(AbstractBaseUser):
     if not feedback:
       raise ExcecaoDeDominio('Feedback deve ser informado')
 
-    if self.jaPossuiReconhecimentoDaMesmaPessoaPelosMesmosMotivos(reconhecedor, feedback):
+    if self.ja_possui_um_reconhecimento_identico(reconhecedor, feedback, pilar):
       raise ExcecaoDeDominio('Não é possível reconhecer uma pessoa duas vezes pelos mesmos motivos')
 
     self.reconhecido.create(reconhecedor = reconhecedor, pilar = pilar, feedback = feedback)
 
-  def jaPossuiReconhecimentoDaMesmaPessoaPelosMesmosMotivos(self, reconhecedor, feedback):
-    return self.reconhecido.filter(reconhecedor = reconhecedor, feedback = feedback).exists()
+  def ja_possui_um_reconhecimento_identico(self, reconhecedor, feedback, pilar):
+    return self.reconhecido.filter(
+        reconhecedor = reconhecedor,
+        pilar = pilar,
+        feedback__situacao = feedback.situacao,
+        feedback__comportamento = feedback.comportamento,
+        feedback__impacto = feedback.impacto
+      ).exists()
 
   def reconhecimentos(self):
     return self.reconhecido.all()
