@@ -2,6 +2,10 @@
   "name": "Aprecie",
   "version": "1.0.0",
   "private": "true",
+  "engines": {
+    "node": "~6.9.4",
+    "npm": "~3.10.10"
+  },
   "description": "Mini rede-social para estímulo de reconhecimentos baseados nos valores da DígithoBrasil.",
   "directories": {
     "test": "test"
