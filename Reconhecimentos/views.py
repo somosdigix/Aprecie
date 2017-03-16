@@ -28,6 +28,7 @@ def ultimos_reconhecimentos(requisicao):
   reconhecimentos = Reconhecimento.objects.all().order_by('-id')[:10]
 
   reconhecimentos_mapeados = list(map(lambda reconhecimento: {
+    'id': reconhecimento.pk,
     'id_do_reconhecedor': reconhecimento.reconhecedor.id,
     'nome_do_reconhecedor': reconhecimento.reconhecedor.nome_abreviado,
     'id_do_reconhecido': reconhecimento.reconhecido.id,
