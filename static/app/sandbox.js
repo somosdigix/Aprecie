@@ -38,6 +38,10 @@
 			template.acrescentarEm(container, conteudo, modelo);
 		};
 
+		self.compilarTemplate = function(conteudo, modelo) {
+			return template.compilar(conteudo, modelo);
+		};
+
 		self.limpar = function(seletor) {
 			$(seletor).empty();
 		};

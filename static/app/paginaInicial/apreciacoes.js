@@ -1,15 +1,20 @@
 define([
+	'text!app/paginaInicial/ultimasApreciacoesTemplate.html',
 	'text!app/paginaInicial/apreciacoesTemplate.html'
-], function(apreciacoesTemplate) {
+], function(ultimasApreciacoesTemplate, apreciacoesTemplate) {
 	'use strict';
 
 	var self = {};
-	var _sandbox;
+	var _sandbox, _paginaAtual;
 
 	self.inicializar = function(sandbox) {
 		_sandbox = sandbox;
+		_paginaAtual = 0;
 
-		_sandbox.getJSON('/reconhecimentos/ultimos/').then(exibirTemplate);
+		$('#conteudo').on('click', 'button[data-js="carregar-mais"]', carregarApreciacoes);
+
+		_sandbox.acrescentarTemplateEm('#conteudo', ultimasApreciacoesTemplate);
+		carregarApreciacoes();
 	};
 
 	self.finalizar = function() {
@@ -17,8 +22,23 @@ define([
 		_sandbox.removerEvento('#conteudo');
 	};
 
-	function exibirTemplate(ultimosReconhecimentos) {
-		_sandbox.acrescentarTemplateEm('#conteudo', apreciacoesTemplate, ultimosReconhecimentos);
+	function carregarApreciacoes() {
+		_paginaAtual++;
+		$('button[data-js="carregar-mais"]').attr('disabled', 'disabled');
+
+		_sandbox.getJSON('/reconhecimentos/ultimos/', { pagina_atual: _paginaAtual }).then(exibirUltimasApreciacoes);
+	}
+
+	function exibirUltimasApreciacoes(ultimosReconhecimentos) {
+		var totalDePaginas = ultimosReconhecimentos.total_de_paginas;
+		var conteudo = _sandbox.compilarTemplate(apreciacoesTemplate, ultimosReconhecimentos);
+
+		$('div[data-js="ultimas-apreciacoes"]').append(conteudo);
+
+		if (totalDePaginas === _paginaAtual)
+			$('button[data-js="carregar-mais"]').hide();
+		else
+			$('button[data-js="carregar-mais"]').removeAttr('disabled');
 	}
 
 	return self;

@@ -1,126 +1,48 @@
-﻿<div class="conteudo feed-principal">
-  <div class="bloco-lado-direito">
-  	<h2>Últimas apreciações</h2>
-  	{{#.}}
-  	<section data-id="{{ this.id }}" class="feed-reconhecimentos">
-  		<div class="caixa-feed">
-  			<div class="reconhecido">
-  				<img class="img-reconhecido" src="{{foto this.id_do_reconhecido}}" alt="" />
-  				<div class="sobre-reconhecido">
-  					<strong>
-  						<a href="#/perfil/{{this.id_do_reconhecido}}" class="nome cursor-pointer">{{this.nome_do_reconhecido}} foi reconhecido em {{this.pilar}}</a>
-  					</strong>
-  					<div class="data">em {{emDataLegivel this.data}}</div>
-  				</div>
-  			</div>
-  			<div class="bloco-reconhecimento">
-  				<img class="img-reconhecedor" src="{{foto this.id_do_reconhecedor}}" alt="" />
-  				<div class="texto-reconhecimento">
-  					<strong>
-  						<a href="#/perfil/{{this.id_do_reconhecedor}}" class="apreciador cursor-pointer">{{this.nome_do_reconhecedor}}</a> 
-  					</strong>
-            disse:
-  					{{#if this.situacao}}
-  						<div>
-  							<b>Situação:</b>
-  							<span>{{this.situacao}}</span>
-  						</div>
-  						<div>
-  							<b>Comportamento:</b>
-  							<span>{{this.comportamento}}</span>
-  						</div>
-  						<div>
-  							<b>Impacto:</b>
-  							<span>{{this.impacto}}</span>
-  						</div>
-  					{{else}}
-  						<p>
-  							{{this.impacto}}
-  						</p>
-  					{{/if}}
-  				</div>
-  			</div>
-  		</div>
-  	</section>
-  	{{else}}
-  	<article>
-  		<p>
-  			Não houveram reconhecimentos até o momento.
-  		</p>
-  	</article>
-  	{{/.}}
-  </div>
-</div>
-
-
-<style>
-
-.bloco-lado-direito,.bloco-lado-esquerdo {
-  display: inline-block;
-  vertical-align: top;
-}
-
-.bloco-lado-esquerdo{
-    background-color: #fff;
-    border: 1px solid #e2e2e2;
-    padding: 20px 20px;
-    width: 33%;
-
-}
-
-.bloco-lado-esquerdo .busca-colaboradores{
-  width: 279px;
-}
-
-.bloco-lado-esquerdo .busca-colaboradores input{
-      border: 1px solid #0BC0D3;
-}
-.escrever-apreciacao h2{
-    font-size: 20px;
-} 
-
-.selecionado,
-.escrever-apreciacao .selecione-o-pilar .campos:hover {
-background-color:  #0BC0D3;
-color: #fff;
-}
-
-.escrever-apreciacao .selecione-o-pilar .campos input{
-  display: none;
-}
-
-.escrever-apreciacao textarea{
-  width: 100%;
-  margin: 13px 0 0 0;
-  padding: 12px;
-  height: 100px;
-  outline: none;
-  border-radius: 5px;
-}
-
-.apreciacoes-recebidas{
-margin:2% 2%;
-}
-
-
-.bloco-lado-direito{
-  list-style: none;
-  display: inline-block;
-  vertical-align: top;
-/*  width: 64%;
-  margin-left: 2%;*/
-  width: 100%;
-}
-
-.cursor-pointer{
-	cursor: pointer;
-}
-
-a {
-	color: rgba(0,0,0,.87);
-}
-
-a:hover {
-	color: rgb(177, 148, 65);
-}
-</style>
+{{#each reconhecimentos}}
+<section data-id="{{ this.id }}" class="feed-reconhecimentos">
+    <div class="caixa-feed">
+        <div class="reconhecido">
+            <img class="img-reconhecido" src="{{foto this.id_do_reconhecido}}" alt="" />
+            <div class="sobre-reconhecido">
+                <strong>
+                    <a href="#/perfil/{{this.id_do_reconhecido}}" class="nome cursor-pointer">{{this.nome_do_reconhecido}} foi reconhecido em {{this.pilar}}</a>
+                </strong>
+                <div class="data">em {{emDataLegivel this.data}}</div>
+            </div>
+        </div>
+        <div class="bloco-reconhecimento">
+            <img class="img-reconhecedor" src="{{foto this.id_do_reconhecedor}}" alt="" />
+            <div class="texto-reconhecimento">
+                <strong>
+                    <a href="#/perfil/{{this.id_do_reconhecedor}}" class="apreciador cursor-pointer">{{this.nome_do_reconhecedor}}</a> 
+                </strong>
+                disse:
+                {{#if this.situacao}}
+                    <div>
+                        <b>Situação:</b>
+                        <span>{{this.situacao}}</span>
+                    </div>
+                    <div>
+                        <b>Comportamento:</b>
+                        <span>{{this.comportamento}}</span>
+                    </div>
+                    <div>
+                        <b>Impacto:</b>
+                        <span>{{this.impacto}}</span>
+                    </div>
+                {{else}}
+                    <p>
+                        {{this.impacto}}
+                    </p>
+                {{/if}}
+            </div>
+        </div>
+    </div>
+</section>
+{{else}}
+<article>
+    <p>
+        Não houveram reconhecimentos até o momento.
+    </p>
+</article>
+{{/each}}

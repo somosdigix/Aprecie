@@ -1,10 +1,12 @@
 ﻿from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render
 from django.utils import formats
+from django.db.models import Count
+from django.core.paginator import Paginator
+
 from Login.models import Colaborador
 from Reconhecimentos.models import Pilar, Valor, Reconhecimento, ReconhecimentoHistorico, Feedback
 from Reconhecimentos.services import Notificacoes
-from django.db.models import Count
 
 def reconhecer(requisicao):
   id_do_reconhecedor = requisicao.POST['id_do_reconhecedor']
@@ -25,7 +27,11 @@ def reconhecer(requisicao):
   return JsonResponse({})
 
 def ultimos_reconhecimentos(requisicao):
-  reconhecimentos = Reconhecimento.objects.all().order_by('-id')[:10]
+  reconhecimentos = Reconhecimento.objects.all().order_by('-id')
+
+  pagina_atual = int(requisicao.GET['pagina_atual'])
+  paginacao = Paginator(reconhecimentos, 10)
+  pagina = paginacao.page(pagina_atual)
 
   reconhecimentos_mapeados = list(map(lambda reconhecimento: {
     'id': reconhecimento.pk,
@@ -38,9 +44,15 @@ def ultimos_reconhecimentos(requisicao):
     'comportamento': reconhecimento.feedback.comportamento,
     'impacto': reconhecimento.feedback.impacto,
     'data': reconhecimento.data
-  }, reconhecimentos))
+  }, pagina.object_list))
 
-  return JsonResponse(reconhecimentos_mapeados, safe=False)
+  retorno = {
+    'total_de_paginas': paginacao.num_pages,
+    'pagina_atual': pagina.number,
+    'reconhecimentos': reconhecimentos_mapeados
+  }
+
+  return JsonResponse(retorno, safe=False)
 
 def reconhecimentos_do_colaborador(requisicao, id_do_reconhecido):
   reconhecido = Colaborador.objects.get(id = id_do_reconhecido)
