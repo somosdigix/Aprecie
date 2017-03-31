@@ -52,6 +52,9 @@ define([
   }
 
   function validarOperacao(reconhecerViewModel) {
+    if (!reconhecerViewModel.id_do_pilar)
+      throw new ViolacaoDeRegra('O pilar deve ser informado');
+
     if (reconhecerViewModel.situacao === '')
       throw new ViolacaoDeRegra('A situação deve ser informada');
 
