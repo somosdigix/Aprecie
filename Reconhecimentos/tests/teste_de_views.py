@@ -18,6 +18,10 @@ class TesteDeApiDeReconhecimento(TestCase):
 
     self.logar(self.reconhecedor)
 
+    self.parametros_de_consulta = {
+      'pagina_atual': 1
+    }
+
     self.dados_do_reconhecimento = {
       'id_do_reconhecido': self.reconhecido.id,
       'id_do_reconhecedor': self.reconhecedor.id,
@@ -43,20 +47,29 @@ class TesteDeApiDeReconhecimento(TestCase):
   def testa_a_listagem_dos_ultimos_reconhecimentos_realizados(self):
     self.criar_reconhecimentos(2)
 
-    resposta = self.client.post(reverse('ultimos_reconhecimentos'))
+    resposta = self.client.get(reverse('ultimos_reconhecimentos'), self.parametros_de_consulta)
     resposta_json = json.loads(resposta.content.decode())
 
     self.assertEqual(200, resposta.status_code)
-    self.assertEqual(2, len(resposta_json))
+    self.assertEqual(2, len(resposta_json['reconhecimentos']))
 
   def testa_que_apenas_10_reconhecimentos_sao_listados(self):
     self.criar_reconhecimentos(15)
 
-    resposta = self.client.post(reverse('ultimos_reconhecimentos'))
+    resposta = self.client.get(reverse('ultimos_reconhecimentos'), self.parametros_de_consulta)
     resposta_json = json.loads(resposta.content.decode())
 
     self.assertEqual(200, resposta.status_code)
-    self.assertEqual(10, len(resposta_json))
+    self.assertEqual(10, len(resposta_json['reconhecimentos']))
+
+  def testa_que_os_proximos_reconhecimentos_sao_listados_ao_trocar_de_pagina(self):
+    self.criar_reconhecimentos(15)
+
+    resposta = self.client.get(reverse('ultimos_reconhecimentos'), { 'pagina_atual': 2 })
+    resposta_json = json.loads(resposta.content.decode())
+
+    self.assertEqual(200, resposta.status_code)
+    self.assertEqual(5, len(resposta_json['reconhecimentos']))
 
   def testa_reconhecimentos_de_uma_pessoa_agrupados_por_reconhecedor(self):
     reconhecido = ColaboradorFactory()
