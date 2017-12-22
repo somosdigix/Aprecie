@@ -75,9 +75,11 @@ TIME_ZONE = 'America/Campo_Grande'
 
 USE_TZ = False
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static').replace('\\', '/') 
 
-STATIC_URL = '/'
+STATIC_URL = '/static/'
+
+STATICFILES_DIRS = ()
 
 ON_OPENSHIFT = "OPENSHIFT_APP_NAME" in os.environ
 
