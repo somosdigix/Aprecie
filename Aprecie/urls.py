@@ -5,7 +5,8 @@ from django.conf import settings
 from Aprecie import views
 
 urlpatterns = [
-    url(r'^$', 'django.contrib.staticfiles.views.serve', kwargs={ 'path': 'index.html' }),
+    # url(r'^$', 'django.contrib.staticfiles.views.serve', kwargs={ 'path': 'index.html' }),
+    url(r'^$', 'helloworld.views.home', name='home'),
     url(r'^logon', views.login),
     url(r'^app/', views.index),
     url(r'^login/', include('Login.urls')),

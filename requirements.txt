@@ -5,3 +5,4 @@ factory-boy==2.5.2
 Pillow==2.9.0
 pytz==2015.4
 slackweb==1.0.5
+wfastcgi==3.0.0
