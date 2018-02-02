@@ -17,5 +17,10 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
+      migrations.AlterField(
+          model_name='valor',
+          name='resumo',
+          field=models.CharField(max_length=200),
+        ),
         migrations.RunPython(migrar_descricoes)
     ]
