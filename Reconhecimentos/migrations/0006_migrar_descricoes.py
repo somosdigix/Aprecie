@@ -8,7 +8,7 @@ def migrar_descricoes(apps, schema_editor):
 
     for valor in Valor.objects.all():
         for descricao in valor.descricao.split("|"):
-            valor.descricoes.create(descricao=descricao)
+            valor.descricoes.create(descricao='')
 
 class Migration(migrations.Migration):
 
