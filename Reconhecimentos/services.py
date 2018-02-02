@@ -4,7 +4,7 @@ from Aprecie import settings
 class Notificacoes():
 	@staticmethod
 	def notificar_no_slack(reconhecedor, reconhecido, pilar):
-		if not settings.ON_OPENSHIFT or not reconhecedor.usuario_no_slack or not reconhecido.usuario_no_slack:
+		if not settings.ON_AZURE or not reconhecedor.usuario_no_slack or not reconhecido.usuario_no_slack:
 			return
 
 		mensagem = '*@{0}* acabou de ser reconhecido(a) em *{1}* por *@{2}*'.format(reconhecido.usuario_no_slack, pilar.nome, reconhecedor.usuario_no_slack)

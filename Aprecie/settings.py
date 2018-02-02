@@ -81,7 +81,7 @@ STATIC_URL = '/static/'
 
 STATICFILES_DIRS = ()
 
-ON_OPENSHIFT = "OPENSHIFT_APP_NAME" in os.environ
+ON_AZURE = "AZURE_APP_NAME" in os.environ
 
 URL_DO_AMBIENTE = "aprecie.me"
 
@@ -91,22 +91,22 @@ COMPRESS_PRECOMPILERS = (
 
 COMPRESS_ROOT = os.path.join(BASE_DIR, "static")
 
-if ON_OPENSHIFT:
-    URL_DO_AMBIENTE = os.environ['OPENSHIFT_APP_DNS']
+if ON_AZURE:
+    # URL_DO_AMBIENTE = os.environ['AZURE_APP_DNS']
 
     DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME':     os.environ['OPENSHIFT_APP_NAME'],
-            'USER':     os.environ['OPENSHIFT_POSTGRESQL_DB_USERNAME'],
-            'PASSWORD': os.environ['OPENSHIFT_POSTGRESQL_DB_PASSWORD'],
-            'HOST':     os.environ['OPENSHIFT_POSTGRESQL_DB_HOST'],
-            'PORT':     os.environ['OPENSHIFT_POSTGRESQL_DB_PORT'],
-        }
+      'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME':     os.environ['AZURE_APP_NAME'],
+        'USER':     os.environ['AZURE_DB_USERNAME'],
+        'PASSWORD': os.environ['AZURE_DB_PASSWORD'],
+        'HOST':     os.environ['AZURE_DB_HOST'],
+        'PORT':     os.environ['AZURE_DB_PORT'],
+      }
     }
 
-    STATIC_ROOT = os.path.join(os.environ['OPENSHIFT_REPO_DIR'], 'wsgi', 'static')
-    COMPRESS_ROOT = STATIC_ROOT
+    # STATIC_ROOT = os.path.join(os.environ['AZURE_REPO_DIR'], 'wsgi', 'static')
+    # COMPRESS_ROOT = STATIC_ROOT
 
 STATICFILES_FINDERS = (
     "django.contrib.staticfiles.finders.FileSystemFinder",
