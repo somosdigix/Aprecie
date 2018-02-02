@@ -1,4 +1,5 @@
 ﻿import os
+import dj_database_url
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -81,7 +82,7 @@ STATIC_URL = '/static/'
 
 STATICFILES_DIRS = ()
 
-ON_AZURE = "AZURE_APP_NAME" in os.environ
+IN_RELEASE_ENV = "APP_NAME" in os.environ
 
 URL_DO_AMBIENTE = "aprecie.me"
 
@@ -91,25 +92,17 @@ COMPRESS_PRECOMPILERS = (
 
 COMPRESS_ROOT = os.path.join(BASE_DIR, "static")
 
-if ON_AZURE:
-    # URL_DO_AMBIENTE = os.environ['AZURE_APP_DNS']
+if IN_RELEASE_ENV:
+  # URL_DO_AMBIENTE = os.environ['APP_DNS']
 
-    DATABASES = {
-      'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME':     os.environ['AZURE_APP_NAME'],
-        'USER':     os.environ['AZURE_DB_USERNAME'],
-        'PASSWORD': os.environ['AZURE_DB_PASSWORD'],
-        'HOST':     os.environ['AZURE_DB_HOST'],
-        'PORT':     os.environ['AZURE_DB_PORT'],
-      }
-    }
+  db_from_env = dj_database_url.config(conn_max_age=500)
+  DATABASES['default'].update(db_from_env)
 
-    # STATIC_ROOT = os.path.join(os.environ['AZURE_REPO_DIR'], 'wsgi', 'static')
-    # COMPRESS_ROOT = STATIC_ROOT
+  # STATIC_ROOT = os.path.join(os.environ['REPO_DIR'], 'wsgi', 'static')
+  # COMPRESS_ROOT = STATIC_ROOT
 
 STATICFILES_FINDERS = (
-    "django.contrib.staticfiles.finders.FileSystemFinder",
-    "django.contrib.staticfiles.finders.AppDirectoriesFinder",
-    'compressor.finders.CompressorFinder', 
+  "django.contrib.staticfiles.finders.FileSystemFinder",
+  "django.contrib.staticfiles.finders.AppDirectoriesFinder",
+  'compressor.finders.CompressorFinder', 
 )

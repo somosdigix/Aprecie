@@ -1,1 +1,0 @@
-docker build --tag renansmoreira/aprecieme:v1.0.0 .
