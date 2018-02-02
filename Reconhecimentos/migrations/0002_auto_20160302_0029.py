@@ -18,7 +18,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='valor',
             name='resumo',
-            field=models.CharField(max_length=100,default=''),
+            field=models.CharField(max_length=200,default=''),
             preserve_default=False,
         ),
     ]

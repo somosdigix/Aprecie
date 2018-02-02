@@ -15,7 +15,7 @@ class DescricaoDoValor(models.Model):
 
 class Valor(models.Model):
   nome = models.CharField(max_length=200)
-  resumo = models.CharField(max_length=100)
+  resumo = models.CharField(max_length=200)
   descricoes = models.ManyToManyField(DescricaoDoValor)
 
   @property
