@@ -45,7 +45,7 @@ def obter_imagem(colaborador):
 		b64 = match.group('b64')
 		image = Image.open(BytesIO(base64.b64decode(b64)))
 	else:
-		caminho_da_foto_padrao = os.path.join(settings.STATICFILES_DIRS[0], "img", "sem-foto.png")
+		caminho_da_foto_padrao = os.path.join(settings.STATIC_ROOT, "img", "sem-foto.png")
 		image = Image.open(caminho_da_foto_padrao)
 
 	return image
