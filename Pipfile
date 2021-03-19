@@ -7,7 +7,7 @@ url = "https://pypi.python.org/simple"
 
 [packages]
 
-django = "==1.8.2"
+django = "==1.11.29"
 django-appconf = "==1.0.2"
 django-compressor = "==1.5"
 factory-boy = "==2.5.2"
