@@ -14,7 +14,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='reconhecimento',
             name='feedback',
-            field=models.ForeignKey(to='Reconhecimentos.Feedback', related_name='feedback', default=None),
+            field=models.ForeignKey(to='Reconhecimentos.Feedback', related_name='feedback', default=None, on_delete=models.CASCADE),
             preserve_default=False,
         ),
     ]

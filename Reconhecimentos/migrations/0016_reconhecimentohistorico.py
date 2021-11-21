@@ -18,10 +18,10 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, verbose_name='ID', primary_key=True, serialize=False)),
                 ('data', models.DateField()),
-                ('feedback', models.ForeignKey(related_name='feedback_historico', to='Reconhecimentos.Feedback')),
-                ('reconhecedor', models.ForeignKey(related_name='reconhecedor_historico', to=settings.AUTH_USER_MODEL)),
-                ('reconhecido', models.ForeignKey(related_name='reconhecido_historico', to=settings.AUTH_USER_MODEL)),
-                ('valor', models.ForeignKey(to='Reconhecimentos.Valor')),
+                ('feedback', models.ForeignKey(related_name='feedback_historico', to='Reconhecimentos.Feedback', on_delete=models.CASCADE)),
+                ('reconhecedor', models.ForeignKey(related_name='reconhecedor_historico', to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)),
+                ('reconhecido', models.ForeignKey(related_name='reconhecido_historico', to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)),
+                ('valor', models.ForeignKey(to='Reconhecimentos.Valor', on_delete=models.CASCADE)),
             ],
         ),
     ]

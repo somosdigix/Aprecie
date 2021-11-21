@@ -14,6 +14,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='reconhecimento',
             name='pilar',
-            field=models.ForeignKey(to='Reconhecimentos.Pilar'),
+            field=models.ForeignKey(to='Reconhecimentos.Pilar', on_delete=models.CASCADE),
         ),
     ]

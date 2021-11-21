@@ -18,8 +18,8 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(primary_key=True, verbose_name='ID', serialize=False, auto_created=True)),
                 ('justificativa', models.CharField(max_length=200)),
                 ('data', models.DateField(auto_now_add=True)),
-                ('reconhecedor', models.ForeignKey(related_name='reconhecedor', to=settings.AUTH_USER_MODEL)),
-                ('reconhecido', models.ForeignKey(related_name='reconhecido', to=settings.AUTH_USER_MODEL)),
+                ('reconhecedor', models.ForeignKey(related_name='reconhecedor', to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)),
+                ('reconhecido', models.ForeignKey(related_name='reconhecido', to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)),
             ],
         ),
         migrations.CreateModel(
@@ -32,6 +32,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='reconhecimento',
             name='valor',
-            field=models.ForeignKey(to='Reconhecimentos.Valor'),
+            field=models.ForeignKey(to='Reconhecimentos.Valor', on_delete=models.CASCADE),
         ),
     ]
