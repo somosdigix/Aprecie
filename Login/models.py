@@ -4,6 +4,7 @@ from django.contrib.auth.models import AbstractBaseUser
 from Aprecie.base import ExcecaoDeDominio
 
 class Colaborador(AbstractBaseUser):
+  id = models.AutoField(primary_key=True)
   cpf = models.CharField(max_length=11, unique=True)
   nome = models.CharField(max_length=200)
   data_de_nascimento = models.DateField()

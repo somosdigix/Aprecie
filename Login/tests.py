@@ -1,20 +1,24 @@
-﻿import json
-from datetime import datetime
+import json
 from django.test import TestCase
 from django.utils import timezone
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 
 from Aprecie.base import ExcecaoDeDominio
 from Login.factories import ColaboradorFactory
-from Reconhecimentos.models import Reconhecimento, Pilar, Feedback
-from Reconhecimentos.factories import ReconhecimentoFactory, FeedbackFactory
+from Reconhecimentos.models import Pilar
+from Reconhecimentos.factories import FeedbackFactory
 
 class TesteDeColaborador(TestCase):
 	def setUp(self):
 		self.colaborador = ColaboradorFactory()
 		self.reconhecedor = ColaboradorFactory()
 		
-		self.pilar = Pilar.objects.get(nome='Colaborar sempre')
+		self.pilar = Pilar.objects.create(nome='Colaborar sempre', descricao='Descrição do pilar de colaborar sempre')
+		self.pilar.save()
+		
+		self.outroPilar = Pilar.objects.create(nome='Fazer diferente', descricao='Descrição do pilar de fazer diferente')
+		self.outroPilar.save()
+
 		self.feedback = FeedbackFactory()
 
 	def testa_que_a_foto_do_colaborador_eh_alterada(self):
@@ -94,15 +98,14 @@ class TesteDeColaborador(TestCase):
 		self.assertEqual(pilares_esperados, list(pilar_reconhecidos))
 
 	def testa_a_listagem_de_reconhecimentos_por_pilar(self):
-		outroPilar = Pilar.objects.get(nome='Fazer diferente')
 		segundoFeedback = FeedbackFactory(descritivo = 'Descritivo 2')
 		terceiroFeedback = FeedbackFactory(descritivo = 'Descritivo 3')
 
-		self.colaborador.reconhecer(self.reconhecedor, outroPilar, self.feedback)
+		self.colaborador.reconhecer(self.reconhecedor, self.outroPilar, self.feedback)
 		self.colaborador.reconhecer(self.reconhecedor, self.pilar, segundoFeedback)
 		self.colaborador.reconhecer(self.reconhecedor, self.pilar, terceiroFeedback)
 
-		self.assertEqual(1, len(self.colaborador.reconhecimentos_por_pilar(outroPilar)))
+		self.assertEqual(1, len(self.colaborador.reconhecimentos_por_pilar(self.outroPilar)))
 		self.assertEqual(2, len(self.colaborador.reconhecimentos_por_pilar(self.pilar)))
 
 	def testa_que_o_colaborador_nao_pode_se_reconher(self):
@@ -122,6 +125,7 @@ class TesteDeColaborador(TestCase):
 class TesteDeAutenticacao(TestCase):
 	def testa_autenticacao_de_colaborador_existente(self):
 		colaborador = ColaboradorFactory()
+		colaborador.save()
 		dados_da_requisicao = dict(cpf=colaborador.cpf, data_de_nascimento=colaborador.data_de_nascimento.strftime('%d/%m/%Y'))
 
 		resposta = self.client.post(reverse('entrar'), dados_da_requisicao)

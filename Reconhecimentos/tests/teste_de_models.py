@@ -1,56 +1,46 @@
 ﻿from datetime import date, datetime, timedelta
 from django.test import TestCase
 
-from Login.factories import ColaboradorFactory
+from Login.factories import ColaboradorFactory, PilarFactory
 from Reconhecimentos.models import *
 from Reconhecimentos.factories import *
 
 class TesteDeReconhecimento(TestCase):
-  def setUp(self):
-    self.feedback = FeedbackFactory()
-    self.reconhecido = ColaboradorFactory()
-    self.reconhecedor = ColaboradorFactory()
-    self.responsabilidade = Valor.objects.get(nome='Responsabilidade')
-    self.inquietude = Valor.objects.get(nome='Inquietude')
+	def setUp(self):
+		self.feedback = FeedbackFactory()
+		self.reconhecido = ColaboradorFactory()
+		self.reconhecedor = ColaboradorFactory()
 
-  def testa_alteracao_de_um_feedback(self):
-    reconhecimento = ReconhecimentoFactory(reconhecedor=self.reconhecedor)
-    novo_feedback = FeedbackFactory()
+		PilarFactory(nome='Colaborar sempre').save()
+		PilarFactory().save()
 
-    reconhecimento.alterar_feedback(novo_feedback, self.reconhecedor)
+	def testa_alteracao_de_um_feedback(self):
+		reconhecimento = ReconhecimentoFactory(reconhecedor=self.reconhecedor)
+		novo_feedback = FeedbackFactory()
 
-    self.assertEqual(novo_feedback, reconhecimento.feedback)
+		reconhecimento.alterar_feedback(novo_feedback, self.reconhecedor)
 
-  def testa_que_nao_permite_alteracao_de_feedback_depois_de_1_dia(self):
-    ontem = datetime.now() - timedelta(days=1)
-    reconhecimento = ReconhecimentoFactory(reconhecedor=self.reconhecedor)
-    reconhecimento.data = ontem
-    novo_feedback = FeedbackFactory()
+		self.assertEqual(novo_feedback, reconhecimento.feedback)
 
-    with self.assertRaises(Exception) as contexto:
-      reconhecimento.alterar_feedback(novo_feedback, self.reconhecedor)
+	def testa_que_nao_permite_alteracao_de_feedback_depois_de_1_dia(self):
+		ontem = datetime.now() - timedelta(days=1)
+		reconhecimento = ReconhecimentoFactory(reconhecedor=self.reconhecedor)
+		reconhecimento.data = ontem
+		novo_feedback = FeedbackFactory()
 
-    self.assertEqual('O reconhecimento só pode ser alterado no mesmo dia de sua realização', contexto.exception.args[0])
+		with self.assertRaises(Exception) as contexto:
+			reconhecimento.alterar_feedback(novo_feedback, self.reconhecedor)
 
-  def testa_que_o_feedback_so_pode_ser_alterado_por_quem_o_criou(self):
-    reconhecimento = ReconhecimentoFactory()
-    novo_feedback = FeedbackFactory()
-    outro_reconhecedor = self.reconhecedor
+		self.assertEqual('O reconhecimento só pode ser alterado no mesmo dia de sua realização', contexto.exception.args[0])
 
-    with self.assertRaises(Exception) as contexto:
-      reconhecimento.alterar_feedback(novo_feedback, self.reconhecedor)
+	def testa_que_o_feedback_so_pode_ser_alterado_por_quem_o_criou(self):
+		reconhecimento = ReconhecimentoFactory()
+		novo_feedback = FeedbackFactory()
 
-    self.assertEqual('O reconhecimento só pode ser alterado por quem o elaborou', contexto.exception.args[0])
+		with self.assertRaises(Exception) as contexto:
+			reconhecimento.alterar_feedback(novo_feedback, self.reconhecedor)
 
-class TesteDeValor(TestCase):
-  def testa_que_valor_sabe_retornar_uma_lista_de_frases_que_o_descreve_detalhadamente(self):
-    descricao1 = DescricaoDoValorFactory(descricao="descricao1")
-    descricao2 = DescricaoDoValorFactory(descricao="descricao2")
-    valor = ValorFactory(descricoes=(descricao1, descricao2))
-
-    detalhes = valor.frases_de_descricao
-
-    self.assertEqual([descricao1.descricao, descricao2.descricao], detalhes)
+		self.assertEqual('O reconhecimento só pode ser alterado por quem o elaborou', contexto.exception.args[0])
 
 class TesteDeFeedback(TestCase):
   def testa_que_deve_possuir_o_descritivo(self):

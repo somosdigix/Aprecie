@@ -3,29 +3,23 @@ from django.db import models
 from Aprecie.base import ExcecaoDeDominio
 
 class Pilar(models.Model):
+  id = models.AutoField(primary_key=True)
   nome = models.CharField(max_length=200)
   descricao = models.CharField(max_length=1000)
 
   def __eq__(self, other):
     return self.nome == other.nome
 
-class DescricaoDoValor(models.Model):
-  descricao = models.CharField(max_length=100)
-
-class Valor(models.Model):
-  nome = models.CharField(max_length=200)
-  resumo = models.CharField(max_length=200)
-  descricoes = models.ManyToManyField(DescricaoDoValor)
-
   @property
   def frases_de_descricao(self):
     return list(self.descricoes.values_list('descricao', flat=True))
 
 class Reconhecimento(models.Model):
-  reconhecedor = models.ForeignKey('Login.Colaborador', related_name='reconhecedor')
-  reconhecido = models.ForeignKey('Login.Colaborador', related_name='reconhecido')
-  feedback = models.ForeignKey('Feedback', related_name='feedback')
-  pilar = models.ForeignKey(Pilar)
+  id = models.AutoField(primary_key=True)
+  reconhecedor = models.ForeignKey('Login.Colaborador', related_name='reconhecedor', on_delete=models.CASCADE)
+  reconhecido = models.ForeignKey('Login.Colaborador', related_name='reconhecido', on_delete=models.CASCADE)
+  feedback = models.ForeignKey('Feedback', related_name='feedback', on_delete=models.CASCADE)
+  pilar = models.ForeignKey(Pilar, on_delete=models.CASCADE)
   data = models.DateField(auto_now_add=True)
 
   def alterar_feedback(self, novo_feedback, reconhecedor):
@@ -38,12 +32,14 @@ class Reconhecimento(models.Model):
     self.feedback = novo_feedback
 
 class Feedback(models.Model):
+  id = models.AutoField(primary_key=True)
   descritivo = models.CharField(max_length=1000)
 
   def __eq__(self, other):
     return self.descritivo == other.descritivo
 
 class FeedbackSCI(models.Model):
+  id = models.AutoField(primary_key=True)
   situacao = models.CharField(max_length=1000)
   comportamento = models.CharField(max_length=1000)
   impacto = models.CharField(max_length=1000)

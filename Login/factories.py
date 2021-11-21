@@ -1,3 +1,4 @@
+from Reconhecimentos.models import Pilar
 import factory
 from Login.models import Colaborador
 from datetime import datetime, timedelta
@@ -6,6 +7,13 @@ import random
 def gerar_data_aleatoria():
 	anos_atras = random.randint(20, 80) * 365
 	return datetime.today() - timedelta(days=anos_atras)
+
+class PilarFactory(factory.django.DjangoModelFactory):
+	class Meta:
+		model = Pilar
+
+	nome = 'Fazer diferente'
+	descricao = 'Descrição do pilar de fazer diferente'
 
 class ColaboradorFactory(factory.django.DjangoModelFactory):
 

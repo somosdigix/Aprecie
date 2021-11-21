@@ -76,8 +76,8 @@ def todas_as_apreciacoes(requisicao, id_do_reconhecido):
   reconhecido = Colaborador.objects.get(id=id_do_reconhecido)
   
   apreciacoes = reconhecido.reconhecimentos() \
-    .values('data', 'pilar__nome', 'feedback__situacao', 'feedback__comportamento', \
-            'feedback__impacto', 'reconhecedor__nome', 'reconhecedor__id') \
+    .values('data', 'pilar__nome', 'feedback__descritivo', \
+            'reconhecedor__nome', 'reconhecedor__id') \
     .order_by('-data', '-id')
 
   resposta = {
@@ -93,8 +93,8 @@ def reconhecimentos_por_pilar(requisicao, id_do_reconhecido, id_do_pilar):
   reconhecido = Colaborador.objects.get(id=id_do_reconhecido)
   pilar = Pilar.objects.get(id=id_do_pilar)
   reconhecimentos = reconhecido.reconhecimentos_por_pilar(id_do_pilar) \
-    .values('data', 'feedback__situacao', 'feedback__comportamento', \
-            'feedback__impacto', 'reconhecedor__nome', 'reconhecedor__id') \
+    .values('data', 'feedback__descritivo', \
+            'reconhecedor__nome', 'reconhecedor__id') \
     .order_by('-data', '-id')
 
   resposta = {
