@@ -24,7 +24,7 @@ class TesteDeColaborador(TestCase):
 			'id_do_colaborador': self.colaborador.id
 		}
 
-		resposta = self.client.post(reverse('alterar_foto'), dados_da_requisicao)
+		self.client.post(reverse('alterar_foto'), dados_da_requisicao)
 
 		self.colaborador.refresh_from_db()
 		self.assertEqual(nova_foto, self.colaborador.foto)
@@ -68,13 +68,11 @@ class TesteDeColaborador(TestCase):
 		self.assertEqual(self.reconhecedor, reconhecimento.reconhecedor)
 		self.assertEqual(self.pilar, reconhecimento.pilar)
 
-	def testa_que_feedback_esta_no_formato_sci(self):
+	def testa_que_feedback_esta_no_formato_simplificado(self):
 		self.colaborador.reconhecer(self.reconhecedor, self.pilar, self.feedback)
 		reconhecimento = self.colaborador.reconhecimentos()[0]
 
-		self.assertEqual(self.feedback.situacao, reconhecimento.feedback.situacao)
-		self.assertEqual(self.feedback.comportamento, reconhecimento.feedback.comportamento)
-		self.assertEqual(self.feedback.impacto, reconhecimento.feedback.impacto)
+		self.assertEqual(self.feedback.descritivo, reconhecimento.feedback.descritivo)
 
 	def testa_que_armazena_a_data_do_reconhecimento(self):
 		self.colaborador.reconhecer(self.reconhecedor, self.pilar, self.feedback)
@@ -86,7 +84,7 @@ class TesteDeColaborador(TestCase):
 		self.assertEqual(agora.day, reconhecimento.data.day)
 
 	def testa_a_listagem_de_reconhecimentos(self):
-		segundoFeedback = FeedbackFactory(situacao = 'Situação 2')
+		segundoFeedback = FeedbackFactory(descritivo = 'Descritivo 2')
 
 		self.colaborador.reconhecer(self.reconhecedor, self.pilar, self.feedback)
 		self.colaborador.reconhecer(self.reconhecedor, self.pilar, segundoFeedback)
@@ -97,8 +95,8 @@ class TesteDeColaborador(TestCase):
 
 	def testa_a_listagem_de_reconhecimentos_por_pilar(self):
 		outroPilar = Pilar.objects.get(nome='Fazer diferente')
-		segundoFeedback = FeedbackFactory(situacao = 'Situação 2')
-		terceiroFeedback = FeedbackFactory(situacao = 'Situação 3')
+		segundoFeedback = FeedbackFactory(descritivo = 'Descritivo 2')
+		terceiroFeedback = FeedbackFactory(descritivo = 'Descritivo 3')
 
 		self.colaborador.reconhecer(self.reconhecedor, outroPilar, self.feedback)
 		self.colaborador.reconhecer(self.reconhecedor, self.pilar, segundoFeedback)

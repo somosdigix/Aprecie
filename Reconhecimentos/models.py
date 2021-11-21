@@ -1,5 +1,4 @@
-﻿import django
-from datetime import date
+﻿from datetime import date
 from django.db import models
 from Aprecie.base import ExcecaoDeDominio
 
@@ -38,14 +37,13 @@ class Reconhecimento(models.Model):
 
     self.feedback = novo_feedback
 
-class ReconhecimentoHistorico(models.Model):
-  reconhecedor = models.ForeignKey('Login.Colaborador', related_name='reconhecedor_historico')
-  reconhecido = models.ForeignKey('Login.Colaborador', related_name='reconhecido_historico')
-  feedback = models.ForeignKey('Feedback', related_name='feedback_historico')
-  valor = models.ForeignKey(Valor)
-  data = models.DateField()
-
 class Feedback(models.Model):
+  descritivo = models.CharField(max_length=1000)
+
+  def __eq__(self, other):
+    return self.descritivo == other.descritivo
+
+class FeedbackSCI(models.Model):
   situacao = models.CharField(max_length=1000)
   comportamento = models.CharField(max_length=1000)
   impacto = models.CharField(max_length=1000)

@@ -50,9 +50,7 @@ class Colaborador(AbstractBaseUser):
     return self.reconhecido.filter(
         reconhecedor = reconhecedor,
         pilar = pilar,
-        feedback__situacao = feedback.situacao,
-        feedback__comportamento = feedback.comportamento,
-        feedback__impacto = feedback.impacto
+        feedback__descritivo = feedback.descritivo
       ).exists()
 
   def reconhecimentos(self):

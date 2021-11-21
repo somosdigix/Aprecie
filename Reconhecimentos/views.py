@@ -5,21 +5,19 @@ from django.db.models import Count
 from django.core.paginator import Paginator
 
 from Login.models import Colaborador
-from Reconhecimentos.models import Pilar, Valor, Reconhecimento, ReconhecimentoHistorico, Feedback
+from Reconhecimentos.models import Pilar, Reconhecimento, Feedback
 from Reconhecimentos.services import Notificacoes
 
 def reconhecer(requisicao):
   id_do_reconhecedor = requisicao.POST['id_do_reconhecedor']
   id_do_reconhecido = requisicao.POST['id_do_reconhecido']
   id_do_pilar = requisicao.POST['id_do_pilar']
-  situacao = requisicao.POST['situacao']
-  comportamento = requisicao.POST['comportamento']
-  impacto = requisicao.POST['impacto']
+  descritivo = requisicao.POST['descritivo']
 
   reconhecido = Colaborador.objects.get(id = id_do_reconhecido)
   reconhecedor = Colaborador.objects.get(id = id_do_reconhecedor)
   pilar = Pilar.objects.get(id = id_do_pilar)
-  feedback = Feedback.objects.create(situacao = situacao, comportamento = comportamento, impacto = impacto)
+  feedback = Feedback.objects.create(descritivo = descritivo)
 
   reconhecido.reconhecer(reconhecedor, pilar, feedback)
   Notificacoes.notificar_no_slack(reconhecedor, reconhecido, pilar)
@@ -40,9 +38,7 @@ def ultimos_reconhecimentos(requisicao):
     'id_do_reconhecido': reconhecimento.reconhecido.id,
     'nome_do_reconhecido': reconhecimento.reconhecido.nome_abreviado,
     'pilar': reconhecimento.pilar.nome,
-    'situacao': reconhecimento.feedback.situacao,
-    'comportamento': reconhecimento.feedback.comportamento,
-    'impacto': reconhecimento.feedback.impacto,
+    'descritivo': reconhecimento.feedback.descritivo,
     'data': reconhecimento.data
   }, pagina.object_list))
 
@@ -66,24 +62,6 @@ def reconhecimentos_do_colaborador(requisicao, id_do_reconhecido):
 
   return JsonResponse({ 'id': reconhecido.id, 'nome': reconhecido.nome_abreviado, 'pilares': pilares }, safe = False)
 
-def reconhecimentos_historicos_do_colaborador(requisicao, id_do_reconhecido):
-  reconhecimentos_historicos = ReconhecimentoHistorico.objects \
-    .filter(reconhecido=id_do_reconhecido) \
-    .order_by('-id')
-
-  resposta = list(map(lambda reconhecimento_historico: {
-      'id': reconhecimento_historico.id,
-      'id_do_reconhecedor': reconhecimento_historico.reconhecedor.id,
-      'nome_do_reconhecedor': reconhecimento_historico.reconhecedor.nome_abreviado,
-      'valor': reconhecimento_historico.valor.nome,
-      'situacao': reconhecimento_historico.feedback.situacao,
-      'comportamento': reconhecimento_historico.feedback.comportamento,
-      'impacto': reconhecimento_historico.feedback.impacto,
-      'data': reconhecimento_historico.data
-    }, reconhecimentos_historicos))
-
-  return JsonResponse(resposta, safe = False)
-
 def reconhecimentos_por_reconhecedor(requisicao, id_do_reconhecido):
   reconhecedores = Reconhecimento.objects.filter(reconhecido = id_do_reconhecido) \
     .values('reconhecedor__nome', 'reconhecedor', 'reconhecedor__id', 'pilar__id') \
@@ -102,16 +80,8 @@ def todas_as_apreciacoes(requisicao, id_do_reconhecido):
             'feedback__impacto', 'reconhecedor__nome', 'reconhecedor__id') \
     .order_by('-data', '-id')
 
-  apreciacoes_historicas = ReconhecimentoHistorico.objects \
-    .filter(reconhecido=id_do_reconhecido) \
-    .values('data', 'valor__nome', 'feedback__situacao', 'feedback__comportamento', \
-            'feedback__impacto', 'reconhecedor__nome', 'reconhecedor__id') \
-    .order_by('-data', '-id')
-
-  retorno = list(apreciacoes) + list(apreciacoes_historicas)
-
   resposta = {
-    'apreciacoes': retorno
+    'apreciacoes': list(apreciacoes)
   }
 
   return JsonResponse(resposta)

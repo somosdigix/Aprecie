@@ -38,17 +38,13 @@ class ReconhecimentoFactory(factory.django.DjangoModelFactory):
   feedback = factory.SubFactory('Reconhecimentos.factories.FeedbackFactory')
   data = '2015-01-01'
 
-class ReconhecimentoHistoricoFactory(factory.django.DjangoModelFactory):
-  class Meta:
-    model = ReconhecimentoHistorico
-
-  reconhecedor = factory.SubFactory(ColaboradorFactory)
-  reconhecido = factory.SubFactory(ColaboradorFactory)
-  valor = Valor.objects.get(nome='Alegria')
-  feedback = factory.SubFactory('Reconhecimentos.factories.FeedbackFactory')
-  data = '2015-01-01'
-
 class FeedbackFactory(factory.django.DjangoModelFactory):
+  class Meta:
+    model = Feedback
+
+  descritivo = 'Você fez tal coisa...'
+
+class FeedbackSCIFactory(factory.django.DjangoModelFactory):
   class Meta:
     model = Feedback
 
