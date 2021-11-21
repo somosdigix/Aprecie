@@ -14,12 +14,7 @@ class TesteDeApiDeReconhecimento(TestCase):
 		self.reconhecido = ColaboradorFactory()
 		self.reconhecedor = ColaboradorFactory()
 		self.feedback = FeedbackFactory()
-		self.pilar_de_fazer_diferente = PilarFactory(nome='Fazer diferente')
-		self.pilar_de_fazer_diferente.save()
-
-		PilarFactory(nome='Colaborar sempre').save()
-		PilarFactory(nome='Planejar, entregar, aprender').save()
-		PilarFactory(nome='Focar nas pessoas').save()
+		self.pilar_de_fazer_diferente = Pilar.objects.get(nome='Fazer diferente')
 
 		self.logar(self.reconhecedor)
 
@@ -78,9 +73,9 @@ class TesteDeApiDeReconhecimento(TestCase):
 		reconhecido = ColaboradorFactory()
 		reconhecedor1 = ColaboradorFactory()
 		reconhecedor2 = ColaboradorFactory()
-		ReconhecimentoFactory(reconhecedor=reconhecedor1, reconhecido=reconhecido)
-		ReconhecimentoFactory(reconhecedor=reconhecedor2, reconhecido=reconhecido)
-		ReconhecimentoFactory(reconhecedor=reconhecedor2, reconhecido=reconhecido)
+		ReconhecimentoFactory(reconhecedor=reconhecedor1, reconhecido=reconhecido, pilar=self.pilar_de_fazer_diferente)
+		ReconhecimentoFactory(reconhecedor=reconhecedor2, reconhecido=reconhecido, pilar=self.pilar_de_fazer_diferente)
+		ReconhecimentoFactory(reconhecedor=reconhecedor2, reconhecido=reconhecido, pilar=self.pilar_de_fazer_diferente)
 
 		resposta = self.client.get(reverse('reconhecimentos_por_reconhecedor', args=[reconhecido.id]))
 		resultado = json.loads(resposta.content.decode())
@@ -122,7 +117,8 @@ class TesteDeApiDeReconhecimento(TestCase):
 	def testa_que_deve_listar_os_detalhes_do_reconhecimento_ao_soliticar_os_reconhecimentos_de_um_determinado_pilar(self):
 		reconhecido = ColaboradorFactory()
 		reconhecedor = ColaboradorFactory()
-		reconhecimento = ReconhecimentoFactory(reconhecedor=reconhecedor, reconhecido=reconhecido)
+		reconhecimento = ReconhecimentoFactory(reconhecedor=reconhecedor, \
+			reconhecido=reconhecido, pilar=self.pilar_de_fazer_diferente)
 
 		resposta = self.client.get(reverse('reconhecimentos_por_pilar', \
 			args=[reconhecido.id, self.pilar_de_fazer_diferente.id]))
@@ -140,8 +136,8 @@ class TesteDeApiDeReconhecimento(TestCase):
 		resposta = self.client.get(reverse('reconhecimentos_do_colaborador', args = [ reconhecido.id ]))
 		resposta_json = json.loads(resposta.content.decode())
 
-		self.assertEqual(True, resposta_json['pilares'][0]['possui_reconhecimentos'])
-		self.assertEqual(False, resposta_json['pilares'][1]['possui_reconhecimentos'])
+		self.assertEqual(False, resposta_json['pilares'][0]['possui_reconhecimentos'])
+		self.assertEqual(True, resposta_json['pilares'][1]['possui_reconhecimentos'])
 		self.assertEqual(False, resposta_json['pilares'][2]['possui_reconhecimentos'])
 		self.assertEqual(False, resposta_json['pilares'][3]['possui_reconhecimentos'])
 
@@ -155,8 +151,8 @@ class TesteDeApiDeReconhecimento(TestCase):
 		resposta = self.client.get(reverse('reconhecimentos_do_colaborador', args = [ reconhecido.id ]))
 		resposta_json = json.loads(resposta.content.decode())
 
-		self.assertEqual(2, resposta_json['pilares'][0]['quantidade_de_reconhecimentos'])
-		self.assertEqual(1, resposta_json['pilares'][1]['quantidade_de_reconhecimentos'])
+		self.assertEqual(1, resposta_json['pilares'][0]['quantidade_de_reconhecimentos'])
+		self.assertEqual(2, resposta_json['pilares'][1]['quantidade_de_reconhecimentos'])
 		self.assertEqual(0, resposta_json['pilares'][2]['quantidade_de_reconhecimentos'])
 		self.assertEqual(0, resposta_json['pilares'][3]['quantidade_de_reconhecimentos'])
 

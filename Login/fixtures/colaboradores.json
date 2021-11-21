@@ -8,7 +8,7 @@
 		"cpf": "11111111111",
 		"last_login": "2016-01-29T10:06:39.948"
 	},
-	"model": "Login.colaborador"
+	"model": "Login.Colaborador"
 }, {
 	"pk": 2,
 	"fields": {
@@ -19,7 +19,7 @@
 		"cpf": "11111111112",
 		"last_login": null
 	},
-	"model": "Login.colaborador"
+	"model": "Login.Colaborador"
 }, {
 	"pk": 3,
 	"fields": {
@@ -30,7 +30,7 @@
 		"cpf": "00000000000",
 		"last_login": null
 	},
-	"model": "Login.colaborador"
+	"model": "Login.Colaborador"
 }, {
 	"pk": 4,
 	"fields": {
@@ -41,7 +41,7 @@
 		"cpf": "39887593095",
 		"last_login": null
 	},
-	"model": "Login.colaborador"
+	"model": "Login.Colaborador"
 }, {
 	"pk": 5,
 	"fields": {
@@ -52,7 +52,7 @@
 		"cpf": "18564732955",
 		"last_login": null
 	},
-	"model": "Login.colaborador"
+	"model": "Login.Colaborador"
 }, {
 	"pk": 6,
 	"fields": {
@@ -63,7 +63,7 @@
 		"cpf": "68524523107",
 		"last_login": null
 	},
-	"model": "Login.colaborador"
+	"model": "Login.Colaborador"
 }, {
 	"pk": 7,
 	"fields": {
@@ -74,7 +74,7 @@
 		"cpf": "28539194120",
 		"last_login": null
 	},
-	"model": "Login.colaborador"
+	"model": "Login.Colaborador"
 }, {
 	"pk": 8,
 	"fields": {
@@ -85,5 +85,5 @@
 		"cpf": "46720552309",
 		"last_login": null
 	},
-	"model": "Login.colaborador"
+	"model": "Login.Colaborador"
 }]
