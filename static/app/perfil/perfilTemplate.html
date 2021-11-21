@@ -1,197 +1,199 @@
 ﻿<div class="conteudo perfil-colaborador">
 	<input data-js="alterar-foto" type="file" class="invisivel" />
 
-  <h1>Perfil</h1>
+	<h1>Perfil</h1>
 
 	<input type="hidden" id="reconhecidoId" value="{{this.id}}" />
 
 	<div id="perfilColaborador">
 		<div data-js="foto" class="alterar-foto">
 			<span data-js="foto" class="editar ion-camera invisivel"></span>
-			<img data-js="foto" class="foto-colaborador" src="{{foto this.id}}" alt="Foto" title="Clique para alterar" width="100" height="100" />
+			<img data-js="foto" class="foto-colaborador" src="{{foto this.id}}" alt="Foto" title="Clique para alterar"
+				width="100" height="100" />
 		</div>
 
 		<div class="informacoes-colaborador">
-      <div class="chamada-apreciar">Aprecie</div>
+			<div class="chamada-apreciar">Aprecie</div>
 			<h2 class="nome-colaborador">{{this.nome}}</h2>
 		</div>
 
-    <div data-js="apreciacao" class="escrever-apreciacao"></div>
-  </div>
-  
-  <div class="bloco-apreciacoes">  
-    <ul class="pilares" data-js="reconhecimentos" >
-      {{#each this.pilares}}
-      <li class="itens">
-        <div data-pilar-id="{{this.id}}" data-js="exibir-reconhecimentos">
-          <div class="descricao">      
-            <div class="titulo">
-              {{this.nome}}
-            </div>
-            <div class="content sobre-pilares">
-              <h2>{{this.descricao}}</h2>
-            </div>
-          </div>
-          <div class="extra content {{#if this.possui_reconhecimentos}}possui-reconhecimento{{/if}}">
-            <span>
-              <span class="quantidade-reconhecimentos">{{this.quantidade_de_reconhecimentos}} 
-              </span>
-             <span class="texto">
-              <i class="star icon"></i>
-              apreciação(ões)</span>
-            </span>
-          </div>
-        </div>
-      </li>
-      {{/each}}
-    </ul>
+		<div data-js="apreciacao" class="escrever-apreciacao"></div>
+	</div>
 
-    <div data-js="todas-as-apreciacoes" class="apreciacoes-recebidas"></div>
-  </div>
+	<div class="bloco-apreciacoes">
+		<ul class="pilares" data-js="reconhecimentos">
+			{{#each this.pilares}}
+			<li class="itens">
+				<div data-pilar-id="{{this.id}}" data-js="exibir-reconhecimentos">
+					<div class="descricao">
+						<div class="titulo">
+							{{this.nome}}
+						</div>
+						<div class="content sobre-pilares">
+							<h2>{{this.descricao}}</h2>
+						</div>
+					</div>
+					<div class="extra content {{#if this.possui_reconhecimentos}}possui-reconhecimento{{/if}}">
+						<span>
+							<span class="quantidade-reconhecimentos">{{this.quantidade_de_reconhecimentos}}
+							</span>
+							<span class="texto">
+								<i class="star icon"></i>
+								apreciação(ões)</span>
+						</span>
+					</div>
+				</div>
+			</li>
+			{{/each}}
+		</ul>
+
+		<div data-js="todas-as-apreciacoes" class="apreciacoes-recebidas"></div>
+	</div>
 	<div data-js="reconhecimentos-historicos" class="ui three column grid pilares" style="display: none;"></div>
 </div>
 
 <style>
-.sobre-pilares{
-	height: 119px;
-}
-
-
-  .bloco-apreciacoes{
-    list-style: none;
-    display: inline-block;
-    vertical-align: top;
-    width: 64%;
-    margin-left: 2%;
-  }
-
-  .pilares .itens{
-    width: 45%;
-    overflow: hidden;
-    border-radius: 6px;
-    -moz-border-radius: 6px;
-    -webkit-border-radius: 6px;
-    margin-bottom: 20px;
-    cursor: pointer;
-    padding: 20px;
-    background-color: #fff;
-    border: 1px solid #e2e2e2;
-    display: inline-block;
-    vertical-align: top;
-    margin: 0 2% 2% 2%;
-    height: 270px;
-  }
-
-  .pilares .itens:hover{
-    background-color: #fff;
-  }
-
-  .pilares .itens .descricao{
-    width: 100%;
-    display: inline-block;
-    vertical-align: middle;
-    height: 115px;
-  }
-
-  .pilares .itens .titulo{
-    font-size: 26px;
-    color: #0BC0D3;
-    line-height: 26px;
-    display: inline-block;
-  }
-
-	.pilares .itens h2{
-		  font-size: 15px;
-    	color: #6A6A6A;
-      font-weight: normal;
+	.sobre-pilares {
+		height: 119px;
 	}
 
-  .pilares .itens .extra{
-    width: 100%;
-    display: inline-block;
-    vertical-align: middle;
-    margin-top: 30%;
-    text-align: right;
 
-  }
+	.bloco-apreciacoes {
+		list-style: none;
+		display: inline-block;
+		vertical-align: top;
+		width: 64%;
+		margin-left: 2%;
+	}
 
-    .pilares .itens .extra .quantidade-reconhecimentos{
-      font-size: 46px;
-      line-height: 45px;
-      display: inline-block;
-      color: #D34AF4;
+	.pilares .itens {
+		width: 45%;
+		overflow: hidden;
+		border-radius: 6px;
+		-moz-border-radius: 6px;
+		-webkit-border-radius: 6px;
+		margin-bottom: 20px;
+		cursor: pointer;
+		padding: 20px;
+		background-color: #fff;
+		border: 1px solid #e2e2e2;
+		display: inline-block;
+		vertical-align: top;
+		margin: 0 2% 2% 2%;
+		height: 270px;
+	}
 
-    }
-    
-    .pilares .itens .extra .texto{
-      font-size: 13px;
-      line-height: 15px;
-      text-align: left;
-      display: inline-block;
-      color: #6f7d95;
-    }
+	.pilares .itens:hover {
+		background-color: #fff;
+	}
 
-    .pilares .itens .extra .texto .star{
-      display: block;
-      color: #D34AF4;
+	.pilares .itens .descricao {
+		width: 100%;
+		display: inline-block;
+		vertical-align: middle;
+		height: 115px;
+	}
 
-    }
+	.pilares .itens .titulo {
+		font-size: 26px;
+		color: #0BC0D3;
+		line-height: 26px;
+		display: inline-block;
+	}
 
-	.tamanho-icone-pilares{
+	.pilares .itens h2 {
+		font-size: 15px;
+		color: #6A6A6A;
+		font-weight: normal;
+	}
+
+	.pilares .itens .extra {
+		width: 100%;
+		display: inline-block;
+		vertical-align: middle;
+		margin-top: 30%;
+		text-align: right;
+
+	}
+
+	.pilares .itens .extra .quantidade-reconhecimentos {
+		font-size: 46px;
+		line-height: 45px;
+		display: inline-block;
+		color: #D34AF4;
+
+	}
+
+	.pilares .itens .extra .texto {
+		font-size: 13px;
+		line-height: 15px;
+		text-align: left;
+		display: inline-block;
+		color: #6f7d95;
+	}
+
+	.pilares .itens .extra .texto .star {
+		display: block;
+		color: #D34AF4;
+
+	}
+
+	.tamanho-icone-pilares {
 		width: 150px !important;
 		margin: 8% auto;
 	}
 
 
-.possui-reconhecimento{
-	font-weight: bold;
-    color: #D6740F !important;
-}
+	.possui-reconhecimento {
+		font-weight: bold;
+		color: #D6740F !important;
+	}
 
-.perfil-colaborador {
-  margin-bottom: 20px;
-}
+	.perfil-colaborador {
+		margin-bottom: 20px;
+	}
 
-.bloco-pilares{
-  width: 100%;
-}
+	.bloco-pilares {
+		width: 100%;
+	}
 
-button.reconhecimentos-anteriores{
-  margin: 29px 0;
-  cursor: pointer;
-  min-height: 1em;
-  outline: none;
-  border: none;
-  background: #E0E1E2;
-  color: rgba(0,0,0,.6);
-  padding: .78571429em 1.5em;
-  font-weight: 700;
-  line-height: 1em;
-  font-style: normal;
-  text-align: center;
-  border-radius: .28571429rem;
-  box-shadow: 0 0 0 1px transparent inset,0 0 0 0 rgba(34,36,38,.15) inset;
-}
+	button.reconhecimentos-anteriores {
+		margin: 29px 0;
+		cursor: pointer;
+		min-height: 1em;
+		outline: none;
+		border: none;
+		background: #E0E1E2;
+		color: rgba(0, 0, 0, .6);
+		padding: .78571429em 1.5em;
+		font-weight: 700;
+		line-height: 1em;
+		font-style: normal;
+		text-align: center;
+		border-radius: .28571429rem;
+		box-shadow: 0 0 0 1px transparent inset, 0 0 0 0 rgba(34, 36, 38, .15) inset;
+	}
 
-button.reconhecimentos-anteriores:hover{
-  background: #c8cbce;
-}
+	button.reconhecimentos-anteriores:hover {
+		background: #c8cbce;
+	}
 
 
-.escrever-apreciacao{
-  text-align: left;
-  display: none;
-}
-.escrever-apreciacao h2 {
-  font-size: 18px;
-  margin-top: 15px;
-}
+	.escrever-apreciacao {
+		text-align: left;
+		display: none;
+	}
 
-.escrever-apreciacao .selecione-o-pilar{
-  text-align: left;
-}
+	.escrever-apreciacao h2 {
+		font-size: 18px;
+		margin-top: 15px;
+	}
 
-/*.escrever-apreciacao .selecione-o-pilar .campos{
+	.escrever-apreciacao .selecione-o-pilar {
+		text-align: left;
+	}
+
+	/*.escrever-apreciacao .selecione-o-pilar .campos{
     color: #616161;
     cursor: pointer;    
     padding: 3px 5px;
@@ -201,27 +203,26 @@ button.reconhecimentos-anteriores:hover{
     border: 1px solid #0BC0D3;
 }*/
 
-.selecionado,
-.escrever-apreciacao .selecione-o-pilar .campos:hover {
-  background-color:  #0BC0D3;
-  color: #fff;
-}
+	.selecionado,
+	.escrever-apreciacao .selecione-o-pilar .campos:hover {
+		background-color: #0BC0D3;
+		color: #fff;
+	}
 
-.escrever-apreciacao .selecione-o-pilar .campos input{
-    display: none;
-}
+	.escrever-apreciacao .selecione-o-pilar .campos input {
+		display: none;
+	}
 
-.escrever-apreciacao textarea{
-  width: 100%;
-  margin: 13px 0 0 0;
-  padding: 12px;
-  height: 100px;
-  outline: none;
-  border-radius: 5px;
-}
+	.escrever-apreciacao textarea {
+		width: 100%;
+		margin: 13px 0 0 0;
+		padding: 12px;
+		height: 100px;
+		outline: none;
+		border-radius: 5px;
+	}
 
-.apreciacoes-recebidas{
-  margin:2% 2%;
-}
-
+	.apreciacoes-recebidas {
+		margin: 2% 2%;
+	}
 </style>

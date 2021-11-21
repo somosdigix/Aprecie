@@ -37,6 +37,7 @@ define([
   }
 
   function reconhecer() {
+		$('button[data-js="reconhecer"]').prop('disabled', 'disabled');
     var reconhecerViewModel = new ReconhecerViewModel();
     validarOperacao(reconhecerViewModel);
 
@@ -55,14 +56,8 @@ define([
     if (!reconhecerViewModel.id_do_pilar)
       throw new ViolacaoDeRegra('O pilar deve ser informado');
 
-    if (reconhecerViewModel.situacao === '')
-      throw new ViolacaoDeRegra('A situação deve ser informada');
-
-    if (reconhecerViewModel.comportamento === '')
-      throw new ViolacaoDeRegra('O comportamento que a pessoa exibiu deve ser informado');
-
-    if (reconhecerViewModel.impacto === '')
-      throw new ViolacaoDeRegra('O impacto que isso gerou deve ser informado');
+    if (reconhecerViewModel.descritivo === '')
+      throw new ViolacaoDeRegra('O descritivo da sua apreciação precisa ser informado');
   }
 
   return _self;

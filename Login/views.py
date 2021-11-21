@@ -19,8 +19,6 @@ def entrar(requisicao):
   # TODO: Pensar uma forma melhor do que lançar excecao e extrair daqui
   colaborador_autenticado = authenticate(cpf=cpf, data_de_nascimento=data_de_nascimento)
   
-  # print(colaborador_autenticado)
-
   if colaborador_autenticado:
     login(requisicao, colaborador_autenticado)
   else:

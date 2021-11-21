@@ -32,6 +32,8 @@ MIDDLEWARE = (
     'Aprecie.middlewares.LoginObrigatorioMiddleware'
 )
 
+DATA_UPLOAD_MAX_MEMORY_SIZE = 5242880
+
 AUTH_USER_MODEL = 'Login.Colaborador'
 AUTHENTICATION_BACKENDS = ['Aprecie.middlewares.AutenticadorDeColaborador']
 
