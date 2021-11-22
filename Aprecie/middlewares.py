@@ -1,11 +1,13 @@
 from django.contrib.auth.backends import BaseBackend
 from django.http import JsonResponse
+from django.http.response import HttpResponse, HttpResponseServerError
 import pytz
 from django.utils import timezone
 from django.conf import settings
 from Aprecie.base import ExcecaoDeDominio
 from Login.models import Colaborador
-from Aprecie.base import acesso_anonimo, permite_acesso_anonimo
+from Aprecie.settings import ADMIN_TOKEN
+from Aprecie.base import acesso_anonimo, permite_acesso_anonimo, verificar_se_deve_acessar_somente_com_token
 
 class ProcessadorDeExcecao(object):
 
@@ -66,4 +68,27 @@ class LoginObrigatorioMiddleware():
 
 	def process_request(self, request):
 		#print (request.user)
+		pass
+
+class PermiteUsoComTokenDeAdmin():
+
+	def __init__(self, get_response):
+		self.get_response = get_response
+
+	def __call__(self, request):
+		return self.get_response(request)
+
+	def process_view(self, request, view_func, view_args, view_kwarg):
+		if not verificar_se_deve_acessar_somente_com_token(view_func):
+			return
+
+		cabecalho_de_autorizacao = 'Authorization'
+
+		if cabecalho_de_autorizacao in request.headers:
+			if request.headers[cabecalho_de_autorizacao] == ADMIN_TOKEN:
+				return
+		
+		return HttpResponse('Unauthorized', status=403)
+
+	def process_request(self, request):
 		pass

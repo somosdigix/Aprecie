@@ -1,4 +1,5 @@
-﻿from Aprecie.base import ExcecaoDeDominio
+﻿import json
+from Aprecie.base import ExcecaoDeDominio
 from datetime import datetime
 from Login.models import Colaborador
 from django.http import JsonResponse, HttpResponse
@@ -9,7 +10,8 @@ from PIL import Image
 import os
 from django.conf import settings
 import re
-from Aprecie.base import acesso_anonimo
+from Aprecie.base import acesso_anonimo, acesso_exclusivo_com_token
+from Login.services import ServicoDeInclusaoDeColaboradores
 
 @acesso_anonimo
 def entrar(requisicao):
@@ -74,3 +76,12 @@ def obter_colaboradores(requisicao):
 	transformacao = lambda colaborador: { 'id': colaborador.id, 'nome': colaborador.nome_abreviado }
 	colaboradores = map(transformacao, colaboradores)
 	return JsonResponse({ 'colaboradores': list(colaboradores) })
+
+# @acesso_exclusivo_com_token
+def inserir_colaboradores(requisicao):
+	colaboradores = json.loads(requisicao.POST.get('colaboradores'))
+
+	retorno_da_inclusao = \
+		ServicoDeInclusaoDeColaboradores().incluir(colaboradores)
+	
+	return JsonResponse(data=retorno_da_inclusao, status=200)

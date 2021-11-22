@@ -1,6 +1,0 @@
-PYTHONPATH=$OPENSHIFT_REPO_DIR
-pip install psycopg2
-pip install pillow
-python $PYTHONPATH/manage.py collectstatic -c --noinput --pythonpath=\$PYTHONPATH
-python $PYTHONPATH/manage.py makemigrations
-python $PYTHONPATH/manage.py migrate

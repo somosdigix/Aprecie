@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "b7b439dd2f66d37d9cb7ee9b476d4efda22c3c5da9b2912e028f325f7d1c04cc"
+            "sha256": "79da9b491324141ad6ef74f98f3e562535241f3c6cc7f63406843342f4e86e78"
         },
         "pipfile-spec": 6,
         "requires": {},
@@ -21,6 +21,21 @@
             ],
             "markers": "python_version >= '3.6'",
             "version": "==3.4.1"
+        },
+        "bradocs4py": {
+            "hashes": [
+                "sha256:6991508a3a9448a626318eb5d59a409cff4177815b6bad3f3244fb1810149029",
+                "sha256:97cf170e40d322c21d605052f6d55e0814f5a6e44dc9399bff76228835f1e4f4"
+            ],
+            "index": "pypi",
+            "version": "==1.3.1.0"
+        },
+        "cpf": {
+            "hashes": [
+                "sha256:e88f21389c78d0cd1770933aaf9c2da1b4841c9369d67987319fc621c82d37f7"
+            ],
+            "index": "pypi",
+            "version": "==2.1"
         },
         "dj-database-url": {
             "hashes": [

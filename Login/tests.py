@@ -1,14 +1,54 @@
 import json
+from django.core.exceptions import ValidationError
 from django.test import TestCase
 from django.utils import timezone
 from django.urls import reverse
+from django.db.utils import IntegrityError
 
 from Aprecie.base import ExcecaoDeDominio
 from Login.factories import ColaboradorFactory
+from Login.models import CPF, Colaborador
+from Login.services import ServicoDeInclusaoDeColaboradores
 from Reconhecimentos.models import Pilar
 from Reconhecimentos.factories import FeedbackFactory
 
-class TesteDeColaborador(TestCase):
+class TesteDeCpf(TestCase):
+	def testa_que_deve_validar_um_cpf_valido(self):
+		cpf_valido = '29787427398'
+		
+		cpf = CPF(cpf_valido)
+
+		self.assertTrue(cpf.eh_valido)
+
+	def testa_que_deve_validar_um_cpf_invalido(self):
+		cpf_invalido = '12312312321'
+		
+		cpf = CPF(cpf_invalido)
+
+		self.assertFalse(cpf.eh_valido)
+
+	def testa_que_deve_limpar_o_valor_caso_hajam_mascaras(self):
+		cpf_com_mascara = '421.289.469-64'
+		cpf_com_mascara_e_sujeiras = ' 617.529 .995-76   '
+		
+		self.assertEqual(CPF(cpf_com_mascara).valor, '42128946964')
+		self.assertEqual(CPF(cpf_com_mascara_e_sujeiras).valor, '61752999576')
+
+	def testa_que_deve_se_representar_como_texto(self):
+		valor = '29787427398'
+		
+		cpf = CPF(valor)
+
+		self.assertEqual(valor, str(cpf))
+
+	def testa_que_deve_se_representar_como_texto_sem_sujeiras(self):
+		valor = '297.874.273-98'
+		
+		cpf = CPF(valor)
+
+		self.assertEqual('29787427398', str(cpf))
+
+class TesteDeColaboradores(TestCase):
 	def setUp(self):
 		self.colaborador = ColaboradorFactory()
 		self.reconhecedor = ColaboradorFactory()
@@ -20,6 +60,17 @@ class TesteDeColaborador(TestCase):
 		self.outroPilar.save()
 
 		self.feedback = FeedbackFactory()
+
+	def testa_que_nao_devem_existir_colaboradores_com_cpfs_iguais(self):
+		colaborador = Colaborador.objects.create(nome='nome', \
+			cpf='cpf', data_de_nascimento='1989-12-31')
+		colaborador.save()
+
+		with self.assertRaises(IntegrityError) as contexto:
+			Colaborador.objects.create(nome=colaborador.nome, \
+				cpf=colaborador.cpf, data_de_nascimento=colaborador.data_de_nascimento)
+
+		self.assertEqual('UNIQUE constraint failed: Login_colaborador.cpf', contexto.exception.args[0])
 
 	def testa_que_a_foto_do_colaborador_eh_alterada(self):
 		nova_foto = 'base64=???'
@@ -122,6 +173,23 @@ class TesteDeColaborador(TestCase):
 
 		self.assertEqual('Não é possível reconhecer uma pessoa duas vezes pelos mesmos motivos', contexto.exception.args[0])
 
+	def testa_que_deve_incluir_colaboradores(self):
+		dados_da_requisicao = {
+			'colaboradores': json.dumps([
+				{ 'cpf': '100.016.740-21', 'nome': 'nome 1', 'data_de_nascimento': '1989-08-31' },
+				{ 'cpf': '494.734.520-98', 'nome': 'nome 2', 'data_de_nascimento': '1989-09-30' },
+				{ 'cpf': '494.734.520-98', 'nome': 'nome 3', 'data_de_nascimento': '1989-10-31' },
+				{ 'cpf': '062.975.370-97', 'nome': 'nome 4', 'data_de_nascimento': '1989-11-30' },
+				{ 'cpf': '111.122.333-44', 'nome': 'nome 5', 'data_de_nascimento': '1989-12-31' },
+			])
+		}
+
+		resposta = self.client.post(reverse('colaborador'), data=dados_da_requisicao)
+
+		resposta_json = json.loads(resposta.content.decode())
+		self.assertEqual(3, resposta_json['contagem_de_inclusoes'])
+		self.assertTrue('11112233344' in resposta_json['cpfs_invalidos'])
+
 class TesteDeAutenticacao(TestCase):
 	def testa_autenticacao_de_colaborador_existente(self):
 		colaborador = ColaboradorFactory()
@@ -144,3 +212,104 @@ class TesteDeAutenticacao(TestCase):
 		resposta_json = json.loads(resposta.content.decode())
 		self.assertEqual(403, resposta.status_code)
 		self.assertEqual('Oi! Seus dados não foram encontrados. Confira e tente novamente. :)', resposta_json['mensagem'])
+
+class TesteDoServicoDeInclusaoDeColaboradores(TestCase):
+	def setUp(self):
+		self.nome = 'José Alberto'
+		self.cpf = '42128946964'
+		self.data_de_nascimento = '1989-12-31'
+		self.servico = ServicoDeInclusaoDeColaboradores()
+
+	def testa_que_deve_incluir_um_usuario(self):
+		colaboradores_para_inclusao = [
+			self.criar_colaborador_para_o_dicionario(self.nome, self.cpf, self.data_de_nascimento)
+		]
+		
+		self.servico.incluir(colaboradores_para_inclusao)
+
+		colaborador_obtido = self.obter_colaboradores_por_cpf(self.cpf)[0]
+		self.assertEqual(self.nome, colaborador_obtido.nome)
+		self.assertEqual(self.cpf, colaborador_obtido.cpf)
+		self.assertEqual(self.data_de_nascimento, colaborador_obtido.data_de_nascimento.strftime('%Y-%m-%d'))
+
+	def testa_que_deve_incluir_mais_de_um_usuario(self):
+		outro_cpf_esperado = '61752999576'
+		colaboradores_para_inclusao = [
+			self.criar_colaborador_para_o_dicionario(self.nome, self.cpf, self.data_de_nascimento),
+			self.criar_colaborador_para_o_dicionario(self.nome, outro_cpf_esperado, self.data_de_nascimento)
+		]
+		
+		self.servico.incluir(colaboradores_para_inclusao)
+
+		colaboradores = self.obter_colaboradores_por_cpf(self.cpf, outro_cpf_esperado)
+		self.assertEqual(2, len(colaboradores))
+		self.assertEqual(self.cpf, colaboradores[0].cpf)
+		self.assertEqual(outro_cpf_esperado, colaboradores[1].cpf)
+
+	def testa_que_deve_ignorar_usuarios_ja_existentes(self):
+		outro_cpf_esperado = '61752999576'
+		cpf_duplicado = self.cpf
+		Colaborador.objects.create(nome=self.nome, \
+				cpf=self.cpf, data_de_nascimento=self.data_de_nascimento).save()
+		colaboradores_para_inclusao = [
+			self.criar_colaborador_para_o_dicionario(self.nome, self.cpf, self.data_de_nascimento),
+			self.criar_colaborador_para_o_dicionario(self.nome, outro_cpf_esperado, self.data_de_nascimento),
+			self.criar_colaborador_para_o_dicionario(self.nome, cpf_duplicado, self.data_de_nascimento)
+		]
+		
+		self.servico.incluir(colaboradores_para_inclusao)
+
+		colaboradores = self.obter_colaboradores_por_cpf(self.cpf, outro_cpf_esperado, cpf_duplicado)
+		self.assertEqual(2, len(colaboradores))
+		self.assertEqual(self.cpf, colaboradores[0].cpf)
+		self.assertEqual(outro_cpf_esperado, colaboradores[1].cpf)
+
+	def testa_que_deve_informar_quantos_usuarios_foram_adicionados_ja_considerando_casos_duplicados(self):
+		outro_cpf = '61752999576'
+		cpf_duplicado = self.cpf
+		colaboradores_para_inclusao = [
+			self.criar_colaborador_para_o_dicionario(self.nome, self.cpf, self.data_de_nascimento),
+			self.criar_colaborador_para_o_dicionario(self.nome, outro_cpf, self.data_de_nascimento),
+			self.criar_colaborador_para_o_dicionario(self.nome, cpf_duplicado, self.data_de_nascimento)
+		]
+		
+		retorno = self.servico.incluir(colaboradores_para_inclusao)
+
+		colaboradores = self.obter_colaboradores_por_cpf(self.cpf, outro_cpf, cpf_duplicado)
+		self.assertEqual(2, len(colaboradores))
+		self.assertEqual(2, retorno['contagem_de_inclusoes'])
+
+	def testa_que_deve_ignorar_os_que_possuem_cpf_invalido(self):
+		cpf_invalido = '213123213'
+		colaboradores_para_inclusao = [
+			self.criar_colaborador_para_o_dicionario(self.nome, self.cpf, self.data_de_nascimento),
+			self.criar_colaborador_para_o_dicionario(self.nome, cpf_invalido, self.data_de_nascimento),
+		]
+		
+		self.servico.incluir(colaboradores_para_inclusao)
+
+		colaboradores = self.obter_colaboradores_por_cpf(self.cpf, cpf_invalido)
+		self.assertEqual(1, len(colaboradores))
+
+	def testa_que_deve_informar_quais_cpf_foram_ignorados_por_estarem_invalidos(self):
+		cpf_invalido = '213123213'
+		colaboradores_para_inclusao = [
+			self.criar_colaborador_para_o_dicionario(self.nome, self.cpf, self.data_de_nascimento),
+			self.criar_colaborador_para_o_dicionario(self.nome, cpf_invalido, self.data_de_nascimento),
+		]
+		
+		retorno = self.servico.incluir(colaboradores_para_inclusao)
+
+		colaboradores = self.obter_colaboradores_por_cpf(self.cpf, cpf_invalido)
+		self.assertEqual(1, len(colaboradores))
+		self.assertTrue(cpf_invalido in retorno['cpfs_invalidos'])
+
+	def obter_colaboradores_por_cpf(self, *cpfs):
+		return Colaborador.objects.filter(cpf__in = cpfs).order_by('cpf')
+
+	def criar_colaborador_para_o_dicionario(self, nome, cpf, data_de_nascimento):
+		return {
+			'nome': nome,
+			'cpf': cpf,
+			'data_de_nascimento': data_de_nascimento
+		}

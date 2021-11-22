@@ -11,28 +11,30 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
 	'aprecie.herokuapp.com',
-	'aprecie.digix.com.br'
+	'aprecie.digix.com.br',
+	'127.0.0.1'
 ]
 
 INSTALLED_APPS = (
-    'django.contrib.auth',
-    'django.contrib.sessions',
-    'django.contrib.contenttypes',
-    'django.contrib.staticfiles',
-    'Login',
-    'Reconhecimentos',
-    'compressor'
+	'django.contrib.auth',
+	'django.contrib.sessions',
+	'django.contrib.contenttypes',
+	'django.contrib.staticfiles',
+	'Login',
+	'Reconhecimentos',
+	'compressor'
 )
 
 MIDDLEWARE = (
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.middleware.security.SecurityMiddleware',
-    'Aprecie.middlewares.ProcessadorDeExcecao',
-    'Aprecie.middlewares.TimezoneMiddleware',
-    'Aprecie.middlewares.LoginObrigatorioMiddleware'
+	'django.contrib.sessions.middleware.SessionMiddleware',
+	'django.contrib.auth.middleware.AuthenticationMiddleware',
+	'django.middleware.common.CommonMiddleware',
+	'django.middleware.clickjacking.XFrameOptionsMiddleware',
+	'django.middleware.security.SecurityMiddleware',
+	'Aprecie.middlewares.ProcessadorDeExcecao',
+	'Aprecie.middlewares.TimezoneMiddleware',
+	'Aprecie.middlewares.LoginObrigatorioMiddleware',
+	'Aprecie.middlewares.PermiteUsoComTokenDeAdmin',
 )
 
 DATA_UPLOAD_MAX_MEMORY_SIZE = 5242880
@@ -43,18 +45,18 @@ AUTHENTICATION_BACKENDS = ['Aprecie.middlewares.AutenticadorDeColaborador']
 ROOT_URLCONF = 'Aprecie.urls'
 
 TEMPLATES = [
-    {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates'), ],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.messages.context_processors.messages',
-            ],
-        },
-    },
+	{
+		'BACKEND': 'django.template.backends.django.DjangoTemplates',
+		'DIRS': [os.path.join(BASE_DIR, 'templates'), ],
+		'APP_DIRS': True,
+		'OPTIONS': {
+			'context_processors': [
+				'django.template.context_processors.debug',
+				'django.template.context_processors.request',
+				'django.contrib.messages.context_processors.messages',
+			],
+		},
+	},
 ]
 
 WSGI_APPLICATION = 'Aprecie.wsgi.application'
@@ -63,10 +65,10 @@ WSGI_APPLICATION = 'Aprecie.wsgi.application'
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
+	'default': {
+		'ENGINE': 'django.db.backends.sqlite3',
+		'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+	}
 }
 
 # Internationalization
@@ -91,22 +93,25 @@ IN_RELEASE_ENV = "APP_NAME" in os.environ
 URL_DO_AMBIENTE = "aprecie.me"
 
 COMPRESS_PRECOMPILERS = (
-    ('text/x-scss', 'sass --scss {infile} {outfile}'),
+	('text/x-scss', 'sass --scss {infile} {outfile}'),
 )
 
 COMPRESS_ROOT = os.path.join(BASE_DIR, "static")
 
 if IN_RELEASE_ENV:
-  # URL_DO_AMBIENTE = os.environ['APP_DNS']
+	# URL_DO_AMBIENTE = os.environ['APP_DNS']
+	ADMIN_TOKEN = os.environ['ADMIN_TOKEN']
 
-  db_from_env = dj_database_url.config(conn_max_age=500)
-  DATABASES['default'].update(db_from_env)
+	db_from_env = dj_database_url.config(conn_max_age=500)
+	DATABASES['default'].update(db_from_env)
 
-  # STATIC_ROOT = os.path.join(os.environ['REPO_DIR'], 'wsgi', 'static')
-  # COMPRESS_ROOT = STATIC_ROOT
+	# STATIC_ROOT = os.path.join(os.environ['REPO_DIR'], 'wsgi', 'static')
+	# COMPRESS_ROOT = STATIC_ROOT
+else:
+	ADMIN_TOKEN = 'Basic dXN1YXJpb2xvY2FsOnNlbmhhbG9jYWw='
 
 STATICFILES_FINDERS = (
-  "django.contrib.staticfiles.finders.FileSystemFinder",
-  "django.contrib.staticfiles.finders.AppDirectoriesFinder",
-  'compressor.finders.CompressorFinder', 
+	"django.contrib.staticfiles.finders.FileSystemFinder",
+	"django.contrib.staticfiles.finders.AppDirectoriesFinder",
+	'compressor.finders.CompressorFinder', 
 )

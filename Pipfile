@@ -15,5 +15,7 @@ wfastcgi = "==3.0.0"
 gunicorn = "*"
 django-heroku = "*"
 psycopg2-binary = "*"
+cpf = "*"
+bradocs4py = "*"
 
 [dev-packages]
