@@ -77,8 +77,9 @@ def obter_colaboradores(requisicao):
 	colaboradores = map(transformacao, colaboradores)
 	return JsonResponse({ 'colaboradores': list(colaboradores) })
 
-# @acesso_exclusivo_com_token
+@acesso_exclusivo_com_token
 def inserir_colaboradores(requisicao):
+	print(requisicao.POST)
 	colaboradores = json.loads(requisicao.POST.get('colaboradores'))
 
 	retorno_da_inclusao = \

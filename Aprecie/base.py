@@ -2,6 +2,7 @@ class ExcecaoDeDominio(Exception):
 	pass
 
 def acesso_exclusivo_com_token(funcao):
+	print('oi')
 	funcao.acesso_exclusivo_com_token = True
 	return funcao
 
