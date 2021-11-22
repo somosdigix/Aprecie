@@ -79,7 +79,6 @@ def obter_colaboradores(requisicao):
 
 @acesso_exclusivo_com_token
 def inserir_colaboradores(requisicao):
-	print(requisicao.POST)
 	colaboradores = json.loads(requisicao.POST.get('colaboradores'))
 
 	retorno_da_inclusao = \

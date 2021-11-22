@@ -6,6 +6,7 @@ from django.urls import reverse
 from django.db.utils import IntegrityError
 
 from Aprecie.base import ExcecaoDeDominio
+from Aprecie.settings import ADMIN_TOKEN
 from Login.factories import ColaboradorFactory
 from Login.models import CPF, Colaborador
 from Login.services import ServicoDeInclusaoDeColaboradores
@@ -174,7 +175,7 @@ class TesteDeColaboradores(TestCase):
 		self.assertEqual('Não é possível reconhecer uma pessoa duas vezes pelos mesmos motivos', contexto.exception.args[0])
 
 	def testa_que_deve_incluir_colaboradores(self):
-		cabecalho_com_admin_token = {'Authorization': 'Basic usuariolocal:senhalocal'}
+		cabecalho_com_admin_token = {'HTTP_AUTHORIZATION': ADMIN_TOKEN}
 		dados_da_requisicao = {
 			'colaboradores': json.dumps([
 				{ 'cpf': '100.016.740-21', 'nome': 'nome 1', 'data_de_nascimento': '1989-08-31' },
@@ -185,8 +186,7 @@ class TesteDeColaboradores(TestCase):
 			])
 		}
 
-		resposta = self.client.post(reverse('colaborador'), content_type='application/json', \
-			data=dados_da_requisicao, **cabecalho_com_admin_token)
+		resposta = self.client.post(reverse('colaborador'), data=dados_da_requisicao, **cabecalho_com_admin_token)
 
 		resposta_json = json.loads(resposta.content.decode())
 		self.assertEqual(3, resposta_json['contagem_de_inclusoes'])

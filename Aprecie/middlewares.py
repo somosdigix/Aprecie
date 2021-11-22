@@ -81,7 +81,7 @@ class PermiteUsoComTokenDeAdmin():
 	def process_view(self, request, view_func, view_args, view_kwarg):
 		if not verificar_se_deve_acessar_somente_com_token(view_func):
 			return
-
+		
 		cabecalho_de_autorizacao = 'Authorization'
 
 		if cabecalho_de_autorizacao in request.headers:
@@ -89,6 +89,3 @@ class PermiteUsoComTokenDeAdmin():
 				return
 		
 		return HttpResponse('Unauthorized', status=403)
-
-	def process_request(self, request):
-		pass
