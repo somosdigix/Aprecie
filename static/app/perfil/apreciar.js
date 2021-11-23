@@ -39,7 +39,14 @@ define([
   function reconhecer() {
 		$('button[data-js="reconhecer"]').prop('disabled', 'disabled');
     var reconhecerViewModel = new ReconhecerViewModel();
-    validarOperacao(reconhecerViewModel);
+
+		try {
+    	validarOperacao(reconhecerViewModel);
+		}
+		catch(erro) {
+			$('button[data-js="reconhecer"]').removeAttr('disabled');
+			throw erro;
+		}
 
     $('#conteudo button[data-js="reconhecer"]').attr('disabled', true);
 
