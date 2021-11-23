@@ -178,11 +178,11 @@ class TesteDeColaboradores(TestCase):
 		cabecalho_com_admin_token = {'HTTP_AUTHORIZATION': ADMIN_TOKEN}
 		dados_da_requisicao = json.dumps({
 			'colaboradores': [
-				{ 'cpf': '100.016.740-21', 'nome': 'nome 1', 'data_de_nascimento': '1989-08-31' },
-				{ 'cpf': '494.734.520-98', 'nome': 'nome 2', 'data_de_nascimento': '1989-09-30' },
-				{ 'cpf': '494.734.520-98', 'nome': 'nome 3', 'data_de_nascimento': '1989-10-31' },
-				{ 'cpf': '062.975.370-97', 'nome': 'nome 4', 'data_de_nascimento': '1989-11-30' },
-				{ 'cpf': '111.122.333-44', 'nome': 'nome 5', 'data_de_nascimento': '1989-12-31' }
+				{ 'cpf': '100.016.740-21', 'nome': 'nome 1', 'data_de_nascimento': '1989-08-31', 'usuario_id_do_chat': '1' },
+				{ 'cpf': '494.734.520-98', 'nome': 'nome 2', 'data_de_nascimento': '1989-09-30', 'usuario_id_do_chat': '1' },
+				{ 'cpf': '494.734.520-98', 'nome': 'nome 3', 'data_de_nascimento': '1989-10-31', 'usuario_id_do_chat': '1' },
+				{ 'cpf': '062.975.370-97', 'nome': 'nome 4', 'data_de_nascimento': '1989-11-30', 'usuario_id_do_chat': '1' },
+				{ 'cpf': '111.122.333-44', 'nome': 'nome 5', 'data_de_nascimento': '1989-12-31', 'usuario_id_do_chat': '1' }
 			]
 		})
 
@@ -224,8 +224,9 @@ class TesteDoServicoDeInclusaoDeColaboradores(TestCase):
 		self.servico = ServicoDeInclusaoDeColaboradores()
 
 	def testa_que_deve_incluir_um_usuario(self):
+		usuario_id_do_chat = '123123213'
 		colaboradores_para_inclusao = [
-			self.criar_colaborador_para_o_dicionario(self.nome, self.cpf, self.data_de_nascimento)
+			self.criar_colaborador_para_o_dicionario(self.nome, self.cpf, self.data_de_nascimento, usuario_id_do_chat)
 		]
 		
 		self.servico.incluir(colaboradores_para_inclusao)
@@ -234,6 +235,7 @@ class TesteDoServicoDeInclusaoDeColaboradores(TestCase):
 		self.assertEqual(self.nome, colaborador_obtido.nome)
 		self.assertEqual(self.cpf, colaborador_obtido.cpf)
 		self.assertEqual(self.data_de_nascimento, colaborador_obtido.data_de_nascimento.strftime('%Y-%m-%d'))
+		self.assertEqual(usuario_id_do_chat, colaborador_obtido.usuario_id_do_chat)
 
 	def testa_que_deve_incluir_mais_de_um_usuario(self):
 		outro_cpf_esperado = '61752999576'
@@ -310,9 +312,10 @@ class TesteDoServicoDeInclusaoDeColaboradores(TestCase):
 	def obter_colaboradores_por_cpf(self, *cpfs):
 		return Colaborador.objects.filter(cpf__in = cpfs).order_by('cpf')
 
-	def criar_colaborador_para_o_dicionario(self, nome, cpf, data_de_nascimento):
+	def criar_colaborador_para_o_dicionario(self, nome, cpf, data_de_nascimento, usuario_id_do_chat='1'):
 		return {
 			'nome': nome,
 			'cpf': cpf,
-			'data_de_nascimento': data_de_nascimento
+			'data_de_nascimento': data_de_nascimento,
+			'usuario_id_do_chat': usuario_id_do_chat
 		}

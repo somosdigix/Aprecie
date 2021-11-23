@@ -13,8 +13,9 @@ class ServicoDeInclusaoDeColaboradores:
 				continue
 
 			if not Colaborador.objects.filter(cpf=cpf).exists():
-				Colaborador.objects.create(nome=colaborador['nome'], \
-					cpf=cpf, data_de_nascimento=colaborador['data_de_nascimento']).save()
+				Colaborador.objects.create(nome=colaborador['nome'], cpf=cpf, \
+					data_de_nascimento=colaborador['data_de_nascimento'], \
+					usuario_id_do_chat=colaborador['usuario_id_do_chat']).save()
 				contagem_de_inclusoes += 1
 
 		return {
