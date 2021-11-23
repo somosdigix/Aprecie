@@ -3,5 +3,9 @@ Authorization: Basic usuariolocal:senhalocal
 Content-Type: application/json
 
 {
-    "colaboradores": "[]"
+    "colaboradores": [
+        { "cpf": "100.016.740-21", "nome": "nome 1", "data_de_nascimento": "1989-08-31" },
+        { "cpf": "100.016.740-21", "nome": "nome 1", "data_de_nascimento": "1989-08-31" },
+        { "cpf": "200.016.740-21", "nome": "nome de um cpf inválido", "data_de_nascimento": "1989-08-31" }
+    ]
 }

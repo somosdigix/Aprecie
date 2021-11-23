@@ -176,17 +176,18 @@ class TesteDeColaboradores(TestCase):
 
 	def testa_que_deve_incluir_colaboradores(self):
 		cabecalho_com_admin_token = {'HTTP_AUTHORIZATION': ADMIN_TOKEN}
-		dados_da_requisicao = {
-			'colaboradores': json.dumps([
+		dados_da_requisicao = json.dumps({
+			'colaboradores': [
 				{ 'cpf': '100.016.740-21', 'nome': 'nome 1', 'data_de_nascimento': '1989-08-31' },
 				{ 'cpf': '494.734.520-98', 'nome': 'nome 2', 'data_de_nascimento': '1989-09-30' },
 				{ 'cpf': '494.734.520-98', 'nome': 'nome 3', 'data_de_nascimento': '1989-10-31' },
 				{ 'cpf': '062.975.370-97', 'nome': 'nome 4', 'data_de_nascimento': '1989-11-30' },
-				{ 'cpf': '111.122.333-44', 'nome': 'nome 5', 'data_de_nascimento': '1989-12-31' },
-			])
-		}
+				{ 'cpf': '111.122.333-44', 'nome': 'nome 5', 'data_de_nascimento': '1989-12-31' }
+			]
+		})
 
-		resposta = self.client.post(reverse('colaborador'), data=dados_da_requisicao, **cabecalho_com_admin_token)
+		resposta = self.client.post(reverse('colaborador'), content_type='application/json', \
+			data=dados_da_requisicao, **cabecalho_com_admin_token)
 
 		resposta_json = json.loads(resposta.content.decode())
 		self.assertEqual(3, resposta_json['contagem_de_inclusoes'])
