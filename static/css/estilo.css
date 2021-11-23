@@ -7,10 +7,6 @@ input {
 button {
   cursor: pointer; }
 
-@font-face {
-  font-family: 'Campton-SemiBold';
-  src: local("Campton-SemiBold"), url("http://www.digix.com.br/wp-content/themes/digix/fonts/Campton-SemiBold.ttf") format("truetype"); }
-
 * {
   margin: 0;
   padding: 0; }
@@ -28,7 +24,7 @@ p {
   font-size: 1rem; }
 
 h1, h2, .pilares .itens .titulo {
-  font-family: 'Campton-SemiBold'; }
+  font-family: 'Arial'; }
 
 .pilares .itens h2 {
   font-family: "Raleway", sans-serif;
@@ -219,7 +215,7 @@ h1, h2, .pilares .itens .titulo {
 
 .feed-principal h2 {
   font-size: 30px;
-  font-family: 'Campton-SemiBold'; }
+  font-family: 'Arial'; }
 
 .feed-principal .por-data {
   color: #fff;
