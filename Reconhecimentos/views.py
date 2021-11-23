@@ -20,7 +20,7 @@ def reconhecer(requisicao):
   feedback = Feedback.objects.create(descritivo = descritivo)
 
   reconhecido.reconhecer(reconhecedor, pilar, feedback)
-  Notificacoes.notificar_no_slack(reconhecedor, reconhecido, pilar)
+  Notificacoes.notificar_no_chat(reconhecedor, reconhecido, pilar)
 
   return JsonResponse({})
 

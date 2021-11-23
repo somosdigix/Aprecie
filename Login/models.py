@@ -18,7 +18,7 @@ class Colaborador(AbstractBaseUser):
 	nome = models.CharField(max_length=200)
 	data_de_nascimento = models.DateField()
 	foto = models.TextField(default=None, null=True)
-	usuario_no_slack = models.CharField(max_length=100, null=True)
+	usuario_id_do_chat = models.CharField(max_length=100, null=True)
 
 	USERNAME_FIELD = 'cpf'
 
