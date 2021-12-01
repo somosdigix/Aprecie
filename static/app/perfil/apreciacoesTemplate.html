@@ -1,28 +1,33 @@
 <h2>Minhas apreciações</h2>
+
 {{#each this.apreciacoes}}
 <section class="feed-reconhecimentos caixa-feed">
-	<div class="bloco-reconhecimento">
-		<img class="img-reconhecedor" src="{{ foto this.reconhecedor__id usar_miniatura=true}}" />
+    <div id="print" class="bloco-reconhecimento">
+        <img class="img-reconhecedor" src="{{ foto this.reconhecedor__id usar_miniatura=true}}" />
 
-		<div class="texto-reconhecimento">
-			{{#if this.pilar__nome}}
-			<strong data-id="1" data-js="ir-ao-perfil" class="apreciador">{{ this.reconhecedor__nome }} em {{ this.pilar__nome
-				}}</strong>
-			{{else}}
-			<strong data-id="1" data-js="ir-ao-perfil" class="apreciador">{{ this.reconhecedor__nome }} em {{ this.valor__nome
-				}}</strong>
-			{{/if}}
+        <div class="texto-reconhecimento">
+            {{#if this.pilar__nome}}
+            <strong data-id="1" data-js="ir-ao-perfil" class="apreciador">{{ this.reconhecedor__nome }} em {{ this.pilar__nome
+                }}</strong>
+            {{else}}
+            <strong data-id="1" data-js="ir-ao-perfil" class="apreciador">{{ this.reconhecedor__nome }} em {{ this.valor__nome
+                }}</strong>
+            {{/if}}
 
-			<div class="data-reconhecimento">{{ emDataLegivel this.data }}</div>
+            <div class="data-reconhecimento">{{ emDataLegivel this.data }}</div>
 
-			<p>
-				{{this.feedback__descritivo}}
-			</p>
-		</div>
-	</div>
+            <p>
+                {{this.feedback__descritivo}}
+            </p>
+        </div>
+    </div>
+    <button id="download" onclick="saveAs()">Download</button>
 </section>
+
+
 {{else}}
 <div class="ui yellow message">
-	Ainda não possuo nenhuma apreciação :(
+    Ainda não possuo nenhuma apreciação :(
 </div>
 {{/each}}
+<script src="/static/app/perfil/apreciacoesPrint.js"></script>
