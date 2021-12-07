@@ -2,26 +2,76 @@
 
 {{#each this.apreciacoes}}
 <section class="feed-reconhecimentos caixa-feed">
-    <div id="print" class="bloco-reconhecimento">
-        <img class="img-reconhecedor" src="{{ foto this.reconhecedor__id usar_miniatura=true}}" />
+	<div class="container">
+		<div class="bloco-reconhecimento">
+			<img class="img-reconhecedor" src="{{ foto this.reconhecedor__id usar_miniatura=true}}" />
 
-        <div class="texto-reconhecimento">
-            {{#if this.pilar__nome}}
-            <strong data-id="1" data-js="ir-ao-perfil" class="apreciador">{{ this.reconhecedor__nome }} em {{ this.pilar__nome
-                }}</strong>
-            {{else}}
-            <strong data-id="1" data-js="ir-ao-perfil" class="apreciador">{{ this.reconhecedor__nome }} em {{ this.valor__nome
-                }}</strong>
-            {{/if}}
+			<div class="texto-reconhecimento">
+				{{#if this.pilar__nome}}
+				<strong data-id="1" data-js="ir-ao-perfil" class="apreciador">
+					{{ this.reconhecedor__nome }} em {{
+ this.pilar__nome
+					}}
+				</strong>
+				{{else}}
+				<strong data-id="1" data-js="ir-ao-perfil" class="apreciador">
+					{{ this.reconhecedor__nome }} em {{
+ this.valor__nome
+					}}
+				</strong>
+				{{/if}}
 
-            <div class="data-reconhecimento">{{ emDataLegivel this.data }}</div>
+				<div class="data-reconhecimento">{{ emDataLegivel this.data }}</div>
 
-            <p>
-                {{this.feedback__descritivo}}
-            </p>
+				<p>
+					{{this.feedback__descritivo}}
+				</p>
+			</div>
+		</div>
+
+		<div id="modal-botao">
+			<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-share" viewBox="0 0 16 16">
+				<path d="M13.5 1a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.499 2.499 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5zm-8.5 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm11 5.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z" />
+			</svg>
+		</div>
+
+	</div>
+	
+
+	<div id="modal" class="modal">
+		<div class="conteudo-modal">
+			<span class="fechar">&times;</span>
+      <div class="tudo">
+        <!--//layout apreciacao-->
+        <div id="print">
+          <div class="card">
+            <div class="card--conteudo">
+              <canvas id="canvasDestino" class="logo" style="width: 500px" resize="true"></canvas>
+              <h1 class="card--titulo">Fulano de tal</h1>
+              <p class="card--reconhecimento">Recebeu reconhedimento por: <span class="nome-reconhecedor">Ciclano</span></p>
+              <p class="card--pilar">Apreciacao feita por: <span class="pilar">Pilar</span></p>
+              <div class="card--apreciacao">
+                <p class="card--mensagemDe">Mensagem de Fernando Pinhel para Bárbara de Oliveira:</p>
+                <p class="card--mensagem">Gostaria de agradecer por todo o suporte e apoio que você me deu desde a minha chegada na expedição Digix. Parabéns por ser essa profissional talentosa e atenciosa. Gratidão!</p>
+              </div>
+            </div>
+            <div class="card--imagemRodape">
+              <img src="/Aprecie/static/img/logos-rodape.png" alt="Logo do Aprecie e Digix">
+            </div>
+          </div>
         </div>
-    </div>
-    <button id="download" onclick="saveAs()">Download</button>
+
+        <!--//botao para baixar layout apreciacao-->
+        <button class="botao-baixar" onclick="saveAs()">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
+            <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
+            <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
+          </svg>
+        </button>
+      </div>
+      </div>
+			
+	</div>
 </section>
 
 
@@ -31,3 +81,181 @@
 </div>
 {{/each}}
 <script src="/static/app/perfil/apreciacoesPrint.js"></script>
+<script type="text/javascript" src="https://geradordeelementos.digix.com.br/elementoDeApoio?canvasId=canvasDestino&corDoFundo=&velocidade=-0.02"></script>
+
+<style>
+	.logo{
+        position: absolute;
+        top: 20px;
+        left: 470px;
+        width: 125px;
+        height: 125px;
+    }
+
+    .card{
+        /* background-image: url(/Aprecie/static/img/card-vazio.jpg); */
+        background-repeat: no-repeat;
+        background-size: cover;
+
+        width: 600px;
+        height: 335px;
+        position: relative;
+    }
+
+    .card--conteudo{
+        text-align: left;
+
+        width: 550px;
+        height: 50%;
+
+        padding: 2% 0;
+
+        margin: 0 auto;
+
+        /* padding: 3% 4%;  */
+    }
+
+    .card--titulo{
+        text-transform: uppercase;
+
+        color: #2B2567;
+
+        margin-bottom: 8px;
+
+        font-size: 1.2rem;
+        font-family: 'Campton-Bold';
+    }
+
+    .card--reconhecimento{
+        font-size: 1rem;
+        
+        margin-bottom: 8px;
+
+        font-family: 'Campton-Light';
+    }
+    
+    .card--pilar{
+        font-size: 1.3rem;
+
+        margin-top: 8px;
+        margin-bottom: 24px;
+
+        font-family: 'Campton-Light';
+    }
+
+    .nome-reconhecedor{
+        color: #0BC0D3;
+
+        font-family: 'Campton-Medium';
+    }
+
+    .pilar{
+        color: #D34AF4;
+
+        font-size: 1.3rem;
+        
+        font-family: 'Campton-Medium'
+    }
+
+    .card-apreciacao{
+        width: 100%;
+
+        display: flex;
+        flex-direction: column;
+
+        align-items: left;
+    }
+    
+    .card--mensagemDe{
+        color: #FC671D;
+
+        text-align: left;
+
+        margin-bottom: 2px;
+
+        font-family: 'Campton-Bold';
+        }
+    
+    .card--mensagem{
+        font-size: 1rem;
+        font-style: italic;
+
+        width: 88%;
+        
+        margin-top: 2px;
+        margin-bottom: 64px;
+
+        text-align: left;
+        font-family: 'Campton-Light';
+    }
+
+    .card--imagemRodape{
+        height: 30px;
+        background-color: #2B2567;
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        left: 0;
+    }
+
+	#modal-botao {
+		margin: 12px 0 0;
+	}
+
+	.botao-baixar{
+		background:none;
+		border: none;
+	}
+
+	.container{
+		display: flex;
+		justify-content:space-between;
+	}
+
+	.modal {
+		display: none;
+		position: fixed;
+		z-index: 1;
+		padding-top: 100px;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		overflow: auto;
+		background-color: rgb(0,0,0);
+		background-color: rgba(0,0,0,0.4);
+	}
+
+	.conteudo-modal {
+		background-color: #fefefe;
+		margin: auto;
+		padding: 20px;
+		border: 1px solid #888;
+		width: 800px;
+		height: 500px;
+	}
+	.tudo {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+
+	.fechar {
+		color: #aaaaaa;
+		float: right;
+		font-size: 28px;
+		font-weight: bold;
+	}
+
+	.close:hover,
+	.close:focus {
+		color: #000;
+		text-decoration: none;
+		cursor: pointer;
+	}
+	
+</style>
