@@ -46,17 +46,17 @@
         <div id="print">
           <div class="card">
             <div class="card--conteudo">
-              <canvas id="canvasDestino" class="logo" style="width: 500px" resize="true"></canvas>
-              <h1 class="card--titulo">Fulano de tal</h1>
-              <p class="card--reconhecimento">Recebeu reconhedimento por: <span class="nome-reconhecedor">Ciclano</span></p>
-              <p class="card--pilar">Apreciacao feita por: <span class="pilar">Pilar</span></p>
+              <canvas id="canvasDestino" class="logo" style="width: 125px;" resize="false"></canvas>
+              <h1 class="card--titulo">{{this.nome_do_reconhecido}}</h1>
+              <p class="card--reconhecimento">Recebeu reconhedimento por: <span class="nome-reconhecedor">{{this.reconhecedor__nome}}</span></p>
+              <p class="card--pilar">Apreciacao feita por: <span class="pilar">{{this.pilar__nome}}</span></p>
               <div class="card--apreciacao">
-                <p class="card--mensagemDe">Mensagem de Fernando Pinhel para Bárbara de Oliveira:</p>
-                <p class="card--mensagem">Gostaria de agradecer por todo o suporte e apoio que você me deu desde a minha chegada na expedição Digix. Parabéns por ser essa profissional talentosa e atenciosa. Gratidão!</p>
+                <p class="card--mensagemDe">Mensagem de {{this.reconhecedor__nome}} para {{this.nome}}:</p>
+                <p class="card--mensagem">{{this.feedback__descritivo}}</p>
               </div>
             </div>
             <div class="card--imagemRodape">
-              <img src="/Aprecie/static/img/logos-rodape.png" alt="Logo do Aprecie e Digix">
+              <img src="../static/img/logos-rodape.png" alt="Logo Aprecie">
             </div>
           </div>
         </div>
@@ -84,7 +84,10 @@
 <script type="text/javascript" src="https://geradordeelementos.digix.com.br/elementoDeApoio?canvasId=canvasDestino&corDoFundo=&velocidade=-0.02"></script>
 
 <style>
-	.logo{
+  
+  
+
+	.modal .conteudo-modal .tudo .card .card--conteudo .logo{
         position: absolute;
         top: 20px;
         left: 470px;
@@ -93,7 +96,6 @@
     }
 
     .card{
-        /* background-image: url(/Aprecie/static/img/card-vazio.jpg); */
         background-repeat: no-repeat;
         background-size: cover;
 
@@ -112,7 +114,6 @@
 
         margin: 0 auto;
 
-        /* padding: 3% 4%;  */
     }
 
     .card--titulo{
