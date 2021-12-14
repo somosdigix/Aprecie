@@ -1,5 +1,5 @@
 <h2>Minhas apreciações</h2>
-
+<div id="reconhecimentos" reconhecimentos={{apreciacoes}}></div>
 {{#each this.apreciacoes}}
 <section class="feed-reconhecimentos caixa-feed">
 	<div class="container">
@@ -24,56 +24,12 @@
 
 				<p>{{this.feedback__descritivo}}</p>
 			</div>
-			<button id="modal-botao" onClick="gerarModal()">
-				<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-share" viewBox="0 0 16 16" id="compartilhar">
+			<button id="modal-botao" onClick="obterApreciacao(event, '{{this.pilar__nome}}', '{{this.feedback__descritivo}}', '{{this.reconhecedor__nome}}', '{{this.reconhecido__nome}}')" pilar={{this.pilar__nome}} reconhecido={{this.reconhecido__nome}} 
+            reconhecedor={{this.reconhecedor__nome}} descricao={{this.feedback__descritivo}}>
+				<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-share" viewBox="0 0 16 16" id="compartilhar" >
 					<path d="M13.5 1a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.499 2.499 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5zm-8.5 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm11 5.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z" />
 				</svg>
 			</button>
-		</div>
-		
-		<div id="container">
-			<div class="modal" id="modal"></div>
-
-			<div class="corpo-modal" id="corpo-modal">
-				<div class="card" id="card">
-					<div class="p">
-						<div class="card">
-							<div class="card--conteudo">
-								<canvas
-									id="canvasDestino"
-									style="width: 125px"
-									resize="true"
-									class="logo"
-								></canvas>
-								<h1 class="card--titulo">{{this.reconhecido__nome}}</h1>
-								<p class="card--reconhecimento">
-									Recebeu reconhedimento por:
-									<span class="nome-reconhecedor">{{this.reconhecedor__nome}}</span>
-								</p>
-								<p class="card--pilar">
-									Apreciacao feita por:
-									<span class="pilar">{{this.pilar__nome}}</span>
-								</p>
-								<div class="card--apreciacao">
-									<p class="card--mensagemDe">
-										Mensagem de {{this.reconhecedor__nome}} para {{this.reconhecido__nome}}:
-									</p>
-									<p class="card--mensagem">{{this.feedback__descritivo}}</p>
-								</div>
-							</div>
-							<div class="card--imagemRodape">
-								<img src="../static/img/logos-rodape.png" alt="Logo Aprecie" />
-							</div>
-						</div>
-					</div>
-				</div>
-				<button class="baixar" onclick="SaveAs()">
-					<img src="../static/img/botao-download.svg" alt="Icone de download" />
-				</button>
-				<button class="fecha" onclick="sumirModal()">
-					<img src="../static/img/botao-fechar.svg" alt="Icone para fechar card" />
-				</button>
-			</div>
 		</div>
 	</div>
 </section>
@@ -82,19 +38,36 @@
 <div class="ui yellow message">Ainda não possuo nenhuma apreciação :(</div>
 {{/each}}
 
+<div id="container">
+    <div class="modal" id="modal"></div>
+
+    <div class="corpo-modal" id="corpo-modal">
+        <div class="card" id="card">
+            <div class="p">
+                <div class="card">
+                    <div class="card--conteudo">
+                        <h1 class="card--titulo"></h1>
+                        <div class="card--apreciacao">
+                            <p class="card--mensagem"></p>
+                            <p class="card--mensagemDe"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="baixar" onclick="SaveAs()">
+            <img src="../static/img/botao-download.svg" alt="Icone de download" />
+        </button>
+        <button class="fecha" onclick="sumirModal()">
+            <img src="../static/img/botao-fechar.svg" alt="Icone para fechar card" />
+        </button>
+    </div>
+    
+</div>
+
 <script src="/static/app/perfil/apreciacoesPrint.js"></script>
-<script
-	type="text/javascript"
-	src="https://geradordeelementos.digix.com.br/elementoDeApoio?canvasId=canvasDestino&corDoFundo=&velocidade=-0.04"
-></script>
 
 <style>
-	.logo {
-		position: absolute;
-		right: 30px;
-		top: 20px;
-	}
-
 	.bloco-reconhecimento {
 		position: relative;;
 	}
@@ -108,181 +81,150 @@
 	}
 
 	.modal {
-		background-color: gray;
-
-		width: 100%;
-		height: 100%;
-
-		box-sizing: border-box;
-
-		position: fixed;
-		top: 0;
-		left: 0;
-		right: 0;
-		bottom: 0;
-
-		opacity: 0.5;
-
-		filter: blur(90px);
-		visibility: hidden;
-		z-index: 1;
-	}
-
-	.corpo-modal {
-		z-index: 2;
-
-		width: 600px;
-		height: 420px;
-		visibility: hidden;
-		position: absolute;
-		top: 50%;
-		left: 50%;
-		transform: translate(-50%, -50%);
-	}
-
-	.card {
-		width: 600px;
-		height: 330px;
-
-		position: absolute;
-		top: 50%;
-		left: 50%;
-		transform: translate(-50%, -50%);
-
-		background-color: whitesmoke;
-
-		z-index: 2;
-
-		text-align: left;
-	}
-
-	.card--conteudo {
-		text-align: left;
-
-		width: 550px;
-		height: 50%;
-
-		padding: 2% 0;
-
-		margin: 0 auto;
-	}
-
-	.card--titulo {
-		text-transform: uppercase;
-
-		color: #2b2567;
-
-		margin-bottom: 8px;
-
-		font-size: 1.2rem;
-		font-family: "Campton-Bold";
-	}
-
-	.card--reconhecimento {
-		font-size: 1rem;
-
-		margin-bottom: 8px;
-
-		font-family: "Campton-Light";
-	}
-
-	.card--pilar {
-		font-size: 1.3rem;
-
-		margin-top: 8px;
-		margin-bottom: 24px;
-
-		font-family: "Campton-Light";
-	}
-
-	.nome-reconhecedor {
-		color: #0bc0d3;
-
-		font-family: "Campton-Medium";
-	}
-
-	.pilar {
-		color: #d34af4;
-
-		font-size: 1.3rem;
-
-		font-family: "Campton-Medium";
-	}
-
-	.card-apreciacao {
-		width: 100%;
-
-		display: flex;
-		flex-direction: column;
-
-		align-items: left;
-	}
-
-	.card--mensagemDe {
-		color: #fc671d;
-
-		text-align: left;
-
-		margin-bottom: 2px;
-
-		font-family: "Campton-Bold";
-	}
-
-	.card--mensagem {
-		font-size: 1rem;
-		font-style: italic;
-
-		width: 88%;
-
-		margin-top: 2px;
-		margin-bottom: 64px;
-
-		text-align: left;
-		font-family: "Campton-Light";
-	}
-
-	.card--imagemRodape {
-		height: 30px;
-		background-color: #2b2567;
-		align-items: center;
-		display: flex;
-		flex-direction: column;
-		width: 100%;
-		position: absolute;
-		bottom: 0;
-		right: 0;
-		left: 0;
-	}
-
-	.baixar {
-		z-index: 2;
-
-		position: absolute;
-		bottom: 0;
-		right: -10px;
-
-		background-color: transparent;
-
-		border: 0;
-
-		cursor: pointer;
-
-		transform: scale(0.8);
-	}
-
-	.fecha {
-		z-index: 2;
-
-		position: absolute;
-		top: 10px;
-		right: -10px;
-
-		background-color: transparent;
-
-		border: 0;
-
-		cursor: pointer;
-
-		transform: scale(0.8);
-	}
+            background-color: gray;
+    
+            width: 100%;
+            height: 100%;
+    
+            box-sizing: border-box;
+    
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+    
+            opacity: 0.5;
+    
+            filter: blur(90px);
+            visibility: hidden;
+            z-index: 1;
+        }
+    
+        .corpo-modal {
+            z-index: 2;
+    
+            width: 600px;
+            height: 420px;
+            visibility: hidden;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    
+        .card {
+            width: 650px;
+            height: 650px;
+    
+            background-repeat: no-repeat;
+            background-size: contain;
+    
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            
+            z-index: 2;
+    
+            text-align: left;
+        }
+    
+        .card--conteudo {
+            text-align: left;
+    
+            width: 550px;
+            height: 50%;
+    
+            padding: 2% 0;
+    
+            margin: 0 auto;
+        }
+    
+        .card--titulo {
+            text-transform: uppercase;
+    
+            color: white;
+    
+            margin-bottom: 8px;
+            position: relative;
+            top: 40px;
+            left: 75px;
+            font-size: 32px;
+            font-family: "Campton-Bold";
+        }
+    
+        .card-apreciacao {
+            width: 100%;
+    
+            display: flex;
+            flex-direction: column;
+    
+            align-items: left;
+        }
+    
+        .card--mensagemDe {
+            color: #2b2567;
+    
+            font-size: 20px;
+            text-align: left;
+            position: relative;
+            top: 230px;
+            left: 25px;
+            margin-bottom: 2px;
+    
+            font-family: "Campton-Light";
+        }
+    
+        .card--mensagem {
+            color: #2b2567;
+    
+            font-size: 18px;
+            font-style: italic;
+    
+            width: 500px;
+            height: 150px;
+            position: relative;
+    
+            top: 250px;
+            left: 30px;
+    
+            margin-top: 2px;
+            margin-bottom: 64px;
+    
+            text-align: left;
+            font-family: "Campton-Light";
+        }
+    
+        .baixar {
+            z-index: 2;
+    
+            position: absolute;
+            bottom: -155px;
+            right: -30px;
+    
+            background-color: transparent;
+    
+            border: 0;
+    
+            cursor: pointer;
+    
+            transform: scale(0.8);
+        }
+    
+        .fecha {
+            z-index: 2;
+    
+            position: absolute;
+            top: -150px;
+            right: -30px;
+    
+            background-color: transparent;
+    
+            border: 0;
+    
+            cursor: pointer;
+    
+            transform: scale(0.8);
+        }
 </style>
