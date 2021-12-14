@@ -1,4 +1,4 @@
-function obterApreciacao(event, pilar, descricao, reconhecedor, reconhecido) {
+function obterApreciacao(pilar, descricao, reconhecedor, reconhecido) {
    var apreciacao = {
      pilar : pilar,
      reconhecido : reconhecido,
@@ -18,7 +18,7 @@ function preencherModal(apreciacao){
 
   document.querySelector(".card--mensagemDe").innerHTML = apreciacao.reconhecedor;
   
-  gerarModal();
+  setTimeout(() => gerarModal(), 250);
 }
 
 function verificarPilar(pilar) {
