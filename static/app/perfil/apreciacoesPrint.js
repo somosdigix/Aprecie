@@ -36,6 +36,7 @@ function verificarPilar(pilar) {
 	} else if (pilar === "Planejar, entregar e aprender") {
 		backgroundDiv.style.backgroundImage =
 			"url('../static/img/pilares/planejar.png')";
+		document.querySelector(".card--mensagem").style.top = "265px";
 	}
 }
 
