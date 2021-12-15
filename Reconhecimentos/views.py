@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.utils import formats
 from django.db.models import Count
 from django.core.paginator import Paginator
+from datetime import date
 
 from Login.models import Colaborador
 from Reconhecimentos.models import Pilar, Reconhecimento, Feedback
@@ -49,6 +50,24 @@ def ultimos_reconhecimentos(requisicao):
   }
 
   return JsonResponse(retorno, safe=False)
+
+def ultima_data_de_publicacao(requisicao, id_do_reconhecedor):
+  reconhecedor = Colaborador.objects.get(id = id_do_reconhecedor)
+
+  ultima_data = reconhecedor.obter_ultima_data_de_publicacao()
+
+  resposta = {
+    'ultimaData': ultima_data
+  }
+
+  return JsonResponse(resposta)
+
+def definir_data_de_publicacao(requisicao, id_do_reconhecedor):
+  reconhecedor = Colaborador.objects.get(id = id_do_reconhecedor)
+
+  reconhecedor.definir_ultima_data_de_publicacao(date.today())
+
+  return JsonResponse ({})
 
 def reconhecimentos_do_colaborador(requisicao, id_do_reconhecido):
   reconhecido = Colaborador.objects.get(id = id_do_reconhecido)
