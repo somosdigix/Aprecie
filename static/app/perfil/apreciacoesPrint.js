@@ -40,7 +40,7 @@ function verificarPilar(pilar) {
 	}
 }
 
-function sumirModal() {
+function esconderModal() {
 	document.getElementById("modal").style.visibility = "hidden";
 	document.getElementById("corpo-modal").style.visibility = "hidden";
 }
@@ -50,7 +50,7 @@ function gerarModal() {
 	document.getElementById("corpo-modal").style.visibility = "visible";
 }
 
-function SaveAs() {
+function salvarComo() {
 	html2canvas(document.querySelector("#card")).then(function (canvas) {
 		var uri = canvas.toDataURL();
 		var filename = "file-name.png";
