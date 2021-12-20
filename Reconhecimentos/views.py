@@ -86,6 +86,18 @@ def todas_as_apreciacoes(requisicao, id_do_reconhecido):
 
   return JsonResponse(resposta)
 
+
+def contar_todas_as_apreciacoes(requisicao):
+  apreciacoes = Colaborador.objects.all().order_by('-quantidade_de_apreciacoes_recebidas')
+
+  resposta = {
+    'nome': apreciacoes.reconhecido.nome_abreviado,
+    'quantidade_apreciacoes': apreciacoes.reconhecido.quantidade_de_apreciacoes_recebidas
+  }
+
+  JsonResponse(resposta)
+
+
 def todos_os_pilares(requisicao):
   return JsonResponse(list(Pilar.objects.all()))
 

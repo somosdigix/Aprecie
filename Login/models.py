@@ -1,5 +1,6 @@
 ﻿from django.db import models
 from django.contrib.auth.models import AbstractBaseUser
+from django.db.models.fields import IntegerField
 from bradocs4py import ValidadorCpf
 
 from Aprecie.base import ExcecaoDeDominio
@@ -19,6 +20,7 @@ class Colaborador(AbstractBaseUser):
 	data_de_nascimento = models.DateField()
 	foto = models.TextField(default=None, null=True)
 	usuario_id_do_chat = models.CharField(max_length=100, null=True)
+	quantidade_de_apreciacoes_recebidas = IntegerField(null=True)
 
 	USERNAME_FIELD = 'cpf'
 
@@ -55,6 +57,7 @@ class Colaborador(AbstractBaseUser):
 			raise ExcecaoDeDominio('Não é possível reconhecer uma pessoa duas vezes pelos mesmos motivos')
 
 		self.reconhecido.create(reconhecedor = reconhecedor, pilar = pilar, feedback = feedback)
+		self.incrementar_quantidade_reconhecimentos()
 
 	def ja_possui_um_reconhecimento_identico(self, reconhecedor, feedback, pilar):
 		return self.reconhecido.filter(
@@ -66,5 +69,12 @@ class Colaborador(AbstractBaseUser):
 	def reconhecimentos(self):
 		return self.reconhecido.all()
 
+	def contar_todos_reconhecimentos(self):
+		reconhecimentos = self.reconhecido.all()
+		return len(reconhecimentos)
+
 	def reconhecimentos_por_pilar(self, pilar):
 		return self.reconhecido.filter(pilar = pilar).order_by('-data')
+
+	def incrementar_quantidade_reconhecimentos(self):
+		self.quantidade_de_apreciacoes_recebidas +=1
