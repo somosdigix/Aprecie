@@ -28,7 +28,8 @@ define([
 	};
 
 	function exibir(colaboradorId, reconhecimentosDoColaborador) {
-		if (sessaoDeUsuario.id === colaboradorId) return;
+		if (sessaoDeUsuario.id === colaboradorId)
+			return;
 
 		template.exibirEm(
 			'div[data-js="apreciacao"]',
