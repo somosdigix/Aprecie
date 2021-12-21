@@ -23,7 +23,7 @@ define([
       template.exibirEm('div[data-js="todas-as-apreciacoes"]', apreciacoesTemplate, apreciacoes);
       if (sessaoDeUsario.id !== _colaboradorId){
         var usuario = document.getElementsByName("compartilhar");
-        for(var i=0; i-usuario.length; i++){
+        for(var i=0; i<usuario.length; i++){
           usuario[i].style.visibility = "hidden";
         }
       }
