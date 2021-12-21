@@ -11,10 +11,10 @@
 	roteador.configurar = function () {
 		var rotas = {
 			'/': [middlewareDeTransicaoDeTela, limparTela, login],
-			'/login': [middlewareDeAutenticacao, middlewareDeAtualizacaoComGoogleAnalytics, middlewareDeToolbar, middlewareDeTransicaoDeTela, limparTela, login],
-			'/paginaInicial': [middlewareDeAutenticacao, middlewareDeAtualizacaoComGoogleAnalytics, middlewareDeToolbar, middlewareDeTransicaoDeTela, limparTela, paginaInicial],
-			'/estatisticas': [middlewareDeAutenticacao, middlewareDeAtualizacaoComGoogleAnalytics, middlewareDeToolbar, middlewareDeTransicaoDeTela, limparTela, estatisticas],
-			'/perfil/:colaboradorId': [middlewareDeAutenticacao, middlewareDeAtualizacaoComGoogleAnalytics, middlewareDeToolbar, middlewareDeTransicaoDeTela, limparTela, perfil],
+			'/login': [middlewareDeAutenticacao, middlewareDeAtualizacaoComGoogleAnalytics, middlewareDeToolbar, middlewareDeBotaoReconhecer, middlewareDeTransicaoDeTela, limparTela, login],
+			'/paginaInicial': [middlewareDeAutenticacao, middlewareDeAtualizacaoComGoogleAnalytics, middlewareDeToolbar, middlewareDeBotaoReconhecer, middlewareDeTransicaoDeTela, limparTela, paginaInicial],
+			'/estatisticas': [middlewareDeAutenticacao, middlewareDeAtualizacaoComGoogleAnalytics, middlewareDeToolbar, middlewareDeBotaoReconhecer, middlewareDeTransicaoDeTela, limparTela, estatisticas],
+			'/perfil/:colaboradorId': [middlewareDeAutenticacao, middlewareDeAtualizacaoComGoogleAnalytics, middlewareDeToolbar, middlewareDeBotaoReconhecer, middlewareDeTransicaoDeTela, limparTela, perfil],
 		};
 
 		function limparTela() {
@@ -97,6 +97,19 @@
 			}
 			else {
 				toolbar.esconder();
+				$('body').removeClass('body-app').addClass('body-login');
+			}
+		});
+	}
+
+	function middlewareDeBotaoReconhecer(){
+		require(['app/botaoReconhecer/botaoReconhecer'], function(botaoReconhecer) { 
+			if (servicoDeAutenticacao.jaEstaAutenticado() && roteador.paginaAtual() !== '/login') {
+				botaoReconhecer.exibir();
+				$('body').removeClass('body-login').addClass('body-app');
+			}
+			else {
+				botaoReconhecer.esconder();
 				$('body').removeClass('body-app').addClass('body-login');
 			}
 		});

@@ -1,0 +1,202 @@
+<div class="campo-reconhecer">
+	<button class="botao-reconhecer" onclick="exibirModalReconhecer()">+</button>
+</div>
+
+
+<input type="hidden" id="idDoReconhecido" value="id">
+
+<div class="modalReconhecer">
+	<button class="fechar__modal--botaoreconhecer" onclick="fecharModal()">
+		X
+	</button>
+	<div data-js="buscaColaboradores" class="ui fluid search largura-busca">
+		<div class="ui icon small input largura-busca">
+			<input
+				class="prompt"
+				class="largura-busca"
+				placeholder="Quem você quer reconhecer?"
+				type="text"
+			/>
+			<i class="search icon"></i>
+		</div>
+		<div class="results"></div>
+	</div>
+	<div class="conteudo-botaoReconhecer">
+		<div class="escolhaPilar">
+			<div class="campo">
+				<input
+					id="pilar_1"
+					name="pilar"
+					type="radio"
+					value="1"
+				/>
+				<label for="pilar_{{this.id}}">Colaborar sempre</label>
+			</div>
+			<div class="campo">
+				<input
+					id="pilar_2"
+					name="pilar"
+					type="radio"
+					value="2"
+				/>
+				<label for="pilar_2">Colaborar sempre</label>
+			</div>
+			<div class="campo">
+				<input
+					id="pilar_3"
+					name="pilar"
+					type="radio"
+					value="3"
+				/>
+				<label for="pilar_3">Colaborar sempre</label>
+			</div>
+			<div class="campo">
+				<input
+					id="pilar_4"
+					name="pilar"
+					type="radio"
+					value="4"
+				/>
+				<label for="pilar_4">Colaborar sempre</label>
+			</div>
+		</div>
+		<textarea
+			class="elogio"
+			placeholder="Digite seu elogio"
+			cols="30"
+			rows="10"
+			maxlength="220"
+		></textarea>
+	</div>
+	<button class="botao-para-reconhecer" data-js="reconhecerGlobal">Reconhecer</button>
+</div>
+
+<script>
+	$(".modalReconhecer").hide();
+
+	function exibirModalReconhecer() {
+		var modal = $(".modalReconhecer");
+
+		modal.show();
+	}
+
+	function fecharModal() {
+		$(".modalReconhecer").hide();
+	}
+</script>
+
+<style>
+	.modalReconhecer {
+		width: 600px;
+		height: 400px;
+
+		position: fixed;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+
+		background-color: #2c006a;
+		color: white;
+
+		border-radius: 20px;
+
+		padding: 0 16px;
+
+		z-index: 1;
+
+		box-shadow: 2px 2px 600px gray;
+	}
+
+	.botao-reconhecer {
+		background-color: #2c006a;
+
+		position: fixed;
+		bottom: 32px;
+		right: 32px;
+
+		height: 50px;
+		width: 50px;
+
+		border-radius: 50%;
+		color: white;
+
+		font-size: 2.5rem;
+		font-weight: bold;
+
+		border: 0;
+
+		cursor: pointer;
+	}
+
+	.escolhaPilar .campo {
+		color: #616161;
+		cursor: pointer;
+		padding: 3px 5px;
+		text-align: center;
+		border-radius: 25px;
+		margin: 10px 0;
+		border: 1px solid #0bc0d3;
+    }
+    
+    .selecionado, .escolhaPilar .campo:hover {
+    background-color: #0BC0D3;
+    color: #fff;
+    }
+
+	.escolhaPilar {
+		text-align: left;
+	}
+
+	.elogio {
+		color: black;
+
+		padding: 8px;
+	}
+
+	.botao-para-reconhecer {
+		position: relative;
+
+		left: 450px;
+
+		background-color: #0bc0d3;
+
+		padding: 8px;
+
+		border: 0;
+
+		color: white;
+
+		font-size: 1.2rem;
+		font-weight: bold;
+
+		border-radius: 20px;
+	}
+
+	.conteudo-botaoReconhecer {
+		display: flex;
+		flex-direction: row;
+
+		justify-content: space-between;
+
+		padding: 16px;
+
+		height: 70%;
+	}
+
+	.fechar__modal--botaoreconhecer {
+		position: relative;
+		border: none;
+		left: 103%;
+	}
+
+	.pilares-botao {
+		display: flex;
+		flex-direction: column;
+
+		width: 40%;
+	}
+
+	.pilar-botao {
+		margin: 8px auto;
+	}
+</style>
