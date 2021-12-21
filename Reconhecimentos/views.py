@@ -88,14 +88,13 @@ def todas_as_apreciacoes(requisicao, id_do_reconhecido):
 
 
 def contar_todas_as_apreciacoes(requisicao):
-  apreciacoes = Colaborador.objects.all().order_by('-quantidade_de_apreciacoes_recebidas')
+	colaboradores = Colaborador.objects.all().order_by('-quantidade_de_apreciacoes_recebidas')
 
-  resposta = {
-    'nome': apreciacoes.reconhecido.nome_abreviado,
-    'quantidade_apreciacoes': apreciacoes.reconhecido.quantidade_de_apreciacoes_recebidas
-  }
+	transformacao = lambda colaborador: { 'nome': colaborador.nome_abreviado, 'foto': colaborador.foto }
+	colaboradores = map(transformacao, colaboradores)
 
-  JsonResponse(resposta)
+	return JsonResponse({ 'colaboradores': list(colaboradores) })
+
 
 
 def todos_os_pilares(requisicao):

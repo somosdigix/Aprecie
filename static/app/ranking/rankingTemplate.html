@@ -1,0 +1,43 @@
+<h1 class="teste">Ranking de Apreciacoes</h1>
+<div class="box--destaques">
+	{{#each this.colaboradores}}
+	<div class="box--colaborador">
+		<img id="colab" src={{this.foto}} alt="foto colaborador">
+		<p>{{this.nome}}</p>
+	</div>
+	{{/each}}
+</div>
+<style>
+	.box--destaques {
+		background-color: #2c006a;
+		height: 50%;
+		display: flex;
+		align-items:center;
+		justify-content: center;
+		flex-wrap: wrap;
+		margin-top: 200px ;
+		
+	}
+
+	p {
+		color: white;
+		font-size: 24px;
+		text-align: center;
+	}
+
+	#colab {
+		width: 40%;
+		margin: auto;
+		border-radius: 60px;
+	}
+
+	.box--colaborador {
+		box-sizing: border-box;
+		padding: 20px;
+		margin: 10px;
+		width: calc((100% / 5) - 2rem);
+		display: flex;
+		align-items:center;
+		flex-direction: column;
+	}
+</style>

@@ -51,7 +51,7 @@
 		}
 		
 		function ranking() { 
-			require(['app/perfil/controller'], function (controller) {
+			require(['app/ranking/controller'], function (controller) {
 				_controllerAtivo = controller;
 				controller.exibir();
 			});
