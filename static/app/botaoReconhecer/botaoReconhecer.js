@@ -7,7 +7,15 @@ define([
 	"growl",
 	"roteador",
 	"jquery-ui",
-], function ($, template, botaoReconhecerTemplate, sessaoDeUsuario, ReconhecerGlobalViewModel, growl, roteador,) {
+], function (
+	$,
+	template,
+	botaoReconhecerTemplate,
+	sessaoDeUsuario,
+	ReconhecerGlobalViewModel,
+	growl,
+	roteador
+) {
 	"use strict";
 
 	var botaoReconhecerView = {};
@@ -29,6 +37,7 @@ define([
 				.on("click", 'button[data-js="reconhecerGlobal"]', reconhecerGlobal);
 
 			$('div[data-js="botaoReconhecer"]').show();
+			$(".modalReconhecer").hide();
 
 			$('div[data-js="buscaColaboradores"]').search({
 				source: converterParaAutocomplete(colaboradoresEPilares.colaboradores),
@@ -49,33 +58,37 @@ define([
 	function converterParaAutocomplete(colaboradores) {
 		return colaboradores.map(function (colaborador) {
 			colaborador.title = colaborador.nome;
-			
+
 			return colaborador;
 		});
 	}
 
 	function selecionarPilarGlobal() {
 		$("div.campoGlobal.selecionadoGlobal").removeClass("selecionadoGlobal");
-		$(this).toggleClass("selecionadoGlobal").find('.inputPilar').attr("checked", true);
+		$(this)
+			.toggleClass("selecionadoGlobal")
+			.find(".inputPilar")
+			.attr("checked", true);
 	}
 
-	function reconhecerGlobal() {
+	async function reconhecerGlobal() {
+		$('button[data-js="reconhecerGlobal"]').prop("disabled", "disabled");
 		var reconhecerGlobalViewModel = new ReconhecerGlobalViewModel();
-
+		
 		try {
 			validarOperacao(reconhecerGlobalViewModel);
 		} catch (erro) {
+			$('#global button[data-js="reconhecerGlobal"]').removeAttr("disabled");
 			throw erro;
 		}
 
-		$.post(
-			"/reconhecimentos/reconhecer/",
-			reconhecerGlobalViewModel,
-			function () {
-				growl.deSucesso().exibir("Reconhecimento realizado com sucesso");
-				roteador.atualizar();
-			}
-		);
+		await $.post("/reconhecimentos/reconhecer/", reconhecerGlobalViewModel, function () {
+			growl.deSucesso().exibir("Reconhecimento realizado com sucesso");
+		}).fail(function () {
+			$('#global button[data-js="reconhecerGlobal"]').removeAttr("disabled");
+		});
+
+		window.location.reload(true);
 	}
 
 	function validarOperacao(reconhecerViewModel) {
