@@ -2,12 +2,11 @@
 	<button class="botao-reconhecer" onclick="exibirModalReconhecer()">+</button>
 </div>
 
-
-<input type="hidden" id="idDoReconhecido" value="id">
+<input type="hidden" id="idDoReconhecido" value="id" />
 
 <div class="modalReconhecer">
 	<button class="fechar__modal--botaoreconhecer" onclick="fecharModal()">
-		X
+		<img src="../static/img/fechar.svg" alt="Icone de fechar" />
 	</button>
 	<div data-js="buscaColaboradores" class="ui fluid search largura-busca">
 		<div class="ui icon small input largura-busca">
@@ -23,52 +22,30 @@
 	</div>
 	<div class="conteudo-botaoReconhecer">
 		<div class="escolhaPilar">
-			<div class="campo">
+			{{#each this.pilares}}
+			<div class="campoGlobal">
 				<input
-					id="pilar_1"
-					name="pilar"
+					id="pilarGlobal_{{this.id}}"
+					class="inputPilar"
+					name="pilarGlobal"
 					type="radio"
-					value="1"
+					value="{{this.id}}"
 				/>
-				<label for="pilar_{{this.id}}">Colaborar sempre</label>
+				<label for="pilarGlobal_{{this.id}}">{{this.nome}}</label>
 			</div>
-			<div class="campo">
-				<input
-					id="pilar_2"
-					name="pilar"
-					type="radio"
-					value="2"
-				/>
-				<label for="pilar_2">Colaborar sempre</label>
-			</div>
-			<div class="campo">
-				<input
-					id="pilar_3"
-					name="pilar"
-					type="radio"
-					value="3"
-				/>
-				<label for="pilar_3">Colaborar sempre</label>
-			</div>
-			<div class="campo">
-				<input
-					id="pilar_4"
-					name="pilar"
-					type="radio"
-					value="4"
-				/>
-				<label for="pilar_4">Colaborar sempre</label>
-			</div>
+			{{/each}}
 		</div>
 		<textarea
 			class="elogio"
 			placeholder="Digite seu elogio"
-			cols="30"
-			rows="10"
 			maxlength="220"
+			cols="30"
+			rows="5"
 		></textarea>
 	</div>
-	<button class="botao-para-reconhecer" data-js="reconhecerGlobal">Reconhecer</button>
+	<button class="botao-para-reconhecer" data-js="reconhecerGlobal">
+		Reconhecer
+	</button>
 </div>
 
 <script>
@@ -98,13 +75,13 @@
 		background-color: #2c006a;
 		color: white;
 
-		border-radius: 20px;
+		border-radius: 15px;
 
 		padding: 0 16px;
 
 		z-index: 1;
 
-		box-shadow: 2px 2px 600px gray;
+		box-shadow: 2px 2px 700px gray;
 	}
 
 	.botao-reconhecer {
@@ -128,29 +105,23 @@
 		cursor: pointer;
 	}
 
-	.escolhaPilar .campo {
-		color: #616161;
-		cursor: pointer;
-		padding: 3px 5px;
-		text-align: center;
-		border-radius: 25px;
-		margin: 10px 0;
-		border: 1px solid #0bc0d3;
-    }
-    
-    .selecionado, .escolhaPilar .campo:hover {
-    background-color: #0BC0D3;
-    color: #fff;
-    }
-
-	.escolhaPilar {
-		text-align: left;
+	.selecionadoGlobal{
+		background-color: #0bc0d3;
 	}
 
 	.elogio {
 		color: black;
 
 		padding: 8px;
+
+		resize: none;
+
+		border-radius: 4px;
+		border: 0;
+	}
+
+	.inputPilar{
+		display: none;
 	}
 
 	.botao-para-reconhecer {
@@ -158,9 +129,9 @@
 
 		left: 450px;
 
-		background-color: #0bc0d3;
-
 		padding: 8px;
+
+		margin: 32px 0;
 
 		border: 0;
 
@@ -169,34 +140,65 @@
 		font-size: 1.2rem;
 		font-weight: bold;
 
+		background-color: transparent;
+
+		transition: 0.4s;
+
 		border-radius: 20px;
+		border: solid 2px #0bc0d3;
+	}
+
+	.botao-para-reconhecer:hover{
+		background-color: #0bc0d3;
+	}
+
+	.campoGlobal{
+		text-align: center;
+
+		font-weight: bold;
+		font-size: 1.2rem;
+
+		margin: 0 8px;
+
+		padding: 8px;
+
+		border-radius: 4px;
+
+		transition: 0.2s;
+	}
+
+	.campoGlobal:hover{
+		border: solid 4px #0bc0d3;
+
+		transform: scale(1.2);
+	}
+
+	.escolhaPilar {
+		display: flex;
+		flex-direction: row;
+
+		width: 100%;
+
+		margin: 32px auto;
+
+		justify-content: space-between;
+		align-items: center;
 	}
 
 	.conteudo-botaoReconhecer {
 		display: flex;
-		flex-direction: row;
+		flex-direction: column;
 
-		justify-content: space-between;
-
-		padding: 16px;
-
-		height: 70%;
+		padding: 0 16px;
 	}
 
 	.fechar__modal--botaoreconhecer {
 		position: relative;
 		border: none;
 		left: 103%;
-	}
 
-	.pilares-botao {
-		display: flex;
-		flex-direction: column;
+		background-color: transparent;
 
-		width: 40%;
-	}
-
-	.pilar-botao {
-		margin: 8px auto;
+		border: none;
 	}
 </style>

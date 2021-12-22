@@ -13,25 +13,25 @@ define([
 	var botaoReconhecerView = {};
 
 	botaoReconhecerView.exibir = function (callback) {
-		$.getJSON("/login/obter_colaboradores/", function (data) {
+		$.getJSON("/reconhecimentos/pilares", function (colaboradoresEPilares) {
 			template.exibirEm(
 				'div[data-js="botaoReconhecer"]',
 				botaoReconhecerTemplate,
-				sessaoDeUsuario
+				colaboradoresEPilares
 			);
 
 			$("#global")
 				.on(
 					"click",
-					"div.conteudo-botaoReconhecer div.escolhaPilar",
-					selecionarPilar
+					"div.conteudo-botaoReconhecer div.campoGlobal",
+					selecionarPilarGlobal
 				)
 				.on("click", 'button[data-js="reconhecerGlobal"]', reconhecerGlobal);
 
 			$('div[data-js="botaoReconhecer"]').show();
 
 			$('div[data-js="buscaColaboradores"]').search({
-				source: converterParaAutocomplete(data.colaboradores),
+				source: converterParaAutocomplete(colaboradoresEPilares.colaboradores),
 				onSelect: selecionarReconhecido,
 				error: {
 					noResults: "Não encontrei ninguém :(",
@@ -49,18 +49,17 @@ define([
 	function converterParaAutocomplete(colaboradores) {
 		return colaboradores.map(function (colaborador) {
 			colaborador.title = colaborador.nome;
-
+			
 			return colaborador;
 		});
 	}
 
-	function selecionarPilar() {
-		$("div.escolhaPilar.selecionado").removeClass("selecionado");
-		$(this).toggleClass("selecionado").find(":radio").attr("checked", true);
+	function selecionarPilarGlobal() {
+		$("div.campoGlobal.selecionadoGlobal").removeClass("selecionadoGlobal");
+		$(this).toggleClass("selecionadoGlobal").find('.inputPilar').attr("checked", true);
 	}
 
 	function reconhecerGlobal() {
-		console.log("oi");
 		var reconhecerGlobalViewModel = new ReconhecerGlobalViewModel();
 
 		try {
@@ -97,7 +96,7 @@ define([
 		var divReconhecido = $('div[data-js="buscaColaboradores"]');
 		document
 			.getElementById("idDoReconhecido")
-			.setAttribute("value", colaborador.id);
+			.setAttribute("value", colaborador.id_colaborador);
 		divReconhecido.value = colaborador.nome;
 	}
 
