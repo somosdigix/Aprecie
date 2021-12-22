@@ -1,11 +1,14 @@
 {
   "ExpandedNodes": [
     "",
-    "\\Reconhecimentos",
     "\\static",
     "\\static\\app",
-    "\\static\\css"
+    "\\static\\app\\perfil",
+    "\\static\\app\\ranking",
+    "\\static\\app\\servicos",
+    "\\static\\app\\toolbar",
+    "\\wsgi\\static"
   ],
-  "SelectedNode": "\\static\\css\\perfil.css",
+  "SelectedNode": "\\static\\app\\perfil\\perfilTemplate.html",
   "PreviewInSolutionExplorer": false
 }

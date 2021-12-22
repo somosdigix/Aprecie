@@ -1,36 +1,54 @@
-<h1 class="teste">Ranking de Apreciacoes</h1>
+<h1>Colaboradores em Destaque</h1>
 <div class="box--destaques">
 	{{#each this.colaboradores}}
 	<div class="box--colaborador">
-		<img id="colab" src={{this.foto}} alt="foto colaborador">
-		<p>{{this.nome}}</p>
-	</div>
+		<div class="imagem">
+			<div class="medalha">
+			<img id="posicao" src ="../static/img/medalhas/medalha1.png">
+			</div>
+			<img id="colab" src={{this.foto}} alt="foto colaborador">
+		</div>
+			<p>{{this.nome}}</p>
+		</div>
 	{{/each}}
+	<img class="logo" src="../static/img/logos-rodape.png">
 </div>
+
 <style>
+	.imagem{
+		position:relative;
+	  align-items:center;
+		flex-direction:column;
+		display:flex;
+	}
+	.medalha{
+		position:absolute;
+		top:-10px;
+		left:30px;
+	}
 	.box--destaques {
 		background-color: #2c006a;
-		height: 50%;
+		height: 90%;
 		display: flex;
 		align-items:center;
 		justify-content: center;
 		flex-wrap: wrap;
-		margin-top: 200px ;
-		
 	}
 
 	p {
 		color: white;
-		font-size: 24px;
+		font-size: 28px;
 		text-align: center;
 	}
 
 	#colab {
-		width: 40%;
+		width: 65%;
 		margin: auto;
-		border-radius: 60px;
+		border-radius: 120px;
 	}
-
+	#posicao {
+		width: 35%;
+	}
 	.box--colaborador {
 		box-sizing: border-box;
 		padding: 20px;
@@ -40,4 +58,10 @@
 		align-items:center;
 		flex-direction: column;
 	}
+	h1{
+		margin-left:30px;
+		padding-top: 100px;
+		font-size: 35px;
+	}
+
 </style>

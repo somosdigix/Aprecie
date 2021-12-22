@@ -27,3 +27,6 @@ define([
 
 	return self;
 });
+function medalhass() {
+	document.getElementById("posicao").src = "../static/img/medalhas/medalha1.png";
+}
