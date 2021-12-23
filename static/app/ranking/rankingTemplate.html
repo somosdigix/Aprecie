@@ -1,14 +1,18 @@
 <h1>Colaboradores em Destaque</h1>
 <div class="box--destaques">
 	{{#each this.colaboradores}}
+	
 	<div class="box--colaborador">
 		<div class="imagem">
-			<div class="medalha">
-			<img id="posicao" src ="../static/img/medalhas/medalha1.png">
-			</div>
-			<img id="colab" src={{this.foto}} alt="foto colaborador">
+			<div id="medalha" class="medalha"></div>
+			{{#if this.foto}}
+			<img id="colab" class="com-foto" src={{this.foto}} alt="foto colaborador">
+			{{else}}
+			<img id="colab" class="sem-foto" src="../static/img/sem-foto.png" alt="foto colaborador">
+			{{/if}}
 		</div>
 			<p>{{this.nome}}</p>
+			<!-- <p>{{this.apreciacoes}}</p> -->
 		</div>
 	{{/each}}
 	<img class="logo" src="../static/img/logos-rodape.png">
@@ -17,18 +21,20 @@
 <style>
 	.imagem{
 		position:relative;
-	  align-items:center;
+	  	align-items:center;
 		flex-direction:column;
 		display:flex;
 	}
-	.medalha{
+
+	#medalha{
 		position:absolute;
-		top:-10px;
-		left:30px;
+		top:-16px;
+		left:16px;
 	}
+
 	.box--destaques {
 		background-color: #2c006a;
-		height: 90%;
+		height: 82%;
 		display: flex;
 		align-items:center;
 		justify-content: center;
@@ -42,12 +48,18 @@
 	}
 
 	#colab {
-		width: 65%;
 		margin: auto;
 		border-radius: 120px;
+		padding: 5px;
+	}
+	.com-foto{
+		width: 65%;
+	}
+	.sem-foto{
+		width: 75%;
 	}
 	#posicao {
-		width: 35%;
+		width: 100px;
 	}
 	.box--colaborador {
 		box-sizing: border-box;

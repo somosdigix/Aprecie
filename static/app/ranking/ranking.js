@@ -1,32 +1,42 @@
 define([
-    'jquery',
-	'template',
-	'text!app/ranking/rankingTemplate.html',
-], function($, template, rankingTemplate) {
-	'use strict';
+	"jquery",
+	"template",
+	"text!app/ranking/rankingTemplate.html",
+], function ($, template, rankingTemplate) {
+	"use strict";
 
 	var self = {};
 	var _sandbox;
 
-	self.inicializar = function(sandbox) {
+	self.inicializar = function (sandbox) {
 		_sandbox = sandbox;
-        
-        carregarRanking()
+
+		carregarRanking();
 	};
 
-	self.finalizar = function() {
-		_sandbox.limpar('#conteudo');
-		_sandbox.removerEvento('#conteudo');
+	self.finalizar = function () {
+		_sandbox.limpar("#conteudo");
+		_sandbox.removerEvento("#conteudo");
 	};
 
 	function carregarRanking() {
-		$.getJSON('/reconhecimentos/ranking', function(ranking_de_colaboradores){
-            template.exibir(rankingTemplate, ranking_de_colaboradores);
-        });
+		$.getJSON("/reconhecimentos/ranking", function (ranking_de_colaboradores) {
+			template.exibir(rankingTemplate, ranking_de_colaboradores);
+			imagemMedalhaDinamica();
+		});
 	}
 
 	return self;
 });
-function medalhass() {
-	document.getElementById("posicao").src = "../static/img/medalhas/medalha1.png";
+
+function imagemMedalhaDinamica() {
+	var imagem = document.getElementsByClassName("medalha");
+	for (var i = 0; i < imagem.length; i++) {
+		var img = document.createElement("img");
+		img.src = "../static/img/medalhas/medalha" + i + ".svg";
+		img.id = "posicao";
+		var medalha = imagem[i];
+		console.log(medalha);
+		medalha.appendChild(img);
+	}
 }

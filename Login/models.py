@@ -20,7 +20,6 @@ class Colaborador(AbstractBaseUser):
 	data_de_nascimento = models.DateField()
 	foto = models.TextField(default=None, null=True)
 	usuario_id_do_chat = models.CharField(max_length=100, null=True)
-	quantidade_de_apreciacoes_recebidas = IntegerField(null=True)
 
 	USERNAME_FIELD = 'cpf'
 
@@ -75,6 +74,3 @@ class Colaborador(AbstractBaseUser):
 
 	def reconhecimentos_por_pilar(self, pilar):
 		return self.reconhecido.filter(pilar = pilar).order_by('-data')
-
-	def incrementar_quantidade_reconhecimentos(self):
-		self.quantidade_de_apreciacoes_recebidas +=1
