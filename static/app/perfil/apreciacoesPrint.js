@@ -6,7 +6,7 @@ function verificaCaracteres(apreciacao){
 		require(['../static/app/helpers/growl'], function(growl){
 			growl
 			.deErro()
-			.exibir("Não é possível exibir a imagem, a apreciação excedeu o limite de caracteres suportado :/");
+			.exibir("Não é possível exibir a imagem, a apreciação excedeu o limite de caracteres suportado.");
 		})
 	}
 }
