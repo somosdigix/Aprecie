@@ -18,7 +18,9 @@
 			function (reconhecimentosDoColaborador) {
 				template.exibir(perfilTemplate, reconhecimentosDoColaborador);
 
-				verificaUsuarioAdministrador(sessaoDeUsuario.administrador, reconhecimentosDoColaborador, colaboradorId);
+				verificaUsuarioAdministrador(sessaoDeUsuario.administrador);
+
+				switchAdministrador(reconhecimentosDoColaborador, colaboradorId);
 
 				$("#conteudo").on(
 					"click",
@@ -64,12 +66,11 @@
 		});
 	}
 
-	function verificaUsuarioAdministrador(administrador, reconhecimentosDoColaborador, colaboradorId){
+	function verificaUsuarioAdministrador(administrador){
 		if (administrador === false) {
 			$('div[data-js="switch-adm"]').hide();
 		} else {
 			$('div[data-js="switch-adm"]').show();
-			switchAdministrador(reconhecimentosDoColaborador, colaboradorId);
 		}
 	}
 
