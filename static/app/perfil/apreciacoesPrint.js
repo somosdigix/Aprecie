@@ -53,7 +53,7 @@ function obterApreciacao(pilar, descricao, reconhecedor, reconhecido) {
 	 }
  }
  
- function sumirModal() {
+ function esconderModal() {
 	 document.getElementById("modal").style.visibility = "hidden";
 	 document.getElementById("corpo-modal").style.visibility = "hidden";
  }
@@ -63,7 +63,7 @@ function obterApreciacao(pilar, descricao, reconhecedor, reconhecido) {
 	 document.getElementById("corpo-modal").style.visibility = "visible";
  }
  
- function SaveAs() {
+ function salvarComo() {
 	 html2canvas(document.querySelector("#card")).then(function (canvas) {
 		 var uri = canvas.toDataURL();
 		 var filename = "file-name.png";
