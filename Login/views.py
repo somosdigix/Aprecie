@@ -27,11 +27,14 @@ def entrar(requisicao):
     return JsonResponse(status=403, data={
       'mensagem': 'Oi! Seus dados não foram encontrados. Confira e tente novamente. :)'
     })
+	  
+  data = {
+      'id_do_colaborador': colaborador_autenticado.id,
+	  'nome_do_colaborador': colaborador_autenticado.primeiro_nome,
+	  'administrador': colaborador_autenticado.administrador
+    }
 
-  return JsonResponse(status=200, data={
-    'id_do_colaborador': colaborador_autenticado.id,
-    'nome_do_colaborador': colaborador_autenticado.primeiro_nome,
-  })
+  return JsonResponse(data, status=200)
 
 def alterar_foto(requisicao):
 	id_do_colaborador = requisicao.POST['id_do_colaborador']

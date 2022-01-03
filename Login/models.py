@@ -20,6 +20,7 @@ class Colaborador(AbstractBaseUser):
 	data_de_nascimento = models.DateField()
 	foto = models.TextField(default=None, null=True)
 	usuario_id_do_chat = models.CharField(max_length=100, null=True)
+	administrador = models.BooleanField(default=False)
 
 	USERNAME_FIELD = 'cpf'
 
@@ -74,3 +75,10 @@ class Colaborador(AbstractBaseUser):
 
 	def reconhecimentos_por_pilar(self, pilar):
 		return self.reconhecido.filter(pilar = pilar).order_by('-data')
+
+	def tornar_administrador(self):
+		self.administrador = True
+
+	def remover_administrador(self):
+		self.administrador = False
+		

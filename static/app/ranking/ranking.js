@@ -2,7 +2,8 @@ define([
 	"jquery",
 	"template",
 	"text!app/ranking/rankingTemplate.html",
-], function ($, template, rankingTemplate) {
+	"sessaoDeUsuario",
+], function ($, template, rankingTemplate, sessaoDeUsuario) {
 	"use strict";
 
 	var self = {};
@@ -23,6 +24,7 @@ define([
 		$.getJSON("/reconhecimentos/ranking", function (ranking_de_colaboradores) {
 			template.exibir(rankingTemplate, ranking_de_colaboradores);
 			imagemMedalhaDinamica();
+			console.log(sessaoDeUsuario.administrador);
 		});
 	}
 

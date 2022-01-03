@@ -25,6 +25,7 @@ def reconhecer(requisicao):
 
   return JsonResponse({})
 
+
 def ultimos_reconhecimentos(requisicao):
   reconhecimentos = Reconhecimento.objects.all().order_by('-id')
 
@@ -51,6 +52,32 @@ def ultimos_reconhecimentos(requisicao):
 
   return JsonResponse(retorno, safe=False)
 
+
+def switch_administrador(requisicao):
+    id_do_colaborador = requisicao.POST['id_do_colaborador']
+    switch_administrador = requisicao.POST['switch_administrador']
+
+    switch_convertido = converte_boolean(switch_administrador)
+    colaborador = Colaborador.objects.get(id = id_do_colaborador)
+
+    if switch_convertido == True:
+      colaborador.tornar_administrador()
+      colaborador.save()
+    
+    else:
+      colaborador.remover_administrador()
+      colaborador.save()
+
+    return JsonResponse({})
+    
+def converte_boolean(bool):
+    if bool.lower() == 'false':
+        return False
+    elif bool.lower() == 'true':
+        return True
+    else:
+        raise ValueError("...")
+
 def reconhecimentos_do_colaborador(requisicao, id_do_reconhecido):
   reconhecido = Colaborador.objects.get(id = id_do_reconhecido)
   pilares = list(map(lambda pilar: {
@@ -61,7 +88,8 @@ def reconhecimentos_do_colaborador(requisicao, id_do_reconhecido):
     'quantidade_de_reconhecimentos': len(reconhecido.reconhecimentos_por_pilar(pilar))
   }, Pilar.objects.all()))
 
-  return JsonResponse({ 'id': reconhecido.id, 'nome': reconhecido.nome_abreviado, 'pilares': pilares }, safe = False)
+  return JsonResponse({ 'id': reconhecido.id, 'nome': reconhecido.nome_abreviado, 'administrador': reconhecido.administrador, 'pilares': pilares }, safe = False)
+
 
 def contar_reconhecimentos(requisicao):
    colaboradores = Colaborador.objects.all()[:10]
@@ -73,40 +101,11 @@ def contar_reconhecimentos(requisicao):
 
    return JsonResponse({'colaboradores': list(colaboradoresOrdenados)})
 
+
 def contar_reconhecimentos_pilar_colaborar_sempre(requisicao):
    colaboradores = Colaborador.objects.all()[:10]
 
    transformacao = lambda colaborador: { 'nome': colaborador.nome_abreviado, 'apreciacoes': colaborador.reconhecimentos_por_pilar("Colaborar sempre")}
-   colaboradores = map(transformacao, colaboradores)
-   
-   colaboradoresOrdenados= sorted(colaboradores, key=lambda x: x["apreciacoes"], reverse=True)
-
-   return JsonResponse({'colaboradores': list(colaboradoresOrdenados)})
-
-def contar_reconhecimentos_pilar_fazer_diferente(requisicao):
-   colaboradores = Colaborador.objects.all()[:10]
-
-   transformacao = lambda colaborador: { 'nome': colaborador.nome_abreviado, 'apreciacoes': colaborador.reconhecimentos_por_pilar("Fazer diferente")}
-   colaboradores = map(transformacao, colaboradores)
-   
-   colaboradoresOrdenados= sorted(colaboradores, key=lambda x: x["apreciacoes"], reverse=True)
-
-   return JsonResponse({'colaboradores': list(colaboradoresOrdenados)})
-
-def contar_reconhecimentos_pilar_focar_nas_pessoas(requisicao):
-   colaboradores = Colaborador.objects.all()[:10]
-
-   transformacao = lambda colaborador: { 'nome': colaborador.nome_abreviado, 'apreciacoes': colaborador.reconhecimentos_por_pilar("Focar nas pessoas")}
-   colaboradores = map(transformacao, colaboradores)
-   
-   colaboradoresOrdenados= sorted(colaboradores, key=lambda x: x["apreciacoes"], reverse=True)
-
-   return JsonResponse({'colaboradores': list(colaboradoresOrdenados)})
-
-def contar_reconhecimentos_pilar_planejar_entregar_e_aprender(requisicao):
-   colaboradores = Colaborador.objects.all()[:10]
-
-   transformacao = lambda colaborador: { 'nome': colaborador.nome_abreviado, 'apreciacoes': colaborador.reconhecimentos_por_pilar("Planejar, entregar e aprender")}
    colaboradores = map(transformacao, colaboradores)
    
    colaboradoresOrdenados= sorted(colaboradores, key=lambda x: x["apreciacoes"], reverse=True)
@@ -124,6 +123,7 @@ def reconhecimentos_por_reconhecedor(requisicao, id_do_reconhecido):
 
   return JsonResponse({ 'reconhecedores': list(reconhecedores) })
 
+
 def todas_as_apreciacoes(requisicao, id_do_reconhecido):
   reconhecido = Colaborador.objects.get(id=id_do_reconhecido)
   
@@ -137,6 +137,7 @@ def todas_as_apreciacoes(requisicao, id_do_reconhecido):
   }
 
   return JsonResponse(resposta)
+
 
 def reconhecimentos_por_pilar(requisicao, id_do_reconhecido, id_do_pilar):
   reconhecido = Colaborador.objects.get(id=id_do_reconhecido)

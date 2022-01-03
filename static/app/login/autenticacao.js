@@ -27,7 +27,7 @@ define(function() {
 	function autenticar(colaborador) {
 		_sandbox.preencherSessao(colaborador);
 		_sandbox.preencherCookie(colaborador);
-
+		
 		_sandbox.redirecionarPara('/app/#/paginaInicial');
 	}
 
