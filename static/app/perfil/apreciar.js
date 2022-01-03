@@ -59,11 +59,11 @@ define([
 
 	function obterData() {
 		var hoje = new Date();
-		var dd = String(hoje.getDate()).padStart(2, "0");
-		var mm = String(hoje.getMonth() + 1).padStart(2, "0");
-		var yyyy = hoje.getFullYear();
+		var dia = String(hoje.getDate()).padStart(2, "0");
+		var mes = String(hoje.getMonth() + 1).padStart(2, "0");
+		var ano = hoje.getFullYear();
 
-		hoje = yyyy + "-" + mm + "-" + dd;
+		hoje = ano + "-" + mes + "-" + dia;
 		return hoje;
 	}
 
@@ -98,7 +98,7 @@ define([
 		}
 
 		$.post("/reconhecimentos/reconhecer/", reconhecerViewModel, function () {
-			growl.deSucesso().exibir("Reconhecimento realizado com sucesso");
+			growl.deSucesso().exibir("Reconhecimento realizado com sucesso.");
 			roteador.atualizar();
 		}).fail(function () {
 			$('#conteudo button[data-js="reconhecer"]').removeAttr("disabled");
@@ -107,11 +107,11 @@ define([
 
 	function validarOperacao(reconhecerViewModel) {
 		if (!reconhecerViewModel.id_do_pilar)
-			throw new ViolacaoDeRegra("O pilar deve ser informado");
+			throw new ViolacaoDeRegra("O pilar deve ser informado.");
 
 		if (reconhecerViewModel.descritivo === "")
 			throw new ViolacaoDeRegra(
-				"O descritivo da sua apreciação precisa ser informado"
+				"A apreciação precisa ser feita."
 			);
 	}
 
