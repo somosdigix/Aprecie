@@ -2,7 +2,8 @@ define([
 	"jquery",
 	"template",
 	"text!app/ranking/rankingTemplate.html",
-], function ($, template, rankingTemplate) {
+	"text!app/ranking/rankingAdminTemplate.html",
+], function ($, template, rankingTemplate, rankingAdminTempleate) {
 	"use strict";
 
 	var self = {};
@@ -23,6 +24,18 @@ define([
 		$.getJSON("/reconhecimentos/ranking", function (ranking_de_colaboradores) {
 			template.exibir(rankingTemplate, ranking_de_colaboradores);
 			imagemMedalhaDinamica();
+		});
+	}
+
+	function carregarRankingPeriodoDeDatas() {
+		$.getJSON("/reconhecimentos/ranking_por_periodo", function (ranking_de_colaboradores) {
+			template.exibir(rankingAdminTempleate, ranking_de_colaboradores);
+		});
+	}
+
+	function carregarRankingPilar(id_pilar) {
+		$.getJSON("/reconhecimentos/ranking_de_pilar/" + id_pilar , function (ranking_de_colaboradores) {
+			template.exibir(rankingAdminTempleate, ranking_de_colaboradores);
 		});
 	}
 
