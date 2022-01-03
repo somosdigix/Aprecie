@@ -259,11 +259,12 @@ h1, h2, .pilares .itens .titulo {
     padding: 10px;
     margin: 12px 0 0; }
     .feed-reconhecimentos .bloco-reconhecimento .img-reconhecedor {
-      width: 42px;
-      height: 42px;
-      border-radius: 143px;
-      display: inline-block;
-      vertical-align: top; }
+        width: 42px;
+        height: 42px;
+        border-radius: 143px;
+        display: inline-block;
+        vertical-align: top;
+    }
     .feed-reconhecimentos .bloco-reconhecimento .texto-reconhecimento {
       display: inline-block;
       vertical-align: top;

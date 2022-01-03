@@ -24,11 +24,13 @@ define([
 		if (sessaoDeUsuario.id === colaboradorId)
 			return;
 
+
 		template.exibirEm('div[data-js="apreciacao"]', apreciarTemplate, reconhecimentosDoColaborador);
 
 		$('#conteudo')
 			.on('click', 'div.escrever-apreciacao div.campos', selecionarPilar)
 			.on('click', 'button[data-js="reconhecer"]', reconhecer);
+
 	}
 
 	function selecionarPilar() {

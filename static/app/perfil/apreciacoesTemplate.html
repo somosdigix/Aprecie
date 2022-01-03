@@ -1,28 +1,67 @@
 <h2>Minhas apreciações</h2>
+<div id="reconhecimentos" reconhecimentos={{apreciacoes}}></div>
 {{#each this.apreciacoes}}
 <section class="feed-reconhecimentos caixa-feed">
-	<div class="bloco-reconhecimento">
-		<img class="img-reconhecedor" src="{{ foto this.reconhecedor__id usar_miniatura=true}}" />
+	<div class="container">
+		<div class="bloco-reconhecimento">
+			<img
+				class="img-reconhecedor"
+				src="{{ foto this.reconhecedor__id usar_miniatura=true}}"
+			/>
 
-		<div class="texto-reconhecimento">
-			{{#if this.pilar__nome}}
-			<strong data-id="1" data-js="ir-ao-perfil" class="apreciador">{{ this.reconhecedor__nome }} em {{ this.pilar__nome
-				}}</strong>
-			{{else}}
-			<strong data-id="1" data-js="ir-ao-perfil" class="apreciador">{{ this.reconhecedor__nome }} em {{ this.valor__nome
-				}}</strong>
-			{{/if}}
+			<div class="texto-reconhecimento">
+				{{#if this.pilar__nome}}
+				<strong data-id="1" data-js="ir-ao-perfil" class="apreciador">
+					{{ this.reconhecedor__nome }} em {{ this.pilar__nome }}
+				</strong>
+				{{else}}
+				<strong data-id="1" data-js="ir-ao-perfil" class="apreciador">
+					{{ this.reconhecedor__nome }} em {{ this.valor__nome }}
+				</strong>
+				{{/if}}
 
-			<div class="data-reconhecimento">{{ emDataLegivel this.data }}</div>
+				<div class="data-reconhecimento">{{ emDataLegivel this.data }}</div>
 
-			<p>
-				{{this.feedback__descritivo}}
-			</p>
+				<p>{{this.feedback__descritivo}}</p>
+			</div>
+			<button id="modal-botao" onClick="obterApreciacao('{{this.pilar__nome}}', '{{this.feedback__descritivo}}', '{{this.reconhecedor__nome}}', '{{this.reconhecido__nome}}')" name="compartilhar">
+				<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-share" viewBox="0 0 16 16" id="compartilhar" >
+					<path d="M13.5 1a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.499 2.499 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5zm-8.5 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm11 5.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z" />
+				</svg>
+			</button>
 		</div>
 	</div>
 </section>
+
 {{else}}
-<div class="ui yellow message">
-	Ainda não possuo nenhuma apreciação :(
-</div>
+<div class="ui yellow message">Ainda não possuo nenhuma apreciação :(</div>
 {{/each}}
+
+<div id="container">
+    <div class="modal" id="modal"></div>
+
+    <div class="corpo-modal" id="corpo-modal">
+        <div class="card" id="card">
+            <div class="p">
+                <div class="card">
+                    <div class="card--conteudo">
+                        <h1 class="card--titulo"></h1>
+                        <div class="card--apreciacao">
+                            <p class="card--mensagem"></p>
+                            <p class="card--mensagemDe"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="baixar" onclick="salvarComo()">
+            <img src="../static/img/botao-download.svg" alt="Icone de download" />
+        </button>
+        <button class="fecha" onclick="esconderModal()">
+            <img src="../static/img/botao-fechar.svg" alt="Icone para fechar card" />
+        </button>
+    </div>
+    
+</div>
+
+<script src="/static/app/perfil/apreciacoesPrint.js"></script>

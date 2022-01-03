@@ -57,3 +57,21 @@
   src: url("fonts/OpenSans-SemiboldItalic.ttf") format("truetype");
   font-weight: normal;
   font-style: normal; }
+
+@font-face{
+    font-family: 'Campton-Light';
+
+    src: url("fonts/Campton/Campton-Light.otf");
+}
+
+@font-face{
+    font-family: 'Campton-Medium';
+
+    src: url("fonts/Campton/Campton-Medium.otf");
+}
+
+@font-face{
+    font-family: 'Campton-Bold';
+
+    src: url("fonts/Campton/Campton-Bold.otf");
+}
