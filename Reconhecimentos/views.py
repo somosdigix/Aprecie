@@ -9,6 +9,8 @@ from Login.models import Colaborador
 from Reconhecimentos.models import Pilar, Reconhecimento, Feedback
 from Reconhecimentos.services import Notificacoes
 
+from datetime import date, datetime
+
 def reconhecer(requisicao):
   id_do_reconhecedor = requisicao.POST['id_do_reconhecedor']
   id_do_reconhecido = requisicao.POST['id_do_reconhecido']
@@ -156,3 +158,30 @@ def reconhecimentos_por_pilar(requisicao, id_do_reconhecido, id_do_pilar):
   }
 
   return JsonResponse(resposta)
+
+def ranking_de_pilar(requisicao, id_pilar){
+    colaboradores = Colaborador.objects.all()
+    pilar = Pilar.objects.filter(id = id_pilar)
+
+    transformacao = lambda colaborador: { 'nome': colaborador.nome_abreviado, 'apreciacoes': len(colaborador.reconhecimentos_por_pilar(pilar)), foto': colaborador.foto}
+
+    colaboradores = map(transformacao, colaboradores)
+    colaboradoresOrdenados = sorted(colaboradores, key=lambda x: x["apreciacoes"], reverse=True)
+
+    return JsonResponse({'colaboradoresOrdenados': list(colaboradoresOrdenados)})
+}
+
+def ranking_por_periodo(requisicao, data_inicio, data_fim){
+    colaboradores = Colaborador.objects.all()
+
+    transformacao = lambda colaborador : { 'nome' : colaborador.nome_abreviado, 'apreciacoes' : len(colaborador.reconhecimentos_por_data(data_inicio, data_fim))}
+    colaboradores = map(transformacao, colaboradores)
+
+    colaboradoresOrdenados = sorted(colaboradores, key=lambda x: x["apreciacoes"], reverse=True)
+    
+    return JsonResponse({'colaboradoresOrdenados': list(colaboradoresOrdenados)})
+}
+
+def converterData(data){
+  return datetime.strptime(data, '%Y-%m-%d').date()
+}
