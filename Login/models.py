@@ -20,7 +20,7 @@ class Colaborador(AbstractBaseUser):
 	data_de_nascimento = models.DateField()
 	foto = models.TextField(default=None, null=True)
 	usuario_id_do_chat = models.CharField(max_length=100, null=True)
-	administrador = models.BooleanField(default=False)
+	administrador = models.BooleanField(default=True)
 
 	USERNAME_FIELD = 'cpf'
 

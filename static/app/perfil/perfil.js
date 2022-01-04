@@ -67,10 +67,12 @@
 	}
 
 	function verificaUsuarioAdministrador(administrador){
-		if (administrador === false) {
+		if (administrador === true) {
 			$('div[data-js="switch-adm"]').hide();
+			$('div[data-js="datas-ciclo"]').hide();
 		} else {
 			$('div[data-js="switch-adm"]').show();
+			$('div[data-js="datas-ciclo"]').show();
 		}
 	}
 
@@ -112,7 +114,6 @@
 			});
 		});
 	}
-
 	// TODO: Modular esse envio de foto e aliar com webcomponent
 	function abrirSelecaoDeImagens() {
 		$('input[data-js="alterar-foto"]').trigger("click");
@@ -156,3 +157,14 @@
 
 	return _self;
 });
+
+function enviarDatas() {
+	var dataQ1 = document.getElementById('data1').value;
+	console.log(dataQ1);
+	var dataQ2 = document.getElementById('data2').value;
+	console.log(dataQ2);
+	var dataQ3 = document.getElementById('data3').value;
+	console.log(dataQ3);
+	var dataQ4 = document.getElementById('data4').value;
+	console.log(dataQ4);
+}

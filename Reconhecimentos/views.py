@@ -102,6 +102,7 @@ def contar_reconhecimentos(requisicao):
    return JsonResponse({'colaboradores': list(colaboradoresOrdenados)})
 
 
+
 def contar_reconhecimentos_pilar_colaborar_sempre(requisicao):
    colaboradores = Colaborador.objects.all()[:10]
 
