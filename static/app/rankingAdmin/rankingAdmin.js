@@ -14,10 +14,10 @@ define([
 		_sandbox = sandbox;
 
 		$('#conteudo')
-		.on('click', 'input[data-js="colaborarSempre"]', carregarRankingPilar)
-		.on('click', 'input[data-js="focarNasPessoas"]', carregarRankingPilar)
-		.on('click', 'input[data-js="fazerDiferente"]', carregarRankingPilar)
-		.on('click', 'input[data-js="planejarEntregarAprender"]', carregarRankingPilar)
+		.on('click', 'button[data-js="colaborarSempre"]', carregarRankingPilar)
+		.on('click', 'button[data-js="focarNasPessoas"]', carregarRankingPilar)
+		.on('click', 'button[data-js="fazerDiferente"]', carregarRankingPilar)
+		.on('click', 'button[data-js="planejarEntregarAprender"]', carregarRankingPilar)
 		.on('click', 'button[data-js="botao__ranking__adm"]', carregarRankingPeriodoDeDatas);
 
 		carregarRankingAdmin();

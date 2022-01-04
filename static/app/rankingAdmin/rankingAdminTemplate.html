@@ -1,23 +1,20 @@
 <div class="filtros">
     <div class="filtro__pilares">
-        <input class='ranking__admin__input' name ="pilar_ranking" type="radio" id="colaborarSempre" data-js="colaborarSempre" data-pilar_ranking-id="1">
-        <label class="filtro__pilares__label" for="colaborarSempre">Colaborar Sempre</label>
-        <input class='ranking__admin__input' name ="pilar_ranking" type="radio" id="focarNasPessoas" data-js="focarNasPessoas" data-pilar_ranking-id="2">
-        <label class="filtro__pilares__label" for="focarNasPessoas">Focar nas pessoas</label>
-        <input class='ranking__admin__input' name ="pilar_ranking" type="radio" id="fazerDiferente" data-js="fazerDiferente" data-pilar_ranking-id="3">
-        <label class="filtro__pilares__label" for="fazerDiferente">Fazer diferente</label>
-        <input class='ranking__admin__input' name ="pilar_ranking" type="radio" id="planejarEntregarAprender" data-js="planejarEntregarAprender" data-pilar_ranking-id="4">
-        <label class="filtro__pilares__label" for="planejarEntregarAprender">Planejar, entregar e aprender</label>
+        <button class="filtro__pilares__botao" id="colaborarSempre" data-js="colaborarSempre" data-pilar_ranking-id="1"> Colaborar Sempre </button>
+        <button class="filtro__pilares__botao" id="focarNasPessoas" data-js="focarNasPessoas" data-pilar_ranking-id="2"> Focar nas pessoas </button>
+        <button class="filtro__pilares__botao" id="fazerDiferente" data-js="fazerDiferente" data-pilar_ranking-id="3"> Fazer diferente </button>
+        <button class="filtro__pilares__botao" id="planejarEntregarAprender" data-js="planejarEntregarAprender" data-pilar_ranking-id="4"> Planejar, entregar e aprender </button>
     </div>
     <div class="filtro__data">
-        <label for="dataInicial">Data de inicio</label>
-        <input type="date" id="data_inicial" data-js="dataInicial">
-        <label for="dataFinal">Data final</label>
-        <input type="date" id="data_final" data-js="dataFinal">
-        <button data-js="botao__ranking__adm"> Filtrar data</button>
+        <label for="dataInicial">Data de inicio:</label>
+        <input type="date" id="data_inicial" data-js="dataInicial" class="filtro__data__input">
+        <label for="dataFinal">Data final:</label>
+        <input type="date" id="data_final" data-js="dataFinal" class="filtro__data__input">
+        <button data-js="botao__ranking__adm" class="filtro__data__botao"> Filtrar data</button>
     </div>
 </div>
 
+<h1 class="ranking__admin__pilar"> {{ this.pilar }}</h1>
 <div data-js="container__ranking" class="container__ranking">
     {{#each this.colaboradores}}
         <!-- <p class="count">
@@ -51,14 +48,6 @@
         width: 80%;
     }
     
-    .filtro__pilares__label{
-        margin:8px;
-        padding: 8px;
-        border: 2px solid purple;
-        border-radius: 4px;
-        cursor: pointer;
-    }
-
     .filtro__pilares{
         margin: 16px;
     }
@@ -71,8 +60,32 @@
         width: 10%;
     }
 
-    .ranking__admin__input{
-        display: none;
+    .filtro__pilares__botao{
+        background-color: purple;
+        color: white;
+        padding: 5px;
+        border:1px solid purple;
+        border-radius: 5px;
+        margin: 2px;
+    }
+
+    .ranking__admin__pilar{
+        margin: 0 auto;
+        width: 80%;
+    }
+
+    .filtro__data__input{
+        background: none;
+    }
+
+    .filtro__data__botao{
+        background: rebeccapurple;
+        border:1px solid rebeccapurple;
+        border-radius: 5px;
+        color: white;
+        
+        padding: 5px;
+        margin: 2px;
     }
 
 </style>
