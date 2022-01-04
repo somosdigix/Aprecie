@@ -1,4 +1,5 @@
-﻿from django.http import JsonResponse, HttpResponse
+﻿from django.utils.datastructures import MultiValueDictKeyError
+from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render
 from django.utils import formats
 from django.db.models import Count
@@ -119,19 +120,30 @@ def reconhecimentos_por_pilar(requisicao, id_do_reconhecido, id_do_pilar):
 
   return JsonResponse(resposta)
 
-def ranking_de_pilar(requisicao, id_pilar){
+def ranking_de_pilares(requisicao, id_pilar):
     colaboradores = Colaborador.objects.all()
-    pilar = Pilar.objects.filter(id = id_pilar)
+    pilar = Pilar.objects.get(id = id_pilar)
 
-    transformacao = lambda colaborador: { 'nome': colaborador.nome_abreviado, 'apreciacoes': len(colaborador.reconhecimentos_por_pilar(pilar)), foto': colaborador.foto}
+    transformacao = lambda colaborador: { 'nome': colaborador.nome_abreviado, 'apreciacoes': len(colaborador.reconhecimentos_por_pilar(pilar)), 'foto': colaborador.foto}
 
     colaboradores = map(transformacao, colaboradores)
     colaboradoresOrdenados = sorted(colaboradores, key=lambda x: x["apreciacoes"], reverse=True)
 
-    return JsonResponse({'colaboradoresOrdenados': list(colaboradoresOrdenados)})
-}
+    return JsonResponse({'colaboradores': list(colaboradoresOrdenados)})
 
-def ranking_por_periodo(requisicao, data_inicio, data_fim){
+def ranking_por_periodo(requisicao):
+    try:
+      data_inicio = requisicao.POST['data_inicio']
+    except MultiValueDictKeyError:
+      data_inicio = False
+
+    try:
+      data_fim = requisicao.POST['data_fim']
+    except MultiValueDictKeyError:
+      data_fim = False
+    
+    
+
     colaboradores = Colaborador.objects.all()
 
     transformacao = lambda colaborador : { 'nome' : colaborador.nome_abreviado, 'apreciacoes' : len(colaborador.reconhecimentos_por_data(data_inicio, data_fim))}
@@ -139,9 +151,10 @@ def ranking_por_periodo(requisicao, data_inicio, data_fim){
 
     colaboradoresOrdenados = sorted(colaboradores, key=lambda x: x["apreciacoes"], reverse=True)
     
-    return JsonResponse({'colaboradoresOrdenados': list(colaboradoresOrdenados)})
-}
+    return JsonResponse({'colaboradores': list(colaboradoresOrdenados)})
 
-def converterData(data){
+def converterData(data):
   return datetime.strptime(data, '%Y-%m-%d').date()
-}
+
+
+

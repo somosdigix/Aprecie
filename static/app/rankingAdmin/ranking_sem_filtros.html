@@ -1,10 +1,8 @@
-{% include 'filtrosTemplate.html' %}
-
-<div class="container__ranking">
-    {{# each colaborador}}
-        <p class="counter">
+<div data-js="container__ranking" class="container__ranking">
+    {{#each this.colaboradores}}
+        <!-- <p class="count">
             {{count}} lugar
-        </p>
+        </p> -->
         <div class="colaborador__ranking">
             {{#if this.foto}}
 			<img id="colab" class="com-foto" src={{this.foto}} alt="foto colaborador">
@@ -15,5 +13,5 @@
                 {{this.nome}}
             </p>
         </div>
-    {{ /each}}
+    {{/each}}
 </div>

@@ -1,0 +1,78 @@
+<div class="filtros">
+    <div class="filtro__pilares">
+        <input class='ranking__admin__input' name ="pilar_ranking" type="radio" id="colaborarSempre" data-js="colaborarSempre" data-pilar_ranking-id="1">
+        <label class="filtro__pilares__label" for="colaborarSempre">Colaborar Sempre</label>
+        <input class='ranking__admin__input' name ="pilar_ranking" type="radio" id="focarNasPessoas" data-js="focarNasPessoas" data-pilar_ranking-id="2">
+        <label class="filtro__pilares__label" for="focarNasPessoas">Focar nas pessoas</label>
+        <input class='ranking__admin__input' name ="pilar_ranking" type="radio" id="fazerDiferente" data-js="fazerDiferente" data-pilar_ranking-id="3">
+        <label class="filtro__pilares__label" for="fazerDiferente">Fazer diferente</label>
+        <input class='ranking__admin__input' name ="pilar_ranking" type="radio" id="planejarEntregarAprender" data-js="planejarEntregarAprender" data-pilar_ranking-id="4">
+        <label class="filtro__pilares__label" for="planejarEntregarAprender">Planejar, entregar e aprender</label>
+    </div>
+    <div class="filtro__data">
+        <label for="dataInicial">Data de inicio</label>
+        <input type="date" id="data_inicial" data-js="dataInicial">
+        <label for="dataFinal">Data final</label>
+        <input type="date" id="data_final" data-js="dataFinal">
+        <button data-js="botao__ranking__adm"> Filtrar data</button>
+    </div>
+</div>
+
+<div data-js="container__ranking" class="container__ranking">
+    {{#each this.colaboradores}}
+        <!-- <p class="count">
+            {{count}} lugar
+        </p> -->
+        <div class="colaborador__ranking">
+            {{#if this.foto}}
+			<img id="colab" class="com-foto" src={{this.foto}} alt="foto colaborador">
+			{{else}}
+			<img id="colab" class="sem-foto" src="../static/img/sem-foto.png" alt="foto colaborador">
+			{{/if}}
+            <p class="colaborador__ranking--nome">
+                {{this.nome}}
+            </p>
+        </div>
+    {{/each}}
+</div>
+
+<style>
+    .container__ranking{
+        display:flex;
+        gap: 8px;
+        margin: 32px auto;
+        width: 80%;
+    }
+    .filtros{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 32px auto;
+        width: 80%;
+    }
+    
+    .filtro__pilares__label{
+        margin:8px;
+        padding: 8px;
+        border: 2px solid purple;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .filtro__pilares{
+        margin: 16px;
+    }
+   
+    .colaborador__ranking{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        width: 10%;
+    }
+
+    .ranking__admin__input{
+        display: none;
+    }
+
+</style>
