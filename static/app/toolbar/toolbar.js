@@ -86,7 +86,8 @@
       toolbarView.esconder();
       window.location = '/';
     });
-  }
-
+	}
+		
   return toolbarView;
 });
+

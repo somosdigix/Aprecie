@@ -15,9 +15,13 @@
 		<a class="ranking--botao" data-js="ranking">Ranking</a>
 	</div> 
 	<div class="right menu">
-		<a class="ui item avatar">
 			<div class="meu-perfil" data-js="meu-perfil">
-				<img src="{{ foto this.id }}"/>
+				<img id="foto-perfil" src="{{ foto this.id }}" />
+				<button class="botao-menu"></button>
+				<div id="menu-adm">
+					<a href="#">Relatório de Ranking</a>
+					<a href="#">Configuração de Ciclos</a>
+				</div>
 			</div>
 		</a>
 		<a class="item icone-sair" data-js="sair">
@@ -27,6 +31,47 @@
 </div>
 
 <style>
+	.ui
+	.botao-menu {
+		display:none;
+		cursor: pointer;
+	}
+	#menu-adm {
+		display: none;
+		position: absolute;
+		background-color: #2C006A;
+		min-width: 100px;
+		box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+		z-index: 1;
+		width:10.5%;
+		height: 13%;
+		margin-left:-150px;
+		text-align:left;
+	}
+		#menu-adm a:hover {
+			color: #fc671d;
+		}
+
+	a{
+		display: block;
+	}
+	
+	#menu-adm a {
+		font-size: 24px;
+		font-family:Campton-medium;
+		margin-left:5px;
+		margin-top: 15px;
+		color:white;
+	}
+
+	.meu-perfil:hover #menu-adm {
+		display: block;
+	}
+
+	.meu-perfil:hover .botao-menu {
+		background-color: #3e8e41;
+	}
+
 .ranking--botao{
 	color:white;
 	cursor: pointer;
@@ -42,6 +87,9 @@
 	.largura-busca{
 		width: 100%
 	}
-
+	#foto-perfil{
+		width:100%;
+		margin-top: 10px;
+	}
   
 </style>
