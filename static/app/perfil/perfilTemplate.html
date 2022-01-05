@@ -24,19 +24,6 @@
 			<div class="chamada-apreciar">Aprecie</div>
 			<h2 class="nome-colaborador">{{this.nome}}</h2>
 		</div>
-		<hr size=7 align=top>
-		<h>Definição de Ciclos</h>
-		<div data-js="datas-ciclo" class="ciclo">
-			<label class="msg-ciclo">Primeiro ciclo</label>
-			<input id="data1" type="date" min='1899-01-01'>
-			<label class="msg-ciclo">Segundo ciclo</label>
-			<input id="data2" type="date">
-			<label class="msg-ciclo">Terceiro ciclo</label>
-			<input id="data3" type="date">
-			<label class="msg-ciclo">Quarto ciclo</label>
-			<input id="data4" type="date">
-		</div>
-		<button class="button-enviar" type="submit" onclick="enviarDatas()" value="Submit">Enviar</button>
 		<div data-js="apreciacao" class="escrever-apreciacao"></div>
 	</div>
 
@@ -77,58 +64,12 @@
 
 <style>
 
-	h {
-		font-size: 24px;
-		margin-right: 65px;
-		font-weight: bold;
-		
-	}
 
-hr{
-  margin-bottom: 30px;
-}
-.selecionar-data{
-		display:block;
-		align-items:center;
-		
-}
-.msg-ciclo{
-		display:block;
-		font-size: 20px;
-}
-.ciclo {
-		display:none;
-		border: 1px solid black;
-		border-radius: 4px;
-		background-color: whitesmoke;
-		padding: 10px 10px 10px 10px;
-}
-
-#data1, #data2, #data3, #data4{
-	border-radius:10px;
-	background-color:whitesmoke;
-	border:1px solid black;
-	width:75%;
-	height:75%;
-	font-size: 18px;
-	margin-top: 10px;
-	margin-bottom: 15px;
-}
 
 .switch-adm{
 	text-align: left;
 	padding-bottom: 10px;
 }
-
-.button-enviar{
-	margin-top: 15px;
-		font-size: 18px;
-
-	}
-
-	.switch-adm {
-		display: none;
-	}
 
 .txt-slider{
   font-size: 16px;
