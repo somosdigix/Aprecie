@@ -1,9 +1,14 @@
+<div data-js="container__ranking">
 <div class="filtros">
     <div class="filtro__pilares">
-        <button class="filtro__pilares__botao" id="colaborarSempre" data-js="colaborarSempre" data-pilar_ranking-id="1"> Colaborar Sempre </button>
-        <button class="filtro__pilares__botao" id="focarNasPessoas" data-js="focarNasPessoas" data-pilar_ranking-id="2"> Focar nas pessoas </button>
-        <button class="filtro__pilares__botao" id="fazerDiferente" data-js="fazerDiferente" data-pilar_ranking-id="3"> Fazer diferente </button>
-        <button class="filtro__pilares__botao" id="planejarEntregarAprender" data-js="planejarEntregarAprender" data-pilar_ranking-id="4"> Planejar, entregar e aprender </button>
+        <button class="filtro__pilares__botao" id="colaborarSempre" data-js="colaborarSempre" data-pilar_ranking-id="1">
+            Colaborar Sempre </button>
+        <button class="filtro__pilares__botao" id="focarNasPessoas" data-js="focarNasPessoas" data-pilar_ranking-id="2">
+            Focar nas pessoas </button>
+        <button class="filtro__pilares__botao" id="fazerDiferente" data-js="fazerDiferente" data-pilar_ranking-id="3">
+            Fazer diferente </button>
+        <button class="filtro__pilares__botao" id="planejarEntregarAprender" data-js="planejarEntregarAprender"
+            data-pilar_ranking-id="4"> Planejar, entregar e aprender </button>
     </div>
     <div class="filtro__data">
         <label for="dataInicial">Data de inicio:</label>
@@ -15,44 +20,48 @@
 </div>
 
 <h1 class="ranking__admin__pilar"> {{ this.pilar }}</h1>
-<div data-js="container__ranking" class="container__ranking">
+<div class="container__ranking">
     {{#each this.colaboradores}}
-        <!-- <p class="count">
+    <!-- <p class="count">
             {{count}} lugar
         </p> -->
-        <div class="colaborador__ranking">
-            {{#if this.foto}}
-			<img id="colab" class="com-foto" src={{this.foto}} alt="foto colaborador">
-			{{else}}
-			<img id="colab" class="sem-foto" src="../static/img/sem-foto.png" alt="foto colaborador">
-			{{/if}}
-            <p class="colaborador__ranking--nome">
-                {{this.nome}}
-            </p>
-        </div>
+    <div class="colaborador__ranking">
+        {{#if this.foto}}
+        <img id="colab" class="com-foto" src={{this.foto}} alt="foto colaborador">
+        {{else}}
+        <img id="colab" class="sem-foto" src="../static/img/sem-foto.png" alt="foto colaborador">
+        {{/if}}
+        <p class="colaborador__ranking--nome">
+            {{this.nome}}
+        </p>
+    </div>
     {{/each}}
 </div>
 
+    
+</div>
+
 <style>
-    .container__ranking{
-        display:flex;
+    .container__ranking {
+        display: flex;
         gap: 8px;
         margin: 32px auto;
         width: 80%;
     }
-    .filtros{
+
+    .filtros {
         display: flex;
         flex-direction: column;
         align-items: center;
         margin: 32px auto;
         width: 80%;
     }
-    
-    .filtro__pilares{
+
+    .filtro__pilares {
         margin: 16px;
     }
-   
-    .colaborador__ranking{
+
+    .colaborador__ranking {
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -60,32 +69,31 @@
         width: 10%;
     }
 
-    .filtro__pilares__botao{
+    .filtro__pilares__botao {
         background-color: purple;
         color: white;
         padding: 5px;
-        border:1px solid purple;
+        border: 1px solid purple;
         border-radius: 5px;
         margin: 2px;
     }
 
-    .ranking__admin__pilar{
+    .ranking__admin__pilar {
         margin: 0 auto;
         width: 80%;
     }
 
-    .filtro__data__input{
+    .filtro__data__input {
         background: none;
     }
 
-    .filtro__data__botao{
+    .filtro__data__botao {
         background: rebeccapurple;
-        border:1px solid rebeccapurple;
+        border: 1px solid rebeccapurple;
         border-radius: 5px;
         color: white;
-        
+
         padding: 5px;
         margin: 2px;
     }
-
 </style>

@@ -2,9 +2,9 @@ define([
 	"jquery",
 	"template",
 	"text!app/rankingAdmin/rankingAdminTemplate.html",
-	"text!app/rankingAdmin/ranking_sem_filtros.html",
+	"text!app/rankingAdmin/rankingAdmin.html",
 	'app/models/filtroDataAdminViewModel'
-], function ($, template, rankingAdminTemplate, ranking_sem_filtros, FiltroDataAdminViewModel) {
+], function ($, template, rankingAdminTemplate, rankingAdmin, FiltroDataAdminViewModel) {
 	"use strict";
 
 	var self = {};
@@ -37,7 +37,7 @@ define([
 	function carregarRankingPeriodoDeDatas() {
 		var filtroDataAdminViewModel = new FiltroDataAdminViewModel()
 
-		$.getJSON("/reconhecimentos/ranking_por_periodo/", filtroDataAdminViewModel , function (ranking_de_colaboradores) {
+		$.post("/reconhecimentos/ranking_por_periodo/", filtroDataAdminViewModel , function (ranking_de_colaboradores) {
 			template.exibirEm('div[data-js="container__ranking"]', rankingAdminTemplate,ranking_de_colaboradores);
 		});
 	}
@@ -46,7 +46,7 @@ define([
 		var objetoClicado = $(this);
 
 		$.getJSON("/reconhecimentos/ranking_de_pilares/" + objetoClicado.data('pilar_ranking-id') , function (ranking_de_colaboradores) {
-			template.exibirEm('div[data-js="container__ranking"]', ranking_sem_filtros ,ranking_de_colaboradores);
+			template.exibirEm('div[data-js="container__ranking"]', rankingAdminTemplate ,ranking_de_colaboradores);
 		});
 	}
 

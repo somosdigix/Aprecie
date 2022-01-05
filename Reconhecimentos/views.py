@@ -132,21 +132,12 @@ def ranking_de_pilares(requisicao, id_pilar):
     return JsonResponse({'colaboradores': list(colaboradoresOrdenados), 'pilar': pilar.nome})
 
 def ranking_por_periodo(requisicao):
-    try:
-      data_inicio = requisicao.POST['data_inicio']
-    except MultiValueDictKeyError:
-      data_inicio = False
-
-    try:
-      data_fim = requisicao.POST['data_fim']
-    except MultiValueDictKeyError:
-      data_fim = False
+    data_inicio = requisicao.POST['data_inicio']
+    data_fim = requisicao.POST['data_fim']
     
-    
-
     colaboradores = Colaborador.objects.all()
 
-    transformacao = lambda colaborador : { 'nome' : colaborador.nome_abreviado, 'apreciacoes' : len(colaborador.reconhecimentos_por_data(data_inicio, data_fim))}
+    transformacao = lambda colaborador : { 'nome' : colaborador.nome_abreviado, 'apreciacoes' : len(colaborador.reconhecimentos_por_data(converterData(data_inicio), converterData(data_fim)))}
     colaboradores = map(transformacao, colaboradores)
 
     colaboradoresOrdenados = sorted(colaboradores, key=lambda x: x["apreciacoes"], reverse=True)
@@ -154,7 +145,7 @@ def ranking_por_periodo(requisicao):
     return JsonResponse({'colaboradores': list(colaboradoresOrdenados)})
 
 def converterData(data):
-  return datetime.strptime(data, '%Y-%m-%d').date()
+  return datetime.strptime(data, "%Y-%m-%d").date()
 
 
 
