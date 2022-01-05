@@ -87,14 +87,8 @@ def todas_as_apreciacoes(requisicao, id_do_reconhecido):
   return JsonResponse(resposta)
 
 def todos_os_pilares_e_colaboradores(requisicao):
-    todosPilares = Pilar.objects.all()
-    todosColaboradores = Colaborador.objects.all()
-
-    transformacaoPilar = lambda pilar: { 'id': pilar.id, 'nome': pilar.nome }
-    transformacaoColab = lambda colaborador: { 'id_colaborador': colaborador.id, 'nome': colaborador.nome_abreviado}
-
-    pilares = map(transformacaoPilar, todosPilares)
-    colaboradores = map(transformacaoColab, todosColaboradores)
+    pilares = map(lambda pilar: { 'id': pilar.id, 'nome': pilar.nome }, Pilar.objects.all())
+    colaboradores = map(lambda colaborador: { 'id_colaborador': colaborador.id, 'nome': colaborador.nome_abreviado}, Colaborador.objects.all())
 
     retorno = {
       'pilares': list(pilares),

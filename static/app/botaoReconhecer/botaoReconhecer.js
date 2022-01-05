@@ -43,7 +43,7 @@ define([
 				source: converterParaAutocomplete(colaboradoresEPilares.colaboradores),
 				onSelect: selecionarReconhecido,
 				error: {
-					noResults: "Não encontrei ninguém :(",
+					noResults: "Nenhum colaborador foi encontrado.",
 				},
 			});
 
@@ -97,11 +97,11 @@ define([
 
 		if (reconhecerViewModel.descritivo === "")
 			throw new ViolacaoDeRegra(
-				"O descritivo da sua apreciação precisa ser informado"
+				"O motivo do reconhecimento deve ser informado"
 			);
 
 		if (reconhecerViewModel.id_do_reconhecido == sessaoDeUsuario.id) {
-			throw new ViolacaoDeRegra("Você não pode se apreciar");
+			throw new ViolacaoDeRegra("Não é possível se auto reconhecer, selecione a pessoa que você queira reconhecer");
 		}
 	}
 
