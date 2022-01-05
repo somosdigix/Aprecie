@@ -29,6 +29,7 @@
 				);
 
 				if (sessaoDeUsuario.id === colaboradorId) {
+					$('div[data-js="switch-adm"]').hide();
 					$("span.ion-camera").show();
 					$("#conteudo").on(
 						"click",
@@ -66,13 +67,45 @@
 		});
 	}
 
-	function verificaUsuarioAdministrador(administrador){
-		if (administrador === true) {
+	function verificaUsuarioAdministrador(administrador) {
+		if (administrador === false) {
 			$('div[data-js="switch-adm"]').hide();
 			$('div[data-js="datas-ciclo"]').hide();
 		} else {
 			$('div[data-js="switch-adm"]').show();
 			$('div[data-js="datas-ciclo"]').show();
+		}
+	}
+
+	function confirmaAlteracao() {
+		if (confirm("Confirmar as alteracoes?")) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	function confirmaAlteracao() {
+		if (confirm("Confirmar as alteracoes?")) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	function confirmaAlteracao() {
+		if (confirm("Confirmar as alteracoes?")) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	function confirmaAlteracao() {
+		if (confirm("Confirmar as alteracoes?")) {
+			return true;
+		} else {
+			return false;
 		}
 	}
 
@@ -84,26 +117,32 @@
 		}
 		$("#toggle").change(function () {
 			if (this.checked) {
-				var dados = {
-					id_do_colaborador: colaboradorId,
-					switch_administrador: true,
-				};
+				var confirma = confirmaAlteracao();
+				if (confirma) {
+					var dados = {
+						id_do_colaborador: colaboradorId,
+						switch_administrador: true,
+					};
 
-				var mensagem = "Colaborador se tornou um administrador com sucesso!";
-				$.post("/reconhecimentos/administrador/", dados).done(function () {
-					require(["growl"], function (growl) {
-						growl.deSucesso().exibir(mensagem);
-					});
-				});
+					var mensagem = "Colaborador se tornou um administrador com sucesso!";
+					postSwitch(dados, mensagem);
+				} else {
+					$("#toggle").prop("checked", false);
+				}
 			} else {
-				var dados = {
-					id_do_colaborador: colaboradorId,
-					switch_administrador: false,
-				};
-				var mensagem =
-					"Retirado o acesso de administrador do Colaborador com sucesso!";
+				var confirma = confirmaAlteracao();
+				if (confirma) {
+					var dados = {
+						id_do_colaborador: colaboradorId,
+						switch_administrador: false,
+					};
+					var mensagem =
+						"Retirado o acesso de administrador do Colaborador com sucesso!";
+						postSwitch(dados, mensagem);
+				} else {
+					$("#toggle").prop("checked", true);
+				}
 			}
-			postSwitch(dados, mensagem);
 		});
 	}
 
