@@ -64,50 +64,11 @@ def reconhecimentos_do_colaborador(requisicao, id_do_reconhecido):
   return JsonResponse({ 'id': reconhecido.id, 'nome': reconhecido.nome_abreviado, 'pilares': pilares }, safe = False)
 
 def contar_reconhecimentos(requisicao):
-   colaboradores = Colaborador.objects.all()[:10]
-
-   transformacao = lambda colaborador: { 'nome': colaborador.nome_abreviado, 'apreciacoes': colaborador.contar_todos_reconhecimentos(), 'foto': colaborador.foto}
-   colaboradores = map(transformacao, colaboradores)
-   
-   colaboradoresOrdenados= sorted(colaboradores, key=lambda x: x["apreciacoes"], reverse=True)
-
-   return JsonResponse({'colaboradores': list(colaboradoresOrdenados)})
-
-def contar_reconhecimentos_pilar_colaborar_sempre(requisicao):
-   colaboradores = Colaborador.objects.all()[:10]
-
-   transformacao = lambda colaborador: { 'nome': colaborador.nome_abreviado, 'apreciacoes': colaborador.reconhecimentos_por_pilar("Colaborar sempre")}
-   colaboradores = map(transformacao, colaboradores)
-   
-   colaboradoresOrdenados= sorted(colaboradores, key=lambda x: x["apreciacoes"], reverse=True)
-
-   return JsonResponse({'colaboradores': list(colaboradoresOrdenados)})
-
-def contar_reconhecimentos_pilar_fazer_diferente(requisicao):
-   colaboradores = Colaborador.objects.all()[:10]
-
-   transformacao = lambda colaborador: { 'nome': colaborador.nome_abreviado, 'apreciacoes': colaborador.reconhecimentos_por_pilar("Fazer diferente")}
-   colaboradores = map(transformacao, colaboradores)
-   
-   colaboradoresOrdenados= sorted(colaboradores, key=lambda x: x["apreciacoes"], reverse=True)
-
-   return JsonResponse({'colaboradores': list(colaboradoresOrdenados)})
-
-def contar_reconhecimentos_pilar_focar_nas_pessoas(requisicao):
-   colaboradores = Colaborador.objects.all()[:10]
-
-   transformacao = lambda colaborador: { 'nome': colaborador.nome_abreviado, 'apreciacoes': colaborador.reconhecimentos_por_pilar("Focar nas pessoas")}
-   colaboradores = map(transformacao, colaboradores)
-   
-   colaboradoresOrdenados= sorted(colaboradores, key=lambda x: x["apreciacoes"], reverse=True)
-
-   return JsonResponse({'colaboradores': list(colaboradoresOrdenados)})
-
-def contar_reconhecimentos_pilar_planejar_entregar_e_aprender(requisicao):
-   colaboradores = Colaborador.objects.all()[:10]
-
-   transformacao = lambda colaborador: { 'nome': colaborador.nome_abreviado, 'apreciacoes': colaborador.reconhecimentos_por_pilar("Planejar, entregar e aprender")}
-   colaboradores = map(transformacao, colaboradores)
+   colaboradores = map(lambda colaborador: { 
+     'nome': colaborador.nome_abreviado, 
+     'apreciacoes': colaborador.contar_todos_reconhecimentos(), 
+     'foto': colaborador.foto
+     }, Colaborador.objects.all()[:10])
    
    colaboradoresOrdenados= sorted(colaboradores, key=lambda x: x["apreciacoes"], reverse=True)
 
