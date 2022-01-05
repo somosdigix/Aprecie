@@ -80,7 +80,7 @@ define([
 					growl
 						.deErro()
 						.exibir(
-							"Nao pode ser feito mais de um reconhecimento no mesmo dia"
+							"Você já fez seu reconhecimento de hoje, amanhã você poderá fazer outro"
 						);
 					roteador.atualizar();
 				}
