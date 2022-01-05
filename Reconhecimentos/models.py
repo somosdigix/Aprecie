@@ -34,7 +34,7 @@ class Reconhecimento(models.Model):
 
 class Feedback(models.Model):
   id = models.AutoField(primary_key=True)
-  descritivo = models.CharField(max_length=1000)
+  descritivo = models.CharField(max_length=220)
 
   def __eq__(self, other):
     return self.descritivo == other.descritivo
