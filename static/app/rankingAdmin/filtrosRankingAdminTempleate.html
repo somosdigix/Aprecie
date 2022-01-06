@@ -1,0 +1,67 @@
+<div class="filtros">
+    <div class="filtro__pilares">
+        <input class="filtro__pilares__input" id="todos" data-js="todos" data-pilar_ranking-id="0" type="radio" name="filtro__pilares__ranking" value="todos_reconhecimentos">
+        <label for="todos" class="filtro__pilares__label">Todos</label>
+        <input class="filtro__pilares__input" id="colaborarSempre" data-js="colaborarSempre" data-pilar_ranking-id="1" type="radio" name="filtro__pilares__ranking" value="colaborar_sempre">
+        <label for="colaborarSempre" class="filtro__pilares__label"> Colaborar Sempre</label>
+        <input class="filtro__pilares__input" id="fazerDiferente" data-js="fazerDiferente" data-pilar_ranking-id="2" type="radio" name="filtro__pilares__ranking" value="fazer_diferente">
+        <label for="fazerDiferente" class="filtro__pilares__label">Fazer diferente</label>
+        <input class="filtro__pilares__input" id="focarNasPessoas" data-js="focarNasPessoas" data-pilar_ranking-id="3" type="radio" name="filtro__pilares__ranking" value="focar_nas_pessoas">
+        <label for="focarNasPessoas" class="filtro__pilares__label">Focar nas pessoas</label>
+        <input class="filtro__pilares__input" id="planejarEntregarAprender" data-js="planejarEntregarAprender" data-pilar_ranking-id="4" type="radio" name="filtro__pilares__ranking" value="planejar_entregar_aprender"> 
+        <label for="planejarEntregarAprender" class="filtro__pilares__label">Planejar, entregar e aprender</label>
+    </div>
+    <div class="filtro__data">
+        <label for="dataInicial">Data de inicio:</label>
+        <input type="date" id="data_inicial" data-js="dataInicial" class="filtro__data__input">
+        <label for="dataFinal">Data final:</label>
+        <input type="date" id="data_final" data-js="dataFinal" class="filtro__data__input">
+        <button data-js="botao__ranking__adm" class="filtro__data__botao"> Filtrar data</button>
+    </div>
+</div>
+
+
+<style>
+    .filtros .filtro__pilares input[type=radio]:checked + label{
+        background-color: red;
+    }
+    .filtros {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 32px auto;
+        width: 80%;
+    }
+
+    .filtro__pilares {
+        margin: 16px;
+    }
+
+    .filtro__pilares__input {
+        display: none;
+    }
+
+    .filtro__pilares__label {
+        background-color: purple;
+        color: white;
+        padding: 5px;
+        border: 1px solid purple;
+        border-radius: 5px;
+        margin: 2px;
+        cursor: pointer;
+    }
+
+    .filtro__data__input {
+        background: none;
+    }
+
+    .filtro__data__botao {
+        background: rebeccapurple;
+        border: 1px solid rebeccapurple;
+        border-radius: 5px;
+        color: white;
+
+        padding: 5px;
+        margin: 2px;
+    }
+</style>

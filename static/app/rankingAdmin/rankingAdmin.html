@@ -1,18 +1,43 @@
 <h1 class="ranking__admin__pilar"> {{ this.pilar }}</h1>
 <div class="container__ranking">
     {{#each this.colaboradores}}
-    <!-- <p class="count">
-            {{count}} lugar
-        </p> -->
     <div class="colaborador__ranking">
         {{#if this.foto}}
-        <img id="colab" class="com-foto" src={{this.foto}} alt="foto colaborador">
+            <img id="colab" class="com-foto" src={{this.foto}} alt="foto colaborador">
         {{else}}
-        <img id="colab" class="sem-foto" src="../static/img/sem-foto.png" alt="foto colaborador">
+            <img id="colab" class="sem-foto" src="../static/img/sem-foto.png" alt="foto colaborador">
         {{/if}}
         <p class="colaborador__ranking--nome">
             {{this.nome}}
         </p>
+        <p class="colaborador__ranking--nome">
+            {{this.todos_reconhecimentos}}
+        </p>
     </div>
     {{/each}}
 </div>
+
+
+<style>
+    .container__ranking {
+        display: flex;
+        gap: 8px;
+        margin: 32px auto;
+        width: 80%;
+    }
+
+    
+    .colaborador__ranking {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        width: 10%;
+    }
+
+    .ranking__admin__pilar {
+        margin: 0 auto;
+        width: 80%;
+    }
+    
+</style>

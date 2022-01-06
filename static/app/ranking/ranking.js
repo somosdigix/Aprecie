@@ -36,7 +36,6 @@ function imagemMedalhaDinamica() {
 		img.src = "../static/img/medalhas/medalha" + i + ".svg";
 		img.id = "posicao";
 		var medalha = imagem[i];
-		console.log(medalha);
 		medalha.appendChild(img);
 	}
 }

@@ -124,10 +124,10 @@ def ranking_de_pilares(requisicao, id_pilar):
     colaboradores = Colaborador.objects.all()
     pilar = Pilar.objects.get(id = id_pilar)
 
-    transformacao = lambda colaborador: {'nome': colaborador.nome_abreviado, 'apreciacoes': len(colaborador.reconhecimentos_por_pilar(pilar)), 'foto': colaborador.foto}
+    transformacao = lambda colaborador: {'nome': colaborador.nome_abreviado, 'reconhecimentos': len(colaborador.reconhecimentos_por_pilar(pilar)), 'foto': colaborador.foto}
 
     colaboradores = map(transformacao, colaboradores)
-    colaboradoresOrdenados = sorted(colaboradores, key=lambda x: x["apreciacoes"], reverse=True)
+    colaboradoresOrdenados = sorted(colaboradores, key=lambda x: x["reconhecimentos"], reverse=True)
 
     return JsonResponse({'colaboradores': list(colaboradoresOrdenados), 'pilar': pilar.nome})
 
@@ -137,10 +137,19 @@ def ranking_por_periodo(requisicao):
     
     colaboradores = Colaborador.objects.all()
 
-    transformacao = lambda colaborador : { 'nome' : colaborador.nome_abreviado, 'apreciacoes' : len(colaborador.reconhecimentos_por_data(converterData(data_inicio), converterData(data_fim)))}
+    transformacao = lambda colaborador : { 
+      'nome' : colaborador.nome_abreviado,
+      'todos_reconhecimentos' : len(colaborador.reconhecimentos_por_data(converterData(data_inicio), converterData(data_fim))),
+      'colaborar_sempre': len(colaborador.reconhecimentos_por_pilar_ranking(Pilar.objects.get(nome = "Colaborar sempre"), colaborador.reconhecimentos_por_data(converterData(data_inicio), converterData(data_fim)))),
+      'focar_nas_pessoas': len(colaborador.reconhecimentos_por_pilar_ranking(Pilar.objects.get(nome = "Focar nas pessoas"), colaborador.reconhecimentos_por_data(converterData(data_inicio), converterData(data_fim)))),
+      'fazer_diferente': len(colaborador.reconhecimentos_por_pilar_ranking(Pilar.objects.get(nome = "Fazer diferente"), colaborador.reconhecimentos_por_data(converterData(data_inicio), converterData(data_fim)))),
+      'planejar_entregar_aprender': len(colaborador.reconhecimentos_por_pilar_ranking(Pilar.objects.get(nome = "Planejar, entregar e aprender"), colaborador.reconhecimentos_por_data(converterData(data_inicio), converterData(data_fim)))),
+      'foto': colaborador.foto
+    }
+    
     colaboradores = map(transformacao, colaboradores)
 
-    colaboradoresOrdenados = sorted(colaboradores, key=lambda x: x["apreciacoes"], reverse=True)
+    colaboradoresOrdenados = sorted(colaboradores, key=lambda x: x["todos_reconhecimentos"], reverse=True)
     
     return JsonResponse({'colaboradores': list(colaboradoresOrdenados)})
 
