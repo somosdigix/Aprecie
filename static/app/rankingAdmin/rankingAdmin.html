@@ -4,9 +4,9 @@
     <div class="colaborador__ranking">
         <div class= "colaborador__informacoes">
             {{#if this.foto}}
-                <img id="colab" class="com-foto" src={{this.foto}} alt="foto colaborador">
+                <img class="com-foto foto__colaborador" src={{this.foto}} alt="foto colaborador">
             {{else}}
-                <img id="colab" class="sem-foto" src="../static/img/sem-foto.png" alt="foto colaborador">
+                <img class="sem-foto foto__colaborador" src="../static/img/sem-foto.png" alt="foto colaborador">
             {{/if}}
             <div class="colaborador__informacoes__texto">
                 <p class="posicao__ranking__admin espacamento" ></p>
@@ -38,6 +38,9 @@
 
 
 <style>
+    .foto__colaborador{
+        border-radius: 50%;
+    }
     .container__ranking{    
         font-family: Campton;
     }
