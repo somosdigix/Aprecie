@@ -3,9 +3,9 @@ define([
 	"template",
 	"text!app/rankingAdmin/rankingAdminTemplate.html",
 	"text!app/rankingAdmin/rankingAdmin.html",
-	"text!app/rankingAdmin/filtrosRankingAdminTempleate.html",
+	"text!app/rankingAdmin/filtrosRankingAdminTemplate.html",
 	'app/models/filtroDataAdminViewModel'
-], function ($, template, rankingAdminTemplate, rankingAdmin, filtrosRankingAdminTempleate, FiltroDataAdminViewModel) {
+], function ($, template, rankingAdminTemplate, rankingAdmin, filtrosRankingAdminTemplate, FiltroDataAdminViewModel) {
 	"use strict";
 
 	var self = {};
@@ -21,10 +21,10 @@ define([
 		carregarRankingAdmin();
 
 		$('#conteudo')
-		.on('click', 'input[data-js="colaborarSempre"]', carregarRankingPilar)
-		.on('click', 'input[data-js="focarNasPessoas"]', carregarRankingPilar)
-		.on('click', 'input[data-js="fazerDiferente"]', carregarRankingPilar)
-		.on('click', 'input[data-js="planejarEntregarAprender"]', carregarRankingPilar)
+		.on('click', 'input[data-js="colaborarSempre"]', ordenaRankingPorPilar)
+		.on('click', 'input[data-js="focarNasPessoas"]', ordenaRankingPorPilar)
+		.on('click', 'input[data-js="fazerDiferente"]', ordenaRankingPorPilar)
+		.on('click', 'input[data-js="planejarEntregarAprender"]', ordenaRankingPorPilar)
 		.on('click', 'button[data-js="botao__ranking__adm"]', carregarRankingPeriodoDeDatas);
 
 	};
@@ -36,14 +36,14 @@ define([
 
 
 	function carregarFiltrosRankingAdmin() {
-		template.exibirEm('div[data-js="container__filtros__ranking"]', filtrosRankingAdminTempleate);
+		template.exibirEm('div[data-js="container__filtros__ranking"]', filtrosRankingAdminTemplate);
 	}
 
 	function carregarRankingAdmin() {
 		// #TODO -> Arrumar as datas de acordo com o metodo obterData() que esta em PR [Apreciacao por dia];
 		var data = {
-			'data_inicio': "2022-01-06",
-			'data_fim': "2022-01-06"
+			'data_inicio': "2022-01-07",
+			'data_fim': "2022-01-07"
 		}
 		criarRankingPorPeriodo(data);		
 	}
@@ -54,34 +54,56 @@ define([
 		ordenaRankingPorPilar();
 	}
 
-	function carregarRankingPilar() {
-		var objetoClicado = $(this);
-
-		$.getJSON("/reconhecimentos/ranking_de_pilares/" + objetoClicado.data('pilar_ranking-id') , function (ranking_de_colaboradores) {
-			template.exibirEm('div[data-js="container__ranking"]', rankingAdmin ,ranking_de_colaboradores);
-		});
-	}
-
 	function criarRankingPorPeriodo(dataAdminViewModel) {
 		$.post("/reconhecimentos/ranking_por_periodo/", dataAdminViewModel , function (ranking_de_colaboradores) {
-			ranking_colaboradores = ranking_colaboradores;
+			ranking_colaboradores = ranking_de_colaboradores;
 			exibirRanking(ranking_de_colaboradores);
 		});
 	}
 
 	function exibirRanking(ranking_de_colaboradores){
-		template.exibirEm('div[data-js="container__ranking"]', rankingAdmin ,ranking_de_colaboradores);
+
+		template.exibirEm('div[data-js="container__ranking"]', rankingAdmin , ranking_de_colaboradores);
+		posicaoDinamica();
+		
+		var titulo = $("input[name=filtro__pilares__ranking]:checked").attr("pilar_ranking");
+		document.getElementById("ranking__admin__pilar").innerHTML = titulo;
 	}
 
 	function ordenaRankingPorPilar(){
-		var pilar_selecionado = $("input[name=filtro__pilares__ranking]:checked").val();
 		var ranking_por_pilar = ranking_colaboradores;
-
+		
 		ranking_por_pilar.colaboradores.sort(function(colaborador1, colaborador2){
-			return colaborador1.pilar_selecionado > colaborador2.pilar_selecionado;
+			return verificaValorDoPilar(colaborador2) - verificaValorDoPilar(colaborador1);
 		});
 		
-		template.exibirEm('div[data-js="container__ranking"]', rankingAdmin ,ranking_por_pilar);
+		exibirRanking(ranking_por_pilar);
+	}
+
+	function verificaValorDoPilar(colaborador){
+		var pilar_selecionado = $("input[name=filtro__pilares__ranking]:checked").val();
+		if(pilar_selecionado == 'colaborar_sempre'){
+			return colaborador.colaborar_sempre;
+		}
+		else if(pilar_selecionado == 'focar_nas_pessoas'){
+			return colaborador.focar_nas_pessoas;
+		}
+		else if(pilar_selecionado == 'fazer_diferente'){
+			return colaborador.fazer_diferente;
+		}
+		else if(pilar_selecionado == 'planejar_entregar_aprender'){
+			return colaborador.planejar_entregar_aprender;
+		}
+		else{
+			return colaborador.todos_reconhecimentos;
+		}
+	}
+
+	function posicaoDinamica() {
+		var ranking = document.getElementsByClassName('posicao__ranking__admin');
+		for (var i = 0; i < ranking.length; i++) {
+			ranking[i].innerHTML = (i+1)+ ' ºlugar';
+		}
 	}
 
 	return self;
