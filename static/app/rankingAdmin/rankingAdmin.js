@@ -64,6 +64,9 @@ define([
 	function exibirRanking(ranking_de_colaboradores){
 		template.exibirEm('div[data-js="container__ranking"]', rankingAdmin , ranking_de_colaboradores);
 		posicaoDinamica();
+		
+		var titulo = $("input[name=filtro__pilares__ranking]:checked").attr("pilar_ranking");
+		document.getElementById("ranking__admin__pilar").innerHTML = titulo;
 	}
 
 	function ordenaRankingPorPilar(){

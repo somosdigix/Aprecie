@@ -120,17 +120,6 @@ def reconhecimentos_por_pilar(requisicao, id_do_reconhecido, id_do_pilar):
 
   return JsonResponse(resposta)
 
-def ranking_de_pilares(requisicao, id_pilar):
-    colaboradores = Colaborador.objects.all()
-    pilar = Pilar.objects.get(id = id_pilar)
-
-    transformacao = lambda colaborador: {'nome': colaborador.nome_abreviado, 'reconhecimentos': len(colaborador.reconhecimentos_por_pilar(pilar)), 'foto': colaborador.foto}
-
-    colaboradores = map(transformacao, colaboradores)
-    colaboradoresOrdenados = sorted(colaboradores, key=lambda x: x["reconhecimentos"], reverse=True)
-
-    return JsonResponse({'colaboradores': list(colaboradoresOrdenados), 'pilar': pilar.nome})
-
 def ranking_por_periodo(requisicao):
     data_inicio = requisicao.POST['data_inicio']
     data_fim = requisicao.POST['data_fim']
