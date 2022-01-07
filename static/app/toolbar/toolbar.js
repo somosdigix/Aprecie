@@ -20,7 +20,9 @@
         .on('click', 'div[data-js="meu-perfil"]', meuPerfil)
         .on('click', 'div[data-js="tratar-menu-mobile"]', tratarMenuMobile)
         .on('click', 'a[data-js="ranking"]', ranking)
-        .on('click', 'a[data-js="sair"]', sair);
+        .on('click', 'a[data-js="sair"]', sair)
+        // #TODO -> Funcionar somente quando for administrador
+        .on('click', 'a[data-js="ranking-admin"]', rankingAdmin);
 
       $('div[data-js="buscaDeColaboradores"]').search({
         source: converterParaAutocomplete(data.colaboradores),
@@ -70,6 +72,12 @@
   function ranking() {
     require(['roteador'], function(roteador) {
       roteador.navegarPara('/ranking');
+    });
+  }
+
+  function rankingAdmin() {
+    require(['roteador'], function(roteador) {
+      roteador.navegarPara('/rankingAdmin');
     });
   }
 

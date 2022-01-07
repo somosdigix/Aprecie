@@ -13,15 +13,19 @@
 	</div>
     <div class="ranking--div">
 		<a class="ranking--botao" data-js="ranking">Ranking</a>
-	</div> 
+	</div>
+	<div class="menu__administrador">
+		<div class="menu__administrador__item">
+			<a class="menu__administrador__botao" data-js="ranking-admin">Relatório de Ranking</a>
+		</div>
+		<div class="menu__administrador__item">
+			<a class="menu__administrador__botao" href="#">Configuração de Ciclos</a>
+		</div>
+	</div>
 	<div class="right menu">
+		<a class="ui item avatar">
 			<div class="meu-perfil" data-js="meu-perfil">
-				<img id="foto-perfil" src="{{ foto this.id }}" />
-				<button class="botao-menu"></button>
-				<div id="menu-adm">
-					<a href="#">Relatório de Ranking</a>
-					<a href="#">Configuração de Ciclos</a>
-				</div>
+				<img src="{{ foto this.id }}"/>
 			</div>
 		</a>
 		<a class="item icone-sair" data-js="sair">
@@ -30,66 +34,29 @@
 	</div>
 </div>
 
-<style>
-	.ui
-	.botao-menu {
-		display:none;
-		cursor: pointer;
-	}
-	#menu-adm {
-		display: none;
-		position: absolute;
-		background-color: #2C006A;
-		min-width: 100px;
-		box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-		z-index: 1;
-		width:10.5%;
-		height: 13%;
-		margin-left:-150px;
-		text-align:left;
-	}
-		#menu-adm a:hover {
-			color: #fc671d;
-		}
 
-	a{
-		display: block;
+<style>
+	.menu__administrador{
+		display: flex;
+	}
+
+	.ranking--div, .menu__administrador__item{
+		margin:auto 10px auto 10px;
+	}
+
+	.ranking--botao, .menu__administrador__botao{
+		color:white;
+		cursor: pointer;
+		font-size: 18px;
+		font-family: 'Campton-Medium';
 	}
 	
-	#menu-adm a {
-		font-size: 24px;
-		font-family:Campton-medium;
-		margin-left:5px;
-		margin-top: 15px;
-		color:white;
+	.busca-colaboradores{
+		width: 500px;
 	}
-
-	.meu-perfil:hover #menu-adm {
-		display: block;
-	}
-
-	.meu-perfil:hover .botao-menu {
-		background-color: #3e8e41;
-	}
-
-.ranking--botao{
-	color:white;
-	cursor: pointer;
-	font-size: 18px;
-	font-family: 'Campton-Medium';
-}
-.ranking--div{
-	margin:auto 10px auto 10px;
-}
-.busca-colaboradores{
-	width: 500px;
-}
 	.largura-busca{
 		width: 100%
 	}
-	#foto-perfil{
-		width:100%;
-		margin-top: 10px;
-	}
-  
+	
+	  
 </style>

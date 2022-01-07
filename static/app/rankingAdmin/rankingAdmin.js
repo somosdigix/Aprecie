@@ -3,9 +3,9 @@ define([
 	"template",
 	"text!app/rankingAdmin/rankingAdminTemplate.html",
 	"text!app/rankingAdmin/rankingAdmin.html",
-	"text!app/rankingAdmin/filtrosRankingAdminTempleate.html",
+	"text!app/rankingAdmin/filtrosRankingAdminTemplate.html",
 	'app/models/filtroDataAdminViewModel'
-], function ($, template, rankingAdminTemplate, rankingAdmin, filtrosRankingAdminTempleate, FiltroDataAdminViewModel) {
+], function ($, template, rankingAdminTemplate, rankingAdmin, filtrosRankingAdminTemplate, FiltroDataAdminViewModel) {
 	"use strict";
 
 	var self = {};
@@ -36,7 +36,7 @@ define([
 
 
 	function carregarFiltrosRankingAdmin() {
-		template.exibirEm('div[data-js="container__filtros__ranking"]', filtrosRankingAdminTempleate);
+		template.exibirEm('div[data-js="container__filtros__ranking"]', filtrosRankingAdminTemplate);
 	}
 
 	function carregarRankingAdmin() {
