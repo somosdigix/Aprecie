@@ -2,23 +2,53 @@
 <div class="container__ranking">
     {{#each this.colaboradores}}
     <div class="colaborador__ranking">
-        {{#if this.foto}}
-            <img id="colab" class="com-foto" src={{this.foto}} alt="foto colaborador">
-        {{else}}
-            <img id="colab" class="sem-foto" src="../static/img/sem-foto.png" alt="foto colaborador">
-        {{/if}}
-        <p class="colaborador__ranking--nome">
-            {{this.nome}}
-        </p>
-        <p class="colaborador__ranking--nome">
-            {{this.todos_reconhecimentos}}
-        </p>
+        <div class= "teste">
+            {{#if this.foto}}
+                <img id="colab" class="com-foto" src={{this.foto}} alt="foto colaborador">
+            {{else}}
+                <img id="colab" class="sem-foto" src="../static/img/sem-foto.png" alt="foto colaborador">
+            {{/if}}
+            <div class="teste2">
+                <p class="colaborador__nome">
+                    {{this.nome}}
+                </p>
+                <p class="posicao__ranking__admin">  
+                </p>
+                <p class="colaborador__ranking--nome">Total de apreciações: 
+                    {{this.todos_reconhecimentos}}
+                </p>
+            </div>
+        </div>
+        <div class="apreciacoes">
+            <p class="colaborador__ranking--nome">Colaborar Sempre: 
+                {{this.colaborar_sempre}} 
+            </p>
+            <p class="colaborador__ranking--nome">Focar nas Pessoas: 
+                {{this.focar_nas_pessoas}} 
+            </p>
+            <p class="colaborador__ranking--nome">Fazer Diferente: 
+                {{this.fazer_diferente}} 
+            </p>
+            <p class="colaborador__ranking--nome">Planejar, Entregar e Aprender: 
+                {{this.planejar_entregar_aprender}} 
+            </p>
+            </div>
     </div>
     {{/each}}
 </div>
 
 
 <style>
+    
+    .teste{
+        display: inline-flex;
+    }
+
+    .teste2{
+        display: block;
+        margin-top: 30px;
+    }
+    
     .container__ranking {
         display: flex;
         gap: 8px;
@@ -26,18 +56,38 @@
         width: 80%;
     }
 
+    .com-foto, .sem-foto{
+        width: 35%;
+        margin:10px;
+    }
     
     .colaborador__ranking {
         display: flex;
         flex-direction: column;
-        align-items: center;
+        align-items: left;
+        width: 20%;
+        border-radius: 10px;
+        margin-left: 20px;
+        background-color: white;
 
-        width: 10%;
+        
     }
-
+    
+    p{
+        margin-left:10px;
+        margin-bottom: 10px;
+    }
+    
     .ranking__admin__pilar {
         margin: 0 auto;
         width: 80%;
+    }
+
+    .colaborador__nome{
+        font-size: 20px;
+    }
+    .apreciacoes{
+        padding-bottom: 5px;
     }
     
 </style>

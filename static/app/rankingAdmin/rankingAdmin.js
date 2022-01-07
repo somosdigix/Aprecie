@@ -70,7 +70,7 @@ define([
 	}
 
 	function exibirRanking(ranking_de_colaboradores){
-		template.exibirEm('div[data-js="container__ranking"]', rankingAdmin ,data);
+		template.exibirEm('div[data-js="container__ranking"]', rankingAdmin ,ranking_de_colaboradores);
 	}
 
 	function ordenaRankingPorPilar(){

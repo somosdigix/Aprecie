@@ -1,4 +1,5 @@
 <div class="filtros">
+    <h1>Relatório de Ranking</h1>
     <div class="filtro__pilares">
         <input class="filtro__pilares__input" id="todos" data-js="todos" data-pilar_ranking-id="0" type="radio" name="filtro__pilares__ranking" value="todos_reconhecimentos">
         <label for="todos" class="filtro__pilares__label">Todos</label>
@@ -12,7 +13,7 @@
         <label for="planejarEntregarAprender" class="filtro__pilares__label">Planejar, entregar e aprender</label>
     </div>
     <div class="filtro__data">
-        <label for="dataInicial">Data de inicio:</label>
+        <label for="dataInicial">Data de início:</label>
         <input type="date" id="data_inicial" data-js="dataInicial" class="filtro__data__input">
         <label for="dataFinal">Data final:</label>
         <input type="date" id="data_final" data-js="dataFinal" class="filtro__data__input">
@@ -22,46 +23,61 @@
 
 
 <style>
-    .filtros .filtro__pilares input[type=radio]:checked + label{
-        background-color: red;
+    h1{
+        margin-bottom: 24px;
     }
+    .filtros .filtro__pilares input[type=radio]:checked + label{
+        background-color: #fc671d;
+    }
+    
+    .filtros .filtro__pilares .filtro__pilares__label:hover{
+        background-color: #fc671d;
+    }
+    
     .filtros {
         display: flex;
         flex-direction: column;
-        align-items: center;
+        align-items: left;
         margin: 32px auto;
         width: 80%;
     }
 
     .filtro__pilares {
-        margin: 16px;
+        margin-bottom: 24px; 
     }
 
     .filtro__pilares__input {
         display: none;
+        
     }
 
     .filtro__pilares__label {
-        background-color: purple;
+        background-color: #2C006A;
         color: white;
-        padding: 5px;
-        border: 1px solid purple;
+        padding: 10px;
+        border: 1px solid #2C006A;
         border-radius: 5px;
-        margin: 2px;
         cursor: pointer;
+        margin-right: 16px;
+        border-radius: 5px;
     }
 
     .filtro__data__input {
         background: none;
+        border: black 1px solid;
+        border-radius: 5px;
+        margin-right: 16px;
     }
 
     .filtro__data__botao {
-        background: rebeccapurple;
-        border: 1px solid rebeccapurple;
+        background: #2C006A;
+        border: 1px solid #2C006A;
         border-radius: 5px;
         color: white;
-
         padding: 5px;
         margin: 2px;
+    }
+
+    .filtro__data{
     }
 </style>
