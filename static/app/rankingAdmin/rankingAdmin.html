@@ -2,19 +2,18 @@
 <div class="container__ranking">
     {{#each this.colaboradores}}
     <div class="colaborador__ranking">
-        <div class= "teste">
+        <div class= "colaborador__informacoes">
             {{#if this.foto}}
                 <img id="colab" class="com-foto" src={{this.foto}} alt="foto colaborador">
             {{else}}
                 <img id="colab" class="sem-foto" src="../static/img/sem-foto.png" alt="foto colaborador">
             {{/if}}
-            <div class="teste2">
-                <p class="colaborador__nome">
+            <div class="colaborador__informacoes__texto">
+                <p class="posicao__ranking__admin espacamento" ></p>
+                <p class="colaborador__nome espacamento">
                     {{this.nome}}
                 </p>
-                <p class="posicao__ranking__admin">  
-                </p>
-                <p class="colaborador__ranking--nome">Total de apreciações: 
+                <p class="colaborador__ranking--nome espacamento">Total de apreciações: 
                     {{this.todos_reconhecimentos}}
                 </p>
             </div>
@@ -39,14 +38,21 @@
 
 
 <style>
-    
-    .teste{
-        display: inline-flex;
+    .container__ranking{    
+        font-family: Campton;
+    }
+    .colaborador__informacoes{
+        display: flex;
     }
 
-    .teste2{
-        display: block;
-        margin-top: 30px;
+    .colaborador__informacoes__texto{
+        display: flex;
+        flex-direction: column;
+        margin-top: 20px;
+    }
+
+    .espacamento{
+        margin-bottom: 2px;
     }
     
     .container__ranking {
@@ -54,6 +60,7 @@
         gap: 8px;
         margin: 32px auto;
         width: 80%;
+        flex-wrap: wrap;
     }
 
     .com-foto, .sem-foto{
@@ -64,13 +71,12 @@
     .colaborador__ranking {
         display: flex;
         flex-direction: column;
-        align-items: left;
-        width: 20%;
         border-radius: 10px;
         margin-left: 20px;
         background-color: white;
-
-        
+        padding: 10px;
+        margin-bottom: 10px;
+        width: 22%;
     }
     
     p{
@@ -84,10 +90,15 @@
     }
 
     .colaborador__nome{
-        font-size: 20px;
+        font-size: 18px;
     }
     .apreciacoes{
         padding-bottom: 5px;
+    }
+
+    .posicao__ranking__admin{
+        font-weight: bold;
+        font-size: 20px;
     }
     
 </style>
