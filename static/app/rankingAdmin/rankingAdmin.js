@@ -21,6 +21,7 @@ define([
 		carregarRankingAdmin();
 
 		$('#conteudo')
+		.on('click', 'input[data-js="todos"]', ordenaRankingPorPilar)
 		.on('click', 'input[data-js="colaborarSempre"]', ordenaRankingPorPilar)
 		.on('click', 'input[data-js="focarNasPessoas"]', ordenaRankingPorPilar)
 		.on('click', 'input[data-js="fazerDiferente"]', ordenaRankingPorPilar)
@@ -50,13 +51,14 @@ define([
 	
 	function carregarRankingPeriodoDeDatas() {
 		var filtroDataAdminViewModel = new FiltroDataAdminViewModel()
-		ranking_colaboradores = criarRankingPorPeriodo(filtroDataAdminViewModel);
+		criarRankingPorPeriodo(filtroDataAdminViewModel);
 		ordenaRankingPorPilar();
 	}
 
 	function criarRankingPorPeriodo(dataAdminViewModel) {
 		$.post("/reconhecimentos/ranking_por_periodo/", dataAdminViewModel , function (ranking_de_colaboradores) {
 			ranking_colaboradores = ranking_de_colaboradores;
+			
 			exibirRanking(ranking_de_colaboradores);
 		});
 	}
@@ -71,12 +73,16 @@ define([
 	}
 
 	function ordenaRankingPorPilar(){
-		var ranking_por_pilar = ranking_colaboradores;
+		var ranking_por_pilar = jQuery.extend(true, {}, ranking_colaboradores);
 		
-		ranking_por_pilar.colaboradores.sort(function(colaborador1, colaborador2){
-			return verificaValorDoPilar(colaborador2) - verificaValorDoPilar(colaborador1);
-		});
-		
+		var pilar_selecionado = $("input[name=filtro__pilares__ranking]:checked").val();
+
+		if (pilar_selecionado != 'todos_reconhecimentos'){
+			ranking_por_pilar.colaboradores.sort(function(colaborador1, colaborador2){
+				return verificaValorDoPilar(colaborador2) - verificaValorDoPilar(colaborador1);
+			});
+		}
+
 		exibirRanking(ranking_por_pilar);
 	}
 
@@ -93,9 +99,6 @@ define([
 		}
 		else if(pilar_selecionado == 'planejar_entregar_aprender'){
 			return colaborador.planejar_entregar_aprender;
-		}
-		else{
-			return colaborador.todos_reconhecimentos;
 		}
 	}
 
