@@ -15,6 +15,7 @@
 			'/paginaInicial': [middlewareDeAutenticacao, middlewareDeAtualizacaoComGoogleAnalytics, middlewareDeToolbar, middlewareDeTransicaoDeTela, limparTela, paginaInicial],
 			'/estatisticas': [middlewareDeAutenticacao, middlewareDeAtualizacaoComGoogleAnalytics, middlewareDeToolbar, middlewareDeTransicaoDeTela, limparTela, estatisticas],
 			'/perfil/:colaboradorId': [middlewareDeAutenticacao, middlewareDeAtualizacaoComGoogleAnalytics, middlewareDeToolbar, middlewareDeTransicaoDeTela, limparTela, perfil],
+			'/gerenciadorDeCiclos': [middlewareDeAutenticacao, middlewareDeAtualizacaoComGoogleAnalytics, middlewareDeToolbar, middlewareDeTransicaoDeTela, limparTela, gerenciadorDeCiclos]
 		};
 
 		function limparTela() {
@@ -46,6 +47,13 @@
 			require(['app/perfil/controller'], function (controller) {
 				_controllerAtivo = controller;
 				controller.exibir(parseInt(colaboradorId));
+			});
+		}
+
+		function gerenciadorDeCiclos() {
+			require(['app/gerenciadordeCiclos/controller'], function (controller) {
+				_controllerAtivo = constroller;
+				controller.exibir();
 			});
 		}
 

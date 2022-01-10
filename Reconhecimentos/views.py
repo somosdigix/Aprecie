@@ -107,3 +107,49 @@ def reconhecimentos_por_pilar(requisicao, id_do_reconhecido, id_do_pilar):
   }
 
   return JsonResponse(resposta)
+
+def definir_ciclo(requisicao):
+  data_inicial = requisicao.POST["data_inicial"]
+  data_final = requisicao.POST["data_final"]
+  id_usuario_que_modificou = requisicao.POST["usuario_que_modificou"]
+
+  ciclo = Ciclo(data_inicial, data_final)
+  ciclo.save()
+
+  usuario_que_modificou = Colaborador.objects.get(id=id_usuario_que_modificou)
+  log_Ciclo = LOG_Ciclo(ciclo, usuario_que_modificou, 'Criação do ciclo')
+  log_Ciclo.save()
+
+  return JsonResponse({})
+
+
+def alterar_ciclo(requisicao):
+  id_ciclo = requisicao.POST["id_ciclo"]
+  data_final = requisicao.POST["data_final"]
+  id_usuario_que_modificou = requisicao.POST["usuario_que_modificou"]
+  descricao_da_alteracao = requisicao.POST["descricao_da_alteracao"]
+  
+  ciclo = Ciclo.objects.get(id = id_ciclo)
+  ciclo.alterar_ciclo(data_final)
+  ciclo.save()
+  
+  usuario_que_modificou = Colaborador.objects.get(id=id_usuario_que_modificou)
+  log_Ciclo = LOG_Ciclo(ciclo, usuario_que_modificou, descricao_da_alteracao)
+  log_ciclo.save()
+
+  return JsonResponse({})
+  
+
+def obter_ciclos(requisicao):
+  resposta = {
+    'ciclo_atual': obter_ciclo_atual(),
+    'ciclos_anteriores': Ciclo.objects.all()
+  }
+
+  return JsonResponse(resposta)
+
+
+def obter_ciclo_atual():
+  data_de_hoje = date.today().strftime("%Y-%m-%d")
+  return Ciclo.objects.GET(data_final__lte=data_formatada)
+  
