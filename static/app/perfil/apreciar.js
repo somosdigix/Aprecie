@@ -112,7 +112,7 @@ define([
 
 		if (reconhecerViewModel.descritivo === "")
 			throw new ViolacaoDeRegra(
-				"A apreciação precisa ser feita."
+				"O reconhecimento precisa ser feito."
 			);
 	}
 
