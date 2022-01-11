@@ -96,7 +96,7 @@ def todas_as_apreciacoes(requisicao, id_do_reconhecido):
   
   apreciacoes = reconhecido.reconhecimentos() \
     .values('data', 'pilar__nome', 'feedback__descritivo', \
-            'reconhecedor__nome', 'reconhecedor__id') \
+            'reconhecedor__nome', 'reconhecedor__id', 'reconhecido__nome') \
     .order_by('-data', '-id')
 
   resposta = {

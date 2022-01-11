@@ -31,15 +31,11 @@ define([
 		if (sessaoDeUsuario.id === colaboradorId)
 			return;
 
-		template.exibirEm(
-			'div[data-js="apreciacao"]',
-			apreciarTemplate,
-			reconhecimentosDoColaborador
-		);
+		template.exibirEm('div[data-js="apreciacao"]', apreciarTemplate, reconhecimentosDoColaborador);
 
-		$("#conteudo")
-			.on("click", "div.escrever-apreciacao div.campos", selecionarPilar)
-			.on("click", 'button[data-js="reconhecer"]', reconhecer);
+		$('#conteudo')
+			.on('click', 'div.escrever-apreciacao div.campos', selecionarPilar)
+			.on('click', 'button[data-js="reconhecer"]', reconhecer);
 	}
 
 	function selecionarPilar() {
@@ -118,3 +114,15 @@ define([
 
 	return _self;
 });
+
+function mostrarResultado(box,num_max,campospan){
+	var contagem_carac = box.length;
+	
+	if (contagem_carac >= 0){
+	document.getElementById(campospan).innerHTML = contagem_carac + "/220";
+	}
+	if (contagem_carac >= num_max){
+	document.getElementById(campospan).innerHTML = "Limite de caracteres excedido!";
+	}
+   
+}
