@@ -1,0 +1,79 @@
+<h1>Colaboradores em Destaque</h1>
+<div class="box--destaques">
+	{{#each this.colaboradores}}
+	
+	<div class="box--colaborador">
+		<div class="imagem">
+			<div id="medalha" class="medalha"></div>
+			{{#if this.foto}}
+			<img id="colab" class="com-foto" src={{this.foto}} alt="foto colaborador">
+			{{else}}
+			<img id="colab" class="sem-foto" src="../static/img/sem-foto.png" alt="foto colaborador">
+			{{/if}}
+		</div>
+			<p>{{this.nome}}</p>
+			<!-- <p>{{this.apreciacoes}}</p> -->
+		</div>
+	{{/each}}
+	<img class="logo" src="../static/img/logos-rodape.png">
+</div>
+
+<style>
+	.imagem{
+		position:relative;
+	  	align-items:center;
+		flex-direction:column;
+		display:flex;
+	}
+
+	#medalha{
+		position:absolute;
+		top:-16px;
+		left:16px;
+	}
+
+	.box--destaques {
+		background-color: #2c006a;
+		height: 82%;
+		display: flex;
+		align-items:center;
+		justify-content: center;
+		flex-wrap: wrap;
+	}
+
+	p {
+		color: white;
+		font-size: 28px;
+		text-align: center;
+	}
+
+	#colab {
+		margin: auto;
+		border-radius: 120px;
+		padding: 5px;
+	}
+	.com-foto{
+		width: 65%;
+	}
+	.sem-foto{
+		width: 75%;
+	}
+	.posicao__medalha{
+		width: 100px;
+	}
+	.box--colaborador {
+		box-sizing: border-box;
+		padding: 20px;
+		margin: 10px;
+		width: calc((100% / 5) - 2rem);
+		display: flex;
+		align-items:center;
+		flex-direction: column;
+	}
+	h1{
+		margin-left:30px;
+		padding-top: 100px;
+		font-size: 35px;
+	}
+
+</style>
