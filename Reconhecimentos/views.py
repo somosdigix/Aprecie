@@ -3,7 +3,9 @@ from django.shortcuts import render
 from django.utils import formats
 from django.db.models import Count
 from django.core.paginator import Paginator
+from datetime import date
 
+from operator import attrgetter
 from Login.models import Colaborador
 from Reconhecimentos.models import Pilar, Reconhecimento, Feedback
 from Reconhecimentos.services import Notificacoes
@@ -50,6 +52,24 @@ def ultimos_reconhecimentos(requisicao):
 
   return JsonResponse(retorno, safe=False)
 
+def ultima_data_de_publicacao(requisicao, id_do_reconhecedor):
+  reconhecedor = Colaborador.objects.get(id = id_do_reconhecedor)
+
+  ultima_data = reconhecedor.obter_ultima_data_de_publicacao()
+
+  resposta = {
+    'ultimaData': ultima_data
+  }
+
+  return JsonResponse(resposta)
+
+def definir_data_de_publicacao(requisicao, id_do_reconhecedor):
+  reconhecedor = Colaborador.objects.get(id = id_do_reconhecedor)
+
+  reconhecedor.definir_ultima_data_de_publicacao(date.today())
+
+  return JsonResponse ({})
+
 def reconhecimentos_do_colaborador(requisicao, id_do_reconhecido):
   reconhecido = Colaborador.objects.get(id = id_do_reconhecido)
   pilares = list(map(lambda pilar: {
@@ -61,6 +81,18 @@ def reconhecimentos_do_colaborador(requisicao, id_do_reconhecido):
   }, Pilar.objects.all()))
 
   return JsonResponse({ 'id': reconhecido.id, 'nome': reconhecido.nome_abreviado, 'pilares': pilares }, safe = False)
+
+def contar_reconhecimentos(requisicao):
+   colaboradores = map(lambda colaborador: { 
+     'nome': colaborador.nome_abreviado, 
+     'apreciacoes': colaborador.contar_todos_reconhecimentos(), 
+     'foto': colaborador.foto
+     }, Colaborador.objects.all()[:10])
+   
+   colaboradoresOrdenados= sorted(colaboradores, key=lambda x: x["apreciacoes"], reverse=True)
+
+   return JsonResponse({'colaboradores': list(colaboradoresOrdenados)})
+
 
 def reconhecimentos_por_reconhecedor(requisicao, id_do_reconhecido):
   reconhecedores = Reconhecimento.objects.filter(reconhecido = id_do_reconhecido) \
@@ -86,8 +118,16 @@ def todas_as_apreciacoes(requisicao, id_do_reconhecido):
 
   return JsonResponse(resposta)
 
-def todos_os_pilares(requisicao):
-  return JsonResponse(list(Pilar.objects.all()))
+def todos_os_pilares_e_colaboradores(requisicao):
+    pilares = map(lambda pilar: { 'id': pilar.id, 'nome': pilar.nome }, Pilar.objects.all())
+    colaboradores = map(lambda colaborador: { 'id_colaborador': colaborador.id, 'nome': colaborador.nome_abreviado}, Colaborador.objects.all())
+
+    retorno = {
+      'pilares': list(pilares),
+      'colaboradores': list(colaboradores)
+    }
+
+    return JsonResponse(retorno, safe=False)
 
 def reconhecimentos_por_pilar(requisicao, id_do_reconhecido, id_do_pilar):
   reconhecido = Colaborador.objects.get(id=id_do_reconhecido)

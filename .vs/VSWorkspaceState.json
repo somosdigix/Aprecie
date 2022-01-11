@@ -1,0 +1,14 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\static",
+    "\\static\\app",
+    "\\static\\app\\perfil",
+    "\\static\\app\\ranking",
+    "\\static\\app\\servicos",
+    "\\static\\app\\toolbar",
+    "\\wsgi\\static"
+  ],
+  "SelectedNode": "\\static\\app\\perfil\\perfilTemplate.html",
+  "PreviewInSolutionExplorer": false
+}

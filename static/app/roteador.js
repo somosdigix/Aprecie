@@ -15,6 +15,7 @@
 			'/paginaInicial': [middlewareDeAutenticacao, middlewareDeAtualizacaoComGoogleAnalytics, middlewareDeToolbar, middlewareDeTransicaoDeTela, limparTela, paginaInicial],
 			'/estatisticas': [middlewareDeAutenticacao, middlewareDeAtualizacaoComGoogleAnalytics, middlewareDeToolbar, middlewareDeTransicaoDeTela, limparTela, estatisticas],
 			'/perfil/:colaboradorId': [middlewareDeAutenticacao, middlewareDeAtualizacaoComGoogleAnalytics, middlewareDeToolbar, middlewareDeTransicaoDeTela, limparTela, perfil],
+			'/ranking': [middlewareDeBotaoReconhecer, middlewareDeAutenticacao, middlewareDeAtualizacaoComGoogleAnalytics, middlewareDeToolbar, middlewareDeTransicaoDeTela, limparTela, ranking],
 			'/gerenciadorDeCiclos': [middlewareDeAutenticacao, middlewareDeAtualizacaoComGoogleAnalytics, middlewareDeToolbar, middlewareDeTransicaoDeTela, limparTela, gerenciadorDeCiclos]
 		};
 
@@ -47,6 +48,13 @@
 			require(['app/perfil/controller'], function (controller) {
 				_controllerAtivo = controller;
 				controller.exibir(parseInt(colaboradorId));
+			});
+		}
+		
+		function ranking() { 
+			require(['app/ranking/controller'], function (controller) {
+				_controllerAtivo = controller;
+				controller.exibir();
 			});
 		}
 
@@ -105,6 +113,19 @@
 			}
 			else {
 				toolbar.esconder();
+				$('body').removeClass('body-app').addClass('body-login');
+			}
+		});
+	}
+
+	function middlewareDeBotaoReconhecer(){
+		require(['app/botaoReconhecer/botaoReconhecer'], function(botaoReconhecer) { 
+			if (servicoDeAutenticacao.jaEstaAutenticado() && roteador.paginaAtual() !== '/login') {
+				botaoReconhecer.exibir();
+				$('body').removeClass('body-login').addClass('body-app');
+			}
+			else {
+				botaoReconhecer.esconder();
 				$('body').removeClass('body-app').addClass('body-login');
 			}
 		});
