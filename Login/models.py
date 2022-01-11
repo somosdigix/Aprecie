@@ -68,3 +68,9 @@ class Colaborador(AbstractBaseUser):
 
 	def reconhecimentos_por_pilar(self, pilar):
 		return self.reconhecido.filter(pilar = pilar).order_by('-data')
+
+	def reconhecimentos_por_pilar_por_data(self, pilar, data_inicial, data_final):
+		return self.reconhecimentos_por_pilar(pilar).filter(data__gte= data_inicial).filter(data__lte=data_final)
+
+	def reconhecimentos_por_data(self, data_inicio, data_fim):
+		return self.reconhecimentos().filter(data__gte= data_inicio).filter(data__lte=data_fim)

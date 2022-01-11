@@ -5,8 +5,9 @@ from django.db.models import Count
 from django.core.paginator import Paginator
 
 from Login.models import Colaborador
-from Reconhecimentos.models import Pilar, Reconhecimento, Feedback
+from Reconhecimentos.models import Pilar, Reconhecimento, Feedback, Ciclo, LOG_Ciclo
 from Reconhecimentos.services import Notificacoes
+from datetime import date
 
 def reconhecer(requisicao):
   id_do_reconhecedor = requisicao.POST['id_do_reconhecedor']
@@ -25,7 +26,8 @@ def reconhecer(requisicao):
   return JsonResponse({})
 
 def ultimos_reconhecimentos(requisicao):
-  reconhecimentos = Reconhecimento.objects.all().order_by('-id')
+  ciclo_atual = obter_ciclo_atual()
+  reconhecimentos = Reconhecimento.objects.filter(data__gte= ciclo_atual.data_inicial).filter(data__lte=ciclo_atual.data_final).order_by('-id')
 
   pagina_atual = int(requisicao.GET['pagina_atual'])
   paginacao = Paginator(reconhecimentos, 10)
@@ -51,13 +53,14 @@ def ultimos_reconhecimentos(requisicao):
   return JsonResponse(retorno, safe=False)
 
 def reconhecimentos_do_colaborador(requisicao, id_do_reconhecido):
+  ciclo_atual = obter_ciclo_atual()
   reconhecido = Colaborador.objects.get(id = id_do_reconhecido)
   pilares = list(map(lambda pilar: {
     'id': pilar.id,
     'nome': pilar.nome,
     'descricao': pilar.descricao,
-    'possui_reconhecimentos': len(reconhecido.reconhecimentos_por_pilar(pilar)) > 0,
-    'quantidade_de_reconhecimentos': len(reconhecido.reconhecimentos_por_pilar(pilar))
+    'possui_reconhecimentos': len(reconhecido.reconhecimentos_por_pilar_por_data(pilar, ciclo_atual.data_inicial, ciclo_atual.data_final)) > 0,
+    'quantidade_de_reconhecimentos': len(reconhecido.reconhecimentos_por_pilar_por_data(pilar, ciclo_atual.data_inicial, ciclo_atual.data_final))
   }, Pilar.objects.all()))
 
   return JsonResponse({ 'id': reconhecido.id, 'nome': reconhecido.nome_abreviado, 'pilares': pilares }, safe = False)
@@ -73,9 +76,10 @@ def reconhecimentos_por_reconhecedor(requisicao, id_do_reconhecido):
   return JsonResponse({ 'reconhecedores': list(reconhecedores) })
 
 def todas_as_apreciacoes(requisicao, id_do_reconhecido):
+  ciclo_atual = obter_ciclo_atual()
   reconhecido = Colaborador.objects.get(id=id_do_reconhecido)
   
-  apreciacoes = reconhecido.reconhecimentos() \
+  apreciacoes = reconhecido.reconhecimentos_por_data(ciclo_atual.data_inicial, ciclo_atual.data_final) \
     .values('data', 'pilar__nome', 'feedback__descritivo', \
             'reconhecedor__nome', 'reconhecedor__id', 'reconhecido__nome') \
     .order_by('-data', '-id')
@@ -150,6 +154,5 @@ def obter_ciclos(requisicao):
 
 
 def obter_ciclo_atual():
-  data_de_hoje = date.today().strftime("%Y-%m-%d")
-  return Ciclo.objects.GET(data_final__lte=data_formatada)
+  return Ciclo.objects.get(data_final__gte=date.today())
   
