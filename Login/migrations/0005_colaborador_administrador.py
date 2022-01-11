@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('Login', '0004_remove_colaborador_quantidade_de_apreciacoes_recebidas'),
+        ('Login', '0004_rename_ultima_apreciacao_colaborador_data_ultimo_reconhecimento'),
     ]
 
     operations = [
