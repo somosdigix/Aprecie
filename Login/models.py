@@ -1,5 +1,6 @@
 ﻿from django.db import models
 from django.contrib.auth.models import AbstractBaseUser
+from django.db.models.fields import IntegerField
 from bradocs4py import ValidadorCpf
 
 from Aprecie.base import ExcecaoDeDominio
@@ -67,6 +68,10 @@ class Colaborador(AbstractBaseUser):
 	def reconhecimentos(self):
 		return self.reconhecido.all()
 
+	def contar_todos_reconhecimentos(self):
+		reconhecimentos = self.reconhecido.all()
+		return len(reconhecimentos)
+
 	def reconhecimentos_por_pilar(self, pilar):
 		return self.reconhecido.filter(pilar = pilar).order_by('-data')
 
@@ -76,3 +81,4 @@ class Colaborador(AbstractBaseUser):
 	def definir_ultima_data_de_publicacao(self, data):
 		self.data_ultimo_reconhecimento = data
 		self.save()
+

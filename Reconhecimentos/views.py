@@ -5,6 +5,7 @@ from django.db.models import Count
 from django.core.paginator import Paginator
 from datetime import date
 
+from operator import attrgetter
 from Login.models import Colaborador
 from Reconhecimentos.models import Pilar, Reconhecimento, Feedback
 from Reconhecimentos.services import Notificacoes
@@ -81,6 +82,18 @@ def reconhecimentos_do_colaborador(requisicao, id_do_reconhecido):
 
   return JsonResponse({ 'id': reconhecido.id, 'nome': reconhecido.nome_abreviado, 'pilares': pilares }, safe = False)
 
+def contar_reconhecimentos(requisicao):
+   colaboradores = map(lambda colaborador: { 
+     'nome': colaborador.nome_abreviado, 
+     'apreciacoes': colaborador.contar_todos_reconhecimentos(), 
+     'foto': colaborador.foto
+     }, Colaborador.objects.all()[:10])
+   
+   colaboradoresOrdenados= sorted(colaboradores, key=lambda x: x["apreciacoes"], reverse=True)
+
+   return JsonResponse({'colaboradores': list(colaboradoresOrdenados)})
+
+
 def reconhecimentos_por_reconhecedor(requisicao, id_do_reconhecido):
   reconhecedores = Reconhecimento.objects.filter(reconhecido = id_do_reconhecido) \
     .values('reconhecedor__nome', 'reconhecedor', 'reconhecedor__id', 'pilar__id') \
@@ -104,9 +117,6 @@ def todas_as_apreciacoes(requisicao, id_do_reconhecido):
   }
 
   return JsonResponse(resposta)
-
-def todos_os_pilares(requisicao):
-  return JsonResponse(list(Pilar.objects.all()))
 
 def reconhecimentos_por_pilar(requisicao, id_do_reconhecido, id_do_pilar):
   reconhecido = Colaborador.objects.get(id=id_do_reconhecido)

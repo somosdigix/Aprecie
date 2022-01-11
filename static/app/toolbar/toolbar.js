@@ -19,6 +19,7 @@
         .on('click', 'a[data-js="pagina-inicial"]', paginaInicial)
         .on('click', 'div[data-js="meu-perfil"]', meuPerfil)
         .on('click', 'div[data-js="tratar-menu-mobile"]', tratarMenuMobile)
+        .on('click', 'a[data-js="ranking"]', ranking)
         .on('click', 'a[data-js="sair"]', sair);
 
       $('div[data-js="buscaDeColaboradores"]').search({
@@ -63,6 +64,12 @@
   function meuPerfil() {
     require(['roteador'], function(roteador) {
       roteador.navegarPara('/perfil/' + sessaoDeUsuario.id);
+    });
+  }
+
+  function ranking() {
+    require(['roteador'], function(roteador) {
+      roteador.navegarPara('/ranking');
     });
   }
 

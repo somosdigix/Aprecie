@@ -21,6 +21,7 @@ class Reconhecimento(models.Model):
   feedback = models.ForeignKey('Feedback', related_name='feedback', on_delete=models.CASCADE)
   pilar = models.ForeignKey(Pilar, on_delete=models.CASCADE)
   data = models.DateField(auto_now_add=True)
+  
 
   def alterar_feedback(self, novo_feedback, reconhecedor):
     if self.reconhecedor != reconhecedor:
