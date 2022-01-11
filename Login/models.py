@@ -5,6 +5,7 @@ from bradocs4py import ValidadorCpf
 
 from Aprecie.base import ExcecaoDeDominio
 
+
 class CPF():
 	def __init__(self, valor='') -> None:
 		self.valor = valor.strip().replace('.', '').replace('-', '').replace(' ', '')
@@ -12,6 +13,7 @@ class CPF():
 
 	def __str__(self) -> str:
 			return self.valor
+
 
 class Colaborador(AbstractBaseUser):
 	id = models.AutoField(primary_key=True)
@@ -21,10 +23,11 @@ class Colaborador(AbstractBaseUser):
 	foto = models.TextField(default=None, null=True)
 	usuario_id_do_chat = models.CharField(max_length=100, null=True)
 	administrador = models.BooleanField(default=False)
+	data_ultimo_reconhecimento = models.DateField(null=True)
 
 	USERNAME_FIELD = 'cpf'
 
-	@property 
+	@property
 	def primeiro_nome(self):
 		return Colaborador.obter_primeiro_nome(self.nome)
 
@@ -43,7 +46,7 @@ class Colaborador(AbstractBaseUser):
 	def alterar_foto(self, nova_foto_em_base64):
 		if not nova_foto_em_base64.strip():
 			raise ExcecaoDeDominio('Foto deve ser informada')
-			
+
 		self.foto = nova_foto_em_base64
 
 	def reconhecer(self, reconhecedor, pilar, feedback):
@@ -54,16 +57,18 @@ class Colaborador(AbstractBaseUser):
 			raise ExcecaoDeDominio('Feedback deve ser informado')
 
 		if self.ja_possui_um_reconhecimento_identico(reconhecedor, feedback, pilar):
-			raise ExcecaoDeDominio('Não é possível reconhecer uma pessoa duas vezes pelos mesmos motivos')
+			raise ExcecaoDeDominio(
+			    'Não é possível reconhecer uma pessoa duas vezes pelos mesmos motivos')
 
-		self.reconhecido.create(reconhecedor = reconhecedor, pilar = pilar, feedback = feedback)
+		self.reconhecido.create(reconhecedor=reconhecedor,
+		                        pilar=pilar, feedback=feedback)
 		self.incrementar_quantidade_reconhecimentos()
 
 	def ja_possui_um_reconhecimento_identico(self, reconhecedor, feedback, pilar):
 		return self.reconhecido.filter(
-				reconhecedor = reconhecedor,
-				pilar = pilar,
-				feedback__descritivo = feedback.descritivo
+				reconhecedor=reconhecedor,
+				pilar=pilar,
+				feedback__descritivo=feedback.descritivo
 			).exists()
 
 	def reconhecimentos(self):
@@ -74,7 +79,7 @@ class Colaborador(AbstractBaseUser):
 		return len(reconhecimentos)
 
 	def reconhecimentos_por_pilar(self, pilar):
-		return self.reconhecido.filter(pilar = pilar).order_by('-data')
+		return self.reconhecido.filter(pilar=pilar).order_by('-data')
 
 	def tornar_administrador(self):
 		self.administrador = True
@@ -82,3 +87,10 @@ class Colaborador(AbstractBaseUser):
 	def remover_administrador(self):
 		self.administrador = False
 		
+	def obter_ultima_data_de_publicacao(self):
+		return self.data_ultimo_reconhecimento	
+
+	def definir_ultima_data_de_publicacao(self, data):
+		self.data_ultimo_reconhecimento = data
+		self.save()
+

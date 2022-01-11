@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.utils import formats
 from django.db.models import Count
 from django.core.paginator import Paginator
+from datetime import date
 
 from operator import attrgetter
 from Login.models import Colaborador
@@ -51,7 +52,7 @@ def ultimos_reconhecimentos(requisicao):
   }
 
   return JsonResponse(retorno, safe=False)
-
+  
 
 def switch_administrador(requisicao):
     id_do_colaborador = requisicao.POST['id_do_colaborador']
@@ -69,6 +70,7 @@ def switch_administrador(requisicao):
       colaborador.save()
 
     return JsonResponse({})
+
     
 def converte_boolean(bool):
     if bool.lower() == 'false':
@@ -77,6 +79,27 @@ def converte_boolean(bool):
         return True
     else:
         raise ValueError("...")
+
+
+def ultima_data_de_publicacao(requisicao, id_do_reconhecedor):
+  reconhecedor = Colaborador.objects.get(id = id_do_reconhecedor)
+
+  ultima_data = reconhecedor.obter_ultima_data_de_publicacao()
+
+  resposta = {
+    'ultimaData': ultima_data
+  }
+
+  return JsonResponse(resposta)
+
+
+def definir_data_de_publicacao(requisicao, id_do_reconhecedor):
+  reconhecedor = Colaborador.objects.get(id = id_do_reconhecedor)
+
+  reconhecedor.definir_ultima_data_de_publicacao(date.today())
+
+  return JsonResponse ({})
+
 
 def reconhecimentos_do_colaborador(requisicao, id_do_reconhecido):
   reconhecido = Colaborador.objects.get(id = id_do_reconhecido)
