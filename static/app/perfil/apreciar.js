@@ -28,14 +28,17 @@ define([
 	};
 
 	function exibir(colaboradorId, reconhecimentosDoColaborador) {
-		if (sessaoDeUsuario.id === colaboradorId)
-			return;
+		if (sessaoDeUsuario.id === colaboradorId) return;
 
-		template.exibirEm('div[data-js="apreciacao"]', apreciarTemplate, reconhecimentosDoColaborador);
+		template.exibirEm(
+			'div[data-js="apreciacao"]',
+			apreciarTemplate,
+			reconhecimentosDoColaborador
+		);
 
-		$('#conteudo')
-			.on('click', 'div.escrever-apreciacao div.campos', selecionarPilar)
-			.on('click', 'button[data-js="reconhecer"]', reconhecer);
+		$("#conteudo")
+			.on("click", "div.escrever-apreciacao div.campos", selecionarPilar)
+			.on("click", 'button[data-js="reconhecer"]', reconhecer);
 	}
 
 	function selecionarPilar() {
@@ -45,8 +48,6 @@ define([
 
 	function reconhecer() {
 		$('button[data-js="reconhecer"]').prop("disabled", "disabled");
-		
-
 		obterDataDeReconhecimento();
 	}
 

@@ -1,0 +1,136 @@
+.modalReconhecer {
+  width: 600px;
+  height: 400px;
+
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  background-color: #2c006a;
+  color: white;
+
+  border-radius: 15px;
+
+  padding: 0 16px;
+
+  z-index: 1;
+
+  box-shadow: 2px 2px 700px gray;
+}
+
+.botao-reconhecer {
+  background-color: #2c006a;
+
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+
+  height: 50px;
+  width: 50px;
+
+  border-radius: 50%;
+  color: white;
+
+  font-size: 2.5rem;
+  font-weight: bold;
+
+  border: 0;
+
+  cursor: pointer;
+}
+
+.selecionadoGlobal {
+  background-color: #0bc0d3;
+}
+
+.elogio {
+  color: black;
+
+  padding: 8px;
+
+  resize: none;
+
+  border-radius: 4px;
+  border: 0;
+}
+
+.inputPilar {
+  display: none;
+}
+
+.botao-para-reconhecer {
+  position: relative;
+
+  left: 450px;
+
+  padding: 8px;
+
+  border: 0;
+
+  color: white;
+
+  font-size: 1.2rem;
+  font-weight: bold;
+
+  background-color: transparent;
+
+  transition: 0.4s;
+
+  border-radius: 20px;
+  border: solid 2px #0bc0d3;
+}
+
+.botao-para-reconhecer:hover {
+  background-color: #0bc0d3;
+}
+
+.campoGlobal {
+  text-align: center;
+
+  font-weight: bold;
+  font-size: 1.2rem;
+
+  margin: 0 8px;
+
+  padding: 8px;
+
+  border-radius: 4px;
+
+  transition: 0.2s;
+}
+
+.campoGlobal:hover {
+  border: solid 4px #0bc0d3;
+
+  transform: scale(1.2);
+}
+
+.escolhaPilar {
+  display: flex;
+  flex-direction: row;
+
+  width: 100%;
+
+  margin: 32px auto;
+
+  justify-content: space-between;
+  align-items: center;
+}
+
+.conteudo-botaoReconhecer {
+  display: flex;
+  flex-direction: column;
+
+  padding: 0 16px;
+}
+
+.fechar__modal--botaoreconhecer {
+  position: relative;
+  border: none;
+  left: 103%;
+
+  background-color: transparent;
+
+  border: none;
+}
