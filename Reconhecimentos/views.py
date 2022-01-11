@@ -115,22 +115,11 @@ def reconhecimentos_do_colaborador(requisicao, id_do_reconhecido):
 
 
 def contar_reconhecimentos(requisicao):
-   colaboradores = Colaborador.objects.all()[:10]
-
-   transformacao = lambda colaborador: { 'nome': colaborador.nome_abreviado, 'apreciacoes': colaborador.contar_todos_reconhecimentos(), 'foto': colaborador.foto}
-   colaboradores = map(transformacao, colaboradores)
-   
-   colaboradoresOrdenados= sorted(colaboradores, key=lambda x: x["apreciacoes"], reverse=True)
-
-   return JsonResponse({'colaboradores': list(colaboradoresOrdenados)})
-
-
-
-def contar_reconhecimentos_pilar_colaborar_sempre(requisicao):
-   colaboradores = Colaborador.objects.all()[:10]
-
-   transformacao = lambda colaborador: { 'nome': colaborador.nome_abreviado, 'apreciacoes': colaborador.reconhecimentos_por_pilar("Colaborar sempre")}
-   colaboradores = map(transformacao, colaboradores)
+   colaboradores = map(lambda colaborador: { 
+     'nome': colaborador.nome_abreviado, 
+     'apreciacoes': colaborador.contar_todos_reconhecimentos(), 
+     'foto': colaborador.foto
+     }, Colaborador.objects.all()[:10])
    
    colaboradoresOrdenados= sorted(colaboradores, key=lambda x: x["apreciacoes"], reverse=True)
 
@@ -162,6 +151,16 @@ def todas_as_apreciacoes(requisicao, id_do_reconhecido):
 
   return JsonResponse(resposta)
 
+def todos_os_pilares_e_colaboradores(requisicao):
+    pilares = map(lambda pilar: { 'id': pilar.id, 'nome': pilar.nome }, Pilar.objects.all())
+    colaboradores = map(lambda colaborador: { 'id_colaborador': colaborador.id, 'nome': colaborador.nome_abreviado}, Colaborador.objects.all())
+
+    retorno = {
+      'pilares': list(pilares),
+      'colaboradores': list(colaboradores)
+    }
+
+    return JsonResponse(retorno, safe=False)
 
 def reconhecimentos_por_pilar(requisicao, id_do_reconhecido, id_do_pilar):
   reconhecido = Colaborador.objects.get(id=id_do_reconhecido)

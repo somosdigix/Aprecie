@@ -2,6 +2,7 @@
 from Reconhecimentos import views
 
 urlpatterns = [
+    url(r'^pilares/$', views.todos_os_pilares_e_colaboradores, name="todos_os_pilares_e_colaboradores"),
     url(r'^reconhecer/$', views.reconhecer, name="reconhecer"),
     url(r'^administrador/$', views.switch_administrador, name="switch_administrador"),
     url(r'^ultimos/$', views.ultimos_reconhecimentos, name="ultimos_reconhecimentos"),

@@ -60,9 +60,7 @@ class Colaborador(AbstractBaseUser):
 			raise ExcecaoDeDominio(
 			    'Não é possível reconhecer uma pessoa duas vezes pelos mesmos motivos')
 
-		self.reconhecido.create(reconhecedor=reconhecedor,
-		                        pilar=pilar, feedback=feedback)
-		self.incrementar_quantidade_reconhecimentos()
+		self.reconhecido.create(reconhecedor = reconhecedor, pilar = pilar, feedback = feedback)
 
 	def ja_possui_um_reconhecimento_identico(self, reconhecedor, feedback, pilar):
 		return self.reconhecido.filter(

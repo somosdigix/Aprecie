@@ -36,9 +36,9 @@ function imagemMedalhaDinamica() {
 	for (var i = 0; i < imagem.length; i++) {
 		var img = document.createElement("img");
 		img.src = "../static/img/medalhas/medalha" + i + ".svg";
-		img.id = "posicao";
+		img.className = "posicao__medalha"
+		img.id = "posicao" + i;
 		var medalha = imagem[i];
-		console.log(medalha);
 		medalha.appendChild(img);
 	}
 }
