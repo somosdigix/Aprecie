@@ -48,6 +48,44 @@ define([
 
 	function reconhecer() {
 		$('button[data-js="reconhecer"]').prop("disabled", "disabled");
+		obterDataDeReconhecimento();
+	}
+
+	function definirDataDeReconhecimento() {
+		$.post("/reconhecimentos/definir_data_de_publicacao/" + sessaoDeUsuario.id);
+	}
+
+	function obterData() {
+		var hoje = new Date();
+		var dia = String(hoje.getDate()).padStart(2, "0");
+		var mes = String(hoje.getMonth() + 1).padStart(2, "0");
+		var ano = hoje.getFullYear();
+
+		hoje = ano + "-" + mes + "-" + dia;
+		return hoje;
+	}
+
+	function obterDataDeReconhecimento() {
+		var dataHoje = obterData();
+		$.getJSON(
+			"/reconhecimentos/ultima_data_de_publicacao/" + sessaoDeUsuario.id,
+			function (ultimaData) {
+				if (ultimaData.ultimaData == null || ultimaData.ultimaData < dataHoje) {
+					definirDataDeReconhecimento();
+					gerarReconhecimento();
+				} else if (ultimaData.ultimaData == dataHoje) {
+					growl
+						.deErro()
+						.exibir(
+							"Você já fez seu reconhecimento de hoje, amanhã você poderá fazer outro"
+						);
+					roteador.atualizar();
+				}
+			}
+		);
+	}
+
+	function gerarReconhecimento() {
 		var reconhecerViewModel = new ReconhecerViewModel();
 
 		try {
@@ -58,7 +96,7 @@ define([
 		}
 
 		$.post("/reconhecimentos/reconhecer/", reconhecerViewModel, function () {
-			growl.deSucesso().exibir("Reconhecimento realizado com sucesso");
+			growl.deSucesso().exibir("Reconhecimento realizado com sucesso.");
 			roteador.atualizar();
 		}).fail(function () {
 			$('#conteudo button[data-js="reconhecer"]').removeAttr("disabled");
@@ -67,13 +105,25 @@ define([
 
 	function validarOperacao(reconhecerViewModel) {
 		if (!reconhecerViewModel.id_do_pilar)
-			throw new ViolacaoDeRegra("O pilar deve ser informado");
+			throw new ViolacaoDeRegra("O pilar deve ser informado.");
 
 		if (reconhecerViewModel.descritivo === "")
 			throw new ViolacaoDeRegra(
-				"O descritivo da sua apreciação precisa ser informado"
+				"O reconhecimento precisa ser feito."
 			);
 	}
 
 	return _self;
 });
+
+function mostrarResultado(box,num_max,campospan){
+	var contagem_carac = box.length;
+	
+	if (contagem_carac >= 0){
+	document.getElementById(campospan).innerHTML = contagem_carac + "/220";
+	}
+	if (contagem_carac >= num_max){
+	document.getElementById(campospan).innerHTML = "Limite de caracteres excedido!";
+	}
+   
+}
