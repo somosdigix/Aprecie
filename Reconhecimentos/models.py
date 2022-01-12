@@ -21,6 +21,7 @@ class Reconhecimento(models.Model):
   feedback = models.ForeignKey('Feedback', related_name='feedback', on_delete=models.CASCADE)
   pilar = models.ForeignKey(Pilar, on_delete=models.CASCADE)
   data = models.DateField(auto_now_add=True)
+  
 
   def alterar_feedback(self, novo_feedback, reconhecedor):
     if self.reconhecedor != reconhecedor:
@@ -52,10 +53,6 @@ class Ciclo(models.Model):
   data_inicial = models.DateField()
   data_final = models.DateField()
 
-  # def __init__(self, data_inicial, data_final):
-  #   self.data_inicial = data_inicial
-  #   self.data_final = data_final
-
   def alterar_ciclo(self, data_final):
     self.data_final = data_final
 
@@ -65,12 +62,6 @@ class LOG_Ciclo(models.Model):
   data_da_modificacao = models.DateField(auto_now=True)
   usuario_que_modificou = models.ForeignKey('Login.Colaborador', related_name='usuario_que_modificou', on_delete=models.CASCADE)
   descricao_da_alteracao = models.CharField(max_length=50)
-  
-  # def __init__(self, ciclo, usuario_que_modificou, descricao_da_alteracao):
-  #   self.ciclo = ciclo
-  #   self.usuario_que_modificou = usuario_que_modificou
-  #   self.descricao_da_alteracao = descricao_da_alteracao
-    
-    
+
   
   
