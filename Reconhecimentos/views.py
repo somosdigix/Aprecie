@@ -86,13 +86,14 @@ def reconhecimentos_do_colaborador(requisicao, id_do_reconhecido):
   return JsonResponse({ 'id': reconhecido.id, 'nome': reconhecido.nome_abreviado, 'pilares': pilares }, safe = False)
 
 def contar_reconhecimentos(requisicao):
+   ciclo_atual = obter_ciclo_atual()
    colaboradores = map(lambda colaborador: { 
      'nome': colaborador.nome_abreviado, 
-     'apreciacoes': colaborador.contar_todos_reconhecimentos(), 
+     'reconhecimentos': len(colaborador.reconhecimentos_por_data(ciclo_atual.data_inicial, ciclo_atual.data_final)), 
      'foto': colaborador.foto
      }, Colaborador.objects.all()[:10])
    
-   colaboradoresOrdenados= sorted(colaboradores, key=lambda x: x["apreciacoes"], reverse=True)
+   colaboradoresOrdenados= sorted(colaboradores, key=lambda x: x["reconhecimentos"], reverse=True)
 
    return JsonResponse({'colaboradores': list(colaboradoresOrdenados)})
 
