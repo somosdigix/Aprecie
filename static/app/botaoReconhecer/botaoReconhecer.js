@@ -137,7 +137,6 @@ define([
 		$.getJSON(
 			"/reconhecimentos/ultima_data_de_publicacao/" + sessaoDeUsuario.id,
 			function (ultimaData) {
-				console.log(ultimaData);
 				if (ultimaData.ultimaData == null || ultimaData.ultimaData < dataHoje) {
 					definirDataDeReconhecimento();
 					gerarReconhecimento();
