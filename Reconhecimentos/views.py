@@ -21,8 +21,11 @@ def reconhecer(requisicao):
   pilar = Pilar.objects.get(id = id_do_pilar)
   feedback = Feedback.objects.create(descritivo = descritivo)
 
-  reconhecido.reconhecer(reconhecedor, pilar, feedback)
-  Notificacoes.notificar_no_chat(reconhecedor, reconhecido, pilar)
+  data_ultima_apreciacao = reconhecedor.obter_ultima_data_de_publicacao()
+
+  if data_ultima_apreciacao != date.today(): 
+    reconhecido.reconhecer(reconhecedor, pilar, feedback)
+    Notificacoes.notificar_no_chat(reconhecedor, reconhecido, pilar)
 
   return JsonResponse({})
 

@@ -78,34 +78,21 @@
 	}
 
 	function confirmaAlteracao() {
-		if (confirm("Confirmar as alteracoes?")) {
+		if (confirm("Confirmar as alteracoes?") && usuarioAdministrador()) {
 			return true;
 		} else {
 			return false;
 		}
 	}
 
-	function confirmaAlteracao() {
-		if (confirm("Confirmar as alteracoes?")) {
-			return true;
+	function usuarioAdministrador() {
+		if (!sessaoDeUsuario.administrador) {
+			require(["growl"], function (growl) {
+				growl.deErro().exibir("Você não é administrador");
+				return false;
+			});
 		} else {
-			return false;
-		}
-	}
-
-	function confirmaAlteracao() {
-		if (confirm("Confirmar as alteracoes?")) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	function confirmaAlteracao() {
-		if (confirm("Confirmar as alteracoes?")) {
-			return true;
-		} else {
-			return false;
+			return sessaoDeUsuario.administrador;
 		}
 	}
 
@@ -116,7 +103,7 @@
 			document.getElementById("toggle").checked = false;
 		}
 		$("#toggle").change(function () {
-			if (this.checked) {
+			if (usuarioAdministrador() && this.checked) {
 				var confirma = confirmaAlteracao();
 				if (confirma) {
 					var dados = {
@@ -138,7 +125,7 @@
 					};
 					var mensagem =
 						"Retirado o acesso de administrador do Colaborador com sucesso!";
-						postSwitch(dados, mensagem);
+					postSwitch(dados, mensagem);
 				} else {
 					$("#toggle").prop("checked", true);
 				}
@@ -198,12 +185,12 @@
 });
 
 function enviarDatas() {
-	var dataQ1 = document.getElementById('data1').value;
+	var dataQ1 = document.getElementById("data1").value;
 	console.log(dataQ1);
-	var dataQ2 = document.getElementById('data2').value;
+	var dataQ2 = document.getElementById("data2").value;
 	console.log(dataQ2);
-	var dataQ3 = document.getElementById('data3').value;
+	var dataQ3 = document.getElementById("data3").value;
 	console.log(dataQ3);
-	var dataQ4 = document.getElementById('data4').value;
+	var dataQ4 = document.getElementById("data4").value;
 	console.log(dataQ4);
 }
