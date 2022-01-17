@@ -7,7 +7,7 @@ from datetime import date
 
 from operator import attrgetter
 from Login.models import Colaborador
-from Reconhecimentos.models import Pilar, Reconhecimento, Feedback
+from Reconhecimentos.models import Pilar, Reconhecimento, Feedback, Ciclo, LOG_Ciclo
 from Reconhecimentos.services import Notificacoes
 
 def reconhecer(requisicao):
@@ -149,6 +149,7 @@ def reconhecimentos_por_pilar(requisicao, id_do_reconhecido, id_do_pilar):
   return JsonResponse(resposta)
 
 def definir_ciclo(requisicao):
+  nome = requisicao.POST["nome_ciclo"]
   data_inicial = requisicao.POST["data_inicial"]
   data_final = requisicao.POST["data_final"]
   id_usuario_que_modificou = requisicao.POST["usuario_que_modificou"]
@@ -157,7 +158,7 @@ def definir_ciclo(requisicao):
   ciclo.save()
 
   usuario_que_modificou = Colaborador.objects.get(id=id_usuario_que_modificou)
-  log_Ciclo = LOG_Ciclo(ciclo=ciclo, usuario_que_modificou=usuario_que_modificou,descricao_da_alteracao='Criação do ciclo')
+  log_Ciclo = LOG_Ciclo(ciclo=ciclo,nome=nome_ciclo, usuario_que_modificou=usuario_que_modificou,descricao_da_alteracao='Criação do ciclo')
   log_Ciclo.save()
 
   return JsonResponse({})
@@ -180,16 +181,24 @@ def alterar_ciclo(requisicao):
   return JsonResponse({})
   
 
-def obter_ciclos(requisicao):
+def obter_informacoes_ciclo_atual(requisicao):
+  ciclo = obter_ciclo_atual()
+  log = LOG_Ciclo.objects.get(ciclo=ciclo)
+  colaborador = Colaborador.objects.get(id=log.usuario_que_modificou.id)
+
   resposta = {
-    'ciclo_atual': obter_ciclo_atual(),
-    'ciclos_anteriores': Ciclo.objects.all()
+    'id_ciclo': ciclo.id,
+    'nome_do_ciclo': ciclo.nome,
+    'data_inicial': ciclo.data_inicial,
+    'data_final': ciclo.data_final,
+    'nome_usuario_que_modificou': colaborador.nome_abreviado,
+    'descricao_da_alteracao': log.descricao_da_alteracao,
+    'data_ultima_alteracao': log.data_da_modificacao
   }
 
   return JsonResponse(resposta)
 
 
 def obter_ciclo_atual():
-  data_de_hoje = date.today().strftime("%Y-%m-%d")
-  return Ciclo.objects.GET(data_final__lte=data_formatada)
+  return Ciclo.objects.get(data_final__gte=date.today(), data_inicial__lte=date.today())
   

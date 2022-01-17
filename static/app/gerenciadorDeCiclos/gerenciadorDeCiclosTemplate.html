@@ -1,17 +1,16 @@
-<main>
 	<div class="container">
 		<h1 class="titulo">Configurações de Ciclo</h1>
-
+        <input type="hidden" id="id_ciclo" value={{this.id_ciclo}}>
 		<h2>Ciclo Atual</h2>
 
 		<div id="container__ciclo__atual">
-			<div class="datas__ciclos">
-				<p class="data_inicio">Data de Início: dd/mm/yyyy</p>
-				<p class="data_final">Data Final: dd/mm/yyyy</p>
+			<div class="datas__ciclos" data-inicial={{this.data_inicial}} data-final={{this.data_final}}>
+				<p class="data_inicio">Data de Início: {{this.data_inicial}}</p>
+				<p class="data_final">Data Final: {{this.data_final}}</p>
 			</div>
 			
 			<div class="nome__progresso__ciclo">
-				<p class="nome__ciclo">Nome do Ciclo</p>
+				<p class="nome__ciclo">{{this.nome_do_ciclo}}</p>
 				<h1 id="porcentagem"></h1>
 				<svg>
 					<circle class="circulo1" cx="75" cy="75" r="50"></circle>
@@ -20,14 +19,15 @@
 			</div>
 
 			<div class="caixa__informacoes__ciclo">
-				<p class="nome__autor">Nome do Autor:</p>
-				<p class="data__alteracao">Data da Última Alteração: dd/mm/yyyy</p>
+				<p class="nome__autor">Nome do Autor: {{this.nome_usuario_que_modificou}}</p>
+				<p class="data__alteracao">Data da Última Alteração: {{this.data_ultima_alteracao}}</p>
 				<button id="btn__editar" onclick="mostrarModal()">Editar</button>
 			</div>
 		</div>
+		
 		<div id="abrirModal" class="modal__ciclo">
 			<div class="box__motivo">
-			<h1 class="titulo__modal">Motivo da Alteração: </h1>
+			<h1 class="titulo__modal">Motivo da Alteração:</h1>
 				<div class="descricao">
 				<textarea id="input__motivo" name="post-text" class="wmd-input s-input bar0 js-post-body-field" data-post-type-id="2" cols="100" rows="20" tabindex="101" data-min-length=""></textarea>
 				<label for="nova__data" class="label__nova__data__final">Data Final:</label>
@@ -38,7 +38,7 @@
 						class="nova__data__final"
 					/>
 				<div class="btns__novo__ciclo">
-				<button type="submit" id="btn__confirmar">Confirmar</button>
+				<button type="submit" data-js="btn_alterar_ciclo" id="btn__confirmar">Confirmar</button>
 				<button id="btn__cancelar__edicao" onclick="fecharModal()" >Cancelar</button>
 			</div>
 			</div>
@@ -53,6 +53,7 @@
 			<form id="form__adicionar__ciclo">
 				<input
 					type="text"
+                    id="nome_ciclo"
 					placeholder="Nome do Ciclo"
 					class="adicionar__nome__ciclo"
 				/>
@@ -70,14 +71,14 @@
 						<label for="dataFinal">Data Final:</label>
 						<input
 							type="date"
-							id="data_inicial"
+							id="data_final"
 							data-js="dataFinal"
 							class="data__final__ciclo"
 						/>
 					</div>
 				</div>
 				<div class="btns__novo__ciclo">
-					<button type="submit" id="btn__adicionar">Adicionar</button>
+					<button type="submit" data-js="btn_adicionar_ciclo" id="btn__adicionar"> Adicionar</button>
 					<button
 						type="submit"
 						id="btn__cancelar"
@@ -89,7 +90,7 @@
 			</form>
 		</div>
 	</div>
-</main>
+
 <style>
 	.nome__progresso__ciclo {
 		position: relative;
@@ -338,6 +339,7 @@
 
 </style>
 
+
 <script>
 	function mostrarContainerNovoCiclo() {
 		document.getElementById("container__novo__ciclo").style.display = "block";
@@ -356,8 +358,11 @@
 
 	//Pegaremos do sistema
 	//Precisamos transformar em date
-	const dataInicial = new Date("1/1/2022");
-	const dataFinal = new Date("2/20/2022");
+	var datas_ciclos_div = $(".datas__ciclos");
+	const dataInicial = Date.parse(datas_ciclos_div.attr("data-inicial"));
+	
+	const dataFinal = Date.parse(datas_ciclos_div.attr("data-final"));
+    
 
 	//sempre sera o local date string formatado
 	//precisa ser formatado
@@ -366,7 +371,7 @@
 	//funcao que calcula do periodo total do ciclo
 	function calcularPeriodoCiclo() {
 		const diferencaDeDiasDoCiclo = Math.abs(dataFinal - dataInicial);
-		console.log(Math.abs(dataFinal - dataInicial));
+		//console.log(Math.abs(dataFinal - dataInicial));
 		return Math.ceil(diferencaDeDiasDoCiclo / (1000 * 60 * 60 * 24));
 	}
 
@@ -376,7 +381,7 @@
 		return Math.ceil(diferencaDeDiasDoProgresso / (1000 * 60 * 60 * 24));
 	}
 
-	console.log(Math.abs(dataFinal - dataHoje));
+	//console.log(Math.abs(dataFinal - dataHoje));
 	//funcao que calcula a porcentagem do que progrediu
 	function calcularPorcentagemDoProgresso() {
 		const diferencaPeriodoEProgresso = Math.abs(

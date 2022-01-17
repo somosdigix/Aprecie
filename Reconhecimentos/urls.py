@@ -12,7 +12,7 @@ urlpatterns = [
     url(r'^todos/([0-9]+)$', views.todas_as_apreciacoes, name="todas_as_apreciacoes"),
     url(r'^definir_ciclo/$', views.definir_ciclo, name="definir_ciclo"),
     url(r'^alterar_ciclo/$', views.alterar_ciclo, name="alterar_ciclo"),
-    url(r'^obter_ciclos/$', views.obter_ciclos, name="obter_ciclos"),
+    url(r'^obter_informacoes_ciclo_atual/$', views.obter_informacoes_ciclo_atual, name="obter_informacoes_ciclo_atual"),
     url(r'^ranking/$', views.contar_reconhecimentos, name="contar_reconhecimentos"),
     url(r'^([0-9]+)/([0-9]+)$', views.reconhecimentos_por_pilar, name="reconhecimentos_por_pilar"),
 ]

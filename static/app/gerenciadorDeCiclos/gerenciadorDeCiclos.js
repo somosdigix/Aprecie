@@ -3,7 +3,9 @@ define([
 	"template",
 	"text!app/gerenciadorDeCiclos/gerenciadorDeCiclosTemplate.html",
     "sessaoDeUsuario",
-], function ($, template, gerenciadorDeCiclosTemplate, sessaoDeUsuario) {
+    "growl",
+    "roteador"
+], function ($, template, gerenciadorDeCiclosTemplate, sessaoDeUsuario, growl,  roteador) {
 	"use strict";
 
 	var self = {};
@@ -14,6 +16,9 @@ define([
         carregarGerenciador()
 
         // on click button html para função de definir ciclo e alterar ciclo
+        $("#conteudo")
+            .on("click", 'button[data-js="btn_adicionar_ciclo"]', definirCiclo)
+			.on("click", 'button[data-js="btn_alterar_ciclo"]', alterarCiclo)
 	};
 
 	self.finalizar = function () {
@@ -22,16 +27,24 @@ define([
 	};
 
     function carregarGerenciador(){
-        $.getJSON("/reconhecimentos/obterCiclos", function (ciclos) {
-			template.exibir(gerenciadorDeCiclosTemplate, ciclos);
+        $.getJSON("/reconhecimentos/obter_informacoes_ciclo_atual", function (ciclo_atual) {
+            console.log(ciclo_atual);
+            console.log(ciclo_atual.data_final);
+			template.exibir(gerenciadorDeCiclosTemplate, ciclo_atual);
 		});
     }
 	
-    // alteracao e definicao de ciclo fazer funcoes
     function definirCiclo(){
-        data = {
-            'data_inicial': $('.data_inicial_ciclo').val(),
-            'data_final': $('.data_final_ciclo').val(),
+        console.log("Vo chamar a funcao")
+        console.log($('#nome_ciclo').val())
+        console.log($('#data_inicial').val())
+        console.log($('#data_final').val())
+        console.log(sessaoDeUsuario.id)
+        
+        var data = {
+            'nome_ciclo': $('#nome_ciclo').val(),
+            'data_inicial': $('#data_inicial').val(),
+            'data_final': $('#data_final').val(),
             'usuario_que_modificou': sessaoDeUsuario.id
         }
         
@@ -42,12 +55,11 @@ define([
     }
 
     function alterarCiclo(){
-        data = {
-            'id_ciclo': $('.id_ciclo').val(),
-            'data_inicial': $('.data_inicial_ciclo').val(),
-            'data_final': $('.data_final_ciclo').val(),
+        var data = {
+            'id_ciclo': $('#id_ciclo').val(),
+            'data_final': $('#nova__data__final').val(),
             'usuario_que_modificou': sessaoDeUsuario.id ,
-            'descricao_da_alteracao': $('.descricao_da_alteracao').val()
+            'descricao_da_alteracao': $('#input_motivo').val()
         }
 
         $.post('/reconhecimentos/alterar_ciclo/', data, function () {
