@@ -51,7 +51,7 @@ class FeedbackSCI(models.Model):
 class Ciclo(models.Model):
   id = models.AutoField(primary_key=True)  
   data_inicial = models.DateField()
-  data_final = models.DateField(default=None)
+  data_final = models.DateField(null=True)
 
   def alterar_ciclo(self, data_final):
     self.data_final = data_final

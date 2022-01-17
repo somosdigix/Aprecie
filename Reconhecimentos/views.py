@@ -179,7 +179,7 @@ def alterar_ciclo(requisicao):
   log_ciclo.save()
 
   return JsonResponse({})
-  
+
 
 def obter_ciclos(requisicao):
   resposta = {
@@ -191,6 +191,6 @@ def obter_ciclos(requisicao):
 
 
 def obter_ciclo_atual():
-  return Ciclo.objects.get(data_final__gte=date.today())
+  return Ciclo.objects.get(data_final__gte=date.today(), data_inicial__lte=date.today() )
 
   
