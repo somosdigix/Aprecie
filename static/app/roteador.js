@@ -60,7 +60,7 @@
 
 		function gerenciadorDeCiclos() {
 			require(['app/gerenciadordeCiclos/controller'], function (controller) {
-				_controllerAtivo = constroller;
+				_controllerAtivo = controller;
 				controller.exibir();
 			});
 		}
