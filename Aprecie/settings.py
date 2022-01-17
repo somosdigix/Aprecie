@@ -22,7 +22,8 @@ INSTALLED_APPS = (
 	'django.contrib.staticfiles',
 	'Login',
 	'Reconhecimentos',
-	'compressor'
+	'compressor',
+	'Aprecie.apps.AprecieConfig'
 )
 
 MIDDLEWARE = (
@@ -117,3 +118,4 @@ STATICFILES_FINDERS = (
 	"django.contrib.staticfiles.finders.AppDirectoriesFinder",
 	'compressor.finders.CompressorFinder', 
 )
+

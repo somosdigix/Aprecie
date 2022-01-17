@@ -7,7 +7,7 @@ from datetime import date
 
 from operator import attrgetter
 from Login.models import Colaborador
-from Reconhecimentos.models import Pilar, Reconhecimento, Feedback
+from Reconhecimentos.models import Pilar, Reconhecimento, Feedback, Ciclo, LOG_Ciclo
 from Reconhecimentos.services import Notificacoes
 
 def reconhecer(requisicao):
@@ -29,6 +29,7 @@ def reconhecer(requisicao):
 def ultimos_reconhecimentos(requisicao):
   reconhecimentos = Reconhecimento.objects.all().order_by('-id')
 
+  
   pagina_atual = int(requisicao.GET['pagina_atual'])
   paginacao = Paginator(reconhecimentos, 10)
   pagina = paginacao.page(pagina_atual)
@@ -190,6 +191,6 @@ def obter_ciclos(requisicao):
 
 
 def obter_ciclo_atual():
-  data_de_hoje = date.today().strftime("%Y-%m-%d")
-  return Ciclo.objects.GET(data_final__lte=data_formatada)
+  return Ciclo.objects.get(data_final__gte=date.today())
+
   
