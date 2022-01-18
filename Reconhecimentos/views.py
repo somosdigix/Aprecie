@@ -176,15 +176,16 @@ def alterar_ciclo(requisicao):
   
   usuario_que_modificou = Colaborador.objects.get(id=id_usuario_que_modificou)
   log_Ciclo = LOG_Ciclo(ciclo = ciclo, usuario_que_modificou = usuario_que_modificou, descricao_da_alteracao = descricao_da_alteracao)
-  log_ciclo.save()
+  log_Ciclo.save()
 
   return JsonResponse({})
   
 
 def obter_informacoes_ciclo_atual(requisicao):
   ciclo = obter_ciclo_atual()
-  log = LOG_Ciclo.objects.get(ciclo=ciclo)
+  log = LOG_Ciclo.objects.filter(ciclo=ciclo).order_by('-data_da_modificacao').first()
   colaborador = Colaborador.objects.get(id=log.usuario_que_modificou.id)
+  
 
   resposta = {
     'id_ciclo': ciclo.id,

@@ -28,19 +28,11 @@ define([
 
     function carregarGerenciador(){
         $.getJSON("/reconhecimentos/obter_informacoes_ciclo_atual", function (ciclo_atual) {
-            console.log(ciclo_atual);
-            console.log(ciclo_atual.data_final);
 			template.exibir(gerenciadorDeCiclosTemplate, ciclo_atual);
 		});
     }
 	
-    function definirCiclo(){
-        console.log("Vo chamar a funcao")
-        console.log($('#nome_ciclo').val())
-        console.log($('#data_inicial').val())
-        console.log($('#data_final').val())
-        console.log(sessaoDeUsuario.id)
-        
+    function definirCiclo(){       
         var data = {
             'nome_ciclo': $('#nome_ciclo').val(),
             'data_inicial': $('#data_inicial').val(),
@@ -59,7 +51,7 @@ define([
             'id_ciclo': $('#id_ciclo').val(),
             'data_final': $('#nova__data__final').val(),
             'usuario_que_modificou': sessaoDeUsuario.id ,
-            'descricao_da_alteracao': $('#input_motivo').val()
+            'descricao_da_alteracao': $('#input__motivo').val()
         }
 
         $.post('/reconhecimentos/alterar_ciclo/', data, function () {
