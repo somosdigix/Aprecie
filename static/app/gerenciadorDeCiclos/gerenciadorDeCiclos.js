@@ -32,7 +32,7 @@ define([
 		});
     }
 	
-    function definirCiclo(){       
+    function definirCiclo(){  
         var data = {
             'nome_ciclo': $('#nome_ciclo').val(),
             'data_inicial': $('#data_inicial').val(),

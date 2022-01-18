@@ -154,11 +154,11 @@ def definir_ciclo(requisicao):
   data_final = requisicao.POST["data_final"]
   id_usuario_que_modificou = requisicao.POST["usuario_que_modificou"]
 
-  ciclo = Ciclo(data_inicial=data_inicial, data_final= data_final)
+  ciclo = Ciclo(nome=nome, data_inicial=data_inicial, data_final= data_final)
   ciclo.save()
 
   usuario_que_modificou = Colaborador.objects.get(id=id_usuario_que_modificou)
-  log_Ciclo = LOG_Ciclo(ciclo=ciclo,nome=nome_ciclo, usuario_que_modificou=usuario_que_modificou,descricao_da_alteracao='Criação do ciclo')
+  log_Ciclo = LOG_Ciclo(ciclo=ciclo, usuario_que_modificou=usuario_que_modificou,descricao_da_alteracao='Criação do ciclo')
   log_Ciclo.save()
 
   return JsonResponse({})
@@ -185,16 +185,17 @@ def obter_informacoes_ciclo_atual(requisicao):
   ciclo = obter_ciclo_atual()
   log = LOG_Ciclo.objects.filter(ciclo=ciclo).order_by('-data_da_modificacao').first()
   colaborador = Colaborador.objects.get(id=log.usuario_que_modificou.id)
-  
 
   resposta = {
     'id_ciclo': ciclo.id,
     'nome_do_ciclo': ciclo.nome,
     'data_inicial': ciclo.data_inicial,
+    'data_inicial_formatada': ciclo.data_inicial.strftime('%d/%m/%Y'),
     'data_final': ciclo.data_final,
+    'data_final_formatada': ciclo.data_final.strftime('%d/%m/%Y'),
     'nome_usuario_que_modificou': colaborador.nome_abreviado,
     'descricao_da_alteracao': log.descricao_da_alteracao,
-    'data_ultima_alteracao': log.data_da_modificacao
+    'data_ultima_alteracao': log.data_da_modificacao.strftime('%d/%m/%Y')
   }
 
   return JsonResponse(resposta)
