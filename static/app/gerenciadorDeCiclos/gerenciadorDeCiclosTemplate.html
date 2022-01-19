@@ -1,98 +1,71 @@
-	<div class="container">
-		<h1 class="titulo">Configurações de Ciclo</h1>
-        <input type="hidden" id="id_ciclo" value={{this.id_ciclo}}>
-		<h2>Ciclo Atual</h2>
+<div class="container">
+	<h1 class="titulo">Configurações de Ciclo</h1>
+	<input type="hidden" id="id_ciclo" value={{this.id_ciclo}}>
+	<h2>Ciclo Atual</h2>
 
-		<div id="container__ciclo__atual">
-			<div class="datas__ciclos" data-inicial={{this.data_inicial}} data-final={{this.data_final}}>
-				<p class="data_inicio">Data de Início: {{this.data_inicial_formatada}}</p>
-				<p class="data_final">Data Final: {{this.data_final_formatada}}</p>
-			</div>
-			
-			<div class="nome__progresso__ciclo">
-				<p class="nome__ciclo">{{this.nome_do_ciclo}}</p>
-				<h1 id="porcentagem"></h1>
-				<svg>
-					<circle class="circulo1" cx="75" cy="75" r="50"></circle>
-					<circle id="circulo2" cx="75" cy="75" r="50"></circle>
-				</svg>
-			</div>
+	<div id="container__ciclo__atual">
+		<div class="datas__ciclos" data-inicial={{this.data_inicial}} data-final={{this.data_final}}>
+			<p class="data_inicio">Data de Início: {{this.data_inicial_formatada}}</p>
+			<p class="data_final">Data Final: {{this.data_final_formatada}}</p>
+		</div>
 
-			<div class="caixa__informacoes__ciclo">
-				<p class="nome__autor">Nome do Autor: {{this.nome_usuario_que_modificou}}</p>
-				<p class="data__alteracao">Data da Última Alteração: {{this.data_ultima_alteracao}}</p>
-				<button id="btn__editar" onclick="mostrarModal()">Editar</button>
-			</div>
+		<div class="nome__progresso__ciclo">
+			<p class="nome__ciclo">{{this.nome_do_ciclo}}</p>
+			<h1 id="porcentagem"></h1>
+			<svg>
+				<circle class="circulo1" cx="75" cy="75" r="50"></circle>
+				<circle id="circulo2" cx="75" cy="75" r="50"></circle>
+			</svg>
 		</div>
-		
-		<div id="abrirModal" class="modal__ciclo">
-			<div class="box__motivo">
-			<h1 class="titulo__modal">Motivo da Alteração:</h1>
-				<div class="descricao">
-				<textarea id="input__motivo" name="post-text" cols="100" rows="20" tabindex="101"></textarea>
-				<label for="nova__data" class="label__nova__data__final">Data Final:</label>
-					<input
-						type="date"
-						id="nova__data__final"
-						data-js="dataFinal"
-						class="nova__data__final"
-					/>
-				<div class="btns__novo__ciclo">
-				<button type="submit" data-js="btn_alterar_ciclo" id="btn__confirmar">Confirmar</button>
-				<button id="btn__cancelar__edicao" onclick="fecharModal()" >Cancelar</button>
-			</div>
-			</div>
-		</div>
-		</div>
-		<div class="adicionar__ciclo">
-			<button id="btn__adicionar__ciclo" onclick="mostrarContainerNovoCiclo()">
-				Adicionar Novo Ciclo
-			</button>
-		</div>
-		<div id="container__novo__ciclo">
-			<form id="form__adicionar__ciclo">
-				<input
-					type="text"
-                    id="nome_ciclo"
-					placeholder="Nome do Ciclo"
-					class="adicionar__nome__ciclo"
-					required
-				/>
-				<div class="input__data">
-					<div class="infos__data--inicio">
-						<label for="dataInicial">Data Inicial:</label>
-						<input
-							type="date"
-							id="data_inicial"
-							data-js="dataInicial"
-							class="data__inicial__ciclo"
-						/>
-					</div>
-					<div class="infos__data--fim">
-						<label for="dataFinal">Data Final:</label>
-						<input
-							type="date"
-							id="data_final"
-							data-js="dataFinal"
-							class="data__final__ciclo"
-							required
-						/>
-					</div>
-				</div>
-				<div class="btns__novo__ciclo">
-					<button type="submit" data-js="btn_adicionar_ciclo" id="btn__adicionar"> Adicionar</button>
-					<button
-						type="submit"
-						id="btn__cancelar"
-						onclick="fecharContainerNovoCiclo()"
-					>
-						Cancelar
-					</button>
-				</div>
-			</form>
+
+		<div class="caixa__informacoes__ciclo">
+			<p class="nome__autor">Nome do Autor: {{this.nome_usuario_que_modificou}}</p>
+			<p class="data__alteracao">Data da Última Alteração: {{this.data_ultima_alteracao}}</p>
+			<button id="btn__editar" onclick="mostrarModal()">Editar</button>
 		</div>
 	</div>
 
+	<div id="abrirModal" class="modal__ciclo">
+		<div class="box__motivo">
+			<h1 class="titulo__modal">Motivo da Alteração:</h1>
+			<div class="descricao">
+				<textarea id="input__motivo" name="post-text" cols="100" rows="20" tabindex="101"></textarea>
+				<label for="nova__data" class="label__nova__data__final">Data Final:</label>
+				<input type="date" id="nova__data__final" data-js="dataFinal" class="nova__data__final" />
+				<div class="btns__novo__ciclo">
+					<button type="submit" data-js="btn_alterar_ciclo" id="btn__confirmar">Confirmar</button>
+					<button id="btn__cancelar__edicao" onclick="fecharModal()">Cancelar</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="adicionar__ciclo">
+		<button id="btn__adicionar__ciclo" onclick="mostrarContainerNovoCiclo()">
+			Adicionar Novo Ciclo
+		</button>
+	</div>
+	<div id="container__novo__ciclo">
+		<form id="form__adicionar__ciclo">
+			<input type="text" id="nome_ciclo" placeholder="Nome do Ciclo" class="adicionar__nome__ciclo" required />
+			<div class="input__data">
+				<div class="infos__data--inicio">
+					<label for="dataInicial">Data Inicial:</label>
+					<input type="date" id="data_inicial" data-js="dataInicial" class="data__inicial__ciclo" />
+				</div>
+				<div class="infos__data--fim">
+					<label for="dataFinal">Data Final:</label>
+					<input type="date" id="data_final" data-js="dataFinal" class="data__final__ciclo" required />
+				</div>
+			</div>
+			<div class="btns__novo__ciclo">
+				<button type="submit" data-js="btn_adicionar_ciclo" id="btn__adicionar"> Adicionar</button>
+				<button type="submit" id="btn__cancelar" onclick="fecharContainerNovoCiclo()">
+					Cancelar
+				</button>
+			</div>
+		</form>
+	</div>
+</div>
 <style>
 	.nome__progresso__ciclo {
 		position: relative;
@@ -180,11 +153,11 @@
 		padding: 5px;
 		border: 0;
 	}
-	
+
 	input[type="date"]::-webkit-calendar-picker-indicator {
 		filter: invert(100%);
 	}
-	
+
 	.container {
 		width: 80%;
 		margin: 32px auto;
@@ -205,10 +178,11 @@
 		border: 0;
 	}
 
-	.nome__autor, .data__alteracao{
+	.nome__autor,
+	.data__alteracao {
 		color: white;
 	}
-	
+
 	#container__novo__ciclo {
 		padding: 20px;
 		font-family: Campton;
@@ -229,7 +203,7 @@
 		text-align: center;
 	}
 
-		
+
 	.input__data {
 		width: 70%;
 		margin: 16px auto;
@@ -268,7 +242,8 @@
 		border: 0;
 		cursor: pointer;
 	}
-	.modal__ciclo{
+
+	.modal__ciclo {
 		position: fixed;
 		top: 0;
 		right: 0;
@@ -276,42 +251,42 @@
 		left: 0;
 		background: rgba(0, 0, 0, 0.671);
 		z-index: 99999;
-		opacity:0;
+		opacity: 0;
 		-webkit-transition: opacity 400ms ease-in;
 		-moz-transition: opacity 400ms ease-in;
 		transition: opacity 400ms ease-in;
 		pointer-events: none;
 	}
 
-	.box__motivo{
-	background-color: #0BC0D3;
-	/* text-align: center; */
-	width: 55%;
-	padding-bottom: 40px;
-	padding-top: 15px; 
-	margin-left: 380px;
-	margin-top: 200px;
-	border-radius: 20px;
+	.box__motivo {
+		background-color: #0BC0D3;
+		/* text-align: center; */
+		width: 55%;
+		padding-bottom: 40px;
+		padding-top: 15px;
+		margin-left: 380px;
+		margin-top: 200px;
+		border-radius: 20px;
 	}
 
-	.titulo__modal{
-	text-align: center;
-	color: white;
+	.titulo__modal {
+		text-align: center;
+		color: white;
 	}
 
-	#input__motivo{
+	#input__motivo {
 		resize: none;
 		display: block;
 		margin-left: 150px;
 		margin-bottom: 28px;
 	}
 
-	.label__nova__data__final{
+	.label__nova__data__final {
 		margin-left: 145px;
-		color:white;
+		color: white;
 	}
 
-	#nova__data__final{
+	#nova__data__final {
 		margin-left: 5px;
 		border: 0;
 		border-radius: 5px;
@@ -330,7 +305,8 @@
 		margin: 8px auto;
 	}
 
-	#btn__confirmar, #btn__cancelar__edicao {
+	#btn__confirmar,
+	#btn__cancelar__edicao {
 		padding: 8px;
 		font-family: Campton;
 		background-color: #2c006a;
@@ -338,81 +314,4 @@
 		color: white;
 		border: 0;
 	}
-
 </style>
-
-
-<script>
-	function mostrarContainerNovoCiclo() {
-		document.getElementById("container__novo__ciclo").style.display = "block";
-	}
-	function fecharContainerNovoCiclo() {
-		document.getElementById("container__novo__ciclo").style.display = "none";
-	}
-	function fecharModal() {
-		document.getElementById("abrirModal").style.opacity = "0";
-		document.getElementById("abrirModal").style.pointerEvents = "none";
-	}
-	function mostrarModal(){
-		document.getElementById("abrirModal").style.opacity = "1";
-		document.getElementById("abrirModal").style.pointerEvents = "auto";
-	}
-
-	//Pegaremos do sistema
-	//Precisamos transformar em date
-	var datas_ciclos_div = $(".datas__ciclos");
-
-	const dataInicial = Date.parse(datas_ciclos_div.attr("data-inicial"));
-	const dataFinal = Date.parse(datas_ciclos_div.attr("data-final"));
-
-    
-	function obterData() {
-		var hoje = new Date();
-		var dia = String(hoje.getDate()).padStart(2, "0");
-		var mes = String(hoje.getMonth() + 1).padStart(2, "0");
-		var ano = hoje.getFullYear();
-
-		hoje = dia + "/" + mes + "/" + ano;
-		return hoje;
-	}
-	//sempre sera o local date string formatado
-	//precisa ser formatado
-	var dataHoje = new Date();
-
-	//funcao que calcula do periodo total do ciclo
-	function calcularPeriodoCiclo() {
-		const diferencaDeDiasDoCiclo = Math.abs(dataFinal - dataInicial);
-		//console.log(Math.abs(dataFinal - dataInicial));
-		return Math.ceil(diferencaDeDiasDoCiclo / (1000 * 60 * 60 * 24));
-	}
-
-	//funcao que calcula a quantidade de dias progredidos
-	function calcularProgressoEmDias() {
-		const diferencaDeDiasDoProgresso = Math.abs(dataFinal - dataHoje);
-		return Math.ceil(diferencaDeDiasDoProgresso / (1000 * 60 * 60 * 24));
-	}
-
-	//console.log(Math.abs(dataFinal - dataHoje));
-	//funcao que calcula a porcentagem do que progrediu
-	function calcularPorcentagemDoProgresso() {
-		const diferencaPeriodoEProgresso = Math.abs(
-			calcularPeriodoCiclo() - calcularProgressoEmDias()
-		);
-		return (diferencaPeriodoEProgresso / calcularPeriodoCiclo()) * 100;
-	}
-
-	//funcao que recebe a porcentagem do progresso e aloca no elemtento de texto
-	function definirPorcentagemNoTextoDaBarra() {
-		var porcentagemTexto = document.getElementById("porcentagem");
-		porcentagemTexto.innerHTML = calcularPorcentagemDoProgresso().toFixed(0) + "%";
-	}
-
-	//funcao que pega o valor do elemento de texto da porcentagem e atribui ao circulo de progresso
-	function definirPorcentagemNoCirculo() {
-		var circulo2 = (document.getElementById("circulo2").style.strokeDashoffset =
-			314 - (calcularPorcentagemDoProgresso() / 100) * 314);
-	}
-
-	definirPorcentagemNoTextoDaBarra();
-	definirPorcentagemNoCirculo();
-</script>
