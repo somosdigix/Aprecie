@@ -7,6 +7,7 @@ define([
 	"growl",
 	"roteador",
 	"jquery-ui",
+	"app/perfil/apreciar"
 ], function (
 	$,
 	template,
@@ -14,7 +15,8 @@ define([
 	sessaoDeUsuario,
 	ReconhecerGlobalViewModel,
 	growl,
-	roteador
+	roteador,
+	apreciar
 ) {
 	"use strict";
 
@@ -71,10 +73,8 @@ define([
 			.attr("checked", true);
 	}
 
-	async function reconhecerGlobal() {
-		$('button[data-js="reconhecerGlobal"]').prop("disabled", "disabled");
+	async function gerarReconhecimento(){
 		var reconhecerGlobalViewModel = new ReconhecerGlobalViewModel();
-		
 		try {
 			validarOperacao(reconhecerGlobalViewModel);
 		} catch (erro) {
@@ -89,6 +89,11 @@ define([
 		});
 
 		window.location.reload(true);
+	}
+
+	async function reconhecerGlobal() {
+		$('button[data-js="reconhecerGlobal"]').prop("disabled", "disabled");
+		obterDataDeReconhecimento();
 	}
 
 	function validarOperacao(reconhecerViewModel) {
@@ -113,5 +118,52 @@ define([
 		divReconhecido.value = colaborador.nome;
 	}
 
+	function obterData() {
+		var hoje = new Date();
+		var dia = String(hoje.getDate()).padStart(2, "0");
+		var mes = String(hoje.getMonth() + 1).padStart(2, "0");
+		var ano = hoje.getFullYear();
+
+		hoje = ano + "-" + mes + "-" + dia;
+		return hoje;
+	}
+
+	function definirDataDeReconhecimento() {
+		$.post("/reconhecimentos/definir_data_de_publicacao/" + sessaoDeUsuario.id);
+	}
+
+	function obterDataDeReconhecimento() {
+		var dataHoje = obterData();
+		$.getJSON(
+			"/reconhecimentos/ultima_data_de_publicacao/" + sessaoDeUsuario.id,
+			function (ultimaData) {
+				if (ultimaData.ultimaData == null || ultimaData.ultimaData < dataHoje) {
+					definirDataDeReconhecimento();
+					gerarReconhecimento();
+				} else if (ultimaData.ultimaData == dataHoje) {
+					growl
+						.deErro()
+						.exibir(
+							"Você já fez seu reconhecimento de hoje, amanhã você poderá fazer outro"
+						);
+						setTimeout(() => {
+							window.location.reload(true)}, 350);
+				}
+			}
+		);
+	}
+
 	return botaoReconhecerView;
 });
+
+function mostrarResultado(box,num_max,campospan){
+	var contagem_carac = box.length;
+	
+	if (contagem_carac >= 0){
+	document.getElementById(campospan).innerHTML = contagem_carac + "/220";
+	}
+	if (contagem_carac >= num_max){
+	document.getElementById(campospan).innerHTML = "Limite de caracteres excedido!";
+	}
+   
+}

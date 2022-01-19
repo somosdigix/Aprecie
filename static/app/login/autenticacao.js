@@ -25,10 +25,14 @@ define(function() {
 	}
 
 	function autenticar(colaborador) {
+		console.log(colaborador);
+
 		_sandbox.preencherSessao(colaborador);
 		_sandbox.preencherCookie(colaborador);
 
-		_sandbox.redirecionarPara('/app/#/paginaInicial');
+		console.log(colaborador);
+
+		_sandbox.redirecionarPara('/app/#/perfil/' + colaborador.id_do_colaborador);
 	}
 
 	function validarOperacao(parametros) {

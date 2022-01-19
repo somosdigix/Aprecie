@@ -23,16 +23,24 @@ function obterApreciacao(pilar, descricao, reconhecedor, reconhecido) {
  }
  
  function preencherModal(apreciacao){
-   verificarPilar(apreciacao.pilar);
- 
-   document.querySelector(".card--titulo").innerHTML = apreciacao.reconhecido;
- 
-   document.querySelector(".card--mensagem").innerHTML = apreciacao.descricao;
- 
-   document.querySelector(".card--mensagemDe").innerHTML = apreciacao.reconhecedor;
-   
-   setTimeout(() => gerarModal(), 250);
- }
+	verificarPilar(apreciacao.pilar);
+  
+	document.querySelector(".card--titulo").innerHTML = abreviarNome(apreciacao.reconhecido);
+	
+	document.querySelector(".card--mensagem").innerHTML = apreciacao.descricao;
+  
+	document.querySelector(".card--mensagemDe").innerHTML = abreviarNome(apreciacao.reconhecedor);
+	
+	setTimeout(() => gerarModal(), 250);
+  }
+
+  function abreviarNome(nome){
+	var nome_cortado = nome.split(" ");
+	var primeiro_nome = nome_cortado[0];
+	var ultimo_nome = nome_cortado[nome_cortado.length - 1];
+
+	return primeiro_nome + " " + ultimo_nome;
+}
  
  function verificarPilar(pilar) {
 	 var backgroundDiv = document.getElementById("card");
