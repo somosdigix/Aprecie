@@ -66,3 +66,338 @@
 		</form>
 	</div>
 </div>
+<div class="ciclos__passados">
+
+	<div class="cabecalho__historico">
+		<h1 onclick="exibirCiclosPeloTitulo()" class="historico__ciclo--titulo">Ciclos passados</h1>
+		<img id="seta" class="seta__historico" onclick="exibirCiclos(this)" src="../static/img/seta.svg" alt="Icone de seta">
+	</div>
+
+	<div class="container__historico" id="corpo__historico" style="display: none">
+		<!-- conta de secoes -->
+		<!-- numero de ciclos passados e divir por 4 -->
+		<!-- se o resto for diferente de 0 pega o resto e adiciona uma secao -->
+		{{this.ciclos_passados / 4}}{{this.ciclos_passados % 4}}
+		<ul class="lista__historico">
+
+			<div class="secao secaoSelecionada" id="secao1">
+				<li class="lista__historico--item">
+					<p class="nome__ciclo">{{this.nome_do_ciclo}}</p>
+					<p class="nome__autor">Nome do autor:</p>
+					<p class="data__inicio">Data de início:</p>
+					<p class="data__final">Data final:</p>
+				</li>
+				<li class="lista__historico--item">
+					<p class="nome__ciclo">Nome do ciclo:</p>
+					<p class="nome__autor">Nome do autor:</p>
+					<p class="data__inicio">Data de início:</p>
+					<p class="data__final">Data final:</p>
+				</li>
+				<li class="lista__historico--item">
+					<p class="nome__ciclo">Nome do ciclo:</p>
+					<p class="nome__autor">Nome do autor:</p>
+					<p class="data__inicio">Data de início:</p>
+					<p class="data__final">Data final:</p>
+				</li>
+				<li class="lista__historico--item">
+					<p class="nome__ciclo">Nome do ciclo:</p>
+					<p class="nome__autor">Nome do autor:</p>
+					<p class="data__inicio">Data de início:</p>
+					<p class="data__final">Data final:</p>
+				</li>
+			</div>
+			<!-- foreach secao-->
+			<div class="secao" id="secao2">
+				<li class="lista__historico--item">
+					<p class="nome__ciclo">Nome do ciclo:</p>
+					<p class="nome__autor">Nome do autor:</p>
+					<p class="data__inicio">Data de início:</p>
+					<p class="data__final">Data final:</p>
+				</li>
+				<li class="lista__historico--item">
+					<p class="nome__ciclo">Nome do ciclo:</p>
+					<p class="nome__autor">Nome do autor:</p>
+					<p class="data__inicio">Data de início:</p>
+					<p class="data__final">Data final:</p>
+				</li>
+				<li class="lista__historico--item">
+					<p class="nome__ciclo">Nome do ciclo:</p>
+					<p class="nome__autor">Nome do autor:</p>
+					<p class="data__inicio">Data de início:</p>
+					<p class="data__final">Data final:</p>
+				</li>
+				<li class="lista__historico--item">
+					<p class="nome__ciclo">Nome do ciclo:</p>
+					<p class="nome__autor">Nome do autor:</p>
+					<p class="data__inicio">Data de início:</p>
+					<p class="data__final">Data final:</p>
+				</li>
+			</div>
+			<!--  acaba foreach -->
+
+		</ul>
+
+		<div class="opcoes">
+			<label class="opcao__secao" for="1">
+				<input class="opcao__secao--input" type="radio" name="opcaoSecao" id="1"
+					onclick="exibeCiclosCarrosel(this.id)" checked>
+				<span class="opcao__secao--span"></span>
+			</label>
+			<label class="opcao__secao" for="2">
+				<input class="opcao__secao--input" type="radio" name="opcaoSecao" id="2"
+					onclick="exibeCiclosCarrosel(this.id)">
+				<span class="opcao__secao--span"></span>
+			</label>
+		</div>
+
+		<button class="botao__opcao--historicoEsquerda" onclick="mudarCiclosPelaSetaEsquerda()">
+			<img src="img/seta-tras.svg" alt="Seta para trás">
+		</button>
+		<button class="botao__opcao--historicoDireita" onclick="mudarCiclosPelaSetaDireita()">
+			<img src="img/seta-frente.svg" alt="Seta para frente">
+		</button>
+	</div>
+</div>
+
+<script>
+	function exibirCiclos(seta) {
+		if (seta.getAttribute('id') == 'setaAtivada') {
+			seta.style.animation = "girarSetaCima 0.4s forwards";
+			seta.setAttribute('id', 'setaDesativada');
+			$('.container__historico').hide();
+		}
+		else {
+			seta.setAttribute('id', 'setaAtivada');
+			seta.style.animation = "girarSetaBaixo 0.4s forwards";
+			$('.container__historico').show();
+		}
+	}
+
+
+	function exibeCiclosCarrosel(numeroSecao) {
+		$(".secaoSelecionada").toggleClass("secaoSelecionada");
+
+		$('#secao' + numeroSecao).toggleClass("secaoSelecionada");
+	}
+
+	function mudarCiclosPelaSetaDireita() {
+		var idSecaoAtual = $('input[name=opcaoSecao]:checked', '.opcoes').attr('id');
+		var idSecaoDestino = parseInt(idSecaoAtual) + 1;
+		$('#' + idSecaoDestino).click();
+	}
+
+	function mudarCiclosPelaSetaEsquerda() {
+		var idSecaoAtual = $('input[name=opcaoSecao]:checked', '.opcoes').attr('id');
+		var idSecaoDestino = parseInt(idSecaoAtual) - 1;
+		$('#' + idSecaoDestino).click();
+	}
+
+	function exibirCiclosPeloTitulo() {
+		var seta = $('.seta__historico');
+
+		seta.click();
+	}
+</script>
+
+<style>
+	body {
+		background-color: whitesmoke;
+	}
+
+	.historico__ciclo--titulo {
+		font-size: 1.2rem;
+		cursor: pointer;
+	}
+
+	.cabecalho__historico {
+		display: flex;
+		width: 80%;
+		margin: 0 auto;
+		text-align: left;
+	}
+
+	.seta__historico {
+		cursor: pointer;
+	}
+
+	.container__historico {
+		position: relative;
+		width: 70%;
+		margin: 0 auto;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+
+	.lista__historico {
+		list-style: none;
+		width: 80%;
+		margin: 0 auto;
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: space-around;
+		animation-delay: 5s;
+		animation: aparecerLista 1s forwards;
+	}
+
+	.lista__historico--item {
+		background-color: lightgray;
+		margin: 0 16px;
+		padding: 8px 32px;
+		border-radius: 12px;
+	}
+
+	.opcoes {
+		width: 40%;
+		margin: 16px auto;
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.opcao__secao {
+		border-radius: 50%;
+		position: relative;
+		width: 12px;
+		height: 12px;
+		margin: 0 4px;
+		cursor: pointer;
+	}
+
+		.opcao__secao input:checked + span {
+			background-color: purple;
+		}
+
+	.opcao__secao--span {
+		background-color: gray;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%,-50%);
+		width: 100%;
+		height: 100%;
+		border-radius: 50%;
+		transition: 0.6s;
+	}
+
+	.opcao__secao--input {
+		display: none;
+	}
+
+	.secao {
+		display: none;
+	}
+
+	.secaoSelecionada {
+		animation: aparecerSecao 2s forwards;
+		display: flex;
+	}
+
+	.botao__opcao--historicoEsquerda {
+		border: 0;
+		background-color: purple;
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: center;
+		width: 40px;
+		height: 40px;
+		border-radius: 50%;
+		position: absolute;
+		top: 30%;
+		left: 16px;
+		cursor: pointer;
+	}
+
+	.botao__opcao--historicoDireita {
+		border: 0;
+		background-color: purple;
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: center;
+		width: 40px;
+		height: 40px;
+		border-radius: 50%;
+		position: absolute;
+		top: 30%;
+		right: 16px;
+		cursor: pointer;
+	}
+
+	@keyframes aparecerSecao {
+		0% {
+			opacity: 0;
+			transform: translateX(200px);
+		}
+
+		30% {
+			opacity: 1;
+			transform: translateX(0);
+		}
+
+		80% {
+			opacity: 1;
+			transform: translateX(0);
+		}
+
+		100% {
+			opacity: 1;
+			transform: translateX(0);
+		}
+	}
+
+	@keyframes girarSetaBaixo {
+		0% {
+			transform: rotate(0);
+		}
+
+		50% {
+			transform: rotate(90deg);
+		}
+
+		100% {
+			transform: rotate(90deg);
+		}
+	}
+
+	@keyframes girarSetaCima {
+		0% {
+			transform: rotate(90deg);
+		}
+
+		50% {
+			transform: rotate(0deg);
+		}
+
+		100% {
+			transform: rotate(0deg);
+		}
+	}
+
+	@keyframes desaparecerSecao {
+		0% {
+			opacity: 1;
+			transform: translate(0);
+		}
+
+		30% {
+			opacity: 1;
+			transform: translateX(0);
+		}
+
+		80% {
+			opacity: 1;
+			transform: translateX(200);
+		}
+
+		100% {
+			opacity: 0;
+			transform: translateX(200);
+		}
+	}
+
+
+</style>

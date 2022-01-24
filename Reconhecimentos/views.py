@@ -200,7 +200,46 @@ def obter_informacoes_ciclo_atual(requisicao):
 
   return JsonResponse(resposta)
 
+def ciclos_passados(requisicao):
+    ciclos_passados = map(lambda ciclo: { 'id_ciclo': ciclo.id, 'nome': ciclo.nome}, obter_ciclos_passados())
+
+    lista_todos_ciclos_passados = list(ciclos_passados)
+    numero_de_ciclos = len(lista_todos_ciclos_passados)
+
+    secoes_teto = (numero_de_ciclos // 4)
+
+    secoes_divisao_normal = (numero_de_ciclos / 4)
+
+    if (secoes_divisao_normal % 2) != 0:
+      secoes = secoes_teto + 1
+      lista_por_secoes = cria_listas_de_ciclos(secoes, lista_todos_ciclos_passados)
+    else: 
+      secoes = secoes_divisao_normal
+      lista_por_secoes = cria_listas_de_ciclos(secoes, lista_todos_ciclos_passados)
+
+    resposta = {
+			'ciclos_passados': lista_por_secoes
+		}
+  
+    return JsonResponse(resposta, safe=False)
+
+def cria_listas_de_ciclos(secoes, ciclos):
+  lista_fragmentada_por_secoes = []
+
+  for i in range(0, secoes): 
+    lista_secao = []
+
+    lista_secao.append(ciclos.pop(0))
+    lista_secao.append(ciclos.pop(0))
+    lista_secao.append(ciclos.pop(0))
+    lista_secao.append(ciclos.pop(0))
+
+    lista_fragmentada_por_secoes.append(lista_secao)
+
+  return lista_fragmentada_por_secoes
 
 def obter_ciclo_atual():
   return Ciclo.objects.get(data_final__gte=date.today(), data_inicial__lte=date.today())
-  
+
+def obter_ciclos_passados():
+  return Ciclo.objects.filter(data_final__lte=date.today())

@@ -15,6 +15,7 @@ define([
         _sandbox = sandbox;
 
         carregarGerenciador();
+        carregarCiclosPassados();
 
         // on click button html para função de definir ciclo e alterar ciclo
         $("#conteudo")
@@ -34,6 +35,12 @@ define([
 
         definirPorcentagemNoTextoDaBarra();
         definirPorcentagemNoCirculo();
+    }
+
+    async function carregarCiclosPassados(){
+        await $.getJSON("/reconhecimentos/ciclos_passados/", function (ciclos_passados) {
+            template.exibir(gerenciadorDeCiclosTemplate, ciclos_passados);
+				});
     }
 
     //funcoes para editar ciclo
