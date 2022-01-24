@@ -1,5 +1,5 @@
 ﻿from django.db import models
-from django.contrib.auth.models import AbstractBaseUser
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.db.models.fields import IntegerField
 from bradocs4py import ValidadorCpf
 
@@ -15,7 +15,7 @@ class CPF():
 			return self.valor
 
 
-class Colaborador(AbstractBaseUser):
+class Colaborador(AbstractBaseUser, PermissionsMixin):
 	id = models.AutoField(primary_key=True)
 	cpf = models.CharField(max_length=11, unique=True)
 	nome = models.CharField(max_length=200)

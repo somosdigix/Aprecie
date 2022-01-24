@@ -24,7 +24,6 @@ define([
 		$.getJSON("/reconhecimentos/ranking", function (ranking_de_colaboradores) {
 			template.exibir(rankingTemplate, ranking_de_colaboradores);
 			imagemMedalhaDinamica();
-			console.log(sessaoDeUsuario.administrador);
 		});
 	}
 

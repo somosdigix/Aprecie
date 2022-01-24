@@ -1,9 +1,12 @@
-﻿from django.http import JsonResponse, HttpResponse
+﻿from cmath import log
+from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render
 from django.utils import formats
 from django.db.models import Count
 from django.core.paginator import Paginator
 from datetime import date
+from rolepermissions.roles import assign_role, remove_role
+from rolepermissions.decorators import has_role_decorator
 
 from operator import attrgetter
 from Login.models import Colaborador
@@ -28,7 +31,6 @@ def reconhecer(requisicao):
     Notificacoes.notificar_no_chat(reconhecedor, reconhecido, pilar)
 
   return JsonResponse({})
-
 
 def ultimos_reconhecimentos(requisicao):
   reconhecimentos = Reconhecimento.objects.all().order_by('-id')
@@ -56,8 +58,9 @@ def ultimos_reconhecimentos(requisicao):
 
   return JsonResponse(retorno, safe=False)
   
-
+@has_role_decorator('administrador')
 def switch_administrador(requisicao):
+    
     id_do_colaborador = requisicao.POST['id_do_colaborador']
     switch_administrador = requisicao.POST['switch_administrador']
 
@@ -65,16 +68,17 @@ def switch_administrador(requisicao):
     colaborador = Colaborador.objects.get(id = id_do_colaborador)
 
     if switch_convertido == True:
+      assign_role(colaborador, 'administrador')
       colaborador.tornar_administrador()
       colaborador.save()
     
     else:
+      remove_role(colaborador, 'administrador')
       colaborador.remover_administrador()
       colaborador.save()
 
     return JsonResponse({})
-
-    
+   
 def converte_boolean(bool):
     if bool.lower() == 'false':
         return False
@@ -82,7 +86,6 @@ def converte_boolean(bool):
         return True
     else:
         raise ValueError("...")
-
 
 def ultima_data_de_publicacao(requisicao, id_do_reconhecedor):
   reconhecedor = Colaborador.objects.get(id = id_do_reconhecedor)
@@ -95,14 +98,12 @@ def ultima_data_de_publicacao(requisicao, id_do_reconhecedor):
 
   return JsonResponse(resposta)
 
-
 def definir_data_de_publicacao(requisicao, id_do_reconhecedor):
   reconhecedor = Colaborador.objects.get(id = id_do_reconhecedor)
 
   reconhecedor.definir_ultima_data_de_publicacao(date.today())
 
   return JsonResponse ({})
-
 
 def reconhecimentos_do_colaborador(requisicao, id_do_reconhecido):
   reconhecido = Colaborador.objects.get(id = id_do_reconhecido)
@@ -116,7 +117,6 @@ def reconhecimentos_do_colaborador(requisicao, id_do_reconhecido):
 
   return JsonResponse({ 'id': reconhecido.id, 'nome': reconhecido.nome_abreviado, 'administrador': reconhecido.administrador, 'pilares': pilares }, safe = False)
 
-
 def contar_reconhecimentos(requisicao):
    colaboradores = map(lambda colaborador: { 
      'nome': colaborador.nome_abreviado, 
@@ -128,7 +128,6 @@ def contar_reconhecimentos(requisicao):
 
    return JsonResponse({'colaboradores': list(colaboradoresOrdenados)})
 
-
 def reconhecimentos_por_reconhecedor(requisicao, id_do_reconhecido):
   reconhecedores = Reconhecimento.objects.filter(reconhecido = id_do_reconhecido) \
     .values('reconhecedor__nome', 'reconhecedor', 'reconhecedor__id', 'pilar__id') \
@@ -138,7 +137,6 @@ def reconhecimentos_por_reconhecedor(requisicao, id_do_reconhecido):
     reconhecedor['reconhecedor__nome'] = Colaborador.obter_primeiro_nome(reconhecedor['reconhecedor__nome'])
 
   return JsonResponse({ 'reconhecedores': list(reconhecedores) })
-
 
 def todas_as_apreciacoes(requisicao, id_do_reconhecido):
   reconhecido = Colaborador.objects.get(id=id_do_reconhecido)
@@ -164,6 +162,7 @@ def todos_os_pilares_e_colaboradores(requisicao):
     }
 
     return JsonResponse(retorno, safe=False)
+
 
 def reconhecimentos_por_pilar(requisicao, id_do_reconhecido, id_do_pilar):
   reconhecido = Colaborador.objects.get(id=id_do_reconhecido)

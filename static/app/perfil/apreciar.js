@@ -67,7 +67,7 @@ define([
 		return hoje;
 	}
 
-	function obterDataDeReconhecimento() {
+	async function obterDataDeReconhecimento() {
 		var dataHoje = obterData();
 		$.getJSON(
 			"/reconhecimentos/ultima_data_de_publicacao/" + sessaoDeUsuario.id,
