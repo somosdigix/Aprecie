@@ -8,7 +8,7 @@
 			<p class="data_inicio">Data de Início: {{this.data_inicial_formatada}}</p>
 			<p class="data_final">Data Final: {{this.data_final_formatada}}</p>
 		</div>
-
+		
 		<div class="nome__progresso__ciclo">
 			<p class="nome__ciclo">{{this.nome_do_ciclo}}</p>
 			<h1 id="porcentagem"></h1>
@@ -17,7 +17,7 @@
 				<circle id="circulo2" cx="75" cy="75" r="50"></circle>
 			</svg>
 		</div>
-
+		
 		<div class="caixa__informacoes__ciclo">
 			<p class="nome__autor">Nome do Autor: {{this.nome_usuario_que_modificou}}</p>
 			<p class="data__alteracao">Data da Última Alteração: {{this.data_ultima_alteracao}}</p>
@@ -74,88 +74,6 @@
 	</div>
 
 	<div class="container__historico" id="corpo__historico" style="display: none">
-		<!-- conta de secoes -->
-		<!-- numero de ciclos passados e divir por 4 -->
-		<!-- se o resto for diferente de 0 pega o resto e adiciona uma secao -->
-		{{this.ciclos_passados / 4}}{{this.ciclos_passados % 4}}
-		<ul class="lista__historico">
-
-			<div class="secao secaoSelecionada" id="secao1">
-				<li class="lista__historico--item">
-					<p class="nome__ciclo">{{this.nome_do_ciclo}}</p>
-					<p class="nome__autor">Nome do autor:</p>
-					<p class="data__inicio">Data de início:</p>
-					<p class="data__final">Data final:</p>
-				</li>
-				<li class="lista__historico--item">
-					<p class="nome__ciclo">Nome do ciclo:</p>
-					<p class="nome__autor">Nome do autor:</p>
-					<p class="data__inicio">Data de início:</p>
-					<p class="data__final">Data final:</p>
-				</li>
-				<li class="lista__historico--item">
-					<p class="nome__ciclo">Nome do ciclo:</p>
-					<p class="nome__autor">Nome do autor:</p>
-					<p class="data__inicio">Data de início:</p>
-					<p class="data__final">Data final:</p>
-				</li>
-				<li class="lista__historico--item">
-					<p class="nome__ciclo">Nome do ciclo:</p>
-					<p class="nome__autor">Nome do autor:</p>
-					<p class="data__inicio">Data de início:</p>
-					<p class="data__final">Data final:</p>
-				</li>
-			</div>
-			<!-- foreach secao-->
-			<div class="secao" id="secao2">
-				<li class="lista__historico--item">
-					<p class="nome__ciclo">Nome do ciclo:</p>
-					<p class="nome__autor">Nome do autor:</p>
-					<p class="data__inicio">Data de início:</p>
-					<p class="data__final">Data final:</p>
-				</li>
-				<li class="lista__historico--item">
-					<p class="nome__ciclo">Nome do ciclo:</p>
-					<p class="nome__autor">Nome do autor:</p>
-					<p class="data__inicio">Data de início:</p>
-					<p class="data__final">Data final:</p>
-				</li>
-				<li class="lista__historico--item">
-					<p class="nome__ciclo">Nome do ciclo:</p>
-					<p class="nome__autor">Nome do autor:</p>
-					<p class="data__inicio">Data de início:</p>
-					<p class="data__final">Data final:</p>
-				</li>
-				<li class="lista__historico--item">
-					<p class="nome__ciclo">Nome do ciclo:</p>
-					<p class="nome__autor">Nome do autor:</p>
-					<p class="data__inicio">Data de início:</p>
-					<p class="data__final">Data final:</p>
-				</li>
-			</div>
-			<!--  acaba foreach -->
-
-		</ul>
-
-		<div class="opcoes">
-			<label class="opcao__secao" for="1">
-				<input class="opcao__secao--input" type="radio" name="opcaoSecao" id="1"
-					onclick="exibeCiclosCarrosel(this.id)" checked>
-				<span class="opcao__secao--span"></span>
-			</label>
-			<label class="opcao__secao" for="2">
-				<input class="opcao__secao--input" type="radio" name="opcaoSecao" id="2"
-					onclick="exibeCiclosCarrosel(this.id)">
-				<span class="opcao__secao--span"></span>
-			</label>
-		</div>
-
-		<button class="botao__opcao--historicoEsquerda" onclick="mudarCiclosPelaSetaEsquerda()">
-			<img src="img/seta-tras.svg" alt="Seta para trás">
-		</button>
-		<button class="botao__opcao--historicoDireita" onclick="mudarCiclosPelaSetaDireita()">
-			<img src="img/seta-frente.svg" alt="Seta para frente">
-		</button>
 	</div>
 </div>
 
@@ -207,6 +125,7 @@
 	.historico__ciclo--titulo {
 		font-size: 1.2rem;
 		cursor: pointer;
+		margin: 0;
 	}
 
 	.cabecalho__historico {

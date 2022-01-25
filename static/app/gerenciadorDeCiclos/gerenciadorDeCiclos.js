@@ -2,10 +2,11 @@ define([
     "jquery",
     "template",
     "text!app/gerenciadorDeCiclos/gerenciadorDeCiclosTemplate.html",
+    "text!app/gerenciadorDeCiclos/ciclosPassadosTemplate.html",
     "sessaoDeUsuario",
     "growl",
     "roteador"
-], function ($, template, gerenciadorDeCiclosTemplate, sessaoDeUsuario, growl, roteador) {
+], function ($, template, gerenciadorDeCiclosTemplate, ciclosPassadosTemplate, sessaoDeUsuario, growl, roteador) {
     "use strict";
 
     var self = {};
@@ -15,7 +16,6 @@ define([
         _sandbox = sandbox;
 
         carregarGerenciador();
-        carregarCiclosPassados();
 
         // on click button html para função de definir ciclo e alterar ciclo
         $("#conteudo")
@@ -33,14 +33,19 @@ define([
             template.exibir(gerenciadorDeCiclosTemplate, ciclo_atual);
         });
 
+        await carregarCiclosPassados();
+
         definirPorcentagemNoTextoDaBarra();
         definirPorcentagemNoCirculo();
     }
 
-    async function carregarCiclosPassados(){
-        await $.getJSON("/reconhecimentos/ciclos_passados/", function (ciclos_passados) {
-            template.exibir(gerenciadorDeCiclosTemplate, ciclos_passados);
-				});
+    async function carregarCiclosPassados() {
+        await $.getJSON("/reconhecimentos/ciclos_passados", function (ciclos_passados) {
+            template.acrescentarEm('#corpo__historico', ciclosPassadosTemplate, ciclos_passados);
+        });
+
+        await $("#secao1").toggleClass('secaoSelecionada');
+        $("#1").prop("checked", true);
     }
 
     //funcoes para editar ciclo

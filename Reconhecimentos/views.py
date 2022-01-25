@@ -9,6 +9,7 @@ from operator import attrgetter
 from Login.models import Colaborador
 from Reconhecimentos.models import Pilar, Reconhecimento, Feedback, Ciclo, LOG_Ciclo
 from Reconhecimentos.services import Notificacoes
+from django.core.paginator import Paginator
 
 def reconhecer(requisicao):
   id_do_reconhecedor = requisicao.POST['id_do_reconhecedor']
@@ -201,42 +202,30 @@ def obter_informacoes_ciclo_atual(requisicao):
   return JsonResponse(resposta)
 
 def ciclos_passados(requisicao):
-    ciclos_passados = map(lambda ciclo: { 'id_ciclo': ciclo.id, 'nome': ciclo.nome}, obter_ciclos_passados())
+    ciclos_passados = map(lambda ciclo: { 'id_ciclo': ciclo.id, 'nome': ciclo.nome }, obter_ciclos_passados())
 
     lista_todos_ciclos_passados = list(ciclos_passados)
-    numero_de_ciclos = len(lista_todos_ciclos_passados)
 
-    secoes_teto = (numero_de_ciclos // 4)
+    paginator = Paginator(lista_todos_ciclos_passados, 4)
 
-    secoes_divisao_normal = (numero_de_ciclos / 4)
+    secoes = []
 
-    if (secoes_divisao_normal % 2) != 0:
-      secoes = secoes_teto + 1
-      lista_por_secoes = cria_listas_de_ciclos(secoes, lista_todos_ciclos_passados)
-    else: 
-      secoes = secoes_divisao_normal
-      lista_por_secoes = cria_listas_de_ciclos(secoes, lista_todos_ciclos_passados)
+    for i in range(1, paginator.num_pages + 1):
+      secao = {
+        'id_secao': i,
+        'ciclos': []
+      }
 
+      secao["ciclos"] = paginator.page(i).object_list
+
+      secoes.append(secao)
+      
     resposta = {
-			'ciclos_passados': lista_por_secoes
-		}
+      'secoes': secoes
+    }	
   
     return JsonResponse(resposta, safe=False)
 
-def cria_listas_de_ciclos(secoes, ciclos):
-  lista_fragmentada_por_secoes = []
-
-  for i in range(0, secoes): 
-    lista_secao = []
-
-    lista_secao.append(ciclos.pop(0))
-    lista_secao.append(ciclos.pop(0))
-    lista_secao.append(ciclos.pop(0))
-    lista_secao.append(ciclos.pop(0))
-
-    lista_fragmentada_por_secoes.append(lista_secao)
-
-  return lista_fragmentada_por_secoes
 
 def obter_ciclo_atual():
   return Ciclo.objects.get(data_final__gte=date.today(), data_inicial__lte=date.today())
