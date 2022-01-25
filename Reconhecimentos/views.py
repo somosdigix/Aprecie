@@ -23,6 +23,7 @@ def reconhecer(requisicao):
 
   reconhecido.reconhecer(reconhecedor, pilar, feedback)
   Notificacoes.notificar_no_chat(reconhecedor, reconhecido, pilar)
+  definir_data_de_publicacao(id_do_reconhecedor)
 
   return JsonResponse({})
 
@@ -58,12 +59,12 @@ def ultima_data_de_publicacao(requisicao, id_do_reconhecedor):
   ultima_data = reconhecedor.obter_ultima_data_de_publicacao()
 
   resposta = {
-    'ultimaData': ultima_data
+    'ultima_data': ultima_data
   }
 
   return JsonResponse(resposta)
 
-def definir_data_de_publicacao(requisicao, id_do_reconhecedor):
+def definir_data_de_publicacao(id_do_reconhecedor):
   reconhecedor = Colaborador.objects.get(id = id_do_reconhecedor)
 
   reconhecedor.definir_ultima_data_de_publicacao(date.today())

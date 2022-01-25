@@ -5,9 +5,7 @@ define([
 	"sessaoDeUsuario",
 	"app/models/reconhecerGlobalViewModel",
 	"growl",
-	"roteador",
-	"jquery-ui",
-	"app/perfil/apreciar"
+	"app/helpers/formatadorDeData"
 ], function (
 	$,
 	template,
@@ -15,8 +13,7 @@ define([
 	sessaoDeUsuario,
 	ReconhecerGlobalViewModel,
 	growl,
-	roteador,
-	apreciar
+	formatadorDeData
 ) {
 	"use strict";
 
@@ -75,6 +72,7 @@ define([
 
 	async function gerarReconhecimento(){
 		var reconhecerGlobalViewModel = new ReconhecerGlobalViewModel();
+
 		try {
 			validarOperacao(reconhecerGlobalViewModel);
 		} catch (erro) {
@@ -118,36 +116,22 @@ define([
 		divReconhecido.value = colaborador.nome;
 	}
 
-	function obterData() {
-		var hoje = new Date();
-		var dia = String(hoje.getDate()).padStart(2, "0");
-		var mes = String(hoje.getMonth() + 1).padStart(2, "0");
-		var ano = hoje.getFullYear();
-
-		hoje = ano + "-" + mes + "-" + dia;
-		return hoje;
-	}
-
-	function definirDataDeReconhecimento() {
-		$.post("/reconhecimentos/definir_data_de_publicacao/" + sessaoDeUsuario.id);
-	}
-
 	function obterDataDeReconhecimento() {
-		var dataHoje = obterData();
+		var dataHoje = formatadorDeData.obterHoje("-");
+		debugger;
 		$.getJSON(
 			"/reconhecimentos/ultima_data_de_publicacao/" + sessaoDeUsuario.id,
-			function (ultimaData) {
-				if (ultimaData.ultimaData == null || ultimaData.ultimaData < dataHoje) {
-					definirDataDeReconhecimento();
+			function (dataDePublicacao) {
+				if (dataDePublicacao.ultima_data == null || dataDePublicacao.ultima_data < dataHoje) {
 					gerarReconhecimento();
-				} else if (ultimaData.ultimaData == dataHoje) {
+				} else if (dataDePublicacao.ultima_data == dataHoje) {
 					growl
 						.deErro()
 						.exibir(
 							"Você já fez seu reconhecimento de hoje, amanhã você poderá fazer outro"
 						);
 						setTimeout(() => {
-							window.location.reload(true)}, 350);
+							window.location.reload(true)}, 500);
 				}
 			}
 		);

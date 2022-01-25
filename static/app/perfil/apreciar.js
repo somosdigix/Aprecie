@@ -5,13 +5,15 @@ define([
 	"growl",
 	"roteador",
 	"sessaoDeUsuario",
+	"app/helpers/formatadorDeData"
 ], function (
 	apreciarTemplate,
 	ReconhecerViewModel,
 	template,
 	growl,
 	roteador,
-	sessaoDeUsuario
+	sessaoDeUsuario,
+	formatadorDeData,
 ) {
 	"use strict";
 
@@ -51,29 +53,14 @@ define([
 		obterDataDeReconhecimento();
 	}
 
-	function definirDataDeReconhecimento() {
-		$.post("/reconhecimentos/definir_data_de_publicacao/" + sessaoDeUsuario.id);
-	}
-
-	function obterData() {
-		var hoje = new Date();
-		var dia = String(hoje.getDate()).padStart(2, "0");
-		var mes = String(hoje.getMonth() + 1).padStart(2, "0");
-		var ano = hoje.getFullYear();
-
-		hoje = ano + "-" + mes + "-" + dia;
-		return hoje;
-	}
-
 	function obterDataDeReconhecimento() {
-		var dataHoje = obterData();
+		var dataHoje = formatadorDeData.obterHoje("-");
 		$.getJSON(
 			"/reconhecimentos/ultima_data_de_publicacao/" + sessaoDeUsuario.id,
-			function (ultimaData) {
-				if (ultimaData.ultimaData == null || ultimaData.ultimaData < dataHoje) {
-					definirDataDeReconhecimento();
+			function (dataDePublicacao) {
+				if (dataDePublicacao.ultima_data == null || dataDePublicacao.ultima_data < dataHoje) {
 					gerarReconhecimento();
-				} else if (ultimaData.ultimaData == dataHoje) {
+				} else if (dataDePublicacao.ultima_data == dataHoje) {
 					growl
 						.deErro()
 						.exibir(
