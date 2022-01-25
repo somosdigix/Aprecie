@@ -202,7 +202,7 @@ def obter_informacoes_ciclo_atual(requisicao):
   return JsonResponse(resposta)
 
 def ciclos_passados(requisicao):
-    ciclos_passados = map(lambda ciclo: { 'id_ciclo': ciclo.id, 'nome': ciclo.nome }, obter_ciclos_passados())
+    ciclos_passados = map(lambda ciclo: { 'id_ciclo': ciclo.id, 'nome': ciclo.nome, 'nome_autor': obter_nome_usuario_que_modificou(ciclo), 'data_inicial': ciclo.data_inicial.strftime('%d/%m/%Y'), 'data_final': ciclo.data_final.strftime('%d/%m/%Y') }, obter_ciclos_passados())
 
     lista_todos_ciclos_passados = list(ciclos_passados)
 
@@ -232,3 +232,8 @@ def obter_ciclo_atual():
 
 def obter_ciclos_passados():
   return Ciclo.objects.filter(data_final__lte=date.today())
+
+def obter_nome_usuario_que_modificou(ciclo):
+  log = LOG_Ciclo.objects.get(ciclo=ciclo.id)
+  colaborador = Colaborador.objects.get(id=log.usuario_que_modificou.id)
+  return colaborador.nome_abreviado
