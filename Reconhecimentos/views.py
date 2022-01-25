@@ -25,7 +25,7 @@ def reconhecer(requisicao):
   feedback = Feedback.objects.create(descritivo = descritivo)
 
   data_ultima_apreciacao = reconhecedor.obter_ultima_data_de_publicacao()
-
+  
   if data_ultima_apreciacao != date.today(): 
     reconhecido.reconhecer(reconhecedor, pilar, feedback)
     Notificacoes.notificar_no_chat(reconhecedor, reconhecido, pilar)

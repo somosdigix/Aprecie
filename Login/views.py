@@ -1,9 +1,11 @@
-﻿import json
+﻿from email.errors import InvalidMultipartContentTransferEncodingDefect
+import json
+
 from Aprecie.base import ExcecaoDeDominio
 from datetime import datetime
 from Login.models import Colaborador
-from django.http import JsonResponse, HttpResponse
-from django.contrib.auth import authenticate, login
+from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
+from django.contrib.auth import authenticate, login, logout
 from io import BytesIO
 import base64
 from PIL import Image
@@ -12,6 +14,8 @@ from django.conf import settings
 import re
 from Aprecie.base import acesso_anonimo, acesso_exclusivo_com_token
 from Login.services import ServicoDeInclusaoDeColaboradores
+from Reconhecimentos.views import converte_boolean
+
 
 @acesso_anonimo
 def entrar(requisicao):
@@ -88,3 +92,18 @@ def inserir_colaboradores(requisicao):
 		ServicoDeInclusaoDeColaboradores().incluir(colaboradores)
 	
 	return JsonResponse(data=retorno_da_inclusao, status=200)
+
+def validar_usuario_logado(requisicao):
+	id_da_sessao = int(requisicao.POST['id'])
+	sessao_administrador = converte_boolean(requisicao.POST['administrador'])
+	id = requisicao.user.id
+	administrador = requisicao.user.administrador
+
+	if id_da_sessao != id or id_da_sessao == None or sessao_administrador != administrador:
+		logout(requisicao)
+		return JsonResponse({'valido': False})
+
+	elif id_da_sessao == id and sessao_administrador == administrador:
+		return JsonResponse({'valido': True})
+	
+	

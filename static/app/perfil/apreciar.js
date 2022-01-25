@@ -73,8 +73,8 @@ define([
 			"/reconhecimentos/ultima_data_de_publicacao/" + sessaoDeUsuario.id,
 			function (ultimaData) {
 				if (ultimaData.ultimaData == null || ultimaData.ultimaData < dataHoje) {
-					definirDataDeReconhecimento();
 					gerarReconhecimento();
+					definirDataDeReconhecimento();
 				} else if (ultimaData.ultimaData == dataHoje) {
 					growl
 						.deErro()
