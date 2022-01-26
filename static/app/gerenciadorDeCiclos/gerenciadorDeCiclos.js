@@ -35,8 +35,12 @@ define([
 
         await carregarCiclosPassados();
 
-        definirPorcentagemNoTextoDaBarra();
         definirPorcentagemNoCirculo();
+    }
+
+    async function definirPorcentagemNoCirculo() {
+        var porcentagem = await $('#porcentagem').html();
+        await $("#circulo2").css("stroke-dashoffset", 314 - (parseInt(porcentagem) / 100) * 314);
     }
 
     async function carregarCiclosPassados() {
@@ -75,38 +79,6 @@ define([
             growl.deSucesso().exibir('Ciclo alterado com sucesso');
             roteador.atualizar();
         })
-    }
-
-    //funcoes para o ciclo atual
-    function calcularPeriodoCiclo(dataFinal, dataInicial) {
-        const diferencaDeDiasDoCiclo = Math.abs(dataFinal - dataInicial);
-        return Math.ceil(diferencaDeDiasDoCiclo / (1000 * 60 * 60 * 24));
-    }
-
-    function calcularProgressoEmDias(dataFinal, dataHoje) {
-        const diferencaDeDiasDoProgresso = Math.abs(dataFinal - dataHoje);
-        return Math.ceil(diferencaDeDiasDoProgresso / (1000 * 60 * 60 * 24));
-    }
-
-    function calcularPorcentagemDoProgresso() {
-        //pega do banco
-        const dataInicial = new Date('1/1/2022');
-        const dataFinal = new Date('2/20/2022');
-
-        const dataHoje = new Date();
-
-        const diferencaPeriodoEProgresso = Math.abs(
-            calcularPeriodoCiclo(dataFinal, dataInicial) - calcularProgressoEmDias(dataFinal, dataHoje)
-        );
-        return (diferencaPeriodoEProgresso / calcularPeriodoCiclo(dataFinal, dataInicial)) * 100;
-    }
-
-    function definirPorcentagemNoTextoDaBarra() {
-        $('#porcentagem').html(calcularPorcentagemDoProgresso().toFixed(0) + "%");
-    }
-
-    function definirPorcentagemNoCirculo() {
-        $("#circulo2").css("stroke-dashoffset", 314 - (calcularPorcentagemDoProgresso() / 100) * 314);
     }
 
     //funcoes para abrir e fechar modal
