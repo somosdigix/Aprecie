@@ -1,9 +1,9 @@
 <h1 id="ranking__admin__pilar" class="ranking__admin__pilar"></h1>
 <div class="container__ranking">
-    {{#each this.colaboradores}}
+    {{#each this}}
     <div class="colaborador__ranking">
         <div class= "colaborador__informacoes">
-            {{#if this.foto}}
+            {{#if foto}}
                 <img class="com-foto foto__colaborador" src={{this.foto}} alt="foto colaborador">
             {{else}}
                 <img class="sem-foto foto__colaborador" src="../static/img/sem-foto.png" alt="foto colaborador">
@@ -11,25 +11,25 @@
             <div class="colaborador__informacoes__texto">
                 <p class="posicao__ranking__admin espacamento" ></p>
                 <p class="colaborador__nome espacamento">
-                    {{this.nome}}
+                    {{nome}}
                 </p>
                 <p class="colaborador__ranking--nome espacamento">Total de apreciações: 
-                    {{this.todos_reconhecimentos}}
+                    {{todos_reconhecimentos}}
                 </p>
             </div>
         </div>
         <div class="apreciacoes">
             <p class="colaborador__ranking--nome">Colaborar Sempre: 
-                {{this.colaborar_sempre}} 
+                {{colaborar_sempre}} 
             </p>
             <p class="colaborador__ranking--nome">Focar nas Pessoas: 
-                {{this.focar_nas_pessoas}} 
+                {{focar_nas_pessoas}} 
             </p>
             <p class="colaborador__ranking--nome">Fazer Diferente: 
-                {{this.fazer_diferente}} 
+                {{fazer_diferente}} 
             </p>
             <p class="colaborador__ranking--nome">Planejar, Entregar e Aprender: 
-                {{this.planejar_entregar_aprender}} 
+                {{planejar_entregar_aprender}} 
             </p>
         </div>
     </div>
