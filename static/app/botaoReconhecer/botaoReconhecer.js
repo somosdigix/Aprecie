@@ -70,7 +70,7 @@ define([
 			.attr("checked", true);
 	}
 
-	async function gerarReconhecimento(){
+	function gerarReconhecimento(){
 		var reconhecerGlobalViewModel = new ReconhecerGlobalViewModel();
 
 		try {
@@ -80,7 +80,7 @@ define([
 			throw erro;
 		}
 
-		await $.post("/reconhecimentos/reconhecer/", reconhecerGlobalViewModel, function () {
+		$.post("/reconhecimentos/reconhecer/", reconhecerGlobalViewModel, function () {
 			growl.deSucesso().exibir("Reconhecimento realizado com sucesso");
 		}).fail(function () {
 			$('#global button[data-js="reconhecerGlobal"]').removeAttr("disabled");
@@ -89,7 +89,7 @@ define([
 		window.location.reload(true);
 	}
 
-	async function reconhecerGlobal() {
+	function reconhecerGlobal() {
 		$('button[data-js="reconhecerGlobal"]').prop("disabled", "disabled");
 		obterDataDeReconhecimento();
 	}
@@ -118,7 +118,6 @@ define([
 
 	function obterDataDeReconhecimento() {
 		var dataHoje = formatadorDeData.obterHoje("-");
-		debugger;
 		$.getJSON(
 			"/reconhecimentos/ultima_data_de_publicacao/" + sessaoDeUsuario.id,
 			function (dataDePublicacao) {
@@ -140,14 +139,14 @@ define([
 	return botaoReconhecerView;
 });
 
-function mostrarResultado(box,num_max,campospan){
-	var contagem_carac = box.length;
+function mostrarResultado(box, numeroMaximo, campospan){
+	var quantidadeDeCaracteres = box.length;
 	
-	if (contagem_carac >= 0){
-	document.getElementById(campospan).innerHTML = contagem_carac + "/220";
+	if (quantidadeDeCaracteres >= 0){
+		document.getElementById(campospan).innerHTML = quantidadeDeCaracteres + "/220";
 	}
-	if (contagem_carac >= num_max){
-	document.getElementById(campospan).innerHTML = "Limite de caracteres excedido!";
+
+	if (quantidadeDeCaracteres >= numeroMaximo){
+		document.getElementById(campospan).innerHTML = "Limite de caracteres excedido!";
 	}
-   
 }

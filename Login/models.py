@@ -68,6 +68,9 @@ class Colaborador(AbstractBaseUser):
 	def reconhecimentos(self):
 		return self.reconhecido.all()
 
+	def contar_todos_reconhecimentos(self):
+		return len(self.reconhecimentos())
+
 	def reconhecimentos_por_pilar(self, pilar):
 		return self.reconhecido.filter(pilar = pilar).order_by('-data')
 

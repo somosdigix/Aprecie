@@ -86,13 +86,13 @@ def reconhecimentos_do_colaborador(requisicao, id_do_reconhecido):
 def contar_reconhecimentos(requisicao):
    colaboradores = map(lambda colaborador: { 
      'nome': colaborador.nome_abreviado, 
-     'apreciacoes': len(colaborador.reconhecimentos()), 
+     'apreciacoes': colaborador.contar_todos_reconhecimentos(), 
      'foto': colaborador.foto
      }, Colaborador.objects.all())
    
-   colaboradoresOrdenados= sorted(colaboradores, key=lambda x: x["apreciacoes"], reverse=True)
+   colaboradoresOrdenados= sorted(colaboradores, key=lambda x: x["apreciacoes"], reverse=True)[:10]
 
-   return JsonResponse({'colaboradores': list(colaboradoresOrdenados)[:10]})
+   return JsonResponse({'colaboradores': list(colaboradoresOrdenados)})
 
 
 def reconhecimentos_por_reconhecedor(requisicao, id_do_reconhecido):
@@ -107,14 +107,19 @@ def reconhecimentos_por_reconhecedor(requisicao, id_do_reconhecido):
 
 def todas_as_apreciacoes(requisicao, id_do_reconhecido):
   reconhecido = Colaborador.objects.get(id=id_do_reconhecido)
-  
-  apreciacoes = reconhecido.reconhecimentos() \
-    .values('data', 'pilar__nome', 'feedback__descritivo', \
-            'reconhecedor__nome', 'reconhecedor__id', 'reconhecido__nome') \
-    .order_by('-data', '-id')
+
+  apreciacoes = map(lambda apreciacao: {
+    'id': apreciacao.id,
+    'data': apreciacao.data,
+    'pilar__nome': apreciacao.pilar.nome,
+    'feedback__descritivo': apreciacao.feedback.descritivo, 
+    'reconhecedor__nome': apreciacao.reconhecedor.nome_abreviado,
+    'reconhecedor__id': apreciacao.reconhecedor.id,
+    'reconhecido__nome': apreciacao.reconhecido.nome_abreviado
+  }, reconhecido.reconhecimentos())
 
   resposta = {
-    'apreciacoes': list(apreciacoes)
+    'apreciacoes': list(sorted(sorted(apreciacoes, key=lambda x: x["data"], reverse=True), key=lambda y: y["id"], reverse=True))
   }
 
   return JsonResponse(resposta)
