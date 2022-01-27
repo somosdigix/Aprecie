@@ -88,11 +88,9 @@ def contar_reconhecimentos(requisicao):
      'nome': colaborador.nome_abreviado, 
      'apreciacoes': colaborador.contar_todos_reconhecimentos(), 
      'foto': colaborador.foto
-     }, Colaborador.objects.all())
-   
-   colaboradoresOrdenados= sorted(colaboradores, key=lambda x: x["apreciacoes"], reverse=True)[:10]
+     }, sorted(Colaborador.objects.all(), key=lambda x: x.contar_todos_reconhecimentos(), reverse=True)[:10])
 
-   return JsonResponse({'colaboradores': list(colaboradoresOrdenados)})
+   return JsonResponse({'colaboradores': list(colaboradores)})
 
 
 def reconhecimentos_por_reconhecedor(requisicao, id_do_reconhecido):
@@ -116,10 +114,10 @@ def todas_as_apreciacoes(requisicao, id_do_reconhecido):
     'reconhecedor__nome': apreciacao.reconhecedor.nome_abreviado,
     'reconhecedor__id': apreciacao.reconhecedor.id,
     'reconhecido__nome': apreciacao.reconhecido.nome_abreviado
-  }, reconhecido.reconhecimentos())
+  }, reconhecido.reconhecimentos().order_by('-id'))
 
   resposta = {
-    'apreciacoes': list(sorted(sorted(apreciacoes, key=lambda x: x["data"], reverse=True), key=lambda y: y["id"], reverse=True))
+    'apreciacoes': list(apreciacoes)
   }
 
   return JsonResponse(resposta)
