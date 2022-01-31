@@ -196,9 +196,10 @@ def obter_informacoes_ciclo_atual(requisicao):
     'data_final_formatada': ciclo.data_final.strftime('%d/%m/%Y'),
     'nome_usuario_que_modificou': colaborador.nome_abreviado,
     'descricao_da_alteracao': log.descricao_da_alteracao,
-    'data_ultima_alteracao': log.data_da_modificacao.strftime('%d/%m/%Y')
+    'data_ultima_alteracao': log.data_da_modificacao.strftime('%d/%m/%Y'),
+    'porcentagem_do_progresso': calcular_porcentagem_progresso(ciclo.data_final, ciclo.data_inicial)
   }
-
+  
   return JsonResponse(resposta)
 
 def ciclos_passados(requisicao):
@@ -249,6 +250,26 @@ def historico_alteracoes(requisicao):
   
   return JsonResponse(resposta, safe=False)
   
+def calcularPeriodoCiclo(dataFinal, dataInicial):
+  zap = dataFinal - dataInicial
+  return zap.days
+  
+def calcularProgessoEmDias(dataFinal, dataHoje):
+  zap2 = dataFinal - dataHoje
+  return zap2.days
+  
+def calcular_porcentagem_progresso(dataFinal, dataInicial):
+  dataInicial = dataInicial
+  dataFinal = dataFinal
+
+  dataHoje = date.today()
+  calculoPeriodoCiclo = calcularPeriodoCiclo(dataFinal, dataInicial)
+  calculoProgressoEmDias = calcularProgessoEmDias(dataFinal, dataHoje)
+
+  diferencaPeriodoEProgresso = calculoPeriodoCiclo - calculoProgressoEmDias
+
+  porcentagem_zap = int(((diferencaPeriodoEProgresso / calculoPeriodoCiclo) * 100))
+  return str(porcentagem_zap)
 
 def obter_ciclo_atual():
   return Ciclo.objects.get(data_final__gte=date.today(), data_inicial__lte=date.today())
