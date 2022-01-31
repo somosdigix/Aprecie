@@ -154,7 +154,7 @@ def definir_ciclo(requisicao):
   data_inicial = requisicao.POST["data_inicial"]
   data_final = requisicao.POST["data_final"]
   id_usuario_que_modificou = requisicao.POST["usuario_que_modificou"]
-
+  
   ciclo = Ciclo(nome=nome, data_inicial=data_inicial, data_final= data_final)
   ciclo.save()
 
@@ -170,14 +170,14 @@ def alterar_ciclo(requisicao):
   data_final = requisicao.POST["data_final"]
   id_usuario_que_modificou = requisicao.POST["usuario_que_modificou"]
   descricao_da_alteracao = requisicao.POST["descricao_da_alteracao"]
-  
+
   ciclo = Ciclo.objects.get(id = id_ciclo)
+  usuario_que_modificou = Colaborador.objects.get(id=id_usuario_que_modificou)
+  log_Ciclo = LOG_Ciclo(ciclo = ciclo, usuario_que_modificou = usuario_que_modificou, descricao_da_alteracao = descricao_da_alteracao, data_final_alterada = ciclo.data_final)
+  log_Ciclo.save()
+
   ciclo.alterar_ciclo(data_final)
   ciclo.save()
-  
-  usuario_que_modificou = Colaborador.objects.get(id=id_usuario_que_modificou)
-  log_Ciclo = LOG_Ciclo(ciclo = ciclo, usuario_que_modificou = usuario_que_modificou, descricao_da_alteracao = descricao_da_alteracao)
-  log_Ciclo.save()
 
   return JsonResponse({})
   
@@ -202,30 +202,53 @@ def obter_informacoes_ciclo_atual(requisicao):
   return JsonResponse(resposta)
 
 def ciclos_passados(requisicao):
-    ciclos_passados = map(lambda ciclo: { 'id_ciclo': ciclo.id, 'nome': ciclo.nome, 'nome_autor': obter_nome_usuario_que_modificou(ciclo), 'data_inicial': ciclo.data_inicial.strftime('%d/%m/%Y'), 'data_final': ciclo.data_final.strftime('%d/%m/%Y') }, obter_ciclos_passados())
+  ciclos_passados = map(lambda ciclo: { 'id_ciclo': ciclo.id, 'nome': ciclo.nome, 'nome_autor': obter_nome_usuario_que_modificou(ciclo), 'data_inicial': ciclo.data_inicial.strftime('%d/%m/%Y'), 'data_final': ciclo.data_final.strftime('%d/%m/%Y') }, obter_ciclos_passados())
 
-    lista_todos_ciclos_passados = list(ciclos_passados)
+  lista_todos_ciclos_passados = list(ciclos_passados)
 
-    paginator = Paginator(lista_todos_ciclos_passados, 4)
+  paginator = Paginator(lista_todos_ciclos_passados, 2)
 
-    secoes = []
+  secoes = []
 
-    for i in range(1, paginator.num_pages + 1):
-      secao = {
-        'id_secao': i,
-        'ciclos': []
-      }
+  for i in range(1, paginator.num_pages + 1):
+    secao = {
+      'id_secao': i,
+      'ciclos': []
+    }
 
-      secao["ciclos"] = paginator.page(i).object_list
-
-      secoes.append(secao)
-      
-    resposta = {
-      'secoes': secoes
-    }	
+    secao["ciclos"] = paginator.page(i).object_list
+    secoes.append(secao)
+    
+  resposta = {
+    'secoes': secoes
+  }	
   
-    return JsonResponse(resposta, safe=False)
+  return JsonResponse(resposta, safe=False)
 
+def historico_alteracoes(requisicao):
+  historico_alteracoes = map(lambda LOG_Ciclo: { 'nome_do_ciclo': LOG_Ciclo.ciclo.nome, 'nome_autor': LOG_Ciclo.usuario_que_modificou.nome_abreviado, 'data_anterior': LOG_Ciclo.data_final_alterada.strftime('%d/%m/%Y'), 'nova_data': LOG_Ciclo.ciclo.data_final.strftime('%d/%m/%Y'), 'data_alteracao': LOG_Ciclo.data_da_modificacao.strftime('%d/%m/%Y'), 'motivo_alteracao': LOG_Ciclo.descricao_da_alteracao
+  },obter_historico_de_alteracoes())
+
+  
+  paginator = Paginator(list(historico_alteracoes), 2)
+
+  secoes = []
+
+  for i in range(1, paginator.num_pages + 1):
+    secao = {
+      'id_secao': i,
+      'LOG_ciclos': []
+    }
+
+    secao["LOG_ciclos"] = paginator.page(i).object_list
+    secoes.append(secao)
+      
+  resposta = {
+    'secoes': secoes
+  }	
+  
+  return JsonResponse(resposta, safe=False)
+  
 
 def obter_ciclo_atual():
   return Ciclo.objects.get(data_final__gte=date.today(), data_inicial__lte=date.today())
@@ -237,3 +260,7 @@ def obter_nome_usuario_que_modificou(ciclo):
   log = LOG_Ciclo.objects.get(ciclo=ciclo.id)
   colaborador = Colaborador.objects.get(id=log.usuario_que_modificou.id)
   return colaborador.nome_abreviado
+
+def obter_historico_de_alteracoes():
+  log = LOG_Ciclo.objects.all()
+  return log

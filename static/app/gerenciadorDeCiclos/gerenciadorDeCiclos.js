@@ -3,10 +3,11 @@ define([
     "template",
     "text!app/gerenciadorDeCiclos/gerenciadorDeCiclosTemplate.html",
     "text!app/gerenciadorDeCiclos/ciclosPassadosTemplate.html",
+    "text!app/gerenciadorDeCiclos/historicoDeAlteracao.html",
     "sessaoDeUsuario",
     "growl",
     "roteador"
-], function ($, template, gerenciadorDeCiclosTemplate, ciclosPassadosTemplate, sessaoDeUsuario, growl, roteador) {
+], function ($, template, gerenciadorDeCiclosTemplate, ciclosPassadosTemplate,historicoDeAlteracao,sessaoDeUsuario, growl, roteador) {
     "use strict";
 
     var self = {};
@@ -21,6 +22,10 @@ define([
         $("#conteudo")
             .on("click", 'button[data-js="btn_adicionar_ciclo"]', definirCiclo)
             .on("click", 'button[data-js="btn_alterar_ciclo"]', alterarCiclo)
+            .on("click", 'button[id="btn__editar"]', mostrarModal)
+            .on("click", 'button[id="btn__cancelar__edicao"]', fecharModal)
+            .on("click", 'button[id="btn__adicionar__ciclo"]',mostrarContainerNovoCiclo)
+            .on("click", 'button[id="btn__cancelar"]',fecharContainerNovoCiclo)
     };
 
     self.finalizar = function () {
@@ -35,6 +40,11 @@ define([
 
         await carregarCiclosPassados();
 
+        await carregarHistoricoAlteracoes();
+
+        $('#corpo__historico').hide();
+        $('#historico_alteracao').hide();
+
         definirPorcentagemNoTextoDaBarra();
         definirPorcentagemNoCirculo();
     }
@@ -44,8 +54,17 @@ define([
             template.acrescentarEm('#corpo__historico', ciclosPassadosTemplate, ciclos_passados);
         });
 
-        await $("#secao1").toggleClass('secaoSelecionada');
-        $("#1").prop("checked", true);
+        await $("div.opcaoSecao--ciclos#secaoc1").toggleClass('secaoSelecionada');
+        await $("input.para__ciclos#c1").prop("checked", true);
+    }
+    
+    async function carregarHistoricoAlteracoes() {
+        await $.getJSON("/reconhecimentos/historico_alteracoes", function (LOG_ciclos) {
+            template.acrescentarEm('#historico_alteracao', historicoDeAlteracao, LOG_ciclos);
+        });
+
+        await $("div.opcaoSecao--historico#secaoh1").toggleClass('secaoSelecionada');
+        await $("input.para__historico#h1").prop("checked", true);
     }
 
     //funcoes para editar ciclo
@@ -125,5 +144,6 @@ define([
         document.getElementById("abrirModal").style.pointerEvents = "auto";
     }
 
+    
     return self;
 });

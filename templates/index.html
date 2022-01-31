@@ -10,6 +10,7 @@
 	<link rel="shortcut icon" href="{% static "favicon.ico" %}">
 	<link rel="stylesheet" href="{% static "tema/dist/semantic.min.css" %}">
   	<link rel="stylesheet" href="{% static "css/estilo.css" %}">
+	<link rel="stylesheet" href="{% static "css/gerenciadorDeCiclos.css" %}">
 	  <link rel="stylesheet" href="{% static "css/botaoGlobal.css" %}">
 	<link rel="stylesheet" href="{% static "css/perfil.css" %}">
 	<link rel="stylesheet" href="{% static "css/ionicons.css" %}">
@@ -50,6 +51,7 @@
 
 	<script src="{% static "app/configuracoesRequirejs.js" %}?versao=1"></script>
 	<script src="{% static "app/botaoReconhecer/modalReconhecerglobal.js" %}"></script>
+	<script src="{% static "app/gerenciadorDeCiclos/exibicaoCiclos.js" %}"></script>
 	<script data-main="{% static "app/app.js" %}" src="{% static "lib/requirejs/require.js" %}"></script>
 	{% if not eh_debug %}
 		{% include "analytics.html" %}

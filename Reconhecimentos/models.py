@@ -62,7 +62,8 @@ class LOG_Ciclo(models.Model):
   ciclo = models.ForeignKey('Ciclo', related_name='ciclo', on_delete=models.CASCADE)
   data_da_modificacao = models.DateField(auto_now=True)
   usuario_que_modificou = models.ForeignKey('Login.Colaborador', related_name='usuario_que_modificou', on_delete=models.CASCADE)
-  descricao_da_alteracao = models.CharField(max_length=50)
+  descricao_da_alteracao = models.CharField(max_length=63)
+  data_final_alterada = models.DateField(default=None, null=True)
 
   
   
