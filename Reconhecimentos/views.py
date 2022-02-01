@@ -23,6 +23,7 @@ def reconhecer(requisicao):
 
   reconhecido.reconhecer(reconhecedor, pilar, feedback)
   Notificacoes.notificar_no_chat(reconhecedor, reconhecido, pilar)
+  definir_data_de_publicacao(id_do_reconhecedor)
 
   return JsonResponse({})
 
@@ -58,12 +59,12 @@ def ultima_data_de_publicacao(requisicao, id_do_reconhecedor):
   ultima_data = reconhecedor.obter_ultima_data_de_publicacao()
 
   resposta = {
-    'ultimaData': ultima_data
+    'ultima_data': ultima_data
   }
 
   return JsonResponse(resposta)
 
-def definir_data_de_publicacao(requisicao, id_do_reconhecedor):
+def definir_data_de_publicacao(id_do_reconhecedor):
   reconhecedor = Colaborador.objects.get(id = id_do_reconhecedor)
 
   reconhecedor.definir_ultima_data_de_publicacao(date.today())
@@ -87,11 +88,9 @@ def contar_reconhecimentos(requisicao):
      'nome': colaborador.nome_abreviado, 
      'apreciacoes': colaborador.contar_todos_reconhecimentos(), 
      'foto': colaborador.foto
-     }, Colaborador.objects.all()[:10])
-   
-   colaboradoresOrdenados= sorted(colaboradores, key=lambda x: x["apreciacoes"], reverse=True)
+     }, sorted(Colaborador.objects.all(), key=lambda x: x.contar_todos_reconhecimentos(), reverse=True)[:10])
 
-   return JsonResponse({'colaboradores': list(colaboradoresOrdenados)})
+   return JsonResponse({'colaboradores': list(colaboradores)})
 
 
 def reconhecimentos_por_reconhecedor(requisicao, id_do_reconhecido):
@@ -106,11 +105,16 @@ def reconhecimentos_por_reconhecedor(requisicao, id_do_reconhecido):
 
 def todas_as_apreciacoes(requisicao, id_do_reconhecido):
   reconhecido = Colaborador.objects.get(id=id_do_reconhecido)
-  
-  apreciacoes = reconhecido.reconhecimentos() \
-    .values('data', 'pilar__nome', 'feedback__descritivo', \
-            'reconhecedor__nome', 'reconhecedor__id', 'reconhecido__nome') \
-    .order_by('-data', '-id')
+
+  apreciacoes = map(lambda apreciacao: {
+    'id': apreciacao.id,
+    'data': apreciacao.data,
+    'pilar__nome': apreciacao.pilar.nome,
+    'feedback__descritivo': apreciacao.feedback.descritivo, 
+    'reconhecedor__nome': apreciacao.reconhecedor.nome_abreviado,
+    'reconhecedor__id': apreciacao.reconhecedor.id,
+    'reconhecido__nome': apreciacao.reconhecido.nome_abreviado
+  }, reconhecido.reconhecimentos().order_by('-id'))
 
   resposta = {
     'apreciacoes': list(apreciacoes)
