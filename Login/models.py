@@ -80,5 +80,5 @@ class Colaborador(AbstractBaseUser):
 
 	def definir_ultima_data_de_publicacao(self, data):
 		self.data_ultimo_reconhecimento = data
-		self.save()
+		
 

@@ -1,11 +1,11 @@
 <div class="campo-reconhecer">
-	<button class="botao-reconhecer" onclick="exibirModalReconhecer()">+</button>
+	<button class="botao-reconhecer" data-js="abrir-modal">+</button>
 </div>
 
 <input type="hidden" id="idDoReconhecido" value="id" />
 
 <div class="modalReconhecer">
-	<button class="fechar__modal--botaoreconhecer" onclick="fecharModal()">
+	<button class="fechar__modal--botaoreconhecer" data-js="fechar-modal">
 		<img src="../static/img/fechar.svg" alt="Icone de fechar" />
 	</button>
 	<div data-js="buscaColaboradores" class="ui fluid search largura-busca">
@@ -15,6 +15,7 @@
 				class="largura-busca"
 				placeholder="Quem você quer reconhecer?"
 				type="text"
+				data-js="input-pesquisa"
 			/>
 			<i class="search icon"></i>
 		</div>
@@ -41,7 +42,7 @@
 			maxlength="220"
 			cols="30"
 			rows="5"
-			onkeyup="mostrarResultado(this.value,220,'spcontando')"
+			data-js="mostrar-contagem"
 		></textarea>
 		<span id="spcontando">0/220</span><br />
 	</div>
