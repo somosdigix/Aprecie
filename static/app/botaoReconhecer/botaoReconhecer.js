@@ -6,6 +6,7 @@ define([
 	"app/models/reconhecerGlobalViewModel",
 	"growl",
 	"roteador",
+	"text!app/botaoReconhecer/modalReconhecer.html"
 ], function (
 	$,
 	template,
@@ -13,21 +14,24 @@ define([
 	sessaoDeUsuario,
 	ReconhecerGlobalViewModel,
 	growl,
-	roteador
+	roteador,
+	modalReconhecerTemplate
 ) {
 	"use strict";
 
 	var botaoReconhecer = {};
 	var contagemCaracteres = 0;
+	var colaboradoresEPilaresModal = {}
 
 	botaoReconhecer.exibir = function (callback) {
 		$.getJSON("/reconhecimentos/pilares", function (colaboradoresEPilares) {
 			template.exibirEm(
 				'div[data-js="botaoReconhecer"]',
 				botaoReconhecerTemplate,
-				colaboradoresEPilares
 			);
 
+			colaboradoresEPilaresModal = colaboradoresEPilares
+			
 			$("#global")
 				.on(
 					"click",
@@ -45,18 +49,8 @@ define([
 					"div.conteudo-botaoReconhecer div.campoGlobal",
 					selecionarPilarGlobal
 				)
-				.on("click", 'button[data-js="reconhecerGlobal"]', reconhecerGlobal);
 
 			$('div[data-js="botaoReconhecer"]').show();
-			$(".modalReconhecer").hide();
-
-			$('div[data-js="buscaColaboradores"]').search({
-				source: converterParaAutocomplete(colaboradoresEPilares.colaboradores),
-				onSelect: botaoReconhecer.selecionarReconhecido,
-				error: {
-					noResults: "Nenhum colaborador foi encontrado.",
-				},
-			});
 
 			if (callback) callback();
 		});
@@ -67,7 +61,15 @@ define([
 	};
 
 	botaoReconhecer.exibirModal = function () {
-		$(".modalReconhecer").show();
+		template.exibirEm('div[data-js="modalReconhecer"]', modalReconhecerTemplate, colaboradoresEPilaresModal);
+
+		$('div[data-js="buscaColaboradores"]').search({
+			source: converterParaAutocomplete(colaboradoresEPilaresModal.colaboradores),
+			onSelect: botaoReconhecer.selecionarReconhecido,
+			error: {
+				noResults: "Nenhum colaborador foi encontrado.",
+			},
+		});
 	};
 
 	botaoReconhecer.fecharModal = function () {
@@ -90,8 +92,9 @@ define([
 			.attr("checked", true);
 	}
 
-	function reconhecerGlobal() {
+    botaoReconhecer.reconhecerGlobal = function() { 
 		$('button[data-js="reconhecerGlobal"]').prop("disabled", "disabled");
+
 		var reconhecerGlobalViewModel = new ReconhecerGlobalViewModel();
 
 		try {
