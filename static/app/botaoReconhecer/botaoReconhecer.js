@@ -156,14 +156,13 @@ define([
 	return botaoReconhecerView;
 });
 
-function mostrarResultado(box,num_max,campospan){
-	var contagem_carac = box.length;
+function mostrarResultado(box, limiteDeCaracteres, campospan){
+	var contagemCaracteres = box.length;
 	
-	if (contagem_carac >= 0){
-	document.getElementById(campospan).innerHTML = contagem_carac + "/220";
+	if (contagemCaracteres >= 0){
+	document.getElementById(campospan).innerHTML = contagemCaracteres + "/220";
 	}
-	if (contagem_carac >= num_max){
+	if (contagemCaracteres >= limiteDeCaracteres){
 	document.getElementById(campospan).innerHTML = "Limite de caracteres excedido!";
 	}
-   
 }

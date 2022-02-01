@@ -62,12 +62,12 @@ def ultimos_reconhecimentos(requisicao):
 def switch_administrador(requisicao):
     
     id_do_colaborador = requisicao.POST['id_do_colaborador']
-    switch_administrador = requisicao.POST['switch_administrador']
+    eh_administrador  = requisicao.POST['switch_administrador']
 
-    switch_convertido = converte_boolean(switch_administrador)
+    eh_administrador = converte_boolean(switch_administrador)
     colaborador = Colaborador.objects.get(id = id_do_colaborador)
 
-    if switch_convertido == True:
+    if eh_administrador:
       assign_role(colaborador, 'administrador')
       colaborador.tornar_administrador()
       colaborador.save()
