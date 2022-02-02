@@ -144,14 +144,13 @@ define([
 });
 
 
-function mostrarResultado(box, numeroMaximo, campospan) {
-	var quantidadeDeCaracteres = box.length;
+function mostrarResultado(box, limiteDeCaracteres, campospan) {
+	var contagemCaracteres = box.length;
 
-	if (quantidadeDeCaracteres >= 0) {
-		document.getElementById(campospan).innerHTML = quantidadeDeCaracteres + "/220";
+	if (contagemCaracteres >= 0) {
+		document.getElementById(campospan).innerHTML = contagemCaracteres + "/220";
 	}
-
-	if (quantidadeDeCaracteres >= numeroMaximo) {
+	if (contagemCaracteres >= limiteDeCaracteres) {
 		document.getElementById(campospan).innerHTML = "Limite de caracteres excedido!";
 	}
 }
