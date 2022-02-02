@@ -5,8 +5,6 @@ define([
 	"sessaoDeUsuario",
 	"app/models/reconhecerGlobalViewModel",
 	"growl",
-	"roteador",
-	"text!app/botaoReconhecer/modalReconhecer.html"
 ], function (
 	$,
 	template,
@@ -14,13 +12,10 @@ define([
 	sessaoDeUsuario,
 	ReconhecerGlobalViewModel,
 	growl,
-	roteador,
-	modalReconhecerTemplate
 ) {
 	"use strict";
 
 	var botaoReconhecer = {};
-	var contagemCaracteres = 0;
 	var colaboradoresEPilaresModal = {}
 
 	botaoReconhecer.exibir = function (callback) {
@@ -120,6 +115,11 @@ define([
 		}, 750);
 	}
 
+	function reconhecerGlobal() {
+		$('button[data-js="reconhecerGlobal"]').prop("disabled", "disabled");
+		obterDataDeReconhecimento();
+	}
+
 	function validarOperacao(reconhecerViewModel) {
 		if (!reconhecerViewModel.id_do_pilar)
 			throw new ViolacaoDeRegra("O pilar deve ser informado");
@@ -162,3 +162,15 @@ define([
 
 	return botaoReconhecer;
 });
+
+function mostrarResultado(box, numeroMaximo, campospan){
+	var quantidadeDeCaracteres = box.length;
+	
+	if (quantidadeDeCaracteres >= 0){
+		document.getElementById(campospan).innerHTML = quantidadeDeCaracteres + "/220";
+	}
+
+	if (quantidadeDeCaracteres >= numeroMaximo){
+		document.getElementById(campospan).innerHTML = "Limite de caracteres excedido!";
+	}
+}
