@@ -16,9 +16,6 @@ def reconhecer(requisicao):
   id_do_pilar = requisicao.POST['id_do_pilar']
   descritivo = requisicao.POST['descritivo']
 
-  print("________________")
-  print(id_do_reconhecedor)
-
   reconhecedor = Colaborador.objects.get(id = id_do_reconhecedor)
   
   if verificar_ultima_data_de_publicacao(reconhecedor):

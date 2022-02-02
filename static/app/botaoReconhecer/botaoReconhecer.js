@@ -24,36 +24,41 @@ define([
 	var colaboradoresEPilaresModal = {}
 
 	botaoReconhecer.exibir = function (callback) {
-		$.getJSON("/reconhecimentos/pilares", function (colaboradoresEPilares) {
-			template.exibirEm(
-				'div[data-js="botaoReconhecer"]',
-				botaoReconhecerTemplate,
-			);
 
-			colaboradoresEPilaresModal = colaboradoresEPilares
-			
-			$("#global")
-				.on(
-					"click",
-					'button[data-js="abrir-modal"]',
-					botaoReconhecer.exibirModal
-				)
-				.on(
-					"click",
-					'button[data-js="fechar-modal"]',
-					botaoReconhecer.fecharModal
-				)
-				.on("keyup", 'textarea[data-js="mostrar-contagem"]', mostrarContagem)
-				.on(
-					"click",
-					"div.conteudo-botaoReconhecer div.campoGlobal",
-					selecionarPilarGlobal
-				)
+		if ($('div[data-js="botaoReconhecer"]').html() == '') {
+			$.getJSON("/reconhecimentos/pilares", function (colaboradoresEPilares) {
+				template.exibirEm(
+					'div[data-js="botaoReconhecer"]',
+					botaoReconhecerTemplate,
+				);
 
-			$('div[data-js="botaoReconhecer"]').show();
+				colaboradoresEPilaresModal = colaboradoresEPilares
 
-			if (callback) callback();
-		});
+				$("#global")
+					.on(
+						"click",
+						'button[data-js="abrir-modal"]',
+						botaoReconhecer.exibirModal
+					)
+					.on(
+						"click",
+						'button[data-js="fechar-modal"]',
+						botaoReconhecer.fecharModal
+					)
+					.on("keyup", 'textarea[data-js="mostrar-contagem"]', mostrarContagem)
+					.on(
+						"click",
+						"div.conteudo-botaoReconhecer div.campoGlobal",
+						selecionarPilarGlobal
+					)
+					.on("click", 'button[data-js="reconhecerGlobal"]', botaoReconhecer.reconhecerGlobal);
+					
+				$('div[data-js="botaoReconhecer"]').show();
+
+
+				if (callback) callback();
+			});
+		}
 	};
 
 	botaoReconhecer.esconder = function () {
@@ -92,7 +97,7 @@ define([
 			.attr("checked", true);
 	}
 
-    botaoReconhecer.reconhecerGlobal = function() { 
+	botaoReconhecer.reconhecerGlobal = function () {
 		$('button[data-js="reconhecerGlobal"]').prop("disabled", "disabled");
 
 		var reconhecerGlobalViewModel = new ReconhecerGlobalViewModel();
@@ -101,7 +106,7 @@ define([
 			validarOperacao(reconhecerGlobalViewModel);
 		} catch (erro) {
 			$('#global button[data-js="reconhecerGlobal"]').removeAttr("disabled");
-			throw erro;
+			throw erro
 		}
 
 		$.post("/reconhecimentos/reconhecer/", reconhecerGlobalViewModel, function () {
@@ -109,11 +114,10 @@ define([
 		}).fail(function () {
 			$('#conteudo button[data-js="reconhecerGlobal"]').removeAttr("disabled");
 		});
-		
-		roteador.atualizar();
-		// setTimeout(() => {
-		// 	window.location.reload(true);
-		// }, 750);
+
+		setTimeout(() => {
+			window.location.reload(true);
+		}, 750);
 	}
 
 	function validarOperacao(reconhecerViewModel) {

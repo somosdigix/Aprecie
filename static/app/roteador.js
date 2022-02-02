@@ -12,7 +12,7 @@
 		var rotas = {
 			'/': [middlewareDeTransicaoDeTela, limparTela, login],
 			'/login': [middlewareDeAutenticacao, middlewareDeAtualizacaoComGoogleAnalytics, middlewareDeToolbar, middlewareDeTransicaoDeTela, limparTela, login],
-			'/paginaInicial': [middlewareDeBotaoReconhecer, middlewareDeAutenticacao, middlewareDeAtualizacaoComGoogleAnalytics, middlewareDeToolbar, middlewareDeTransicaoDeTela, limparTela, paginaInicial],
+			'/paginaInicial': [middlewareDeAutenticacao, middlewareDeAtualizacaoComGoogleAnalytics, middlewareDeToolbar, middlewareDeTransicaoDeTela, limparTela, paginaInicial],
 			'/estatisticas': [middlewareDeAutenticacao, middlewareDeAtualizacaoComGoogleAnalytics, middlewareDeToolbar, middlewareDeTransicaoDeTela, limparTela, estatisticas],
 			'/perfil/:colaboradorId': [middlewareDeAutenticacao, middlewareDeAtualizacaoComGoogleAnalytics, middlewareDeToolbar, middlewareDeTransicaoDeTela, limparTela, perfil],
 			'/ranking': [middlewareDeAutenticacao, middlewareDeAtualizacaoComGoogleAnalytics, middlewareDeToolbar, middlewareDeTransicaoDeTela, limparTela, ranking],
@@ -33,6 +33,7 @@
 			require(['app/paginaInicial/controller'], function (controller) {
 				_controllerAtivo = controller;
 				controller.exibir();
+				carregarBotaoReconhecer();
 			});
 		}
 
@@ -110,7 +111,7 @@
 		});
 	}
 
-	function middlewareDeBotaoReconhecer(){
+	function carregarBotaoReconhecer(){
 		require(['app/botaoReconhecer/botaoReconhecer'], function(botaoReconhecer) { 
 			if (servicoDeAutenticacao.jaEstaAutenticado() && roteador.paginaAtual() !== '/login') {
 				botaoReconhecer.exibir();

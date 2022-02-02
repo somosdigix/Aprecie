@@ -40,15 +40,7 @@
 		></textarea>
 		<span id="spcontando">0/220</span><br />
 	</div>
-	<button class="botao-para-reconhecer" data-js="reconhecerGlobal" onclick="reconhecer()">
+	<button class="botao-para-reconhecer" data-js="reconhecerGlobal">
 		Reconhecer
 	</button>
 </div>
-
-<script>
-	function reconhecer(){
-		require(["../static/app/botaoReconhecer/botaoReconhecer"], function(botaoReconhecer) {
-			botaoReconhecer.reconhecerGlobal();
-		})
-	}
-</script>
