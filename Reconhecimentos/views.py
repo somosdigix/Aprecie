@@ -169,14 +169,15 @@ def alterar_ciclo(requisicao):
   id_ciclo = requisicao.POST["id_ciclo"]
   data_final = requisicao.POST["data_final"]
   id_usuario_que_modificou = requisicao.POST["usuario_que_modificou"]
-  descricao_da_alteracao = requisicao.POST["descricao_da_alteracao"]
-
+  novo_nome_ciclo = requisicao.POST["novo_nome_ciclo"]
+  descricao_da_alteracao =requisicao.POST["descricao_da_alteracao"]
+  
   ciclo = Ciclo.objects.get(id = id_ciclo)
   usuario_que_modificou = Colaborador.objects.get(id=id_usuario_que_modificou)
   log_Ciclo = LOG_Ciclo(ciclo = ciclo, usuario_que_modificou = usuario_que_modificou, descricao_da_alteracao = descricao_da_alteracao, data_final_alterada = ciclo.data_final)
   log_Ciclo.save()
 
-  ciclo.alterar_ciclo(data_final)
+  ciclo.alterar_ciclo(data_final,novo_nome_ciclo)
   ciclo.save()
 
   return JsonResponse({})

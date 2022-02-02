@@ -1,3 +1,13 @@
+.falha-data-inicial-menor, .falha-data-final-menor, .falha-datas-iguais{
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px; 
+    color: #a94442;
+    background-color: #f2dede;
+    border-color: #ebccd1;
+    display: none;
+}
 .historico__ciclo--titulo {
 font-size: 1.2rem;
 cursor: pointer;
@@ -60,6 +70,9 @@ margin-right: 60px;
 .motivo_alteracao_log{
 word-wrap: break-word;
 }
+
+
+
 
 .opcoes {
 width: 40%;

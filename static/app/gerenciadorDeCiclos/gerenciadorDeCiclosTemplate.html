@@ -19,28 +19,33 @@
 		</div>
 		
 		<div class="caixa__informacoes__ciclo">
-			<p class="nome__autor">Nome do Autor: {{this.nome_usuario_que_modificou}}</p>
+			<p class="nome__autor__edicao">Nome do Autor: {{this.nome_usuario_que_modificou}}</p>
 			<p class="data__alteracao">Data da Última Alteração: {{this.data_ultima_alteracao}}</p>
-			<button id="btn__editar" onclick="mostrarModal()">Editar</button>
+			<button id="btn__editar">Editar</button>
 		</div>
 	</div>
 
 	<div id="abrirModal" class="modal__ciclo">
 		<div class="box__motivo">
 			<h1 class="titulo__modal">Motivo da Alteração:</h1>
-			<div class="descricao">
-				<textarea id="input__motivo" name="post-text" cols="100" rows="20" tabindex="101" maxlength="63"></textarea>
-				<label for="nova__data" class="label__nova__data__final">Data Final:</label>
-				<input type="date" id="nova__data__final" data-js="dataFinal" class="nova__data__final" />
-				<div class="btns__novo__ciclo">
-					<button type="submit" data-js="btn_alterar_ciclo" id="btn__confirmar">Confirmar</button>
-					<button id="btn__cancelar__edicao" onclick="fecharModal()">Cancelar</button>
+			<form data-js="form_alterar_ciclo">
+				<div class="descricao">
+					<textarea id="input__motivo" name="post-text" cols="45" rows="5" tabindex="50" maxlength="63" required></textarea>
+					<label for="nova__data" class="label__nova__data__final">Data Final:</label>
+					<input type="date" id="nova__data__final"  data-js="dataFinal" class="nova__data__final" value="{{this.data_final}}" required/>
+					<label for="novo_nome_ciclo" class="label__novo__nome" >Novo Nome:</label>
+					<input type="text" id="novo_nome_ciclo" placeholder="Nome do Ciclo" class="novo__nome__ciclo" value="{{this.nome_do_ciclo}}" required/>
+					</div>
+					<div class="btns__novo__ciclo">
+						<button type="submit" data-js="btn_alterar_ciclo" id="btn__confirmar">Confirmar</button>
+						<button id="btn__cancelar__edicao">Cancelar</button>
+					</div>
 				</div>
-			</div>
+			</form>		
 		</div>
 	</div>
 	<div class="adicionar__ciclo">
-		<button id="btn__adicionar__ciclo" onclick="mostrarContainerNovoCiclo()">
+		<button id="btn__adicionar__ciclo">
 			Adicionar Novo Ciclo
 		</button>
 	</div>
@@ -59,10 +64,12 @@
 			</div>
 			<div class="btns__novo__ciclo">
 				<button type="submit" data-js="btn_adicionar_ciclo" id="btn__adicionar"> Adicionar</button>
-				<button type="submit" id="btn__cancelar" onclick="fecharContainerNovoCiclo()">
+				<button type="submit" id="btn__cancelar">
 					Cancelar
 				</button>
 			</div>
+			<div class="falha-data-inicial-menor">Coloque um data inicial maior que a data atual!</div>
+			<div class="falha-data-final-menor">Coloque um data final maior que a data inicial!</div>
 		</form>
 	</div>
 </div>

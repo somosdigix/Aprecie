@@ -21,7 +21,7 @@ define([
         // on click button html para função de definir ciclo e alterar ciclo
         $("#conteudo")
             .on("click", 'button[data-js="btn_adicionar_ciclo"]', definirCiclo)
-            .on("click", 'button[data-js="btn_alterar_ciclo"]', alterarCiclo)
+            .on("submit", 'form[data-js="form_alterar_ciclo"]', alterarCiclo)
             .on("click", 'button[id="btn__editar"]', mostrarModal)
             .on("click", 'button[id="btn__cancelar__edicao"]', fecharModal)
             .on("click", 'button[id="btn__adicionar__ciclo"]',mostrarContainerNovoCiclo)
@@ -79,11 +79,24 @@ define([
             'data_final': $('#data_final').val(),
             'usuario_que_modificou': sessaoDeUsuario.id
         }
+        var dataAtual = new Date();
+        var dataInicial = new Date(data.data_inicial);
+        var dataFinal = new Date(data.data_final);
 
+        if(dataInicial < dataAtual){
+            exibirErroDaDiv('.falha-data-inicial-menor');
+            return;
+        }
+        if(dataFinal < dataInicial){
+            exibirErroDaDiv('.falha-data-final-menor');
+            return;
+        }
+        console.log('lalalal');
         $.post('/reconhecimentos/definir_ciclo/', data, function () {
-            growl.deSucesso().exibir('Ciclo adicionado com sucesso');
-            roteador.atualizar();
-        })
+        growl.deSucesso().exibir('Ciclo adicionado com sucesso');
+        roteador.atualizar();
+        });
+        
     }
 
     function alterarCiclo() {
@@ -91,7 +104,8 @@ define([
             'id_ciclo': $('#id_ciclo').val(),
             'data_final': $('#nova__data__final').val(),
             'usuario_que_modificou': sessaoDeUsuario.id,
-            'descricao_da_alteracao': $('#input__motivo').val()
+            'descricao_da_alteracao': $('#input__motivo').val(),
+            'novo_nome_ciclo': $('#novo_nome_ciclo').val()
         }
 
         $.post('/reconhecimentos/alterar_ciclo/', data, function () {
@@ -116,6 +130,9 @@ define([
         document.getElementById("abrirModal").style.pointerEvents = "auto";
     }
 
-    
+    function exibirErroDaDiv(nomeErro){
+        $(nomeErro).fadeIn( 300 ).delay( 1500 ).fadeOut( 400 );
+    }
+
     return self;
 });

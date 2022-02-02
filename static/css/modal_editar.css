@@ -1,0 +1,106 @@
+.modal__ciclo {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.671);
+    z-index: 99999;
+    opacity: 0;
+    -webkit-transition: opacity 400ms ease-in;
+    -moz-transition: opacity 400ms ease-in;
+    transition: opacity 400ms ease-in;
+    pointer-events: none;
+  }
+  
+  .box__motivo {
+    background-color: #0BC0D3;
+    /* text-align: center; */
+    width: 40%;
+    padding-bottom: 40px;
+    padding-top: 15px;
+    margin-left: 500px;
+    margin-top: 300px;
+    border-radius: 20px;
+  }
+  
+  .titulo__modal {
+    text-align: center;
+    color: white;
+  }
+  
+  #input__motivo {
+    resize: none;
+    display: block;
+    margin-left: 205px;
+    margin-bottom: 28px;
+  }
+  
+  .nome__autor__edicao{
+      color: white;
+  }
+  .label__nova__data__final {
+    margin-left: 100px;
+    color: white;
+  }
+  
+  .label__novo__nome{
+    color: white;
+    margin-left: 50px;
+  }
+  
+  .novo__nome__ciclo{
+    margin-left: 5px;
+    border: 0;
+    border-radius: 5px;
+    font-family: Campton;
+    background-color: #2c006a;
+    color: white;
+    padding: 5px; 
+  }
+
+  #nova__data__final {
+    margin-left: 5px;
+    border: 0;
+    border-radius: 5px;
+    font-family: Campton;
+    background-color: #2c006a;
+    color: white;
+    padding: 5px;
+  }
+  
+  .btns__novo__ciclo {
+    width: 20%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    margin: 8px auto;
+  }
+  
+  #btn__cancelar__edicao{
+    padding: 8px;
+    font-family: Campton;
+    background-color: #2c006a;
+    border-radius: 5px;
+    color: white;
+    border: 0;
+    margin-left: 10px;
+    margin-top: 25px;
+  }
+
+  #btn__cancelar__edicao,
+  #btn__confirmar:hover{
+    transform: scale(1.2);
+  }
+
+  #btn__confirmar{
+    padding: 8px;
+    font-family: Campton;
+    background-color: #2c006a;
+    border-radius: 5px;
+    color: white;
+    border: 0;
+    margin-right: 10px;
+    margin-top: 25px;
+  }

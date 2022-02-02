@@ -54,8 +54,9 @@ class Ciclo(models.Model):
   data_inicial = models.DateField()
   data_final = models.DateField()
 
-  def alterar_ciclo(self, data_final):
+  def alterar_ciclo(self, data_final, novo_nome):
     self.data_final = data_final
+    self.nome = novo_nome
 
 class LOG_Ciclo(models.Model):
   id = models.AutoField(primary_key=True)
