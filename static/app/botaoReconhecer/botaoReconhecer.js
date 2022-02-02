@@ -5,6 +5,7 @@ define([
 	"sessaoDeUsuario",
 	"app/models/reconhecerGlobalViewModel",
 	"growl",
+	"text!app/botaoReconhecer/modalReconhecer.html"
 ], function (
 	$,
 	template,
@@ -12,6 +13,7 @@ define([
 	sessaoDeUsuario,
 	ReconhecerGlobalViewModel,
 	growl,
+	modalReconhecerTemplate
 ) {
 	"use strict";
 

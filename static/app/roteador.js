@@ -33,7 +33,6 @@
 			require(['app/paginaInicial/controller'], function (controller) {
 				_controllerAtivo = controller;
 				controller.exibir();
-				carregarBotaoReconhecer();
 			});
 		}
 
@@ -48,6 +47,7 @@
 			require(['app/perfil/controller'], function (controller) {
 				_controllerAtivo = controller;
 				controller.exibir(parseInt(colaboradorId));
+				carregarBotaoReconhecer();
 			});
 		}
 		
