@@ -186,6 +186,7 @@ def reconhecimentos_por_pilar(requisicao, id_do_reconhecido, id_do_pilar):
 
   return JsonResponse(resposta)
 
+@has_role_decorator('administrador')
 def ranking_por_periodo(requisicao):
     data_inicio = requisicao.POST['data_inicio']
     data_fim = requisicao.POST['data_fim']

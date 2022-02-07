@@ -3,8 +3,8 @@
 	"template",
 	"text!app/perfil/perfilTemplate.html",
 	"sessaoDeUsuario",
-	"app/helpers/iconesDosValoresHelpers",
-], function ($, template, perfilTemplate, sessaoDeUsuario) {
+	"app/helpers/administradorHelper"
+], function ($, template, perfilTemplate, sessaoDeUsuario, administradorHelper) {
 	"use strict";
 
 	var _self = {};
@@ -18,7 +18,7 @@
 			function (reconhecimentosDoColaborador) {
 				template.exibir(perfilTemplate, reconhecimentosDoColaborador);
 
-				mostraSwitchAdministrador(sessaoDeUsuario.administrador);
+				administradorHelper.mostrarConteudoSeForAdministrador('div[data-js="switch-adm"]');
 
 				switchAdministrador(reconhecimentosDoColaborador, colaboradorId);
 
@@ -67,30 +67,11 @@
 		});
 	}
 
-	function mostraSwitchAdministrador(administrador) {
-		if (administrador === false) {
-			$('div[data-js="switch-adm"]').hide();
-		} else {
-			$('div[data-js="switch-adm"]').show();
-		}
-	}
-
 	function confirmaAlteracao() {
-		if (confirm("Confirmar as alteracoes?") && usuarioAdministrador()) {
+		if (confirm("Confirmar as alteracoes?") && administradorHelper.verificaSeUsuarioEhAdministrador()) {
 			return true;
 		} else {
 			return false;
-		}
-	}
-
-	function usuarioAdministrador() {
-		if (!sessaoDeUsuario.administrador) {
-			require(["growl"], function (growl) {
-				growl.deErro().exibir("Você não é administrador");
-				return false;
-			});
-		} else {
-			return sessaoDeUsuario.administrador;
 		}
 	}
 
@@ -101,7 +82,7 @@
 			document.getElementById("toggle").checked = false;
 		}
 		$("#toggle").change(function () {
-			if (usuarioAdministrador()) {
+			if (administradorHelper.verificaSeUsuarioEhAdministrador()) {
 				if (this.checked) {
 					if (confirmaAlteracao()) {
 						var dados = {

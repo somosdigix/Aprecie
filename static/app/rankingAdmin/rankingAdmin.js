@@ -4,8 +4,11 @@ define([
 	"text!app/rankingAdmin/rankingAdminTemplate.html",
 	"text!app/rankingAdmin/rankingAdmin.html",
 	"text!app/rankingAdmin/filtrosRankingAdminTemplate.html",
-	'app/models/filtroDataAdminViewModel'
-], function ($, template, rankingAdminTemplate, rankingAdmin, filtrosRankingAdminTemplate, FiltroDataAdminViewModel) {
+	'app/models/filtroDataAdminViewModel',
+	"app/helpers/formatadorDeData",
+	"app/helpers/administradorHelper",
+	'roteador',
+], function ($, template, rankingAdminTemplate, rankingAdmin, filtrosRankingAdminTemplate, FiltroDataAdminViewModel,formatadorDeData, administradorHelper, roteador) {
 	"use strict";
 
 	var self = {};
@@ -15,33 +18,35 @@ define([
 
 	self.inicializar = function (sandbox) {
 		_sandbox = sandbox;
-
-		template.exibir(rankingAdminTemplate);
-		carregarFiltrosRankingAdmin();
-		carregarRankingAdmin();
-
-		$('#conteudo')
-			.on('click', 'input[data-js="todos"]', ordenaRankingPorPilar)
-			.on('click', 'input[data-js="colaborarSempre"]', ordenaRankingPorPilar)
-			.on('click', 'input[data-js="focarNasPessoas"]', ordenaRankingPorPilar)
-			.on('click', 'input[data-js="fazerDiferente"]', ordenaRankingPorPilar)
-			.on('click', 'input[data-js="planejarEntregarAprender"]', ordenaRankingPorPilar)
-			.on('click', 'button[data-js="botao__ranking__adm"]', carregarRankingPeriodoDeDatas);
-
-		$.getJSON('/login/obter_colaboradores/', function (data) {
-
-			$('div[data-js="buscarColaboradorRanking"]').search({
-				source: converterParaAutocomplete(data.colaboradores),
-				onSelect: ordenaRankingPorNome,
-				error: {
-					noResults: 'Não encontrei ninguém :('
-				}
-			});
-
-			// if (callback)
-			// 	callback();
-		});
-
+		
+		if (administradorHelper.verificaSeUsuarioEhAdministrador()){
+			template.exibir(rankingAdminTemplate);
+			carregarFiltrosRankingAdmin();
+			carregarRankingAdmin();
+	
+			$('#conteudo')
+				.on('click', 'input[data-js="todos"]', ordenaRankingPorPilar)
+				.on('click', 'input[data-js="colaborarSempre"]', ordenaRankingPorPilar)
+				.on('click', 'input[data-js="focarNasPessoas"]', ordenaRankingPorPilar)
+				.on('click', 'input[data-js="fazerDiferente"]', ordenaRankingPorPilar)
+				.on('click', 'input[data-js="planejarEntregarAprender"]', ordenaRankingPorPilar)
+				.on('click', 'button[data-js="botao__ranking__adm"]', carregarRankingPeriodoDeDatas);
+	
+			$.getJSON('/login/obter_colaboradores/', function (data) {
+	
+				$('div[data-js="buscarColaboradorRanking"]').search({
+					source: converterParaAutocomplete(data.colaboradores),
+					onSelect: ordenaRankingPorNome,
+					error: {
+						noResults: 'Não encontrei ninguém :('
+					}
+				});
+			});	
+		}
+		else{
+			roteador.navegarPara('/paginaInicial');
+		}
+		
 	};
 
 	self.finalizar = function () {
@@ -55,12 +60,15 @@ define([
 	}
 
 	function carregarRankingAdmin() {
-		// #TODO -> Arrumar as datas de acordo com o metodo obterData() que esta em PR [Apreciacao por dia];
+		var dataHoje = formatadorDeData.obterHoje("-");
 		var data = {
-			'data_inicio': "2022-01-01",
-			'data_fim': "2022-01-31"
+			'data_inicio': dataHoje,
+			'data_fim': dataHoje
 		}
 		criarRankingPorPeriodo(data);
+		document.getElementById('data_inicial').value = dataHoje;
+		document.getElementById('data_final').value = dataHoje;
+
 	}
 
 	function carregarRankingPeriodoDeDatas() {

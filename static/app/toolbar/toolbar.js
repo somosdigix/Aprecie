@@ -3,8 +3,8 @@
   'template',
   'text!app/toolbar/toolbarTemplate.html',
   'sessaoDeUsuario',
-  'jquery-ui'
-], function($, template, toolbarTemplate, sessaoDeUsuario) {
+  "app/helpers/administradorHelper",
+], function($, template, toolbarTemplate, sessaoDeUsuario, administradorHelper) {
   'use strict';
 
   var toolbarView = {};
@@ -21,8 +21,9 @@
         .on('click', 'div[data-js="tratar-menu-mobile"]', tratarMenuMobile)
         .on('click', 'a[data-js="ranking"]', ranking)
         .on('click', 'a[data-js="sair"]', sair)
-        // #TODO -> Funcionar somente quando for administrador
         .on('click', 'a[data-js="ranking-admin"]', rankingAdmin);
+
+      administradorHelper.mostrarConteudoSeForAdministrador('div[data-js="menu__administrador"]');
 
       $('div[data-js="buscaDeColaboradores"]').search({
         source: converterParaAutocomplete(data.colaboradores),
