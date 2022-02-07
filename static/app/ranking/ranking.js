@@ -2,7 +2,8 @@ define([
 	"jquery",
 	"template",
 	"text!app/ranking/rankingTemplate.html",
-], function ($, template, rankingTemplate) {
+	"sessaoDeUsuario",
+], function ($, template, rankingTemplate, sessaoDeUsuario) {
 	"use strict";
 
 	var self = {};

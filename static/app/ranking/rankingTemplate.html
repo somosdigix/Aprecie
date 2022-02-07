@@ -7,19 +7,9 @@
 			<div class="imagem">
 				<div id="medalha" class="medalha"></div>
 				{{#if this.foto}}
-				<img
-					id="colab"
-					class="com-foto"
-					src="{{this.foto}}"
-					alt="foto colaborador"
-				/>
+				<img id="colab" class="com-foto" src="{{this.foto}}" alt="foto colaborador" />
 				{{else}}
-				<img
-					id="colab"
-					class="sem-foto"
-					src="../static/img/sem-foto.png"
-					alt="foto colaborador"
-				/>
+				<img id="colab" class="sem-foto" src="../static/img/sem-foto.png" alt="foto colaborador" />
 				{{/if}}
 			</div>
 			<p class="nome-colaborador-ranking">{{this.nome}}</p>
@@ -72,11 +62,8 @@
 		border-radius: 50%;
 		padding: 5px;
 	}
-	.com-foto {
-		width: 220px;
-		height: 220px;
-	}
 
+	.com-foto,
 	.sem-foto {
 		width: 220px;
 		height: 220px;
