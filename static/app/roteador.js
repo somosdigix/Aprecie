@@ -12,11 +12,11 @@
 		var rotas = {
 			'/': [middlewareDeTransicaoDeTela, limparTela, login],
 			'/login': [middlewareDeAutenticacao, middlewareDeAtualizacaoComGoogleAnalytics, middlewareDeToolbar, middlewareDeTransicaoDeTela, limparTela, login],
-			'/paginaInicial': [middlewareDeAutenticacao, middlewareDeAtualizacaoComGoogleAnalytics, middlewareDeToolbar, middlewareDeTransicaoDeTela, limparTela, paginaInicial],
-			'/estatisticas': [middlewareDeAutenticacao, middlewareDeAtualizacaoComGoogleAnalytics, middlewareDeToolbar, middlewareDeTransicaoDeTela, limparTela, estatisticas],
-			'/perfil/:colaboradorId': [middlewareDeAutenticacao, middlewareDeAtualizacaoComGoogleAnalytics, middlewareDeToolbar, middlewareDeTransicaoDeTela, limparTela, perfil],
-			'/ranking': [middlewareDeAutenticacao, middlewareDeAtualizacaoComGoogleAnalytics, middlewareDeToolbar, middlewareDeTransicaoDeTela, limparTela, ranking],
-			'/rankingAdmin' : [middlewareDeAutenticacao, middlewareDeAtualizacaoComGoogleAnalytics, middlewareDeToolbar, middlewareDeTransicaoDeTela, limparTela, rankingAdmin]
+			'/paginaInicial': [middlewareDeBotaoReconhecer, middlewareDeAutenticacao, middlewareDeAtualizacaoComGoogleAnalytics, middlewareDeToolbar, middlewareDeTransicaoDeTela, limparTela, paginaInicial],
+			'/estatisticas': [middlewareDeBotaoReconhecer ,middlewareDeAutenticacao, middlewareDeAtualizacaoComGoogleAnalytics, middlewareDeToolbar, middlewareDeTransicaoDeTela, limparTela, estatisticas],
+			'/perfil/:colaboradorId': [middlewareDeBotaoReconhecer, middlewareDeAutenticacao, middlewareDeAtualizacaoComGoogleAnalytics, middlewareDeToolbar, middlewareDeTransicaoDeTela, limparTela, perfil],
+			'/ranking': [middlewareDeBotaoReconhecer, middlewareDeAutenticacao, middlewareDeAtualizacaoComGoogleAnalytics, middlewareDeToolbar, middlewareDeTransicaoDeTela, limparTela, ranking],
+			'/rankingAdmin' : [middlewareDeBotaoReconhecer, middlewareDeAutenticacao, middlewareDeAtualizacaoComGoogleAnalytics, middlewareDeToolbar, middlewareDeTransicaoDeTela, limparTela, rankingAdmin]
 		};
 
 		function limparTela() {
@@ -113,6 +113,19 @@
 			}
 			else {
 				toolbar.esconder();
+				$('body').removeClass('body-app').addClass('body-login');
+			}
+		});
+	}
+
+	function middlewareDeBotaoReconhecer(){
+		require(['app/botaoReconhecer/botaoReconhecer'], function(botaoReconhecer) { 
+			if (servicoDeAutenticacao.jaEstaAutenticado() && roteador.paginaAtual() !== '/login') {
+				botaoReconhecer.exibir();
+				$('body').removeClass('body-login').addClass('body-app');
+			}
+			else {
+				botaoReconhecer.esconder();
 				$('body').removeClass('body-app').addClass('body-login');
 			}
 		});

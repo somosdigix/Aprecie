@@ -1,24 +1,37 @@
-function obterApreciacao(pilar, descricao, reconhecedor, reconhecido) {
-   var apreciacao = {
-     pilar : pilar,
-     reconhecido : reconhecido,
-     reconhecedor : reconhecedor,
-     descricao : descricao
-   };
-
-   preencherModal(apreciacao);
+function verificaCaracteres(apreciacao) {
+	if (apreciacao.descricao.length <= 220) {
+		preencherModal(apreciacao)
+	}
+	else {
+		require(['../static/app/helpers/growl'], function (growl) {
+			growl
+				.deErro()
+				.exibir("Não é possível exibir a imagem, a apreciação excedeu o limite de caracteres suportado.");
+		})
+	}
 }
 
-function preencherModal(apreciacao){
-  verificarPilar(apreciacao.pilar);
+function obterApreciacao(pilar, descricao, reconhecedor, reconhecido) {
+	var apreciacao = {
+		pilar: pilar,
+		reconhecido: reconhecido,
+		reconhecedor: reconhecedor,
+		descricao: descricao
+	};
 
-  document.querySelector(".card--titulo").innerHTML = apreciacao.reconhecido;
+	verificaCaracteres(apreciacao)
+}
 
-  document.querySelector(".card--mensagem").innerHTML = apreciacao.descricao;
+function preencherModal(apreciacao) {
+	verificarPilar(apreciacao.pilar);
 
-  document.querySelector(".card--mensagemDe").innerHTML = apreciacao.reconhecedor;
-  
-  setTimeout(() => gerarModal(), 250);
+	document.querySelector(".card--titulo").innerHTML = apreciacao.reconhecido;
+
+	document.querySelector(".card--mensagem").innerHTML = apreciacao.descricao;
+
+	document.querySelector(".card--mensagemDe").innerHTML = apreciacao.reconhecedor;
+
+	setTimeout(() => gerarModal(), 250);
 }
 
 function verificarPilar(pilar) {
@@ -71,3 +84,4 @@ function salvarComo() {
 		}
 	});
 }
+

@@ -10,7 +10,7 @@ class Notificacoes():
 			or not reconhecedor.usuario_id_do_chat:
 			return
 
-		mensagem = '**<@{0}>** acabou de ser reconhecido(a) em **{1}** por **<@{2}>**' \
+		mensagem = '**<@{0}>** acabou de ser reconhecido(a) em **{1}** por **<@{2}>**. Olha lá: http://aprecie.digix.com.br' \
 			.format(reconhecido.usuario_id_do_chat, pilar.nome, reconhecedor.usuario_id_do_chat)
 
 		webhook = Webhook.from_url(settings.CHAT_WEBHOOK_URL, adapter=RequestsWebhookAdapter())

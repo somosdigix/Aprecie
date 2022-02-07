@@ -2,57 +2,62 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <title>Aprecie.me</title>
+	<title>Aprecie.me</title>
 
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, user-scalable=no" />
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, user-scalable=no" />
 
-    <link rel="shortcut icon" href="{% static "favicon.ico" %}">
-    <link rel="stylesheet" href="{% static "tema/dist/semantic.min.css" %}">
-    <link rel="stylesheet" href="{% static "css/estilo.css" %}">
-    <link rel="stylesheet" href="{% static "css/perfil.css" %}">
-    <link rel="stylesheet" href="{% static "css/ionicons.css" %}">
-    <link rel="stylesheet" href="{% static "css/fontes.css" %}">
-    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Raleway"/>
-    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans"/>
+	<link rel="shortcut icon" href="{% static "favicon.ico" %}">
+	<link rel="stylesheet" href="{% static "tema/dist/semantic.min.css" %}">
+  	<link rel="stylesheet" href="{% static "css/estilo.css" %}">
+	<link rel="stylesheet" href="{% static "css/botaoGlobal.css" %}">
+	<link rel="stylesheet" href="{% static "css/perfil.css" %}">
+	<link rel="stylesheet" href="{% static "css/fontes.css" %}">
+	<link rel="stylesheet" href="{% static "css/ionicons.css" %}">
+	<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Raleway"/>
+	<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans"/>
 
-    <!-- Hotjar Tracking Code for http://aprecie.me/ -->
-    <script>
-        {% if not eh_debug %}
-            (function(h,o,t,j,a,r){
-                h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
-                h._hjSettings={hjid:184992,hjsv:5};
-                a=o.getElementsByTagName('head')[0];
-                r=o.createElement('script');r.async=1;
-                r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
-                a.appendChild(r);
-            })(window,document,'//static.hotjar.com/c/hotjar-','.js?sv=');
-        {% endif %}    
-    </script>
+	<!-- Hotjar Tracking Code for http://aprecie.me/ -->
+	<script>
+		{% if not eh_debug %}
+		    (function(h,o,t,j,a,r){
+		        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+		        h._hjSettings={hjid:184992,hjsv:5};
+		        a=o.getElementsByTagName('head')[0];
+		        r=o.createElement('script');r.async=1;
+		        r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+		        a.appendChild(r);
+		    })(window,document,'//static.hotjar.com/c/hotjar-','.js?sv=');
+		{% endif %}    
+	</script>
 
 </head>
 <body>
-    <div data-js="carregando" class="ui disabled dimmer">
-        <div class="ui large text loader">Carregando, segura a onda ai.</div>
-    </div>
+	<div data-js="carregando" class="ui disabled dimmer">
+		<div class="ui large text loader">Carregando, segura a onda ai.</div>
+	</div>
 
-    <input id="ehDebug" type="hidden" value="{{ eh_debug }}" />
+	<input id="ehDebug" type="hidden" value="{{ eh_debug }}" />
 
-    <header data-js="toolbar"></header>
+	<header data-js="toolbar"></header>
 
-    <main id="conteudo"></main>
+	<main id="conteudo">
+	</main>
 
-    <div data-js="growl" class="growl fixo alinhado-ao-topo fundo-verde branco invisivel"><span></span></div>
-    s
+	<div data-js="botaoReconhecer" id="global">
+	</div>
+
+	<div data-js="growl" class="growl fixo alinhado-ao-topo fundo-verde branco invisivel"><span></span></div>
+
+	s
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
     <script src="{% static "app/configuracoesRequirejs.js" %}?versao=1"></script>
     <script data-main="{% static "app/app.js" %}" src="{% static "lib/requirejs/require.js" %}"></script>
-    
-    
-    {% if not eh_debug %}
-        {% include "analytics.html" %}
-        <!-- {% include "user_report.html" %} -->
-    {% endif %}
-    
+	<script src="{% static "app/botaoReconhecer/modalReconhecerglobal.js" %}"></script>
+
+	{% if not eh_debug %}
+		{% include "analytics.html" %}
+		<!-- {% include "user_report.html" %} -->
+	{% endif %}
 </body>
 </html>
