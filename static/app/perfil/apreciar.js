@@ -30,17 +30,19 @@ define([
 	};
 
 	function exibir(colaboradorId, reconhecimentosDoColaborador) {
-		if (sessaoDeUsuario.id === colaboradorId) return;
+		if (sessaoDeUsuario.id === colaboradorId)
+			return;
+		else {
+			template.exibirEm(
+				'div[data-js="apreciacao"]',
+				apreciarTemplate,
+				reconhecimentosDoColaborador
+			);
 
-		template.exibirEm(
-			'div[data-js="apreciacao"]',
-			apreciarTemplate,
-			reconhecimentosDoColaborador
-		);
-
-		$("#conteudo")
-			.on("click", "div.escrever-apreciacao div.campos", selecionarPilar)
-			.on("click", 'button[data-js="reconhecer"]', reconhecer);
+			$("#conteudo")
+				.on("click", "div.escrever-apreciacao div.campos", selecionarPilar)
+				.on("click", 'button[data-js="reconhecer"]', reconhecer);
+		}
 	}
 
 	function selecionarPilar() {
@@ -53,8 +55,10 @@ define([
 		obterDataDeReconhecimento();
 	}
 
+
 	function obterDataDeReconhecimento() {
 		var dataHoje = formatadorDeData.obterHoje("-");
+
 		$.getJSON(
 			"/reconhecimentos/ultima_data_de_publicacao/" + sessaoDeUsuario.id,
 			function (dataDePublicacao) {
@@ -83,7 +87,7 @@ define([
 		}
 
 		$.post("/reconhecimentos/reconhecer/", reconhecerViewModel, function () {
-			growl.deSucesso().exibir("Reconhecimento realizado com sucesso.");
+			growl.deSucesso().exibir("Reconhecimento realizado com sucesso");
 			roteador.atualizar();
 		}).fail(function () {
 			$('#conteudo button[data-js="reconhecer"]').removeAttr("disabled");

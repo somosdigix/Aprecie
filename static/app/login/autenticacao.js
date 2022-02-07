@@ -1,15 +1,15 @@
-define(function() {
+define(function () {
 	'use strict';
 
 	var self = {};
 	var _sandbox;
 
-	self.inicializar = function(sandbox) {
+	self.inicializar = function (sandbox) {
 		_sandbox = sandbox;
 		_sandbox.escutar('autenticar', validarAutenticacao);
 	};
 
-	self.finalizar = function() {
+	self.finalizar = function () {
 		_sandbox.removerEscuta('autenticar');
 	};
 

@@ -70,7 +70,8 @@ define([
 			.attr("checked", true);
 	}
 
-	function gerarReconhecimento(){
+
+	function gerarReconhecimento() {
 		var reconhecerGlobalViewModel = new ReconhecerGlobalViewModel();
 
 		try {
@@ -88,6 +89,7 @@ define([
 
 		window.location.reload(true);
 	}
+
 
 	function reconhecerGlobal() {
 		$('button[data-js="reconhecerGlobal"]').prop("disabled", "disabled");
@@ -116,6 +118,7 @@ define([
 		divReconhecido.value = colaborador.nome;
 	}
 
+
 	function obterDataDeReconhecimento() {
 		var dataHoje = formatadorDeData.obterHoje("-");
 		$.getJSON(
@@ -129,8 +132,9 @@ define([
 						.exibir(
 							"Você já fez seu reconhecimento de hoje, amanhã você poderá fazer outro"
 						);
-						setTimeout(() => {
-							window.location.reload(true)}, 500);
+					setTimeout(() => {
+						window.location.reload(true)
+					}, 500);
 				}
 			}
 		);
@@ -139,14 +143,15 @@ define([
 	return botaoReconhecerView;
 });
 
-function mostrarResultado(box, numeroMaximo, campospan){
-	var quantidadeDeCaracteres = box.length;
-	
-	if (quantidadeDeCaracteres >= 0){
-		document.getElementById(campospan).innerHTML = quantidadeDeCaracteres + "/220";
-	}
 
-	if (quantidadeDeCaracteres >= numeroMaximo){
+function mostrarResultado(box, limiteDeCaracteres, campospan) {
+	var contagemCaracteres = box.length;
+
+	if (contagemCaracteres >= 0) {
+		document.getElementById(campospan).innerHTML = contagemCaracteres + "/220";
+	}
+	if (contagemCaracteres >= limiteDeCaracteres) {
 		document.getElementById(campospan).innerHTML = "Limite de caracteres excedido!";
 	}
 }
+
