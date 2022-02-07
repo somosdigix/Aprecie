@@ -19,26 +19,26 @@ from Reconhecimentos.views import converte_boolean
 
 @acesso_anonimo
 def entrar(requisicao):
-  cpf = requisicao.POST['cpf']
-  data_de_nascimento = datetime.strptime(requisicao.POST['data_de_nascimento'], '%d/%m/%Y')
+	cpf = requisicao.POST['cpf']
+	data_de_nascimento = datetime.strptime(requisicao.POST['data_de_nascimento'], '%d/%m/%Y')
 
-  # TODO: Pensar uma forma melhor do que lançar excecao e extrair daqui
-  colaborador_autenticado = authenticate(cpf=cpf, data_de_nascimento=data_de_nascimento)
+	# TODO: Pensar uma forma melhor do que lançar excecao e extrair daqui
+	colaborador_autenticado = authenticate(cpf=cpf, data_de_nascimento=data_de_nascimento)
   
-  if colaborador_autenticado:
-    login(requisicao, colaborador_autenticado)
-  else:
-    return JsonResponse(status=403, data={
-      'mensagem': 'Oi! Seus dados não foram encontrados. Confira e tente novamente. :)'
-    })
+	if colaborador_autenticado:
+		login(requisicao, colaborador_autenticado)
+	else:
+		return JsonResponse(status=403, data={
+			'mensagem': 'Oi! Seus dados não foram encontrados. Confira e tente novamente. :)'
+		})
 	  
-  data = {
+	data = {
       'id_do_colaborador': colaborador_autenticado.id,
 	  'nome_do_colaborador': colaborador_autenticado.primeiro_nome,
 	  'administrador': colaborador_autenticado.administrador
-    }
+	}
 
-  return JsonResponse(data, status=200)
+	return JsonResponse(data, status=200)
 
 def alterar_foto(requisicao):
 	id_do_colaborador = requisicao.POST['id_do_colaborador']
