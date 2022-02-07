@@ -64,9 +64,9 @@ def ultimos_reconhecimentos(requisicao):
 def switch_administrador(requisicao):
     
     id_do_colaborador = requisicao.POST['id_do_colaborador']
-    eh_administrador  = requisicao.POST['switch_administrador']
+    eh_administrador  = requisicao.POST['eh_administrador']
 
-    eh_administrador = converte_boolean(switch_administrador)
+    eh_administrador = converte_boolean(eh_administrador)
     colaborador = Colaborador.objects.get(id = id_do_colaborador)
 
     if eh_administrador:

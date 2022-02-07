@@ -106,7 +106,7 @@
 					if (confirmaAlteracao()) {
 						var dados = {
 							id_do_colaborador: colaboradorId,
-							switch_administrador: true,
+							eh_administrador: true,
 						};
 						var mensagem = "Colaborador se tornou um administrador com sucesso!";
 
@@ -119,7 +119,7 @@
 					if (confirmaAlteracao()) {
 						var dados = {
 							id_do_colaborador: colaboradorId,
-							switch_administrador: false,
+							eh_administrador: false,
 						};
 						var mensagem = "Retirado o acesso de administrador do Colaborador com sucesso!";
 
