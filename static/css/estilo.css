@@ -717,6 +717,12 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   padding: 8px;
   margin-bottom: 14px;
   border: 0;
+  display: flex;
+}
+.adicionar__ciclo{
+  width: 80%;
+  margin: 32px auto;
+  text-align: left;
 }
 .nome__autor,
 .data__alteracao {

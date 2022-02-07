@@ -21,7 +21,7 @@ define([
         // on click button html para função de definir ciclo e alterar ciclo
         $("#conteudo")
             .on("click", 'button[data-js="btn_adicionar_ciclo"]', definirCiclo)
-            .on("submit", 'form[data-js="form_alterar_ciclo"]', alterarCiclo)
+            .on("click", 'button[data-js="btn_alterar_ciclo"]', alterarCiclo)
             .on("click", 'button[id="btn__editar"]', mostrarModal)
             .on("click", 'button[id="btn__cancelar__edicao"]', fecharModal)
             .on("click", 'button[id="btn__adicionar__ciclo"]',mostrarContainerNovoCiclo)
@@ -72,7 +72,8 @@ define([
     }
 
     //funcoes para editar ciclo
-    function definirCiclo() {
+    function definirCiclo(event) {
+        event.preventDefault();
         var data = {
             'nome_ciclo': $('#nome_ciclo').val(),
             'data_inicial': $('#data_inicial').val(),
@@ -82,36 +83,34 @@ define([
         var dataAtual = new Date();
         var dataInicial = new Date(data.data_inicial);
         var dataFinal = new Date(data.data_final);
-
-        if(dataInicial < dataAtual){
-            exibirErroDaDiv('.falha-data-inicial-menor');
-            return;
-        }
-        if(dataFinal < dataInicial){
-            exibirErroDaDiv('.falha-data-final-menor');
-            return;
-        }
-        console.log('lalalal');
-        $.post('/reconhecimentos/definir_ciclo/', data, function () {
-        growl.deSucesso().exibir('Ciclo adicionado com sucesso');
-        roteador.atualizar();
-        });
         
+        if(validacaoDataInicialMenor(dataInicial, dataAtual)) return;
+        if(validacaoDataFinalMenor(dataInicial, dataFinal)) return;
+        adicionarNoBanco(data);
+
+
     }
 
-    function alterarCiclo() {
+    function alterarCiclo(event) {
+        event.preventDefault();
         var data = {
             'id_ciclo': $('#id_ciclo').val(),
+            'data_inicial': $("#dataTeste").attr("value"),
             'data_final': $('#nova__data__final').val(),
             'usuario_que_modificou': sessaoDeUsuario.id,
             'descricao_da_alteracao': $('#input__motivo').val(),
             'novo_nome_ciclo': $('#novo_nome_ciclo').val()
         }
-
-        $.post('/reconhecimentos/alterar_ciclo/', data, function () {
-            growl.deSucesso().exibir('Ciclo alterado com sucesso');
-            roteador.atualizar();
-        })
+        var dataAtual = new Date();
+        var dataFinal = new Date(data.data_final);
+        var dataInicial = new Date(data.data_inicial);
+        console.log(dataInicial);
+        console.log(dataFinal)
+        if(validacaoDataFinalMenorAlterada(dataFinal, dataInicial)) return;
+        if(validacaoDataFinalAlteradaMenorDataAtual(dataFinal, dataAtual)) return;
+        console.log("entrou no banco")
+        alterarNoBanco(data);
+        
     }
 
     //funcoes para abrir e fechar modal
@@ -134,5 +133,44 @@ define([
         $(nomeErro).fadeIn( 300 ).delay( 1500 ).fadeOut( 400 );
     }
 
+    function validacaoDataInicialMenor(dataInicial, dataAtual){
+        if(dataInicial < dataAtual){ 
+            exibirErroDaDiv('.falha-data-inicial-menor');
+            return true;
+        }
+        return false;
+    }
+    function validacaoDataFinalMenor(dataInicial, dataFinal){
+        if(dataFinal < dataInicial){
+            exibirErroDaDiv('.falha-data-final-menor');
+            return true;
+        }
+        return false;
+    }
+    function validacaoDataFinalMenorAlterada(dataFinal, dataInicial){
+        if(dataFinal < dataInicial){
+            exibirErroDaDiv('.falha-data-final-menor-alterada');
+            return true;
+        }
+        return false;
+    }
+    function validacaoDataFinalAlteradaMenorDataAtual(dataFinal, dataAtual){
+        if(dataFinal < dataAtual){
+            exibirErroDaDiv('.falha-data-final-menor-atual');
+            return true;
+        }
+        return false;
+    }
+    function adicionarNoBanco(data){
+        $.post('/reconhecimentos/definir_ciclo/', data, function () {
+        growl.deSucesso().exibir('Ciclo adicionado com sucesso');
+        roteador.atualizar();
+      })};
+
+    function alterarNoBanco(data){
+        $.post('/reconhecimentos/alterar_ciclo/',data, function () {
+            growl.deSucesso().exibir('Ciclo alterado com sucesso');
+            roteador.atualizar();
+    })};  
     return self;
 });

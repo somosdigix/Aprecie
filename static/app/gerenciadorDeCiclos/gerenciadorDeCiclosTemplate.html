@@ -5,7 +5,7 @@
 
 	<div id="container__ciclo__atual">
 		<div class="datas__ciclos" data-inicial={{this.data_inicial}} data-final={{this.data_final}}>
-			<p class="data_inicio">Data de Início: {{this.data_inicial_formatada}}</p>
+			<p id="dataTeste" class="data_inicio" value="{{this.data_inicial}}">Data de Início: {{this.data_inicial_formatada}}</p>
 			<p class="data_final">Data Final: {{this.data_final_formatada}}</p>
 		</div>
 		
@@ -30,7 +30,7 @@
 			<h1 class="titulo__modal">Motivo da Alteração:</h1>
 			<form data-js="form_alterar_ciclo">
 				<div class="descricao">
-					<textarea id="input__motivo" name="post-text" cols="45" rows="5" tabindex="50" maxlength="63" required></textarea>
+					<textarea id="input__motivo" name="post-text" cols="50" rows="5" tabindex="50" maxlength="63" required></textarea>
 					<label for="nova__data" class="label__nova__data__final">Data Final:</label>
 					<input type="date" id="nova__data__final"  data-js="dataFinal" class="nova__data__final" value="{{this.data_final}}" required/>
 					<label for="novo_nome_ciclo" class="label__novo__nome" >Novo Nome:</label>
@@ -40,6 +40,8 @@
 						<button type="submit" data-js="btn_alterar_ciclo" id="btn__confirmar">Confirmar</button>
 						<button id="btn__cancelar__edicao">Cancelar</button>
 					</div>
+					<div class="falha-data-final-menor-alterada">⚠ Coloque um data final maior que a data inicial!</div>
+					<div class="falha-data-final-menor-atual">⚠ Coloque um data final maior que a data atual!</div>
 				</div>
 			</form>		
 		</div>
@@ -48,7 +50,10 @@
 		<button id="btn__adicionar__ciclo">
 			Adicionar Novo Ciclo
 		</button>
+		<div class="falha-data-inicial-menor">⚠ Coloque um data inicial maior que a data atual!</div>
+		<div class="falha-data-final-menor">⚠ Coloque um data final maior que a data inicial!</div>
 	</div>
+	
 	<div id="container__novo__ciclo">
 		<form id="form__adicionar__ciclo">
 			<input type="text" id="nome_ciclo" placeholder="Nome do Ciclo" class="adicionar__nome__ciclo" required />
@@ -68,11 +73,11 @@
 					Cancelar
 				</button>
 			</div>
-			<div class="falha-data-inicial-menor">Coloque um data inicial maior que a data atual!</div>
-			<div class="falha-data-final-menor">Coloque um data final maior que a data inicial!</div>
 		</form>
+		
 	</div>
 </div>
+
 <div class="ciclos__passados">
 
 	<div class="cabecalho__historico">

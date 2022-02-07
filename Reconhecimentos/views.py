@@ -150,12 +150,12 @@ def reconhecimentos_por_pilar(requisicao, id_do_reconhecido, id_do_pilar):
   return JsonResponse(resposta)
 
 def definir_ciclo(requisicao):
-  nome = requisicao.POST["nome_ciclo"]
+  nome_ciclo = requisicao.POST["nome_ciclo"]
   data_inicial = requisicao.POST["data_inicial"]
   data_final = requisicao.POST["data_final"]
   id_usuario_que_modificou = requisicao.POST["usuario_que_modificou"]
   
-  ciclo = Ciclo(nome=nome, data_inicial=data_inicial, data_final= data_final)
+  ciclo = Ciclo(nome=nome_ciclo, data_inicial=data_inicial, data_final= data_final)
   ciclo.save()
 
   usuario_que_modificou = Colaborador.objects.get(id=id_usuario_que_modificou)
@@ -167,13 +167,15 @@ def definir_ciclo(requisicao):
 
 def alterar_ciclo(requisicao):
   id_ciclo = requisicao.POST["id_ciclo"]
+  data_inicial = requisicao.POST["data_inicial"]
   data_final = requisicao.POST["data_final"]
   id_usuario_que_modificou = requisicao.POST["usuario_que_modificou"]
   novo_nome_ciclo = requisicao.POST["novo_nome_ciclo"]
   descricao_da_alteracao =requisicao.POST["descricao_da_alteracao"]
-  
+
   ciclo = Ciclo.objects.get(id = id_ciclo)
   usuario_que_modificou = Colaborador.objects.get(id=id_usuario_que_modificou)
+
   log_Ciclo = LOG_Ciclo(ciclo = ciclo, usuario_que_modificou = usuario_que_modificou, descricao_da_alteracao = descricao_da_alteracao, data_final_alterada = ciclo.data_final)
   log_Ciclo.save()
 
@@ -252,12 +254,12 @@ def historico_alteracoes(requisicao):
   return JsonResponse(resposta, safe=False)
   
 def calcularPeriodoCiclo(dataFinal, dataInicial):
-  zap = dataFinal - dataInicial
-  return zap.days
+  periodoCiclo = dataFinal - dataInicial
+  return periodoCiclo.days
   
 def calcularProgessoEmDias(dataFinal, dataHoje):
-  zap2 = dataFinal - dataHoje
-  return zap2.days
+  periodoDias = dataFinal - dataHoje
+  return periodoDias.days
   
 def calcular_porcentagem_progresso(dataFinal, dataInicial):
   dataInicial = dataInicial
@@ -269,8 +271,8 @@ def calcular_porcentagem_progresso(dataFinal, dataInicial):
 
   diferencaPeriodoEProgresso = calculoPeriodoCiclo - calculoProgressoEmDias
 
-  porcentagem_zap = int(((diferencaPeriodoEProgresso / calculoPeriodoCiclo) * 100))
-  return str(porcentagem_zap)
+  porcentagem_progresso = int(((diferencaPeriodoEProgresso / calculoPeriodoCiclo) * 100))
+  return str(porcentagem_progresso)
 
 def obter_ciclo_atual():
   return Ciclo.objects.get(data_final__gte=date.today(), data_inicial__lte=date.today())

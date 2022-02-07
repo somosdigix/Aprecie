@@ -85,12 +85,15 @@
     border-radius: 5px;
     color: white;
     border: 0;
-    margin-left: 10px;
+    margin-left: 108px;
     margin-top: 25px;
   }
 
-  #btn__cancelar__edicao,
   #btn__confirmar:hover{
+    transform: scale(1.2);
+  }
+
+  #btn__cancelar__edicao:hover{
     transform: scale(1.2);
   }
 
@@ -101,6 +104,5 @@
     border-radius: 5px;
     color: white;
     border: 0;
-    margin-right: 10px;
     margin-top: 25px;
   }
