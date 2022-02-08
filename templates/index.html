@@ -10,8 +10,9 @@
 	<link rel="shortcut icon" href="{% static "favicon.ico" %}">
 	<link rel="stylesheet" href="{% static "tema/dist/semantic.min.css" %}">
   	<link rel="stylesheet" href="{% static "css/estilo.css" %}">
-	  <link rel="stylesheet" href="{% static "css/botaoGlobal.css" %}">
+	<link rel="stylesheet" href="{% static "css/botaoGlobal.css" %}">
 	<link rel="stylesheet" href="{% static "css/perfil.css" %}">
+	<link rel="stylesheet" href="{% static "css/fontes.css" %}">
 	<link rel="stylesheet" href="{% static "css/ionicons.css" %}">
 	<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Raleway"/>
 	<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans"/>
@@ -48,9 +49,12 @@
 
 	<div data-js="growl" class="growl fixo alinhado-ao-topo fundo-verde branco invisivel"><span></span></div>
 
-	<script src="{% static "app/configuracoesRequirejs.js" %}?versao=1"></script>
+	s
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <script src="{% static "app/configuracoesRequirejs.js" %}?versao=1"></script>
+    <script data-main="{% static "app/app.js" %}" src="{% static "lib/requirejs/require.js" %}"></script>
 	<script src="{% static "app/botaoReconhecer/modalReconhecerglobal.js" %}"></script>
-	<script data-main="{% static "app/app.js" %}" src="{% static "lib/requirejs/require.js" %}"></script>
+
 	{% if not eh_debug %}
 		{% include "analytics.html" %}
 		<!-- {% include "user_report.html" %} -->

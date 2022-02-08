@@ -5,13 +5,15 @@ define([
 	"growl",
 	"roteador",
 	"sessaoDeUsuario",
+	"app/helpers/formatadorDeData"
 ], function (
 	apreciarTemplate,
 	ReconhecerViewModel,
 	template,
 	growl,
 	roteador,
-	sessaoDeUsuario
+	sessaoDeUsuario,
+	formatadorDeData,
 ) {
 	"use strict";
 
@@ -28,17 +30,19 @@ define([
 	};
 
 	function exibir(colaboradorId, reconhecimentosDoColaborador) {
-		if (sessaoDeUsuario.id === colaboradorId) return;
+		if (sessaoDeUsuario.id === colaboradorId)
+			return;
+		else {
+			template.exibirEm(
+				'div[data-js="apreciacao"]',
+				apreciarTemplate,
+				reconhecimentosDoColaborador
+			);
 
-		template.exibirEm(
-			'div[data-js="apreciacao"]',
-			apreciarTemplate,
-			reconhecimentosDoColaborador
-		);
-
-		$("#conteudo")
-			.on("click", "div.escrever-apreciacao div.campos", selecionarPilar)
-			.on("click", 'button[data-js="reconhecer"]', reconhecer);
+			$("#conteudo")
+				.on("click", "div.escrever-apreciacao div.campos", selecionarPilar)
+				.on("click", 'button[data-js="reconhecer"]', reconhecer);
+		}
 	}
 
 	function selecionarPilar() {
@@ -51,29 +55,16 @@ define([
 		obterDataDeReconhecimento();
 	}
 
-	function definirDataDeReconhecimento() {
-		$.post("/reconhecimentos/definir_data_de_publicacao/" + sessaoDeUsuario.id);
-	}
-
-	function obterData() {
-		var hoje = new Date();
-		var dia = String(hoje.getDate()).padStart(2, "0");
-		var mes = String(hoje.getMonth() + 1).padStart(2, "0");
-		var ano = hoje.getFullYear();
-
-		hoje = ano + "-" + mes + "-" + dia;
-		return hoje;
-	}
 
 	function obterDataDeReconhecimento() {
-		var dataHoje = obterData();
+		var dataHoje = formatadorDeData.obterHoje("-");
+
 		$.getJSON(
 			"/reconhecimentos/ultima_data_de_publicacao/" + sessaoDeUsuario.id,
-			function (ultimaData) {
-				if (ultimaData.ultimaData == null || ultimaData.ultimaData < dataHoje) {
-					definirDataDeReconhecimento();
+			function (dataDePublicacao) {
+				if (dataDePublicacao.ultima_data == null || dataDePublicacao.ultima_data < dataHoje) {
 					gerarReconhecimento();
-				} else if (ultimaData.ultimaData == dataHoje) {
+				} else if (dataDePublicacao.ultima_data == dataHoje) {
 					growl
 						.deErro()
 						.exibir(
@@ -96,7 +87,7 @@ define([
 		}
 
 		$.post("/reconhecimentos/reconhecer/", reconhecerViewModel, function () {
-			growl.deSucesso().exibir("Reconhecimento realizado com sucesso.");
+			growl.deSucesso().exibir("Reconhecimento realizado com sucesso");
 			roteador.atualizar();
 		}).fail(function () {
 			$('#conteudo button[data-js="reconhecer"]').removeAttr("disabled");

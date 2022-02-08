@@ -5,8 +5,7 @@ define([
 	"sessaoDeUsuario",
 	"app/models/reconhecerGlobalViewModel",
 	"growl",
-	"roteador",
-	"jquery-ui",
+	"app/helpers/formatadorDeData"
 ], function (
 	$,
 	template,
@@ -14,7 +13,7 @@ define([
 	sessaoDeUsuario,
 	ReconhecerGlobalViewModel,
 	growl,
-	roteador
+	formatadorDeData
 ) {
 	"use strict";
 
@@ -71,10 +70,10 @@ define([
 			.attr("checked", true);
 	}
 
-	async function reconhecerGlobal() {
-		$('button[data-js="reconhecerGlobal"]').prop("disabled", "disabled");
+
+	function gerarReconhecimento() {
 		var reconhecerGlobalViewModel = new ReconhecerGlobalViewModel();
-		
+
 		try {
 			validarOperacao(reconhecerGlobalViewModel);
 		} catch (erro) {
@@ -82,13 +81,19 @@ define([
 			throw erro;
 		}
 
-		await $.post("/reconhecimentos/reconhecer/", reconhecerGlobalViewModel, function () {
+		$.post("/reconhecimentos/reconhecer/", reconhecerGlobalViewModel, function () {
 			growl.deSucesso().exibir("Reconhecimento realizado com sucesso");
 		}).fail(function () {
 			$('#global button[data-js="reconhecerGlobal"]').removeAttr("disabled");
 		});
 
 		window.location.reload(true);
+	}
+
+
+	function reconhecerGlobal() {
+		$('button[data-js="reconhecerGlobal"]').prop("disabled", "disabled");
+		obterDataDeReconhecimento();
 	}
 
 	function validarOperacao(reconhecerViewModel) {
@@ -113,5 +118,40 @@ define([
 		divReconhecido.value = colaborador.nome;
 	}
 
+
+	function obterDataDeReconhecimento() {
+		var dataHoje = formatadorDeData.obterHoje("-");
+		$.getJSON(
+			"/reconhecimentos/ultima_data_de_publicacao/" + sessaoDeUsuario.id,
+			function (dataDePublicacao) {
+				if (dataDePublicacao.ultima_data == null || dataDePublicacao.ultima_data < dataHoje) {
+					gerarReconhecimento();
+				} else if (dataDePublicacao.ultima_data == dataHoje) {
+					growl
+						.deErro()
+						.exibir(
+							"Você já fez seu reconhecimento de hoje, amanhã você poderá fazer outro"
+						);
+					setTimeout(() => {
+						window.location.reload(true)
+					}, 500);
+				}
+			}
+		);
+	}
+
 	return botaoReconhecerView;
 });
+
+
+function mostrarResultado(box, limiteDeCaracteres, campospan) {
+	var contagemCaracteres = box.length;
+
+	if (contagemCaracteres >= 0) {
+		document.getElementById(campospan).innerHTML = contagemCaracteres + "/220";
+	}
+	if (contagemCaracteres >= limiteDeCaracteres) {
+		document.getElementById(campospan).innerHTML = "Limite de caracteres excedido!";
+	}
+}
+

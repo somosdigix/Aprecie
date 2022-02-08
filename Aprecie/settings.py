@@ -24,6 +24,7 @@ INSTALLED_APPS = (
 	'Reconhecimentos',
 	'compressor',
 	'Aprecie.apps.AprecieConfig'
+	'rolepermissions'
 )
 
 MIDDLEWARE = (
@@ -37,6 +38,8 @@ MIDDLEWARE = (
 	'Aprecie.middlewares.LoginObrigatorioMiddleware',
 	'Aprecie.middlewares.PermiteUsoComTokenDeAdmin',
 )
+
+ROLEPERMISSIONS_MODULE = 'Login.roles'
 
 DATA_UPLOAD_MAX_MEMORY_SIZE = 5242880
 
