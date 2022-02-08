@@ -3,7 +3,6 @@
 	"template",
 	"text!app/perfil/perfilTemplate.html",
 	"sessaoDeUsuario",
-	"app/helpers/iconesDosValoresHelpers",
 ], function ($, template, perfilTemplate, sessaoDeUsuario) {
 	"use strict";
 
@@ -48,6 +47,10 @@
 					reconhecimentosDoColaborador
 				);
 				_sandbox.notificar("exibir-apreciacoes");
+
+				if(sessaoDeUsuario.id == colaboradorId){
+					obterNotificacaoDoAdministrador(sessaoDeUsuario);
+				}
 			}
 		);
 	};
@@ -83,7 +86,7 @@
 		}
 	}
 
-	function usuarioAdministrador() {
+	function usuarioAdministrador () {
 		if (!sessaoDeUsuario.administrador) {
 			require(["growl"], function (growl) {
 				growl.deErro().exibir("Você não é administrador");
@@ -92,6 +95,10 @@
 		} else {
 			return sessaoDeUsuario.administrador;
 		}
+	}
+
+	function obterNotificacaoDoAdministrador (){
+		$.getJSON("/reconhecimentos/obter_notificacoes_administrador/")
 	}
 
 	function switchAdministrador(reconhecimentosDoColaborador, colaboradorId) {
@@ -177,7 +184,6 @@
 					});
 				});
 		};
-
 		if (arquivo) reader.readAsDataURL(arquivo);
 	}
 

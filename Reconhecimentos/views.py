@@ -1,17 +1,14 @@
-﻿from cmath import log
-from django.http import JsonResponse, HttpResponse
-from django.shortcuts import render
-from django.utils import formats
+﻿from django.http import JsonResponse
 from django.db.models import Count
 from django.core.paginator import Paginator
 from datetime import date
 from rolepermissions.roles import assign_role, remove_role
 from rolepermissions.decorators import has_role_decorator
 
-from operator import attrgetter
 from Login.models import Colaborador
 from Reconhecimentos.models import Pilar, Reconhecimento, Feedback, Ciclo, LOG_Ciclo
 from Reconhecimentos.services import Notificacoes
+from Aprecie.apps import AprecieConfig
 
 def reconhecer(requisicao):
   id_do_reconhecedor = requisicao.POST['id_do_reconhecedor']
@@ -231,6 +228,14 @@ def obter_ciclos(requisicao):
 
 
 def obter_ciclo_atual():
-  return Ciclo.objects.get(data_final__gte=date.today(), data_inicial__lte=date.today() )
+  return Ciclo.objects.get(data_final__gte=date.today(), data_inicial__lte=date.today())
+
+@has_role_decorator('administrador')
+def obter_notificacoes_do_administrador(requisicao):
+  mensagem = AprecieConfig.obter_mensagem_notificacao()
+  if mensagem != "":
+    return JsonResponse(status=300, data={ 'mensagem': mensagem })
+  else:
+    return JsonResponse({})
 
   

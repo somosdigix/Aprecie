@@ -14,5 +14,6 @@ urlpatterns = [
     url(r'^alterar_ciclo/$', views.alterar_ciclo, name="alterar_ciclo"),
     url(r'^obter_ciclos/$', views.obter_ciclos, name="obter_ciclos"),
     url(r'^ranking/$', views.contar_reconhecimentos, name="contar_reconhecimentos"),
+    url(r'^obter_notificacoes_administrador/$', views.obter_notificacoes_do_administrador, name="obter_notificacoes_do_administrador"),
     url(r'^([0-9]+)/([0-9]+)$', views.reconhecimentos_por_pilar, name="reconhecimentos_por_pilar"),
 ]

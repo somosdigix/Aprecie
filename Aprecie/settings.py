@@ -23,8 +23,8 @@ INSTALLED_APPS = (
 	'Login',
 	'Reconhecimentos',
 	'compressor',
-	'Aprecie.apps.AprecieConfig'
-	'rolepermissions'
+	'Aprecie.apps.AprecieConfig',
+	'rolepermissions',
 )
 
 MIDDLEWARE = (

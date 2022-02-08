@@ -7,12 +7,14 @@ from django.core.exceptions import ObjectDoesNotExist
 
 class AprecieConfig(AppConfig):
     name = "Aprecie" 
+    mensagem = " "
 
     def notificacao_do_colaborador(self, notificacao):
-        self.mensagem = notificacao
+        AprecieConfig.mensagem = notificacao
     
-    def obtem_mensagem_notificacao(self):
-        return self.mensagem
+    @staticmethod
+    def obter_mensagem_notificacao():
+        return AprecieConfig.mensagem
 
     def verifica_data_final_do_ciclo(self):
         from Reconhecimentos.models import Ciclo
@@ -44,7 +46,6 @@ class AprecieConfig(AppConfig):
         else:
             self.notificacao_do_colaborador("")
         
-        print(self.obtem_mensagem_notificacao())
 
     def ready(self):
         cron = BackgroundScheduler()
