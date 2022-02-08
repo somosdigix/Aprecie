@@ -65,6 +65,9 @@ class LOG_Ciclo(models.Model):
   usuario_que_modificou = models.ForeignKey('Login.Colaborador', related_name='usuario_que_modificou', on_delete=models.CASCADE)
   descricao_da_alteracao = models.CharField(max_length=63)
   data_final_alterada = models.DateField(default=None, null=True)
+  antigo_nome_ciclo = models.CharField(max_length=25)
+  novo_nome_ciclo = models.CharField(max_length=25)
+  
 
   
   

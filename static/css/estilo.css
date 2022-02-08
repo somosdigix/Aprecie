@@ -667,7 +667,7 @@ svg {
   stroke-dashoffset: 0;
 }
 
-.nome__ciclo {
+.nome__ciclo__anterior,.novo__nome__ciclo{
   padding: 8px;
   text-align: center;
   font-family: Campton;

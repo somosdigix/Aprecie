@@ -3,7 +3,8 @@
 	<div class="secao opcaoSecao--historico" id="secaoh{{this.id_secao}}">
 		{{#each this.LOG_ciclos}}
 		<li class="lista__historico--item">
-			<p class="nome__ciclo">Nome do ciclo: {{this.nome_do_ciclo}}</p>
+			<p class="nome__ciclo__anterior">Nome do ciclo Anterior: {{this.antigo_nome_do_ciclo}}</p>
+			<p class="novo__nome__ciclo">Novo Nome do ciclo: {{this.novo_nome_ciclo}}</p>
 			<p>Autor da Alteração: {{this.nome_autor}}</p>
 			<div class="datas_modificadas">
 				<p class="data__inicio">Data Anterior: {{this.data_anterior}}</p>

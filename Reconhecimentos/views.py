@@ -166,22 +166,29 @@ def definir_ciclo(requisicao):
 
 
 def alterar_ciclo(requisicao):
+  # Nessa requisicao precisamos pegar as infos antigas e alocar no log
+  # Assim o log vai ter estaticamente as infos do ciclo antigo
+  # Temos que pegar via requisicao os dados antigos
+  # O nome antigo
+  # A data antiga
+  # Armazenar no log
   id_ciclo = requisicao.POST["id_ciclo"]
   data_inicial = requisicao.POST["data_inicial"]
   data_final = requisicao.POST["data_final"]
   id_usuario_que_modificou = requisicao.POST["usuario_que_modificou"]
   novo_nome_ciclo = requisicao.POST["novo_nome_ciclo"]
   descricao_da_alteracao =requisicao.POST["descricao_da_alteracao"]
-
+  print(novo_nome_ciclo)
   ciclo = Ciclo.objects.get(id = id_ciclo)
   usuario_que_modificou = Colaborador.objects.get(id=id_usuario_que_modificou)
 
-  log_Ciclo = LOG_Ciclo(ciclo = ciclo, usuario_que_modificou = usuario_que_modificou, descricao_da_alteracao = descricao_da_alteracao, data_final_alterada = ciclo.data_final)
+  log_Ciclo = LOG_Ciclo(ciclo = ciclo, usuario_que_modificou = usuario_que_modificou, 
+  descricao_da_alteracao = descricao_da_alteracao, data_final_alterada = ciclo.data_final, antigo_nome_ciclo = ciclo.nome, novo_nome_ciclo = novo_nome_ciclo)
   log_Ciclo.save()
 
   ciclo.alterar_ciclo(data_final,novo_nome_ciclo)
   ciclo.save()
-
+  print(novo_nome_ciclo)
   return JsonResponse({})
   
 
@@ -230,10 +237,17 @@ def ciclos_passados(requisicao):
   return JsonResponse(resposta, safe=False)
 
 def historico_alteracoes(requisicao):
-  historico_alteracoes = map(lambda LOG_Ciclo: { 'nome_do_ciclo': LOG_Ciclo.ciclo.nome, 'nome_autor': LOG_Ciclo.usuario_que_modificou.nome_abreviado, 'data_anterior': LOG_Ciclo.data_final_alterada.strftime('%d/%m/%Y'), 'nova_data': LOG_Ciclo.ciclo.data_final.strftime('%d/%m/%Y'), 'data_alteracao': LOG_Ciclo.data_da_modificacao.strftime('%d/%m/%Y'), 'motivo_alteracao': LOG_Ciclo.descricao_da_alteracao
-  },obter_historico_de_alteracoes())
+  # Precisa carregar o nome antigo do ciclo
+  # O erro acontece porque o historico de alterações mapeia o log com informações do ciclo atual
+  # Mas na verdade o log deve armazenar as infos antigas do ciclo que foi alterado
+  # Ex: nome_antigo : requisicao da um post no nome antigo
+  # data_final_antiga: requisicao da um post na data final do ciclo antigo
+  historico_alteracoes = map(lambda LOG_Ciclo: { 'antigo_nome_do_ciclo': LOG_Ciclo.antigo_nome_ciclo, 'nome_autor': LOG_Ciclo.usuario_que_modificou.nome_abreviado, 
+  'data_anterior': LOG_Ciclo.data_final_alterada.strftime('%d/%m/%Y'), 'nova_data': LOG_Ciclo.ciclo.data_final.strftime('%d/%m/%Y'), 
+  'data_alteracao': LOG_Ciclo.data_da_modificacao.strftime('%d/%m/%Y'), 'motivo_alteracao': LOG_Ciclo.descricao_da_alteracao, 'novo_nome_ciclo' : LOG_Ciclo.novo_nome_ciclo
+  },obter_historico_de_alteracoes().order_by('-data_da_modificacao'))
 
-  
+
   paginator = Paginator(list(historico_alteracoes), 2)
 
   secoes = []
