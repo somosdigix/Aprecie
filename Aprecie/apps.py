@@ -25,23 +25,18 @@ class AprecieConfig(AppConfig):
             amanha = date.today() + timedelta(days=1)
             try:
                 resposta = Ciclo.objects.get(data_inicial = amanha)
-                #exibir mensagem que o novo ciclo comeca no dia seguinte para todo mundo ou só para os adm??
-                AprecieConfig.notificacao_do_colaborador("Amanhã será iniciado um novo ciclo")
             except Ciclo.DoesNotExist:
                 ciclo = Ciclo(data_inicial = amanha)
                 ciclo.save()
                 log_Ciclo = LOG_Ciclo(ciclo=ciclo, descricao_da_alteracao='Criação do ciclo automatico sem data final')
                 log_Ciclo.save()
-                #exibir mensagem que o ciclo esta sem data final para todos os administradores
-                AprecieConfig.notificacao_do_colaborador("O ciclo atual não possui data final")
-           
+            AprecieConfig.notificacao_do_colaborador("Amanhã será iniciado um novo ciclo")
+
         elif ciclo_atual.data_final == None:
             AprecieConfig.notificacao_do_colaborador("O ciclo atual não possui data final")
 
         elif ciclo_atual.data_final != date.today():
-            #verificar quantos dias faltam para terminar o ciclo atual
             dias_para_terminar_ciclo = ciclo_atual.data_final - date.today()
-            #exibir mensagem a partir de 10 dias faltando para o fim
             if dias_para_terminar_ciclo < timedelta(days=10):
                 mensagem = "Faltam " + str(dias_para_terminar_ciclo.days) + " dias para o fim do ciclo atual"
                 AprecieConfig.notificacao_do_colaborador(mensagem)
@@ -49,11 +44,7 @@ class AprecieConfig(AppConfig):
         else:
             AprecieConfig.notificacao_do_colaborador("")
 
-        print("_______+++__________")
-        print(AprecieConfig.obter_mensagem_notificacao())
-        print("________===_________")
-
     def ready(self):
-        cron = BackgroundScheduler(timezone="Europe/Berlin")
-        cron.add_job(self.verifica_data_final_do_ciclo, 'interval', seconds=60)
+        cron = BackgroundScheduler(timezone="America/Campo_Grande")
+        cron.add_job(self.verifica_data_final_do_ciclo, 'cron', hour=6)
         cron.start()
