@@ -3,8 +3,6 @@ from apscheduler.schedulers.background import BackgroundScheduler
 from django.apps import AppConfig
 from django.core.exceptions import ObjectDoesNotExist
 
-
-
 class AprecieConfig(AppConfig):
     name = "Aprecie" 
     mensagem = " "
@@ -17,7 +15,7 @@ class AprecieConfig(AppConfig):
         return AprecieConfig.mensagem
 
     def verifica_data_final_do_ciclo(self):
-        from Reconhecimentos.models import Ciclo
+        from Reconhecimentos.models import Ciclo, LOG_Ciclo
         from Reconhecimentos.views import obter_ciclo_atual
         
         ciclo_atual = obter_ciclo_atual()
@@ -31,9 +29,13 @@ class AprecieConfig(AppConfig):
             except Ciclo.DoesNotExist:
                 ciclo = Ciclo(data_inicial = amanha)
                 ciclo.save()
+                log_Ciclo = LOG_Ciclo(ciclo=ciclo, descricao_da_alteracao='Criação do ciclo automatico sem data final')
+                log_Ciclo.save()
                 #exibir mensagem que o ciclo esta sem data final para todos os administradores
                 self.notificacao_do_colaborador("O ciclo atual não possui data final")
            
+        elif ciclo_atual.data_final == None:
+            self.notificacao_do_colaborador("O ciclo atual não possui data final")
 
         elif ciclo_atual.data_final != date.today():
             #verificar quantos dias faltam para terminar o ciclo atual

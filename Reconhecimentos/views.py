@@ -213,7 +213,7 @@ def alterar_ciclo(requisicao):
   
   usuario_que_modificou = Colaborador.objects.get(id=id_usuario_que_modificou)
   log_Ciclo = LOG_Ciclo(ciclo = ciclo, usuario_que_modificou = usuario_que_modificou, descricao_da_alteracao = descricao_da_alteracao)
-  log_ciclo.save()
+  log_Ciclo.save()
 
   return JsonResponse({})
 
@@ -228,7 +228,10 @@ def obter_ciclos(requisicao):
 
 
 def obter_ciclo_atual():
-  return Ciclo.objects.get(data_final__gte=date.today(), data_inicial__lte=date.today())
+  try:
+    return Ciclo.objects.get(data_final__gte=date.today(), data_inicial__lte=date.today())
+  except Ciclo.DoesNotExist:
+    return Ciclo.objects.get(data_final__isnull=True, data_inicial__lte=date.today())
 
 @has_role_decorator('administrador')
 def obter_notificacoes_do_administrador(requisicao):

@@ -36,6 +36,7 @@
 						abrirSelecaoDeImagens
 					);
 					$('input[data-js="alterar-foto"]').off().on("change", alterarFoto);
+					obterNotificacaoDoAdministrador();
 				} else {
 					$('div[data-js="apreciacao"]').show();
 					$('div[data-js="foto"]').removeClass("alterar-foto");
@@ -47,10 +48,6 @@
 					reconhecimentosDoColaborador
 				);
 				_sandbox.notificar("exibir-apreciacoes");
-
-				if(sessaoDeUsuario.id == colaboradorId){
-					obterNotificacaoDoAdministrador(sessaoDeUsuario);
-				}
 			}
 		);
 	};
@@ -58,6 +55,18 @@
 	_self.finalizar = function () {
 		$("#conteudo").off();
 	};
+
+	function obterStatusDeNotificacao(){
+		let statusNotificacao = localStorage.getItem('notificacao');
+		return JSON.parse(statusNotificacao);
+	}
+
+	function obterNotificacaoDoAdministrador(){
+		if(obterStatusDeNotificacao()){
+			$.getJSON("Reconhecimentos/obter_notificacoes_administrador/");
+			localStorage.setItem('notificacao', 'false');
+		}
+	}
 
 	function exibirReconhecimentos() {
 		var objetoClicado = $(this);
