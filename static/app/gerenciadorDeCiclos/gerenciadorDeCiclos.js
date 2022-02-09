@@ -20,8 +20,8 @@ define([
 
         // on click button html para função de definir ciclo e alterar ciclo
         $("#conteudo")
-            .on("click", 'button[data-js="btn_adicionar_ciclo"]', definirCiclo)
-            .on("click", 'button[data-js="btn_alterar_ciclo"]', alterarCiclo)
+            .on("submit", 'form[data-js="form-adicionar-ciclo"]', definirCiclo)
+            .on("submit", 'form[data-js="form_alterar_ciclo"]', alterarCiclo)
             .on("click", 'button[id="btn__editar"]', mostrarModal)
             .on("click", 'button[id="btn__cancelar__edicao"]', fecharModal)
             .on("click", 'button[id="btn__adicionar__ciclo"]',mostrarContainerNovoCiclo)
@@ -78,11 +78,12 @@ define([
             'nome_ciclo': $('#nome_ciclo').val(),
             'data_inicial': $('#data_inicial').val(),
             'data_final': $('#data_final').val(),
-            'usuario_que_modificou': sessaoDeUsuario.id
+            'usuario_que_modificou' : sessaoDeUsuario.id
         }
         var dataAtual = new Date();
         var dataInicial = new Date(data.data_inicial);
         var dataFinal = new Date(data.data_final);
+        console.log(data);
         
         if(validacaoDataInicialMenor(dataInicial, dataAtual)) return;
         if(validacaoDataFinalMenor(dataInicial, dataFinal)) return;
@@ -104,11 +105,8 @@ define([
         var dataAtual = new Date();
         var dataFinal = new Date(data.data_final);
         var dataInicial = new Date(data.data_inicial);
-        console.log(dataInicial);
-        console.log(dataFinal)
         if(validacaoDataFinalMenorAlterada(dataFinal, dataInicial)) return;
         if(validacaoDataFinalAlteradaMenorDataAtual(dataFinal, dataAtual)) return;
-        console.log("entrou no banco")
         alterarNoBanco(data);
         
     }
@@ -168,7 +166,7 @@ define([
       })};
 
     function alterarNoBanco(data){
-        $.post('/reconhecimentos/alterar_ciclo/',data, function () {
+        $.post('/reconhecimentos/alterar_ciclo/', data, function () {
             growl.deSucesso().exibir('Ciclo alterado com sucesso');
             roteador.atualizar();
     })};  

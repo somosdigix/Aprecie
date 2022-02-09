@@ -159,7 +159,8 @@ def definir_ciclo(requisicao):
   ciclo.save()
 
   usuario_que_modificou = Colaborador.objects.get(id=id_usuario_que_modificou)
-  log_Ciclo = LOG_Ciclo(ciclo=ciclo, usuario_que_modificou=usuario_que_modificou,descricao_da_alteracao='Criação do ciclo')
+  log_Ciclo = LOG_Ciclo(ciclo=ciclo, usuario_que_modificou=usuario_que_modificou,descricao_da_alteracao='Criação do ciclo', nova_data_alterada=data_final, 
+  antiga_data_final = data_final, novo_nome_ciclo = nome_ciclo, antigo_nome_ciclo = nome_ciclo)
   log_Ciclo.save()
 
   return JsonResponse({})
@@ -173,22 +174,20 @@ def alterar_ciclo(requisicao):
   # A data antiga
   # Armazenar no log
   id_ciclo = requisicao.POST["id_ciclo"]
-  data_inicial = requisicao.POST["data_inicial"]
   data_final = requisicao.POST["data_final"]
   id_usuario_que_modificou = requisicao.POST["usuario_que_modificou"]
   novo_nome_ciclo = requisicao.POST["novo_nome_ciclo"]
-  descricao_da_alteracao =requisicao.POST["descricao_da_alteracao"]
-  print(novo_nome_ciclo)
+  descricao_da_alteracao = requisicao.POST["descricao_da_alteracao"]
   ciclo = Ciclo.objects.get(id = id_ciclo)
   usuario_que_modificou = Colaborador.objects.get(id=id_usuario_que_modificou)
 
   log_Ciclo = LOG_Ciclo(ciclo = ciclo, usuario_que_modificou = usuario_que_modificou, 
-  descricao_da_alteracao = descricao_da_alteracao, data_final_alterada = ciclo.data_final, antigo_nome_ciclo = ciclo.nome, novo_nome_ciclo = novo_nome_ciclo)
+  descricao_da_alteracao = descricao_da_alteracao, antiga_data_final = ciclo.data_final, 
+  antigo_nome_ciclo = ciclo.nome, novo_nome_ciclo = novo_nome_ciclo, nova_data_alterada = data_final)
   log_Ciclo.save()
 
   ciclo.alterar_ciclo(data_final,novo_nome_ciclo)
   ciclo.save()
-  print(novo_nome_ciclo)
   return JsonResponse({})
   
 
@@ -213,7 +212,7 @@ def obter_informacoes_ciclo_atual(requisicao):
   return JsonResponse(resposta)
 
 def ciclos_passados(requisicao):
-  ciclos_passados = map(lambda ciclo: { 'id_ciclo': ciclo.id, 'nome': ciclo.nome, 'nome_autor': obter_nome_usuario_que_modificou(ciclo), 'data_inicial': ciclo.data_inicial.strftime('%d/%m/%Y'), 'data_final': ciclo.data_final.strftime('%d/%m/%Y') }, obter_ciclos_passados())
+  ciclos_passados = map(lambda ciclo: { 'id_ciclo': ciclo.id, 'nome': ciclo.nome, 'nome_autor': obter_nome_usuario_que_modificou(ciclo), 'data_inicial': ciclo.data_inicial.strftime('%d/%m/%Y'), 'data_final': ciclo.data_final.strftime('%d/%m/%Y') }, obter_ciclos_passados().order_by('-id'))
 
   lista_todos_ciclos_passados = list(ciclos_passados)
 
@@ -243,9 +242,9 @@ def historico_alteracoes(requisicao):
   # Ex: nome_antigo : requisicao da um post no nome antigo
   # data_final_antiga: requisicao da um post na data final do ciclo antigo
   historico_alteracoes = map(lambda LOG_Ciclo: { 'antigo_nome_do_ciclo': LOG_Ciclo.antigo_nome_ciclo, 'nome_autor': LOG_Ciclo.usuario_que_modificou.nome_abreviado, 
-  'data_anterior': LOG_Ciclo.data_final_alterada.strftime('%d/%m/%Y'), 'nova_data': LOG_Ciclo.ciclo.data_final.strftime('%d/%m/%Y'), 
+  'data_anterior': LOG_Ciclo.antiga_data_final.strftime('%d/%m/%Y'), 'nova_data': LOG_Ciclo.nova_data_alterada.strftime('%d/%m/%Y'), 
   'data_alteracao': LOG_Ciclo.data_da_modificacao.strftime('%d/%m/%Y'), 'motivo_alteracao': LOG_Ciclo.descricao_da_alteracao, 'novo_nome_ciclo' : LOG_Ciclo.novo_nome_ciclo
-  },obter_historico_de_alteracoes().order_by('-data_da_modificacao'))
+  },obter_historico_de_alteracoes().order_by('-id'))
 
 
   paginator = Paginator(list(historico_alteracoes), 2)

@@ -1,6 +1,5 @@
 <div class="container">
 	<h1 class="titulo">Configurações de Ciclo</h1>
-	<input type="hidden" id="id_ciclo" value={{this.id_ciclo}}>
 	<h2>Ciclo Atual</h2>
 
 	<div id="container__ciclo__atual">
@@ -30,7 +29,8 @@
 			<h1 class="titulo__modal">Motivo da Alteração:</h1>
 			<form data-js="form_alterar_ciclo">
 				<div class="descricao">
-					<textarea id="input__motivo" name="post-text" cols="50" rows="5" tabindex="50" maxlength="63" required></textarea>
+					<input hidden id="id_ciclo" value={{this.id_ciclo}}>
+					<textarea id="input__motivo" cols="50" rows="5" tabindex="50" maxlength="63" required></textarea>
 					<label for="nova__data" class="label__nova__data__final">Data Final:</label>
 					<input type="date" id="nova__data__final"  data-js="dataFinal" class="nova__data__final" value="{{this.data_final}}" required/>
 					<label for="novo_nome_ciclo" class="label__novo__nome" >Novo Nome:</label>
@@ -55,7 +55,7 @@
 	</div>
 	
 	<div id="container__novo__ciclo">
-		<form id="form__adicionar__ciclo">
+		<form data-js="form-adicionar-ciclo"id="form__adicionar__ciclo">
 			<input type="text" id="nome_ciclo" placeholder="Nome do Ciclo" class="adicionar__nome__ciclo" required />
 			<div class="input__data">
 				<div class="infos__data--inicio">
@@ -69,7 +69,7 @@
 			</div>
 			<div class="btns__novo__ciclo">
 				<button type="submit" data-js="btn_adicionar_ciclo" id="btn__adicionar"> Adicionar</button>
-				<button type="submit" id="btn__cancelar">
+				<button id="btn__cancelar">
 					Cancelar
 				</button>
 			</div>
