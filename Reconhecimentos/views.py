@@ -235,10 +235,12 @@ def obter_ciclo_atual():
 
 @has_role_decorator('administrador')
 def obter_notificacoes_do_administrador(requisicao):
-  mensagem = AprecieConfig.obter_mensagem_notificacao()
-  if mensagem != "":
-    return JsonResponse(status=300, data={ 'mensagem': mensagem })
-  else:
-    return JsonResponse({})
+  notificacao = AprecieConfig.obter_mensagem_notificacao()
+
+  data = {
+    'mensagem': notificacao
+  }
+  
+  return JsonResponse(data)
 
   

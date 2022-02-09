@@ -63,7 +63,11 @@
 
 	function obterNotificacaoDoAdministrador(){
 		if(obterStatusDeNotificacao()){
-			$.getJSON("Reconhecimentos/obter_notificacoes_administrador/");
+			$.getJSON("/reconhecimentos/obter_notificacoes_administrador/", function(notificacao){
+				require(["growl"], function (growl){
+					growl.deErro().exibir(notificacao.mensagem);
+				})
+			})
 			localStorage.setItem('notificacao', 'false');
 		}
 	}
@@ -104,10 +108,6 @@
 		} else {
 			return sessaoDeUsuario.administrador;
 		}
-	}
-
-	function obterNotificacaoDoAdministrador (){
-		$.getJSON("/reconhecimentos/obter_notificacoes_administrador/")
 	}
 
 	function switchAdministrador(reconhecimentosDoColaborador, colaboradorId) {

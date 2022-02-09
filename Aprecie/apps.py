@@ -7,7 +7,8 @@ class AprecieConfig(AppConfig):
     name = "Aprecie" 
     mensagem = " "
 
-    def notificacao_do_colaborador(self, notificacao):
+    @staticmethod
+    def notificacao_do_colaborador(notificacao):
         AprecieConfig.mensagem = notificacao
     
     @staticmethod
@@ -25,17 +26,17 @@ class AprecieConfig(AppConfig):
             try:
                 resposta = Ciclo.objects.get(data_inicial = amanha)
                 #exibir mensagem que o novo ciclo comeca no dia seguinte para todo mundo ou só para os adm??
-                self.notificacao_do_colaborador("Amanhã será iniciado um novo ciclo")
+                AprecieConfig.notificacao_do_colaborador("Amanhã será iniciado um novo ciclo")
             except Ciclo.DoesNotExist:
                 ciclo = Ciclo(data_inicial = amanha)
                 ciclo.save()
                 log_Ciclo = LOG_Ciclo(ciclo=ciclo, descricao_da_alteracao='Criação do ciclo automatico sem data final')
                 log_Ciclo.save()
                 #exibir mensagem que o ciclo esta sem data final para todos os administradores
-                self.notificacao_do_colaborador("O ciclo atual não possui data final")
+                AprecieConfig.notificacao_do_colaborador("O ciclo atual não possui data final")
            
         elif ciclo_atual.data_final == None:
-            self.notificacao_do_colaborador("O ciclo atual não possui data final")
+            AprecieConfig.notificacao_do_colaborador("O ciclo atual não possui data final")
 
         elif ciclo_atual.data_final != date.today():
             #verificar quantos dias faltam para terminar o ciclo atual
@@ -43,13 +44,16 @@ class AprecieConfig(AppConfig):
             #exibir mensagem a partir de 10 dias faltando para o fim
             if dias_para_terminar_ciclo < timedelta(days=10):
                 mensagem = "Faltam " + str(dias_para_terminar_ciclo.days) + " dias para o fim do ciclo atual"
-                self.notificacao_do_colaborador(mensagem)
+                AprecieConfig.notificacao_do_colaborador(mensagem)
         
         else:
-            self.notificacao_do_colaborador("")
-        
+            AprecieConfig.notificacao_do_colaborador("")
+
+        print("_______+++__________")
+        print(AprecieConfig.obter_mensagem_notificacao())
+        print("________===_________")
 
     def ready(self):
-        cron = BackgroundScheduler()
-        cron.add_job(self.verifica_data_final_do_ciclo, 'interval', seconds=5)
+        cron = BackgroundScheduler(timezone="Europe/Berlin")
+        cron.add_job(self.verifica_data_final_do_ciclo, 'interval', seconds=60)
         cron.start()
