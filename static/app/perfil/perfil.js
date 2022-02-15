@@ -1,11 +1,11 @@
 ﻿define([
-	"jquery",
-	"template",
-	"text!app/perfil/perfilTemplate.html",
-	"sessaoDeUsuario",
-	"app/helpers/iconesDosValoresHelpers",
-], function ($, template, perfilTemplate, sessaoDeUsuario) {
-	"use strict";
+	'jquery',
+	'template',
+	'text!app/perfil/perfilTemplate.html',
+	'sessaoDeUsuario',
+	'app/botaoReconhecer/botaoReconhecer'
+], function ($, template, perfilTemplate, sessaoDeUsuario, botaoReconhecer) {
+	'use strict';
 
 	var _self = {};
 	var _sandbox;
@@ -13,48 +13,45 @@
 	_self.inicializar = function (sandbox, colaboradorId) {
 		_sandbox = sandbox;
 
-		$.getJSON(
-			"/reconhecimentos/colaborador/" + colaboradorId,
-			function (reconhecimentosDoColaborador) {
-				template.exibir(perfilTemplate, reconhecimentosDoColaborador);
+		$.getJSON('/reconhecimentos/colaborador/' + colaboradorId, function (reconhecimentosDoColaborador) {
+			template.exibir(perfilTemplate, reconhecimentosDoColaborador);
 
-				mostraSwitchAdministrador(sessaoDeUsuario.administrador);
+			mostraSwitchAdministrador(sessaoDeUsuario.administrador);
 
-				switchAdministrador(reconhecimentosDoColaborador, colaboradorId);
+			switchAdministrador(reconhecimentosDoColaborador, colaboradorId);
 
-				$("#conteudo").on(
-					"click",
-					'div[data-js="exibir-reconhecimentos"]',
-					exibirReconhecimentos
-				);
+			$('#conteudo')
+				.on('click', 'div[data-js="exibir-reconhecimentos"]', exibirReconhecimentos);
 
-				if (sessaoDeUsuario.id === colaboradorId) {
-					$('div[data-js="switch-adm"]').hide();
-					$("span.ion-camera").show();
-					$("#conteudo").on(
-						"click",
-						'div[data-js="foto"]',
-						abrirSelecaoDeImagens
-					);
-					$('input[data-js="alterar-foto"]').off().on("change", alterarFoto);
-				} else {
-					$('div[data-js="apreciacao"]').show();
-					$('div[data-js="foto"]').removeClass("alterar-foto");
-				}
-
-				_sandbox.notificar(
-					"exibir-espaco-para-apreciar",
-					colaboradorId,
-					reconhecimentosDoColaborador
-				);
-				_sandbox.notificar("exibir-apreciacoes");
+			if (sessaoDeUsuario.id === colaboradorId) {
+				$('div[data-js="switch-adm"]').hide();
+				$('span.ion-camera').show();
+				$('#conteudo').on('click', 'div[data-js="foto"]', abrirSelecaoDeImagens);
+				$('input[data-js="alterar-foto"]').off().on('change', alterarFoto);
+				$('button[data-js="botao-apreciar"]').hide();
 			}
-		);
+			else {
+				$('button[data-js="botao-apreciar"]').show().on('click', apreciar);
+			}
+
+			_sandbox.notificar('exibir-apreciacoes');
+		});
 	};
 
 	_self.finalizar = function () {
 		$("#conteudo").off();
 	};
+
+	function apreciar(){
+		botaoReconhecer.exibirModal();
+
+		var colaborador = {
+			id_colaborador: parseInt($('#reconhecidoId').val()),
+			nome: document.getElementById('reconhecidoNome').innerHTML,
+		};
+		
+		botaoReconhecer.selecionarReconhecido(colaborador);
+	}
 
 	function exibirReconhecimentos() {
 		var objetoClicado = $(this);
