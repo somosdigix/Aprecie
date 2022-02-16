@@ -16,7 +16,7 @@ define([
     self.inicializar = function (sandbox) {
         _sandbox = sandbox;
 
-        carregarGerenciador();
+        carregarGerenciador(); 
 
         // on click button html para função de definir ciclo e alterar ciclo
         $("#conteudo")
@@ -38,6 +38,7 @@ define([
             template.exibir(gerenciadorDeCiclosTemplate, ciclo_atual);
         });
 
+
         await carregarCiclosPassados();
 
         await carregarHistoricoAlteracoes();
@@ -55,7 +56,15 @@ define([
 
     async function carregarCiclosPassados() {
         await $.getJSON("/reconhecimentos/ciclos_passados", function (ciclos_passados) {
-            template.acrescentarEm('#corpo__historico', ciclosPassadosTemplate, ciclos_passados);
+            var paragrafo_mensagem = document.getElementById("mensagem__ciclo");
+                console.log(ciclos_passados)
+            if(ciclos_passados.secoes[0].ciclos.length == 0){
+                paragrafo_mensagem.style.display = "block";
+            }
+            else{
+                template.acrescentarEm('#corpo__historico', ciclosPassadosTemplate, ciclos_passados);
+                paragrafo_mensagem.style.display = "none";
+            }
         });
 
         await $("div.opcaoSecao--ciclos#secaoc1").toggleClass('secaoSelecionada');
