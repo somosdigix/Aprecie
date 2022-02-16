@@ -14,6 +14,7 @@
 	<link rel="stylesheet" href="{% static "css/modal_editar.css" %}">
 	<link rel="stylesheet" href="{% static "css/botaoGlobal.css" %}">
 	<link rel="stylesheet" href="{% static "css/perfil.css" %}">
+	<link rel="stylesheet" href="{% static "css/fontes.css" %}">
 	<link rel="stylesheet" href="{% static "css/ionicons.css" %}">
 	<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Raleway"/>
 	<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans"/>
@@ -44,12 +45,13 @@
 
 	<main id="conteudo">
 	</main>
+	<div data-js="botaoReconhecer" id="global"></div>
 
-	<div data-js="botaoReconhecer" id="global">
-	</div>
+	
 
 	<div data-js="growl" class="growl fixo alinhado-ao-topo fundo-verde branco invisivel"><span></span></div>
 
+	<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 	<script src="{% static "app/configuracoesRequirejs.js" %}?versao=1"></script>
 	<script src="{% static "app/botaoReconhecer/modalReconhecerglobal.js" %}"></script>
 	<script src="{% static "app/gerenciadorDeCiclos/exibicaoCiclos.js" %}"></script>

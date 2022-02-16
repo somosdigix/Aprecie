@@ -699,7 +699,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   filter: invert(100%);
 }
 
-.container {
+.container__ciclo {
   width: 80%;
   margin: 32px auto;
 }
