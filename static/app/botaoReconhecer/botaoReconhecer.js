@@ -21,45 +21,38 @@ define([
 	var colaboradoresEPilaresModal = {}
 
 	botaoReconhecer.exibir = function (callback) {
+		$.getJSON("/reconhecimentos/pilares", function (colaboradoresEPilares) {
+			template.exibirEm(
+				'div[data-js="botaoReconhecer"]',
+				botaoReconhecerTemplate,
+			);
 
-		if ($('div[data-js="botaoReconhecer"]').html() == '') {
-			$.getJSON("/reconhecimentos/pilares", function (colaboradoresEPilares) {
-				template.exibirEm(
-					'div[data-js="botaoReconhecer"]',
-					botaoReconhecerTemplate,
-				);
+			colaboradoresEPilaresModal = colaboradoresEPilares
 
-				colaboradoresEPilaresModal = colaboradoresEPilares
-
-				$("#global")
-					.on(
-						"click",
-						'button[data-js="abrir-modal"]',
-						botaoReconhecer.exibirModal
-					)
-					.on(
-						"click",
-						'button[data-js="fechar-modal"]',
-						botaoReconhecer.fecharModal
-					)
-					.on("keyup", 'textarea[data-js="mostrar-contagem"]', mostrarContagem)
-					.on(
-						"click",
-						"div.conteudo-botaoReconhecer div.campoGlobal",
-						selecionarPilarGlobal
-					)
-					.on("click", 'button[data-js="reconhecerGlobal"]', botaoReconhecer.reconhecerGlobal);
-					
-				$('div[data-js="botaoReconhecer"]').show();
+			$("#global")
+				.on(
+					"click",
+					'button[data-js="abrir-modal"]',
+					botaoReconhecer.exibirModal
+				)
+				.on(
+					"click",
+					'button[data-js="fechar-modal"]',
+					botaoReconhecer.fecharModal
+				)
+				.on("keyup", 'textarea[data-js="mostrar-contagem"]', mostrarContagem)
+				.on(
+					"click",
+					"div.conteudo-botaoReconhecer div.campoGlobal",
+					selecionarPilarGlobal
+				)
+				.on("click", 'button[data-js="reconhecerGlobal"]', botaoReconhecer.reconhecerGlobal);
+				
+			$('div[data-js="botaoReconhecer"]').show();
 
 
-				if (callback) callback();
-			});
-		}
-	};
-
-	botaoReconhecer.esconder = function () {
-		$('div[data-js="botaoReconhecer"]').hide(botaoReconhecerTemplate).empty();
+			if (callback) callback();
+		});
 	};
 
 	botaoReconhecer.exibirModal = function () {
@@ -77,6 +70,10 @@ define([
 	botaoReconhecer.fecharModal = function () {
 		$(".modalReconhecer").hide();
 	};
+
+	botaoReconhecer.existe = function () {
+		return !($('div[data-js="botaoReconhecer"]').html() == '');
+	}
 
 	function converterParaAutocomplete(colaboradores) {
 		return colaboradores.map(function (colaborador) {
