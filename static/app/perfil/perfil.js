@@ -35,8 +35,9 @@
 					$("#conteudo").on(
 						"click",
 						'div[data-js="foto"]',
-						abrirSelecaoDeImagens
+						abrirModalCrop
 					);
+					
 					$('input[data-js="alterar-foto"]').off().on("change", alterarFoto);
 				} else {
 					$('div[data-js="apreciacao"]').show();
@@ -49,7 +50,7 @@
 			if (sessaoDeUsuario.id === colaboradorId) {
 				$('div[data-js="switch-adm"]').hide();
 				$('span.ion-camera').show();
-				$('#conteudo').on('click', 'div[data-js="foto"]', abrirSelecaoDeImagens);
+				$('#conteudo').on('click', 'div[data-js="foto"]', abrirModalCrop);
 				$('input[data-js="alterar-foto"]').off().on('change', alterarFoto);
 				$('button[data-js="botao-apreciar"]').hide();
 			}
@@ -64,6 +65,10 @@
 	_self.finalizar = function () {
 		$("#conteudo").off();
 	};
+
+	function abrirModalCrop(){
+		document.getElementById('caixa-modal').style.display= "block";
+	}
 
 	function apreciar(){
 		botaoReconhecer.exibirModal();
@@ -162,11 +167,13 @@
 		var reader = new FileReader();
 
 		reader.onload = function (progressEvent) {
+			var nova_imagem = $('#imagem__cortada').src;
 			var data = {
 				id_do_colaborador: sessaoDeUsuario.id,
 				nova_foto: reader.result,
 			};
-
+			
+			
 			$.post("/login/alterar_foto/", data)
 				.done(function () {
 					$('img[data-js="foto"]').attr("src", reader.result);
