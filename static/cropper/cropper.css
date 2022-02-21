@@ -1,0 +1,47 @@
+.cropper-crop-box, .cropper-view-box {
+    border-radius: 50%;
+}
+
+.cropper-view-box {
+    box-shadow: 0 0 0 1px #39f;
+    border-radius: 50%;
+    outline: 0;
+}
+
+.cropper-face {
+    background-color:inherit !important;
+}
+
+.cropper-dashed, .cropper-point.point-se, .cropper-point.point-sw, .cropper-point.point-nw,   .cropper-point.point-ne, .cropper-line {
+    display:none !important;
+}
+
+.cropper-view-box {
+    outline:inherit !important;
+}
+
+.imagem__cortada{
+  width: 100px;
+}
+
+.image_container{
+  height: 300px;
+  margin:20px auto;
+}
+
+.cabecalho__modal{
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.titulo__modal__cropper{
+    font-size: 24px;
+    padding: 8px;
+}
+
+.botao__modal__fechar__cropper{
+    border: none;
+    background: transparent;
+    font-size: 24px;
+}
