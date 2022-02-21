@@ -19,7 +19,7 @@ define([
 	self.inicializar = function (sandbox) {
 		_sandbox = sandbox;
 		
-		if (administradorHelper.verificaSeUsuarioEhAdministrador()){
+		if (administradorHelper.ehAdministrador()){
 			template.exibir(rankingAdminTemplate);
 			carregarFiltrosRankingAdmin();
 			carregarRankingAdmin();

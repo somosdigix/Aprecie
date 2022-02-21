@@ -6,7 +6,7 @@ define([
 
 	var administradorHelper = {};
 
-	administradorHelper.verificaSeUsuarioEhAdministrador = function() {
+	administradorHelper.ehAdministrador = function() {
 		if (!sessaoDeUsuario.administrador) {
 			require(["growl"], function (growl) {
 				growl.deErro().exibir("Você não é administrador");

@@ -68,7 +68,7 @@
 	}
 
 	function confirmaAlteracao() {
-		if (confirm("Confirmar as alteracoes?") && administradorHelper.verificaSeUsuarioEhAdministrador()) {
+		if (confirm("Confirmar as alteracoes?") && administradorHelper.ehAdministrador()) {
 			return true;
 		} else {
 			return false;
@@ -82,7 +82,7 @@
 			document.getElementById("toggle").checked = false;
 		}
 		$("#toggle").change(function () {
-			if (administradorHelper.verificaSeUsuarioEhAdministrador()) {
+			if (administradorHelper.ehAdministrador()) {
 				if (this.checked) {
 					if (confirmaAlteracao()) {
 						var dados = {
