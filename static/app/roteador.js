@@ -1,6 +1,6 @@
 ﻿define([
 	'director',
-	'app/servicos/servicoDeAutenticacao'
+	'app/servicos/servicoDeAutenticacao',
 ], function (Router, servicoDeAutenticacao) {
 	'use strict';
 
@@ -96,8 +96,9 @@
 			window.location.href = '/';
 			return false;
 		}
-
 		servicoDeAutenticacao.atualizarSessaoDeUsuario();
+
+		servicoDeAutenticacao.validar();
 	}
 
 	function middlewareDeTransicaoDeTela() {
@@ -118,15 +119,10 @@
 		});
 	}
 
-	function middlewareDeBotaoReconhecer(){
+	function middlewareBotaoReconhecer(){
 		require(['app/botaoReconhecer/botaoReconhecer'], function(botaoReconhecer) { 
-			if (servicoDeAutenticacao.jaEstaAutenticado() && roteador.paginaAtual() !== '/login') {
+			if (servicoDeAutenticacao.jaEstaAutenticado() && roteador.paginaAtual() !== '/login' && !botaoReconhecer.existe()) {
 				botaoReconhecer.exibir();
-				$('body').removeClass('body-login').addClass('body-app');
-			}
-			else {
-				botaoReconhecer.esconder();
-				$('body').removeClass('body-app').addClass('body-login');
 			}
 		});
 	}

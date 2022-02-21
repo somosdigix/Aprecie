@@ -1,11 +1,12 @@
 ﻿define([
-	"jquery",
-	"template",
-	"text!app/perfil/perfilTemplate.html",
-	"sessaoDeUsuario",
-	"app/helpers/administradorHelper"
-], function ($, template, perfilTemplate, sessaoDeUsuario, administradorHelper) {
-	"use strict";
+	'jquery',
+	'template',
+	'text!app/perfil/perfilTemplate.html',
+	'sessaoDeUsuario',
+	'app/botaoReconhecer/botaoReconhecer',
+  'app/helpers/administradorHelper'
+], function ($, template, perfilTemplate, sessaoDeUsuario, botaoReconhecer, administradorHelper) {
+	'use strict';
 
 	var _self = {};
 	var _sandbox;
@@ -42,19 +43,38 @@
 					$('div[data-js="foto"]').removeClass("alterar-foto");
 				}
 
-				_sandbox.notificar(
-					"exibir-espaco-para-apreciar",
-					colaboradorId,
-					reconhecimentosDoColaborador
-				);
-				_sandbox.notificar("exibir-apreciacoes");
+			$('#conteudo')
+				.on('click', 'div[data-js="exibir-reconhecimentos"]', exibirReconhecimentos);
+
+			if (sessaoDeUsuario.id === colaboradorId) {
+				$('div[data-js="switch-adm"]').hide();
+				$('span.ion-camera').show();
+				$('#conteudo').on('click', 'div[data-js="foto"]', abrirSelecaoDeImagens);
+				$('input[data-js="alterar-foto"]').off().on('change', alterarFoto);
+				$('button[data-js="botao-apreciar"]').hide();
 			}
-		);
+			else {
+				$('button[data-js="botao-apreciar"]').show().on('click', apreciar);
+			}
+
+			_sandbox.notificar('exibir-apreciacoes');
+		});
 	};
 
 	_self.finalizar = function () {
 		$("#conteudo").off();
 	};
+
+	function apreciar(){
+		botaoReconhecer.exibirModal();
+
+		var colaborador = {
+			id_colaborador: parseInt($('#reconhecidoId').val()),
+			nome: document.getElementById('reconhecidoNome').innerHTML,
+		};
+		
+		botaoReconhecer.selecionarReconhecido(colaborador);
+	}
 
 	function exibirReconhecimentos() {
 		var objetoClicado = $(this);
