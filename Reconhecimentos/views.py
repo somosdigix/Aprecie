@@ -19,20 +19,26 @@ def reconhecer(requisicao):
   id_do_pilar = requisicao.POST['id_do_pilar']
   descritivo = requisicao.POST['descritivo']
 
-  reconhecido = Colaborador.objects.get(id = id_do_reconhecido)
   reconhecedor = Colaborador.objects.get(id = id_do_reconhecedor)
-  pilar = Pilar.objects.get(id = id_do_pilar)
-  feedback = Feedback.objects.create(descritivo = descritivo)
-
-
-  data_ultima_apreciacao = reconhecedor.obter_ultima_data_de_publicacao()
   
-  if data_ultima_apreciacao != date.today(): 
+  if verificar_ultima_data_de_publicacao(reconhecedor):
+    reconhecido = Colaborador.objects.get(id = id_do_reconhecido)
+    pilar = Pilar.objects.get(id = id_do_pilar)
+    feedback = Feedback.objects.create(descritivo = descritivo)
     reconhecido.reconhecer(reconhecedor, pilar, feedback)
-    definir_data_de_publicacao(id_do_reconhecedor)
     Notificacoes.notificar_no_chat(reconhecedor, reconhecido, pilar)
+    definir_data_de_publicacao(reconhecedor)
 
-  return JsonResponse({})
+    return JsonResponse({})
+
+  else:
+    return JsonResponse(status=403, data = {'mensagem': 'Você já fez um reconhecimento hoje, poderá fazer amanhã novamente!'})
+
+def verificar_ultima_data_de_publicacao(reconhecedor):
+  ultima_data = reconhecedor.obter_ultima_data_de_publicacao()
+
+  return not(ultima_data == date.today())
+  
 
 def ultimos_reconhecimentos(requisicao):
   reconhecimentos = Reconhecimento.objects.all().order_by('-id')
@@ -89,23 +95,9 @@ def converte_boolean(bool):
     else:
         raise ValueError("...")
 
-def ultima_data_de_publicacao(requisicao, id_do_reconhecedor):
-  reconhecedor = Colaborador.objects.get(id = id_do_reconhecedor)
-
-  ultima_data = reconhecedor.obter_ultima_data_de_publicacao()
-
-  resposta = {
-    'ultima_data': ultima_data
-  }
-
-  return JsonResponse(resposta)
-
-def definir_data_de_publicacao(id_do_reconhecedor):
-  reconhecedor = Colaborador.objects.get(id = id_do_reconhecedor)
-
+def definir_data_de_publicacao(reconhecedor):
   reconhecedor.definir_ultima_data_de_publicacao(date.today())
-
-  return JsonResponse ({})
+  reconhecedor.save()
 
 def reconhecimentos_do_colaborador(requisicao, id_do_reconhecido):
   reconhecido = Colaborador.objects.get(id = id_do_reconhecido)

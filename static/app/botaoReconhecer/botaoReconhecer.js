@@ -5,7 +5,7 @@ define([
 	"sessaoDeUsuario",
 	"app/models/reconhecerGlobalViewModel",
 	"growl",
-	"app/helpers/formatadorDeData"
+	"text!app/botaoReconhecer/modalReconhecer.html"
 ], function (
 	$,
 	template,
@@ -13,46 +13,67 @@ define([
 	sessaoDeUsuario,
 	ReconhecerGlobalViewModel,
 	growl,
-	formatadorDeData
+	modalReconhecerTemplate
 ) {
 	"use strict";
 
-	var botaoReconhecerView = {};
+	var botaoReconhecer = {};
+	var colaboradoresEPilaresModal = {}
 
-	botaoReconhecerView.exibir = function (callback) {
+	botaoReconhecer.exibir = function (callback) {
 		$.getJSON("/reconhecimentos/pilares", function (colaboradoresEPilares) {
 			template.exibirEm(
 				'div[data-js="botaoReconhecer"]',
 				botaoReconhecerTemplate,
-				colaboradoresEPilares
 			);
 
+			colaboradoresEPilaresModal = colaboradoresEPilares
+
 			$("#global")
+				.on(
+					"click",
+					'button[data-js="abrir-modal"]',
+					botaoReconhecer.exibirModal
+				)
+				.on(
+					"click",
+					'button[data-js="fechar-modal"]',
+					botaoReconhecer.fecharModal
+				)
+				.on("keyup", 'textarea[data-js="mostrar-contagem"]', mostrarContagem)
 				.on(
 					"click",
 					"div.conteudo-botaoReconhecer div.campoGlobal",
 					selecionarPilarGlobal
 				)
-				.on("click", 'button[data-js="reconhecerGlobal"]', reconhecerGlobal);
-
+				.on("click", 'button[data-js="reconhecerGlobal"]', botaoReconhecer.reconhecerGlobal);
+				
 			$('div[data-js="botaoReconhecer"]').show();
-			$(".modalReconhecer").hide();
 
-			$('div[data-js="buscaColaboradores"]').search({
-				source: converterParaAutocomplete(colaboradoresEPilares.colaboradores),
-				onSelect: selecionarReconhecido,
-				error: {
-					noResults: "Nenhum colaborador foi encontrado.",
-				},
-			});
 
 			if (callback) callback();
 		});
 	};
 
-	botaoReconhecerView.esconder = function () {
-		$('div[data-js="botaoReconhecer"]').hide(botaoReconhecerTemplate).empty();
+	botaoReconhecer.exibirModal = function () {
+		template.exibirEm('div[data-js="modalReconhecer"]', modalReconhecerTemplate, colaboradoresEPilaresModal);
+
+		$('div[data-js="buscaColaboradores"]').search({
+			source: converterParaAutocomplete(colaboradoresEPilaresModal.colaboradores),
+			onSelect: botaoReconhecer.selecionarReconhecido,
+			error: {
+				noResults: "Nenhum colaborador foi encontrado.",
+			},
+		});
 	};
+
+	botaoReconhecer.fecharModal = function () {
+		$(".modalReconhecer").hide();
+	};
+
+	botaoReconhecer.existe = function () {
+		return !($('div[data-js="botaoReconhecer"]').html() == '');
+	}
 
 	function converterParaAutocomplete(colaboradores) {
 		return colaboradores.map(function (colaborador) {
@@ -70,24 +91,27 @@ define([
 			.attr("checked", true);
 	}
 
+	botaoReconhecer.reconhecerGlobal = function () {
+		$('button[data-js="reconhecerGlobal"]').prop("disabled", "disabled");
 
-	function gerarReconhecimento() {
 		var reconhecerGlobalViewModel = new ReconhecerGlobalViewModel();
 
 		try {
 			validarOperacao(reconhecerGlobalViewModel);
 		} catch (erro) {
 			$('#global button[data-js="reconhecerGlobal"]').removeAttr("disabled");
-			throw erro;
+			throw erro
 		}
 
 		$.post("/reconhecimentos/reconhecer/", reconhecerGlobalViewModel, function () {
-			growl.deSucesso().exibir("Reconhecimento realizado com sucesso");
+			growl.deSucesso().exibir("Reconhecimento realizado com sucesso.");
 		}).fail(function () {
-			$('#global button[data-js="reconhecerGlobal"]').removeAttr("disabled");
+			$('#conteudo button[data-js="reconhecerGlobal"]').removeAttr("disabled");
 		});
 
-		window.location.reload(true);
+		setTimeout(() => {
+			window.location.reload(true);
+		}, 750);
 	}
 
 
@@ -106,41 +130,37 @@ define([
 			);
 
 		if (reconhecerViewModel.id_do_reconhecido == sessaoDeUsuario.id) {
-			throw new ViolacaoDeRegra("Não é possível se auto reconhecer, selecione a pessoa que você queira reconhecer");
+			throw new ViolacaoDeRegra(
+				"Não é possível se auto reconhecer, selecione a pessoa que você queira reconhecer"
+			);
 		}
 	}
 
-	function selecionarReconhecido(colaborador) {
-		var divReconhecido = $('div[data-js="buscaColaboradores"]');
+	botaoReconhecer.selecionarReconhecido = function (colaborador) {
 		document
 			.getElementById("idDoReconhecido")
 			.setAttribute("value", colaborador.id_colaborador);
-		divReconhecido.value = colaborador.nome;
-	}
 
-
-	function obterDataDeReconhecimento() {
-		var dataHoje = formatadorDeData.obterHoje("-");
-		$.getJSON(
-			"/reconhecimentos/ultima_data_de_publicacao/" + sessaoDeUsuario.id,
-			function (dataDePublicacao) {
-				if (dataDePublicacao.ultima_data == null || dataDePublicacao.ultima_data < dataHoje) {
-					gerarReconhecimento();
-				} else if (dataDePublicacao.ultima_data == dataHoje) {
-					growl
-						.deErro()
-						.exibir(
-							"Você já fez seu reconhecimento de hoje, amanhã você poderá fazer outro"
-						);
-					setTimeout(() => {
-						window.location.reload(true)
-					}, 500);
-				}
-			}
+		$('div[data-js="buscaColaboradores"]').search(
+			"set value",
+			colaborador.nome
 		);
+	};
+
+	function mostrarContagem() {
+		var box = $(".elogio");
+		var contagemCaracteres = box.val().length;
+		var limiteDeCaracteres = parseInt(box.attr("maxlength"));
+		var campospan = document.getElementById("spcontando");
+
+		campospan.innerHTML = contagemCaracteres + "/" + limiteDeCaracteres;
+
+		if (contagemCaracteres >= limiteDeCaracteres) {
+			campospan.innerHTML = "Limite de caracteres excedido!";
+		}
 	}
 
-	return botaoReconhecerView;
+	return botaoReconhecer;
 });
 
 

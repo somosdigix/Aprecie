@@ -1,0 +1,46 @@
+<div id="modalReconhecer" class="modalReconhecer">
+	<button class="fechar__modal--botaoreconhecer" data-js="fechar-modal">
+		<img src="../static/img/fechar.svg" alt="Icone de fechar" />
+	</button>
+	<div data-js="buscaColaboradores" class="ui fluid search largura-busca">
+		<div class="ui icon small input largura-busca">
+			<input
+				class="prompt"
+				class="largura-busca"
+				placeholder="Quem você quer reconhecer?"
+				type="text"
+				data-js="input-pesquisa"
+			/>
+			<i class="search icon"></i>
+		</div>
+		<div class="results"></div>
+	</div>
+	<div class="conteudo-botaoReconhecer">
+		<div class="escolhaPilar">
+			{{#each this.pilares}}
+			<div class="campoGlobal">
+				<input
+					id="pilarGlobal_{{this.id}}"
+					class="inputPilar"
+					name="pilarGlobal"
+					type="radio"
+					value="{{this.id}}"
+				/>
+				<label for="pilarGlobal_{{this.id}}">{{this.nome}}</label>
+			</div>
+			{{/each}}
+		</div>
+		<textarea
+			class="elogio"
+			placeholder="Digite seu elogio"
+			maxlength="220"
+			cols="30"
+			rows="5"
+			data-js="mostrar-contagem"
+		></textarea>
+		<span id="spcontando">0/220</span><br />
+	</div>
+	<button class="botao-para-reconhecer" data-js="reconhecerGlobal">
+		Reconhecer
+	</button>
+</div>
