@@ -15,5 +15,6 @@ urlpatterns = [
     url(r'^ranking/$', views.contar_reconhecimentos, name="contar_reconhecimentos"),
     url(r'^([0-9]+)/([0-9]+)$', views.reconhecimentos_por_pilar, name="reconhecimentos_por_pilar"),
     url(r'^ciclos_passados/$', views.ciclos_passados, name="ciclos_passados"),
-    url(r'^historico_alteracoes/$', views.historico_alteracoes, name="historico_alteracoes")
+    url(r'^historico_alteracoes/$', views.historico_alteracoes, name="historico_alteracoes"),
+    url(r'^ranking_por_periodo/$', views.ranking_por_periodo, name="ranking_por_periodo")
 ]

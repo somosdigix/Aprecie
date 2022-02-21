@@ -1,6 +1,6 @@
 ﻿define([
 	'director',
-	'app/servicos/servicoDeAutenticacao'
+	'app/servicos/servicoDeAutenticacao',
 ], function (Router, servicoDeAutenticacao) {
 	'use strict';
 
@@ -12,11 +12,12 @@
 		var rotas = {
 			'/': [middlewareDeTransicaoDeTela, limparTela, login],
 			'/login': [middlewareDeAutenticacao, middlewareDeAtualizacaoComGoogleAnalytics, middlewareDeToolbar, middlewareDeTransicaoDeTela, limparTela, login],
-			'/paginaInicial': [middlewareDeAutenticacao, middlewareDeAtualizacaoComGoogleAnalytics, middlewareDeToolbar, middlewareDeTransicaoDeTela, limparTela, paginaInicial],
-			'/estatisticas': [middlewareDeAutenticacao, middlewareDeAtualizacaoComGoogleAnalytics, middlewareDeToolbar, middlewareDeTransicaoDeTela, limparTela, estatisticas],
-			'/perfil/:colaboradorId': [middlewareDeAutenticacao, middlewareDeAtualizacaoComGoogleAnalytics, middlewareDeToolbar, middlewareDeTransicaoDeTela, limparTela, perfil],
-			'/gerenciadorDeCiclos': [middlewareDeAutenticacao, middlewareDeAtualizacaoComGoogleAnalytics, middlewareDeToolbar, middlewareDeTransicaoDeTela, limparTela, gerenciadorDeCiclos],
-			'/ranking': [middlewareDeAutenticacao, middlewareDeAtualizacaoComGoogleAnalytics, middlewareDeToolbar, middlewareDeTransicaoDeTela, limparTela, ranking],
+			'/paginaInicial': [middlewareBotaoReconhecer, middlewareDeAutenticacao, middlewareDeAtualizacaoComGoogleAnalytics, middlewareDeToolbar, middlewareDeTransicaoDeTela, limparTela, paginaInicial],
+			'/estatisticas': [middlewareBotaoReconhecer ,middlewareDeAutenticacao, middlewareDeAtualizacaoComGoogleAnalytics, middlewareDeToolbar, middlewareDeTransicaoDeTela, limparTela, estatisticas],
+			'/perfil/:colaboradorId': [middlewareBotaoReconhecer, middlewareDeAutenticacao, middlewareDeAtualizacaoComGoogleAnalytics, middlewareDeToolbar, middlewareDeTransicaoDeTela, limparTela, perfil],
+			'/ranking': [middlewareBotaoReconhecer, middlewareDeAutenticacao, middlewareDeAtualizacaoComGoogleAnalytics, middlewareDeToolbar, middlewareDeTransicaoDeTela, limparTela, ranking],
+			'/rankingAdmin' : [middlewareBotaoReconhecer, middlewareDeAutenticacao, middlewareDeAtualizacaoComGoogleAnalytics, middlewareDeToolbar, middlewareDeTransicaoDeTela, limparTela, rankingAdmin],
+			'/gerenciadorDeCiclos': [middlewareBotaoReconhecer, middlewareDeAutenticacao, middlewareDeAtualizacaoComGoogleAnalytics, middlewareDeToolbar, middlewareDeTransicaoDeTela, limparTela, gerenciadorDeCiclos],
 		};
 
 		function limparTela() {
@@ -48,7 +49,6 @@
 			require(['app/perfil/controller'], function (controller) {
 				_controllerAtivo = controller;
 				controller.exibir(parseInt(colaboradorId));
-				carregarBotaoReconhecer();
 			});
 		}
 		
@@ -64,6 +64,13 @@
 				_controllerAtivo = controller;
 				controller.exibir();
 			});
+		}
+
+		function rankingAdmin(){
+			require(['app/rankingAdmin/controller'], function (controller) {
+				_controllerAtivo = controller;
+				controller.exibir();
+			})
 		}
 
 		router = Router(rotas);
@@ -97,8 +104,9 @@
 			window.location.href = '/';
 			return false;
 		}
-
 		servicoDeAutenticacao.atualizarSessaoDeUsuario();
+
+		servicoDeAutenticacao.validar();
 	}
 
 	function middlewareDeTransicaoDeTela() {
@@ -119,15 +127,10 @@
 		});
 	}
 
-	function carregarBotaoReconhecer(){
+	function middlewareBotaoReconhecer(){
 		require(['app/botaoReconhecer/botaoReconhecer'], function(botaoReconhecer) { 
-			if (servicoDeAutenticacao.jaEstaAutenticado() && roteador.paginaAtual() !== '/login') {
+			if (servicoDeAutenticacao.jaEstaAutenticado() && roteador.paginaAtual() !== '/login' && !botaoReconhecer.existe()) {
 				botaoReconhecer.exibir();
-				$('body').removeClass('body-login').addClass('body-app');
-			}
-			else {
-				botaoReconhecer.esconder();
-				$('body').removeClass('body-app').addClass('body-login');
 			}
 		});
 	}

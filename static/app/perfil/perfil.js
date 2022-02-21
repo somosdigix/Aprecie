@@ -3,8 +3,9 @@
 	'template',
 	'text!app/perfil/perfilTemplate.html',
 	'sessaoDeUsuario',
-	'app/botaoReconhecer/botaoReconhecer'
-], function ($, template, perfilTemplate, sessaoDeUsuario, botaoReconhecer) {
+	'app/botaoReconhecer/botaoReconhecer',
+  'app/helpers/administradorHelper'
+], function ($, template, perfilTemplate, sessaoDeUsuario, botaoReconhecer, administradorHelper) {
 	'use strict';
 
 	var _self = {};
@@ -13,12 +14,34 @@
 	_self.inicializar = function (sandbox, colaboradorId) {
 		_sandbox = sandbox;
 
-		$.getJSON('/reconhecimentos/colaborador/' + colaboradorId, function (reconhecimentosDoColaborador) {
-			template.exibir(perfilTemplate, reconhecimentosDoColaborador);
+		$.getJSON(
+			"/reconhecimentos/colaborador/" + colaboradorId,
+			function (reconhecimentosDoColaborador) {
+				template.exibir(perfilTemplate, reconhecimentosDoColaborador);
 
-			mostraSwitchAdministrador(sessaoDeUsuario.administrador);
+				administradorHelper.mostrarConteudoSeForAdministrador('div[data-js="switch-adm"]');
 
-			switchAdministrador(reconhecimentosDoColaborador, colaboradorId);
+				switchAdministrador(reconhecimentosDoColaborador, colaboradorId);
+
+				$("#conteudo").on(
+					"click",
+					'div[data-js="exibir-reconhecimentos"]',
+					exibirReconhecimentos
+				);
+
+				if (sessaoDeUsuario.id === colaboradorId) {
+					$('div[data-js="switch-adm"]').hide();
+					$("span.ion-camera").show();
+					$("#conteudo").on(
+						"click",
+						'div[data-js="foto"]',
+						abrirSelecaoDeImagens
+					);
+					$('input[data-js="alterar-foto"]').off().on("change", alterarFoto);
+				} else {
+					$('div[data-js="apreciacao"]').show();
+					$('div[data-js="foto"]').removeClass("alterar-foto");
+				}
 
 			$('#conteudo')
 				.on('click', 'div[data-js="exibir-reconhecimentos"]', exibirReconhecimentos);
@@ -64,30 +87,11 @@
 		});
 	}
 
-	function mostraSwitchAdministrador(administrador) {
-		if (administrador === false) {
-			$('div[data-js="switch-adm"]').hide();
-		} else {
-			$('div[data-js="switch-adm"]').show();
-		}
-	}
-
 	function confirmaAlteracao() {
-		if (confirm("Confirmar as alteracoes?") && usuarioAdministrador()) {
+		if (confirm("Confirmar as alteracoes?") && administradorHelper.ehAdministrador()) {
 			return true;
 		} else {
 			return false;
-		}
-	}
-
-	function usuarioAdministrador() {
-		if (!sessaoDeUsuario.administrador) {
-			require(["growl"], function (growl) {
-				growl.deErro().exibir("Você não é administrador");
-				return false;
-			});
-		} else {
-			return sessaoDeUsuario.administrador;
 		}
 	}
 
@@ -98,7 +102,7 @@
 			document.getElementById("toggle").checked = false;
 		}
 		$("#toggle").change(function () {
-			if (usuarioAdministrador()) {
+			if (administradorHelper.ehAdministrador()) {
 				if (this.checked) {
 					if (confirmaAlteracao()) {
 						var dados = {
