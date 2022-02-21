@@ -4,7 +4,6 @@ from Reconhecimentos import views
 urlpatterns = [
     url(r'^pilares/$', views.todos_os_pilares_e_colaboradores, name="todos_os_pilares_e_colaboradores"),
     url(r'^reconhecer/$', views.reconhecer, name="reconhecer"),
-    url(r'^administrador/$', views.switch_administrador, name="switch_administrador"),
     url(r'^ultimos/$', views.ultimos_reconhecimentos, name="ultimos_reconhecimentos"),
     url(r'^colaborador/([0-9]+)$', views.reconhecimentos_do_colaborador, name="reconhecimentos_do_colaborador"),
     url(r'^por_reconhecedor/([0-9]+)$', views.reconhecimentos_por_reconhecedor, name="reconhecimentos_por_reconhecedor"),

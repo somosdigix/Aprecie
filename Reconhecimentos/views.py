@@ -1,14 +1,8 @@
-﻿from cmath import log
-from django.http import JsonResponse, HttpResponse
-from django.shortcuts import render
-from django.utils import formats
+﻿from django.http import JsonResponse
 from django.db.models import Count
 from django.core.paginator import Paginator
 from datetime import date
-from rolepermissions.roles import assign_role, remove_role
-from rolepermissions.decorators import has_role_decorator
 
-from operator import attrgetter
 from Login.models import Colaborador
 from Reconhecimentos.models import Pilar, Reconhecimento, Feedback
 from Reconhecimentos.services import Notificacoes
@@ -66,26 +60,7 @@ def ultimos_reconhecimentos(requisicao):
 
   return JsonResponse(retorno, safe=False)
   
-@has_role_decorator('administrador')
-def switch_administrador(requisicao):
-    
-    id_do_colaborador = requisicao.POST['id_do_colaborador']
-    eh_administrador  = requisicao.POST['eh_administrador']
 
-    eh_administrador = converte_boolean(eh_administrador)
-    colaborador = Colaborador.objects.get(id = id_do_colaborador)
-
-    if eh_administrador:
-      assign_role(colaborador, 'administrador')
-      colaborador.tornar_administrador()
-      colaborador.save()
-    
-    else:
-      remove_role(colaborador, 'administrador')
-      colaborador.remover_administrador()
-      colaborador.save()
-
-    return JsonResponse({})
    
 def converte_boolean(bool):
     if bool.lower() == 'false':

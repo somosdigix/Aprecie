@@ -130,7 +130,7 @@
 	}
 
 	function postSwitch(dados, mensagem) {
-		$.post("/reconhecimentos/administrador/", dados).done(function () {
+		$.post("/login/administrador/", dados).done(function () {
 			require(["growl"], function (growl) {
 				growl.deSucesso().exibir(mensagem);
 			});
