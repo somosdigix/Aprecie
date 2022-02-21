@@ -1,7 +1,8 @@
 define([
+	'jquery',
 	'sessaoDeUsuario',
 	'app/helpers/cookie'
-], function(sessaoDeUsuario, cookie) {
+], function($, sessaoDeUsuario, cookie) {
 	'use strict';
 
 	var servicoDeAutenticacao = {};
@@ -16,6 +17,22 @@ define([
 		return document.cookie.indexOf('@aprecie.me') > -1;
 	};
 
+	servicoDeAutenticacao.validar = function() {
+		if(this.jaEstaAutenticado()){
+			var sessaoAtual = {
+				'id': sessaoDeUsuario.id,
+				'administrador': sessaoDeUsuario.administrador
+			}
+			$.post("/login/verificar_usuario/", sessaoAtual, function(usuario) {
+				var usuarioValidado = JSON.parse(usuario.valido);
+				if(!usuarioValidado){
+					cookie.limpar();
+					window.location = '/';
+				}
+			})
+		};
+	};
+
 	servicoDeAutenticacao.atualizarSessaoDeUsuario = function() {
 		if (!sessaoDeUsuario.estaVazia()) return;
 
@@ -24,7 +41,7 @@ define([
 		colaborador.nome_do_colaborador = cookie.obter('nome');
 		colaborador.administrador = cookie.obter('administrador');
 
-		sessaoDeUsuario.preencherDados(colaborador);
+	    sessaoDeUsuario.preencherDados(colaborador);
 	};
 
 	return servicoDeAutenticacao;

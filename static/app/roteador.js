@@ -1,6 +1,6 @@
 ﻿define([
 	'director',
-	'app/servicos/servicoDeAutenticacao'
+	'app/servicos/servicoDeAutenticacao',
 ], function (Router, servicoDeAutenticacao) {
 	'use strict';
 
@@ -88,8 +88,9 @@
 			window.location.href = '/';
 			return false;
 		}
-
 		servicoDeAutenticacao.atualizarSessaoDeUsuario();
+
+		servicoDeAutenticacao.validar();
 	}
 
 	function middlewareDeTransicaoDeTela() {

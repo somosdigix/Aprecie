@@ -25,7 +25,6 @@ def reconhecer(requisicao):
     reconhecido = Colaborador.objects.get(id = id_do_reconhecido)
     pilar = Pilar.objects.get(id = id_do_pilar)
     feedback = Feedback.objects.create(descritivo = descritivo)
-
     reconhecido.reconhecer(reconhecedor, pilar, feedback)
     Notificacoes.notificar_no_chat(reconhecedor, reconhecido, pilar)
     definir_data_de_publicacao(reconhecedor)
