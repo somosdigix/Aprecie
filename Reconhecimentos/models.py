@@ -54,10 +54,32 @@ class Ciclo(models.Model):
   data_inicial = models.DateField()
   data_final = models.DateField()
 
-  def alterar_ciclo(self, data_final, novo_nome):
+  def alterar_ciclo(self, data_final, nome):
+    if data_final == None or data_final <= self.data_inicial:
+      raise ExcecaoDeDominio('A data final do ciclo não pode ser igual a data inicial') 
     self.data_final = data_final
-    self.nome = novo_nome
+    
+    if nome == None or nome == "":
+      raise ExcecaoDeDominio('O ciclo não pode ter um nome vazio')
+    self.nome = nome
+  
+  def calcular_porcentagem_progresso(self):
+    calculoPeriodoCiclo = self.calcularPeriodoCiclo()
+    calculoProgressoEmDias = self.calcularProgessoEmDias()
 
+    diferencaPeriodoEProgresso = calculoPeriodoCiclo - calculoProgressoEmDias
+
+    porcentagem_progresso = int(((diferencaPeriodoEProgresso / calculoPeriodoCiclo) * 100))
+    return str(porcentagem_progresso)
+
+  def calcularPeriodoCiclo(self):
+    periodoCiclo = self.dataFinal - self.dataInicial
+    return periodoCiclo.days
+  
+  def calcularProgessoEmDias(self):
+    periodoDias = self.dataFinal - date.today()
+    return periodoDias.days
+    
 class LOG_Ciclo(models.Model):
   id = models.AutoField(primary_key=True)
   ciclo = models.ForeignKey('Ciclo', related_name='ciclo', on_delete=models.CASCADE)
@@ -69,6 +91,13 @@ class LOG_Ciclo(models.Model):
   novo_nome_ciclo = models.CharField(max_length=25)
   nova_data_alterada = models.DateField(default=None, null=True)
   
-
-  
-  
+  def __init__(self, ciclo, usuario_que_modificou, descricao_da_alteracao, novo_nome_ciclo, nova_data_alterada):
+      self.ciclo = ciclo
+      self.usuario_que_modificou = usuario_que_modificou
+      self.descricao_da_alteracao = descricao_da_alteracao
+      self.novo_nome_ciclo = novo_nome_ciclo
+      self.nova_data_alterada = nova_data_alterada
+      if ciclo.data_final != None or ciclo.data_final != "":
+        self.antiga_data_final = ciclo.data_final
+      if ciclo.nome != None or ciclo.none != "":
+        self.antigo_nome_ciclo = ciclo.nome

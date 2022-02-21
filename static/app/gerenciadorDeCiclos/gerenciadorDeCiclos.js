@@ -38,7 +38,6 @@ define([
             template.exibir(gerenciadorDeCiclosTemplate, ciclo_atual);
         });
 
-
         await carregarCiclosPassados();
 
         await carregarHistoricoAlteracoes();
@@ -92,13 +91,10 @@ define([
         var dataAtual = new Date();
         var dataInicial = new Date(data.data_inicial);
         var dataFinal = new Date(data.data_final);
-        console.log(data);
         
         if(validacaoDataInicialMenor(dataInicial, dataAtual)) return;
         if(validacaoDataFinalMenor(dataInicial, dataFinal)) return;
         adicionarNoBanco(data);
-
-
     }
 
     function alterarCiclo(event) {
@@ -116,21 +112,23 @@ define([
         var dataInicial = new Date(data.data_inicial);
         if(validacaoDataFinalMenorAlterada(dataFinal, dataInicial)) return;
         if(validacaoDataFinalAlteradaMenorDataAtual(dataFinal, dataAtual)) return;
-        alterarNoBanco(data);
-        
+        alterarNoBanco(data);   
     }
 
     //funcoes para abrir e fechar modal
     function mostrarContainerNovoCiclo() {
         document.getElementById("container__novo__ciclo").style.display = "block";
     }
+
     function fecharContainerNovoCiclo() {
         document.getElementById("container__novo__ciclo").style.display = "none";
     }
+
     function fecharModal() {
         document.getElementById("abrirModal").style.opacity = "0";
         document.getElementById("abrirModal").style.pointerEvents = "none";
     }
+
     function mostrarModal() {
         document.getElementById("abrirModal").style.opacity = "1";
         document.getElementById("abrirModal").style.pointerEvents = "auto";
@@ -147,6 +145,7 @@ define([
         }
         return false;
     }
+
     function validacaoDataFinalMenor(dataInicial, dataFinal){
         if(dataFinal < dataInicial){
             exibirErroDaDiv('.falha-data-final-menor');
@@ -154,6 +153,7 @@ define([
         }
         return false;
     }
+
     function validacaoDataFinalMenorAlterada(dataFinal, dataInicial){
         if(dataFinal < dataInicial){
             exibirErroDaDiv('.falha-data-final-menor-alterada');
@@ -161,6 +161,7 @@ define([
         }
         return false;
     }
+
     function validacaoDataFinalAlteradaMenorDataAtual(dataFinal, dataAtual){
         if(dataFinal < dataAtual){
             exibirErroDaDiv('.falha-data-final-menor-atual');
@@ -168,6 +169,7 @@ define([
         }
         return false;
     }
+
     function adicionarNoBanco(data){
         $.post('/reconhecimentos/definir_ciclo/', data, function () {
         growl.deSucesso().exibir('Ciclo adicionado com sucesso');

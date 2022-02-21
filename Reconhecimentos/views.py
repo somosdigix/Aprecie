@@ -108,7 +108,14 @@ def reconhecimentos_do_colaborador(requisicao, id_do_reconhecido):
     'quantidade_de_reconhecimentos': len(reconhecido.reconhecimentos_por_pilar(pilar))
   }, Pilar.objects.all()))
 
-  return JsonResponse({ 'id': reconhecido.id, 'nome': reconhecido.nome_abreviado, 'administrador': reconhecido.administrador, 'pilares': pilares }, safe = False)
+  resposta = {
+    'id': reconhecido.id,
+    'nome': reconhecido.nome_abreviado,
+    'administrador': reconhecido.administrador,
+    'pilares': pilares
+  }
+
+  return JsonResponse(resposta, safe = False)
 
 def contar_reconhecimentos(requisicao):
    colaboradores = map(lambda colaborador: { 
@@ -149,8 +156,15 @@ def todas_as_apreciacoes(requisicao, id_do_reconhecido):
   return JsonResponse(resposta)
 
 def todos_os_pilares_e_colaboradores(requisicao):
-    pilares = map(lambda pilar: { 'id': pilar.id, 'nome': pilar.nome }, Pilar.objects.all())
-    colaboradores = map(lambda colaborador: { 'id_colaborador': colaborador.id, 'nome': colaborador.nome_abreviado}, Colaborador.objects.all())
+    pilares = map(lambda pilar: { 
+      'id': pilar.id, 
+      'nome': pilar.nome 
+      }, Pilar.objects.all())
+
+    colaboradores = map(lambda colaborador: { 
+      'id_colaborador': colaborador.id, 
+      'nome': colaborador.nome_abreviado
+      }, Colaborador.objects.all())
 
     retorno = {
       'pilares': list(pilares),
@@ -179,30 +193,24 @@ def reconhecimentos_por_pilar(requisicao, id_do_reconhecido, id_do_pilar):
 
   return JsonResponse(resposta)
 
+@has_role_decorator('administrador')
 def definir_ciclo(requisicao):
   nome_ciclo = requisicao.POST["nome_ciclo"]
   data_inicial = requisicao.POST["data_inicial"]
   data_final = requisicao.POST["data_final"]
   id_usuario_que_modificou = requisicao.POST["usuario_que_modificou"]
+  usuario_que_modificou = Colaborador.objects.get(id=id_usuario_que_modificou)
+
+  log_Ciclo = LOG_Ciclo(ciclo, usuario_que_modificou, 'Criação do ciclo', nome_ciclo , data_final)
+  log_Ciclo.save()
   
   ciclo = Ciclo(nome=nome_ciclo, data_inicial=data_inicial, data_final= data_final)
   ciclo.save()
 
-  usuario_que_modificou = Colaborador.objects.get(id=id_usuario_que_modificou)
-  log_Ciclo = LOG_Ciclo(ciclo=ciclo, usuario_que_modificou=usuario_que_modificou,descricao_da_alteracao='Criação do ciclo', nova_data_alterada=data_final, 
-  antiga_data_final = data_final, novo_nome_ciclo = nome_ciclo, antigo_nome_ciclo = nome_ciclo)
-  log_Ciclo.save()
-
   return JsonResponse({})
 
-
+@has_role_decorator('administrador')
 def alterar_ciclo(requisicao):
-  # Nessa requisicao precisamos pegar as infos antigas e alocar no log
-  # Assim o log vai ter estaticamente as infos do ciclo antigo
-  # Temos que pegar via requisicao os dados antigos
-  # O nome antigo
-  # A data antiga
-  # Armazenar no log
   id_ciclo = requisicao.POST["id_ciclo"]
   data_final = requisicao.POST["data_final"]
   id_usuario_que_modificou = requisicao.POST["usuario_que_modificou"]
@@ -211,9 +219,7 @@ def alterar_ciclo(requisicao):
   ciclo = Ciclo.objects.get(id = id_ciclo)
   usuario_que_modificou = Colaborador.objects.get(id=id_usuario_que_modificou)
 
-  log_Ciclo = LOG_Ciclo(ciclo = ciclo, usuario_que_modificou = usuario_que_modificou, 
-  descricao_da_alteracao = descricao_da_alteracao, antiga_data_final = ciclo.data_final, 
-  antigo_nome_ciclo = ciclo.nome, novo_nome_ciclo = novo_nome_ciclo, nova_data_alterada = data_final)
+  log_Ciclo = LOG_Ciclo(ciclo, usuario_que_modificou, descricao_da_alteracao, novo_nome_ciclo, data_final)
   log_Ciclo.save()
 
   ciclo.alterar_ciclo(data_final,novo_nome_ciclo)
@@ -236,14 +242,20 @@ def obter_informacoes_ciclo_atual(requisicao):
     'nome_usuario_que_modificou': colaborador.nome_abreviado,
     'descricao_da_alteracao': log.descricao_da_alteracao,
     'data_ultima_alteracao': log.data_da_modificacao.strftime('%d/%m/%Y'),
-    'porcentagem_do_progresso': calcular_porcentagem_progresso(ciclo.data_final, ciclo.data_inicial)
+    'porcentagem_do_progresso': ciclo.calcular_porcentagem_progresso()
   }
   
   return JsonResponse(resposta)
 
 @has_role_decorator('administrador')
 def ciclos_passados(requisicao):
-  ciclos_passados = map(lambda ciclo: { 'id_ciclo': ciclo.id, 'nome': ciclo.nome, 'nome_autor': obter_nome_usuario_que_modificou(ciclo), 'data_inicial': ciclo.data_inicial.strftime('%d/%m/%Y'), 'data_final': ciclo.data_final.strftime('%d/%m/%Y') }, obter_ciclos_passados().order_by('-id'))
+  ciclos_passados = map(lambda ciclo: { 
+    'id_ciclo': ciclo.id, 
+    'nome': ciclo.nome, 
+    'nome_autor': obter_nome_usuario_que_modificou(ciclo), 
+    'data_inicial': ciclo.data_inicial.strftime('%d/%m/%Y'), 
+    'data_final': ciclo.data_final.strftime('%d/%m/%Y') 
+    }, obter_ciclos_passados().order_by('-id'))
 
   lista_todos_ciclos_passados = list(ciclos_passados)
 
@@ -268,16 +280,15 @@ def ciclos_passados(requisicao):
 
 @has_role_decorator('administrador')
 def historico_alteracoes(requisicao):
-  # Precisa carregar o nome antigo do ciclo
-  # O erro acontece porque o historico de alterações mapeia o log com informações do ciclo atual
-  # Mas na verdade o log deve armazenar as infos antigas do ciclo que foi alterado
-  # Ex: nome_antigo : requisicao da um post no nome antigo
-  # data_final_antiga: requisicao da um post na data final do ciclo antigo
-  historico_alteracoes = map(lambda LOG_Ciclo: { 'antigo_nome_do_ciclo': LOG_Ciclo.antigo_nome_ciclo, 'nome_autor': LOG_Ciclo.usuario_que_modificou.nome_abreviado, 
-  'data_anterior': LOG_Ciclo.antiga_data_final.strftime('%d/%m/%Y'), 'nova_data': LOG_Ciclo.nova_data_alterada.strftime('%d/%m/%Y'), 
-  'data_alteracao': LOG_Ciclo.data_da_modificacao.strftime('%d/%m/%Y'), 'motivo_alteracao': LOG_Ciclo.descricao_da_alteracao, 'novo_nome_ciclo' : LOG_Ciclo.novo_nome_ciclo
-  },obter_historico_de_alteracoes().order_by('-id'))
-
+  historico_alteracoes = map(lambda LOG_Ciclo: { 
+    'antigo_nome_do_ciclo': LOG_Ciclo.antigo_nome_ciclo, 
+    'nome_autor': LOG_Ciclo.usuario_que_modificou.nome_abreviado, 
+    'data_anterior': LOG_Ciclo.antiga_data_final.strftime('%d/%m/%Y'), 
+    'nova_data': LOG_Ciclo.nova_data_alterada.strftime('%d/%m/%Y'), 
+    'data_alteracao': LOG_Ciclo.data_da_modificacao.strftime('%d/%m/%Y'), 
+    'motivo_alteracao': LOG_Ciclo.descricao_da_alteracao, 
+    'novo_nome_ciclo' : LOG_Ciclo.novo_nome_ciclo
+  }, obter_historico_de_alteracoes().order_by('-id'))
 
   paginator = Paginator(list(historico_alteracoes), 2)
 
@@ -297,27 +308,6 @@ def historico_alteracoes(requisicao):
   }	
   
   return JsonResponse(resposta, safe=False)
-  
-def calcularPeriodoCiclo(dataFinal, dataInicial):
-  periodoCiclo = dataFinal - dataInicial
-  return periodoCiclo.days
-  
-def calcularProgessoEmDias(dataFinal, dataHoje):
-  periodoDias = dataFinal - dataHoje
-  return periodoDias.days
-  
-def calcular_porcentagem_progresso(dataFinal, dataInicial):
-  dataInicial = dataInicial
-  dataFinal = dataFinal
-
-  dataHoje = date.today()
-  calculoPeriodoCiclo = calcularPeriodoCiclo(dataFinal, dataInicial)
-  calculoProgressoEmDias = calcularProgessoEmDias(dataFinal, dataHoje)
-
-  diferencaPeriodoEProgresso = calculoPeriodoCiclo - calculoProgressoEmDias
-
-  porcentagem_progresso = int(((diferencaPeriodoEProgresso / calculoPeriodoCiclo) * 100))
-  return str(porcentagem_progresso)
 
 def obter_ciclo_atual():
   return Ciclo.objects.get(data_final__gte=date.today(), data_inicial__lte=date.today())
