@@ -1,17 +1,15 @@
-﻿from cmath import log
-from django.http import JsonResponse, HttpResponse
-from django.shortcuts import render
-from django.utils import formats
+﻿from django.http import JsonResponse
 from django.db.models import Count
 from django.core.paginator import Paginator
 from datetime import date
 from rolepermissions.roles import assign_role, remove_role
 from rolepermissions.decorators import has_role_decorator
 
-from operator import attrgetter
 from Login.models import Colaborador
 from Reconhecimentos.models import Pilar, Reconhecimento, Feedback
 from Reconhecimentos.services import Notificacoes
+
+from datetime import date, datetime
 
 def reconhecer(requisicao):
   id_do_reconhecedor = requisicao.POST['id_do_reconhecedor']
@@ -179,3 +177,32 @@ def reconhecimentos_por_pilar(requisicao, id_do_reconhecido, id_do_pilar):
   }
 
   return JsonResponse(resposta)
+
+@has_role_decorator('administrador')
+def ranking_por_periodo(requisicao):
+    data_inicio = requisicao.POST['data_inicio']
+    data_fim = requisicao.POST['data_fim']
+    
+    colaboradores = Colaborador.objects.all()
+
+    transformacao = lambda colaborador : { 
+      'nome' : colaborador.nome_abreviado,
+      'todos_reconhecimentos' : len(colaborador.reconhecimentos_por_data(converterData(data_inicio), converterData(data_fim))),
+      'colaborar_sempre': len(colaborador.reconhecimentos_por_pilar_ranking(Pilar.objects.get(nome = "Colaborar sempre"), colaborador.reconhecimentos_por_data(converterData(data_inicio), converterData(data_fim)))),
+      'focar_nas_pessoas': len(colaborador.reconhecimentos_por_pilar_ranking(Pilar.objects.get(nome = "Focar nas pessoas"), colaborador.reconhecimentos_por_data(converterData(data_inicio), converterData(data_fim)))),
+      'fazer_diferente': len(colaborador.reconhecimentos_por_pilar_ranking(Pilar.objects.get(nome = "Fazer diferente"), colaborador.reconhecimentos_por_data(converterData(data_inicio), converterData(data_fim)))),
+      'planejar_entregar_aprender': len(colaborador.reconhecimentos_por_pilar_ranking(Pilar.objects.get(nome = "Planejar, entregar e aprender"), colaborador.reconhecimentos_por_data(converterData(data_inicio), converterData(data_fim)))),
+      'foto': colaborador.foto
+    }
+    
+    colaboradores = map(transformacao, colaboradores)
+
+    colaboradoresOrdenados = sorted(colaboradores, key=lambda x: x["todos_reconhecimentos"], reverse=True)
+    
+    return JsonResponse({'colaboradores': list(colaboradoresOrdenados)})
+
+def converterData(data):
+  return datetime.strptime(data, "%Y-%m-%d").date()
+
+
+

@@ -13,9 +13,10 @@
 			'/': [middlewareDeTransicaoDeTela, limparTela, login],
 			'/login': [middlewareDeAutenticacao, middlewareDeAtualizacaoComGoogleAnalytics, middlewareDeToolbar, middlewareDeTransicaoDeTela, limparTela, login],
 			'/paginaInicial': [middlewareBotaoReconhecer, middlewareDeAutenticacao, middlewareDeAtualizacaoComGoogleAnalytics, middlewareDeToolbar, middlewareDeTransicaoDeTela, limparTela, paginaInicial],
-			'/estatisticas': [middlewareBotaoReconhecer, middlewareDeAutenticacao, middlewareDeAtualizacaoComGoogleAnalytics, middlewareDeToolbar, middlewareDeTransicaoDeTela, limparTela, estatisticas],
+			'/estatisticas': [middlewareBotaoReconhecer ,middlewareDeAutenticacao, middlewareDeAtualizacaoComGoogleAnalytics, middlewareDeToolbar, middlewareDeTransicaoDeTela, limparTela, estatisticas],
 			'/perfil/:colaboradorId': [middlewareBotaoReconhecer, middlewareDeAutenticacao, middlewareDeAtualizacaoComGoogleAnalytics, middlewareDeToolbar, middlewareDeTransicaoDeTela, limparTela, perfil],
 			'/ranking': [middlewareBotaoReconhecer, middlewareDeAutenticacao, middlewareDeAtualizacaoComGoogleAnalytics, middlewareDeToolbar, middlewareDeTransicaoDeTela, limparTela, ranking],
+			'/rankingAdmin' : [middlewareBotaoReconhecer, middlewareDeAutenticacao, middlewareDeAtualizacaoComGoogleAnalytics, middlewareDeToolbar, middlewareDeTransicaoDeTela, limparTela, rankingAdmin]
 		};
 
 		function limparTela() {
@@ -55,6 +56,13 @@
 				_controllerAtivo = controller;
 				controller.exibir();
 			});
+		}
+
+		function rankingAdmin(){
+			require(['app/rankingAdmin/controller'], function (controller) {
+				_controllerAtivo = controller;
+				controller.exibir();
+			})
 		}
 
 		router = Router(rotas);
