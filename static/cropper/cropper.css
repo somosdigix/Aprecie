@@ -20,15 +20,6 @@
     outline:inherit !important;
 }
 
-.imagem__cortada{
-  width: 100px;
-}
-
-.image_container{
-  height: 300px;
-  margin:20px auto;
-}
-
 .cabecalho__modal{
     display: flex;
     align-items: flex-start;

@@ -1,21 +1,3 @@
-function fecharModalCrop() {
-    document.getElementById('caixa-modal').style.display = "none";
-}
-
-function readURL(input) {
-    if (input.files && input.files[0]) {
-        var reader = new FileReader();
-
-        reader.onload = function (e) {
-            document.getElementById("imagem__selecionada__container").innerHTML = "<img id='imagem__selecionada' src=" + e.target.result + " alt='imagem selecionada'/>"
-        };
-
-        reader.readAsDataURL(input.files[0]);
-        setTimeout(initCropper, 10);
-        document.querySelector("#imagem__botao__cropper").style.display = "block";
-    }
-}
-
 function getRoundedCanvas(sourceCanvas) {
     var canvas = document.createElement('canvas');
     var context = canvas.getContext('2d');
@@ -47,7 +29,11 @@ function initCropper() {
         var croppedCanvas = cropper.getCroppedCanvas();
         var roundedCanvas = getRoundedCanvas(croppedCanvas);
         var imgurl = roundedCanvas.toDataURL();
-
-        document.getElementById("cropped_result").innerHTML = "<img id='imagem__cortada' class='imagem__cortada' src=" + imgurl + " alt='imagem cortada'/>"
+        
+        var img = "<img id='imagem__cortada' class='imagem__cortada' src=" + imgurl + " alt='imagem cortada'/> ";
+        var paragrafo = "<p> Resultado: </p>";
+        var paragrafoInvisivel = "<p class='invisivel' id='url_imagem_cortada'>" + imgurl + "</p>";
+        document.getElementById("cropped_result").innerHTML = paragrafoInvisivel + paragrafo + img;
+        
     })
 }

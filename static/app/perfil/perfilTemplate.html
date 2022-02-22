@@ -1,5 +1,5 @@
 ﻿<div class="conteudo perfil-colaborador">
-	<input data-js="alterar-foto" type="file" class="invisivel" />
+	<!-- <input data-js="alterar-foto" type="file" class="invisivel" /> -->
 
 	<h1>Perfil</h1>
 
@@ -66,47 +66,146 @@
 	<div data-js="reconhecimentos-historicos" class="ui three column grid pilares" style="display: none;"></div>
 
 	<!-- Modal -->
-	<div id="caixa-modal">
-		<div class="cabecalho__modal">
-			<h1 class="titulo__modal__cropper"> Recorte sua imagem de perfil</h1>
-			<button class="botao__modal__fechar__cropper" onclick="fecharModalCrop()">
-				<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
-					<path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
-				</svg>
-			</button>
-		</div>
-		<input type="file" name="image" id="image" onchange="readURL(this);" />
-		<div id="imagem__botao__cropper" style="display: none;">
-			<div class="image_container" id="imagem__selecionada__container">
-				<img id="imagem__selecionada" src="#" alt="imagem selecionada" />
+	<div class="fundo__modal__cropper" id="caixa-modal">
+		<div class="modal__cropper">
+			<div class="cabecalho__modal">
+				<h1 class="titulo__modal__cropper"> Recorte sua imagem de perfil</h1>
+				<button class="botao__modal__fechar__cropper" data-js="botao_fechar_cropper">
+					<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-x"
+						viewBox="0 0 16 16">
+						<path
+							d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+					</svg>
+				</button>
 			</div>
-			<p>Prévia do Resultado:</p>
-			<div id="cropped_result"></div>
-			<button id="crop_button"> Cortar </button>
-
-			<button id="crop_button" data-js="salvar-foto-cortada"> Salvar mudanças </button>
+			<div class="corpo__modal__cropper">
+				<input type="file" name="image" id="image" data-js="input__arquivos"/>
+				<div id="imagem__botao__cropper">
+					<div class="container__cropper">
+						<div class="image_container" id="imagem__selecionada__container">
+							<img id="imagem__selecionada" src="#" alt="imagem selecionada" />
+						</div>
+						<div id="cropped_result"> </div>
+					</div>
+					<button id="crop_button"> Cortar </button>
+				</div>
+			</div>
+			<div class="rodape__modal__cropper">
+				<button id="botao__salvar__foto__cortada" data-js="alterar-foto"> Salvar mudanças </button>
+			</div>
 		</div>
 	</div>
 	<!-- Modal -->
 
 </div>
 
-<script>
-	
-
-
-</script>
-
 <style>
-	#caixa-modal {
-		width: 650px;
-		min-height: 100px;
-		border-radius: 15px;
-		background-color: green;
-		display: none;
-		margin: 0 auto;
+	* {
+		margin: 0;
+		padding: 0;
+	}
+
+	.container__cropper {
+		box-sizing: border-box;
+		margin: 16px;
+
+		display: flex;
+		gap: 16px;
+		align-items: flex-start;
+		justify-content: center;
+	}
+
+	.corpo__modal__cropper,
+	.rodape__modal__cropper,
+	.cabecalho__modal {
 		padding: 8px;
 	}
+
+	.fundo__modal__cropper {
+		position: fixed;
+		top: 0;
+		left: 0;
+		z-index: 2;
+
+		width: 100%;
+		height: 100%;
+
+		background: rgb(0, 0, 0, 0.5);
+	}
+
+	.modal__cropper {
+		width: 30%;
+		min-height: 60px;
+		background: white;
+
+		border-radius: 5px;
+		margin: 100px auto;
+	}
+
+	.imagem__cortada {
+		width: 100px;
+	}
+
+	.image_container {
+		max-width: 400px;
+		height: 300px;
+	}
+
+	.cabecalho__modal {
+		display: flex;
+		align-items: flex-start;
+		justify-content: space-between;
+	}
+
+	.titulo__modal__cropper {
+		font-size: 24px;
+		padding: 8px;
+	}
+
+	.botao__modal__fechar__cropper {
+		border: none;
+		background: transparent;
+		font-size: 24px;
+
+		cursor: pointer;
+	}
+
+	.rodape__modal__cropper {
+		border-top: 1px solid #2c006a;
+
+		display: flex;
+		justify-content: flex-end;
+	}
+
+	#botao__salvar__foto__cortada,
+	#crop_button {
+		cursor: pointer;
+		border-radius: 5px;
+		color: #fff;
+		padding: 8px;
+		margin: 4px 0;
+	}
+
+	#botao__salvar__foto__cortada {
+		background-color: #2c006a;
+		border: 1px solid #2c006a;
+	}
+
+	#crop_button {
+		background-color: #fc671d;
+		border: 1px solid #fc671d;
+	}
+
+	/* roxo: #2c006a*/
+	/* laranja: #fc671d*/
+
+
+	#imagem__botao__cropper,
+	#caixa-modal {
+		display: none;
+	}
+
+
 
 	h {
 		font-size: 24px;
