@@ -33,14 +33,14 @@ define([
         _sandbox.removerEvento("#conteudo");
     };
 
-    async function carregarGerenciador() {
-        await $.getJSON("/reconhecimentos/obter_informacoes_ciclo_atual", function (ciclo_atual) {
+    function carregarGerenciador() {
+        $.getJSON("/reconhecimentos/obter_informacoes_ciclo_atual", function (ciclo_atual) {
             template.exibir(gerenciadorDeCiclosTemplate, ciclo_atual);
         });
 
-        await carregarCiclosPassados();
+        carregarCiclosPassados();
 
-        await carregarHistoricoAlteracoes();
+        carregarHistoricoAlteracoes();
 
         $('#corpo__historico').hide();
         $('#historico_alteracao').hide();
@@ -48,13 +48,13 @@ define([
         definirPorcentagemNoCirculo();
     }
 
-    async function definirPorcentagemNoCirculo() {
-        var porcentagem = await $('#porcentagem').html();
-        await $("#circulo2").css("stroke-dashoffset", 314 - (parseInt(porcentagem) / 100) * 314);
+    function definirPorcentagemNoCirculo() {
+        var porcentagem = $('#porcentagem').html();
+        $("#circulo2").css("stroke-dashoffset", 314 - (parseInt(porcentagem) / 100) * 314);
     }
 
-    async function carregarCiclosPassados() {
-        await $.getJSON("/reconhecimentos/ciclos_passados", function (ciclos_passados) {
+    function carregarCiclosPassados() {
+        $.getJSON("/reconhecimentos/ciclos_passados", function (ciclos_passados) {
             var paragrafo_mensagem = document.getElementById("mensagem__ciclo");
                 console.log(ciclos_passados)
             if(ciclos_passados.secoes[0].ciclos.length == 0){
@@ -66,17 +66,17 @@ define([
             }
         });
 
-        await $("div.opcaoSecao--ciclos#secaoc1").toggleClass('secaoSelecionada');
-        await $("input.para__ciclos#c1").prop("checked", true);
+        $("div.opcaoSecao--ciclos#secaoc1").toggleClass('secaoSelecionada');
+        $("input.para__ciclos#c1").prop("checked", true);
     }
     
-    async function carregarHistoricoAlteracoes() {
-        await $.getJSON("/reconhecimentos/historico_alteracoes", function (LOG_ciclos) {
+    function carregarHistoricoAlteracoes() {
+        $.getJSON("/reconhecimentos/historico_alteracoes", function (LOG_ciclos) {
             template.acrescentarEm('#historico_alteracao', historicoDeAlteracao, LOG_ciclos);
         });
 
-        await $("div.opcaoSecao--historico#secaoh1").toggleClass('secaoSelecionada');
-        await $("input.para__historico#h1").prop("checked", true);
+        $("div.opcaoSecao--historico#secaoh1").toggleClass('secaoSelecionada');
+        $("input.para__historico#h1").prop("checked", true);
     }
 
     //funcoes para editar ciclo

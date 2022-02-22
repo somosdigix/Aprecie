@@ -97,7 +97,7 @@ class LOG_Ciclo(models.Model):
       self.descricao_da_alteracao = descricao_da_alteracao
       self.novo_nome_ciclo = novo_nome_ciclo
       self.nova_data_alterada = nova_data_alterada
-      if ciclo.data_final != None or ciclo.data_final != "":
+      if ciclo.data_final != None and ciclo.data_final != "":
         self.antiga_data_final = ciclo.data_final
-      if ciclo.nome != None or ciclo.none != "":
+      if ciclo.nome != None and ciclo.none != "":
         self.antigo_nome_ciclo = ciclo.nome
