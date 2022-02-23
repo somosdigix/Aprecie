@@ -97,4 +97,9 @@ class Colaborador(AbstractBaseUser, PermissionsMixin):
 	def definir_ultima_data_de_publicacao(self, data):
 		self.data_ultimo_reconhecimento = data
 		
-
+class LOG_Administrador(models.Model):
+	id = models.AutoField(primary_key = True)
+	administrador = models.ForeignKey('Colaborador', on_delete=models.CASCADE, related_name="Administrador") 
+	colaborador = models.ForeignKey('Colaborador', on_delete=models.CASCADE, related_name="Colaborador")
+	data_modificacao = models.DateField(auto_now = True)
+	descricao = models.CharField(max_length = 50)
