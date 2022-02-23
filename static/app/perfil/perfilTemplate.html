@@ -1,23 +1,34 @@
 ﻿<div class="conteudo perfil-colaborador">
-	<input data-js="alterar-foto" type="file" class="invisivel" />
+	<!-- <input data-js="alterar-foto" type="file" class="invisivel" /> -->
 
 	<h1>Perfil</h1>
 
 	<input type="hidden" id="reconhecidoId" value="{{this.id}}" />
 
 	<div id="perfilColaborador">
+
+		<div data-js="switch-adm" class="switch-adm">
+			<label class="switch">
+				<input type="checkbox" id="toggle">
+				<span class="slider round"></span>
+				<p class="txt-slider">Administrador</p>
+			</label>
+		</div>
+
 		<div data-js="foto" class="alterar-foto">
 			<span data-js="foto" class="editar ion-camera invisivel"></span>
 			<img data-js="foto" class="foto-colaborador" src="{{foto this.id}}" alt="Foto" title="Clique para alterar"
 				width="100" height="100" />
 		</div>
-
 		<div class="informacoes-colaborador">
 			<div class="chamada-apreciar">Aprecie</div>
-			<h2 class="nome-colaborador">{{this.nome}}</h2>
+			<h2 class="nome-colaborador" id="reconhecidoNome">{{this.nome}}</h2>
 		</div>
 
-		<div data-js="apreciacao" class="escrever-apreciacao"></div>
+		<button class="ui labeled icon floated botao-laranja button button" data-js="botao-apreciar">
+			<i class="star icon"></i>
+			Apreciar
+		</button>
 	</div>
 
 	<div class="bloco-apreciacoes">
@@ -35,11 +46,13 @@
 					</div>
 					<div class="extra content {{#if this.possui_reconhecimentos}}possui-reconhecimento{{/if}}">
 						<span>
-							<span class="quantidade-reconhecimentos">{{this.quantidade_de_reconhecimentos}}
+							<span class="quantidade-reconhecimentos">
+								{{this.quantidade_de_reconhecimentos}}
 							</span>
 							<span class="texto">
 								<i class="star icon"></i>
-								apreciação(ões)</span>
+								apreciação(ões)
+							</span>
 						</span>
 					</div>
 				</div>
@@ -49,9 +62,309 @@
 
 		<div data-js="todas-as-apreciacoes" class="apreciacoes-recebidas"></div>
 	</div>
+
 	<div data-js="reconhecimentos-historicos" class="ui three column grid pilares" style="display: none;"></div>
+
+	<!-- Modal -->
+	<div class="fundo__modal__cropper" id="caixa-modal">
+		<div class="modal__cropper">
+			<div class="cabecalho__modal">
+				<h1 class="titulo__modal__cropper"> Recorte sua imagem de perfil</h1>
+				<button class="botao__modal__fechar__cropper" data-js="botao_fechar_cropper">
+					<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-x"
+						viewBox="0 0 16 16">
+						<path
+							d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+					</svg>
+				</button>
+			</div>
+			<div class="corpo__modal__cropper">
+				<input type="file" name="image" id="image" data-js="input__arquivos"/>
+				<div id="imagem__botao__cropper">
+					<div class="container__cropper">
+						<div class="image_container" id="imagem__selecionada__container">
+							<img id="imagem__selecionada" src="#" alt="imagem selecionada" />
+						</div>
+						<div id="cropped_result"> </div>
+					</div>
+					<button id="crop_button"> Cortar </button>
+				</div>
+			</div>
+			<div class="rodape__modal__cropper">
+				<button id="botao__salvar__foto__cortada" data-js="alterar-foto"> Salvar mudanças </button>
+			</div>
+		</div>
+	</div>
+	<!-- Modal -->
+
 </div>
 
 <style>
-	
+	* {
+		margin: 0;
+		padding: 0;
+	}
+
+
+	h {
+		font-size: 24px;
+		margin-right: 65px;
+		font-weight: bold;
+
+	}
+
+	hr {
+		margin-bottom: 30px;
+	}
+
+	.selecionar-data {
+		display: block;
+		align-items: center;
+
+	}
+
+	.switch-adm {
+		text-align: left;
+		padding-bottom: 10px;
+	}
+
+	.txt-slider {
+		font-size: 16px;
+		font-family: "Campton-Medium";
+		position: absolute;
+		left: 50px;
+		top: -2px;
+	}
+
+	.switch {
+		position: relative;
+		display: inline-block;
+		width: 30px;
+		height: 14px;
+	}
+
+	.switch input {
+		opacity: 0;
+		width: 0;
+		height: 0;
+	}
+
+	.slider {
+		position: absolute;
+		cursor: pointer;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background-color: #ccc;
+		-webkit-transition: .4s;
+		transition: .4s;
+	}
+
+	.slider:before {
+		position: absolute;
+		content: "";
+		height: 9px;
+		width: 9px;
+		left: 2.5px;
+		bottom: 2.5px;
+		background-color: white;
+		-webkit-transition: .4s;
+		transition: .4s;
+	}
+
+	input:checked+.slider {
+		background-color: #2196F3;
+	}
+
+	input:focus+.slider {
+		box-shadow: 0 0 1px #2196F3;
+	}
+
+	input:checked+.slider:before {
+		-webkit-transform: translateX(16px);
+		-ms-transform: translateX(16px);
+		transform: translateX(16px);
+	}
+
+	.slider.round {
+		border-radius: 34px;
+	}
+
+	.slider.round:before {
+		border-radius: 50%;
+	}
+
+	.sobre-pilares {
+		height: 119px;
+	}
+
+
+	.bloco-apreciacoes {
+		list-style: none;
+		display: inline-block;
+		vertical-align: top;
+		width: 64%;
+		margin-left: 2%;
+	}
+
+	.pilares .itens {
+		width: 45%;
+		overflow: hidden;
+		border-radius: 6px;
+		-moz-border-radius: 6px;
+		-webkit-border-radius: 6px;
+		margin-bottom: 20px;
+		cursor: pointer;
+		padding: 20px;
+		background-color: #fff;
+		border: 1px solid #e2e2e2;
+		display: inline-block;
+		vertical-align: top;
+		margin: 0 2% 2% 2%;
+		height: 270px;
+	}
+
+	.pilares .itens:hover {
+		background-color: #fff;
+	}
+
+	.pilares .itens .descricao {
+		width: 100%;
+		display: inline-block;
+		vertical-align: middle;
+		height: 115px;
+	}
+
+	.pilares .itens .titulo {
+		font-size: 26px;
+		color: #0BC0D3;
+		line-height: 26px;
+		display: inline-block;
+	}
+
+	.pilares .itens h2 {
+		font-size: 15px;
+		color: #6A6A6A;
+		font-weight: normal;
+	}
+
+	.pilares .itens .extra {
+		width: 100%;
+		display: inline-block;
+		vertical-align: middle;
+		margin-top: 30%;
+		text-align: right;
+
+	}
+
+	.pilares .itens .extra .quantidade-reconhecimentos {
+		font-size: 46px;
+		line-height: 45px;
+		display: inline-block;
+		color: #D34AF4;
+
+	}
+
+	.pilares .itens .extra .texto {
+		font-size: 13px;
+		line-height: 15px;
+		text-align: left;
+		display: inline-block;
+		color: #6f7d95;
+	}
+
+	.pilares .itens .extra .texto .star {
+		display: block;
+		color: #D34AF4;
+
+	}
+
+	.tamanho-icone-pilares {
+		width: 150px !important;
+		margin: 8% auto;
+	}
+
+
+	.possui-reconhecimento {
+		font-weight: bold;
+		color: #D6740F !important;
+	}
+
+	.perfil-colaborador {
+		margin-bottom: 20px;
+	}
+
+	.bloco-pilares {
+		width: 100%;
+	}
+
+	button.reconhecimentos-anteriores {
+		margin: 29px 0;
+		cursor: pointer;
+		min-height: 1em;
+		outline: none;
+		border: none;
+		background: #E0E1E2;
+		color: rgba(0, 0, 0, .6);
+		padding: .78571429em 1.5em;
+		font-weight: 700;
+		line-height: 1em;
+		font-style: normal;
+		text-align: center;
+		border-radius: .28571429rem;
+		box-shadow: 0 0 0 1px transparent inset, 0 0 0 0 rgba(34, 36, 38, .15) inset;
+	}
+
+	button.reconhecimentos-anteriores:hover {
+		background: #c8cbce;
+	}
+
+
+	.escrever-apreciacao {
+		text-align: left;
+		display: none;
+	}
+
+	.escrever-apreciacao h2 {
+		font-size: 18px;
+		margin-top: 15px;
+	}
+
+	.escrever-apreciacao .selecione-o-pilar {
+		text-align: left;
+	}
+
+	/*.escrever-apreciacao .selecione-o-pilar .campos{
+    color: #616161;
+    cursor: pointer;    
+    padding: 3px 5px;
+    text-align: center;
+    border-radius: 25px;
+    margin: 10px 0;
+    border: 1px solid #0BC0D3;
+}*/
+
+	.selecionado,
+	.escrever-apreciacao .selecione-o-pilar .campos:hover {
+		background-color: #0BC0D3;
+		color: #fff;
+	}
+
+	.escrever-apreciacao .selecione-o-pilar .campos input {
+		display: none;
+	}
+
+	.escrever-apreciacao textarea {
+		width: 100%;
+		margin: 13px 0 0 0;
+		padding: 12px;
+		height: 100px;
+		outline: none;
+		border-radius: 5px;
+	}
+
+	.apreciacoes-recebidas {
+		margin: 2% 2%;
+	}
 </style>

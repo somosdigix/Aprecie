@@ -1,9 +1,8 @@
 ﻿import json
-from Aprecie.base import ExcecaoDeDominio
 from datetime import datetime
-from Login.models import Colaborador
+from Login.models import Colaborador, LOG_Administrador
 from django.http import JsonResponse, HttpResponse
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from io import BytesIO
 import base64
 from PIL import Image
@@ -12,26 +11,33 @@ from django.conf import settings
 import re
 from Aprecie.base import acesso_anonimo, acesso_exclusivo_com_token
 from Login.services import ServicoDeInclusaoDeColaboradores
+from Reconhecimentos.views import converte_boolean
+from rolepermissions.roles import assign_role, remove_role
+from rolepermissions.decorators import has_role_decorator
+
 
 @acesso_anonimo
 def entrar(requisicao):
-  cpf = requisicao.POST['cpf']
-  data_de_nascimento = datetime.strptime(requisicao.POST['data_de_nascimento'], '%d/%m/%Y')
+	cpf = requisicao.POST['cpf']
+	data_de_nascimento = datetime.strptime(requisicao.POST['data_de_nascimento'], '%d/%m/%Y')
 
-  # TODO: Pensar uma forma melhor do que lançar excecao e extrair daqui
-  colaborador_autenticado = authenticate(cpf=cpf, data_de_nascimento=data_de_nascimento)
+	# TODO: Pensar uma forma melhor do que lançar excecao e extrair daqui
+	colaborador_autenticado = authenticate(cpf=cpf, data_de_nascimento=data_de_nascimento)
   
-  if colaborador_autenticado:
-    login(requisicao, colaborador_autenticado)
-  else:
-    return JsonResponse(status=403, data={
-      'mensagem': 'Oi! Seus dados não foram encontrados. Confira e tente novamente. :)'
-    })
+	if colaborador_autenticado:
+		login(requisicao, colaborador_autenticado)
+	else:
+		return JsonResponse(status=403, data={
+			'mensagem': 'Oi! Seus dados não foram encontrados. Confira e tente novamente. :)'
+		})
+	  
+	data = {
+      'id_do_colaborador': colaborador_autenticado.id,
+	  'nome_do_colaborador': colaborador_autenticado.primeiro_nome,
+	  'administrador': colaborador_autenticado.administrador
+	}
 
-  return JsonResponse(status=200, data={
-    'id_do_colaborador': colaborador_autenticado.id,
-    'nome_do_colaborador': colaborador_autenticado.primeiro_nome,
-  })
+	return JsonResponse(data, status=200)
 
 def alterar_foto(requisicao):
 	id_do_colaborador = requisicao.POST['id_do_colaborador']
@@ -85,3 +91,45 @@ def inserir_colaboradores(requisicao):
 		ServicoDeInclusaoDeColaboradores().incluir(colaboradores)
 	
 	return JsonResponse(data=retorno_da_inclusao, status=200)
+
+def validar_usuario_logado(requisicao):
+	id_da_sessao = int(requisicao.POST['id'])
+	sessao_administrador = converte_boolean(requisicao.POST['administrador'])
+	id = requisicao.user.id
+	administrador = requisicao.user.administrador
+
+	if id_da_sessao != id or id_da_sessao == None or sessao_administrador != administrador:
+		logout(requisicao)
+		return JsonResponse({'valido': False})
+
+	elif id_da_sessao == id and sessao_administrador == administrador:
+		return JsonResponse({'valido': True})
+
+@has_role_decorator('administrador')
+def switch_administrador(requisicao):
+    id_do_colaborador = requisicao.POST['id_do_colaborador']
+    eh_administrador  = requisicao.POST['eh_administrador']
+    colaborador = Colaborador.objects.get(id = id_do_colaborador)
+
+    administrador = requisicao.user
+
+    eh_administrador = converte_boolean(eh_administrador)
+    
+    if eh_administrador:
+      assign_role(colaborador, 'administrador')
+      gerar_log_administrador(administrador, colaborador, "O Administrador: " + administrador.nome_abreviado + " setou o usuario: " + colaborador.nome_abreviado + " como administrador")
+      colaborador.tornar_administrador()
+      colaborador.save()
+    
+    else:
+      remove_role(colaborador, 'administrador')
+      gerar_log_administrador(administrador, colaborador, "O Administrador: " + administrador.nome_abreviado + " retirou os privilegios do usuario: " + colaborador.nome_abreviado)
+      colaborador.remover_administrador()
+      colaborador.save()
+
+    return JsonResponse({})
+
+def gerar_log_administrador(administrador, colaborador, descricao):
+	LOG_Administrador.objects.create(administrador = administrador, colaborador = colaborador, descricao = descricao)
+	
+	

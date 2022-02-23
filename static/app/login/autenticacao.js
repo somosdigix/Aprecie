@@ -1,15 +1,15 @@
-define(function() {
+define(function () {
 	'use strict';
 
 	var self = {};
 	var _sandbox;
 
-	self.inicializar = function(sandbox) {
+	self.inicializar = function (sandbox) {
 		_sandbox = sandbox;
 		_sandbox.escutar('autenticar', validarAutenticacao);
 	};
 
-	self.finalizar = function() {
+	self.finalizar = function () {
 		_sandbox.removerEscuta('autenticar');
 	};
 
@@ -28,7 +28,7 @@ define(function() {
 		_sandbox.preencherSessao(colaborador);
 		_sandbox.preencherCookie(colaborador);
 
-		_sandbox.redirecionarPara('/app/#/paginaInicial');
+		_sandbox.redirecionarPara('/app/#/perfil/' + colaborador.id_do_colaborador);
 	}
 
 	function validarOperacao(parametros) {

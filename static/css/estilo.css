@@ -39,6 +39,11 @@ h2,
   font-family: "Arial";
 }
 
+#modal-botao svg{
+  width: 16px;
+  height: 16px;
+}
+
 .pilares .itens h2 {
   font-family: "Raleway", sans-serif;
   margin: 20px 0;
@@ -697,11 +702,6 @@ svg {
 
 input[type="date"]::-webkit-calendar-picker-indicator {
   filter: invert(100%);
-}
-
-.container {
-  width: 80%;
-  margin: 32px auto;
 }
 
 .titulo {

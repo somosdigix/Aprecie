@@ -1,14 +1,16 @@
-﻿from django.http import JsonResponse, HttpResponse
-from django.shortcuts import render
-from django.utils import formats
+﻿from django.http import JsonResponse
 from django.db.models import Count
 from django.core.paginator import Paginator
 from datetime import date
 
-from operator import attrgetter
 from Login.models import Colaborador
 from Reconhecimentos.models import Pilar, Reconhecimento, Feedback, Ciclo, LOG_Ciclo
 from Reconhecimentos.services import Notificacoes
+
+from rolepermissions.roles import assign_role, remove_role
+from rolepermissions.decorators import has_role_decorator
+
+from datetime import date, datetime
 
 def reconhecer(requisicao):
   id_do_reconhecedor = requisicao.POST['id_do_reconhecedor']
@@ -16,15 +18,26 @@ def reconhecer(requisicao):
   id_do_pilar = requisicao.POST['id_do_pilar']
   descritivo = requisicao.POST['descritivo']
 
-  reconhecido = Colaborador.objects.get(id = id_do_reconhecido)
   reconhecedor = Colaborador.objects.get(id = id_do_reconhecedor)
-  pilar = Pilar.objects.get(id = id_do_pilar)
-  feedback = Feedback.objects.create(descritivo = descritivo)
+  
+  if verificar_ultima_data_de_publicacao(reconhecedor):
+    reconhecido = Colaborador.objects.get(id = id_do_reconhecido)
+    pilar = Pilar.objects.get(id = id_do_pilar)
+    feedback = Feedback.objects.create(descritivo = descritivo)
+    reconhecido.reconhecer(reconhecedor, pilar, feedback)
+    Notificacoes.notificar_no_chat(reconhecedor, reconhecido, pilar)
+    definir_data_de_publicacao(reconhecedor)
 
-  reconhecido.reconhecer(reconhecedor, pilar, feedback)
-  Notificacoes.notificar_no_chat(reconhecedor, reconhecido, pilar)
+    return JsonResponse({})
 
-  return JsonResponse({})
+  else:
+    return JsonResponse(status=403, data = {'mensagem': 'Você já fez um reconhecimento hoje, poderá fazer amanhã novamente!'})
+
+def verificar_ultima_data_de_publicacao(reconhecedor):
+  ultima_data = reconhecedor.obter_ultima_data_de_publicacao()
+
+  return not(ultima_data == date.today())
+  
 
 def ultimos_reconhecimentos(requisicao):
   reconhecimentos = Reconhecimento.objects.all().order_by('-id')
@@ -51,24 +64,20 @@ def ultimos_reconhecimentos(requisicao):
   }
 
   return JsonResponse(retorno, safe=False)
+  
 
-def ultima_data_de_publicacao(requisicao, id_do_reconhecedor):
-  reconhecedor = Colaborador.objects.get(id = id_do_reconhecedor)
+   
+def converte_boolean(bool):
+    if bool.lower() == 'false':
+        return False
+    elif bool.lower() == 'true':
+        return True
+    else:
+        raise ValueError("...")
 
-  ultima_data = reconhecedor.obter_ultima_data_de_publicacao()
-
-  resposta = {
-    'ultimaData': ultima_data
-  }
-
-  return JsonResponse(resposta)
-
-def definir_data_de_publicacao(requisicao, id_do_reconhecedor):
-  reconhecedor = Colaborador.objects.get(id = id_do_reconhecedor)
-
+def definir_data_de_publicacao(reconhecedor):
   reconhecedor.definir_ultima_data_de_publicacao(date.today())
-
-  return JsonResponse ({})
+  reconhecedor.save()
 
 def reconhecimentos_do_colaborador(requisicao, id_do_reconhecido):
   reconhecido = Colaborador.objects.get(id = id_do_reconhecido)
@@ -80,19 +89,16 @@ def reconhecimentos_do_colaborador(requisicao, id_do_reconhecido):
     'quantidade_de_reconhecimentos': len(reconhecido.reconhecimentos_por_pilar(pilar))
   }, Pilar.objects.all()))
 
-  return JsonResponse({ 'id': reconhecido.id, 'nome': reconhecido.nome_abreviado, 'pilares': pilares }, safe = False)
+  return JsonResponse({ 'id': reconhecido.id, 'nome': reconhecido.nome_abreviado, 'administrador': reconhecido.administrador, 'pilares': pilares }, safe = False)
 
 def contar_reconhecimentos(requisicao):
    colaboradores = map(lambda colaborador: { 
      'nome': colaborador.nome_abreviado, 
      'apreciacoes': colaborador.contar_todos_reconhecimentos(), 
      'foto': colaborador.foto
-     }, Colaborador.objects.all()[:10])
-   
-   colaboradoresOrdenados= sorted(colaboradores, key=lambda x: x["apreciacoes"], reverse=True)
+     }, sorted(Colaborador.objects.all(), key=lambda x: x.contar_todos_reconhecimentos(), reverse=True)[:10])
 
-   return JsonResponse({'colaboradores': list(colaboradoresOrdenados)})
-
+   return JsonResponse({'colaboradores': list(colaboradores)})
 
 def reconhecimentos_por_reconhecedor(requisicao, id_do_reconhecido):
   reconhecedores = Reconhecimento.objects.filter(reconhecido = id_do_reconhecido) \
@@ -106,11 +112,16 @@ def reconhecimentos_por_reconhecedor(requisicao, id_do_reconhecido):
 
 def todas_as_apreciacoes(requisicao, id_do_reconhecido):
   reconhecido = Colaborador.objects.get(id=id_do_reconhecido)
-  
-  apreciacoes = reconhecido.reconhecimentos() \
-    .values('data', 'pilar__nome', 'feedback__descritivo', \
-            'reconhecedor__nome', 'reconhecedor__id', 'reconhecido__nome') \
-    .order_by('-data', '-id')
+
+  apreciacoes = map(lambda apreciacao: {
+    'id': apreciacao.id,
+    'data': apreciacao.data,
+    'pilar__nome': apreciacao.pilar.nome,
+    'feedback__descritivo': apreciacao.feedback.descritivo, 
+    'reconhecedor__nome': apreciacao.reconhecedor.nome_abreviado,
+    'reconhecedor__id': apreciacao.reconhecedor.id,
+    'reconhecido__nome': apreciacao.reconhecido.nome_abreviado
+  }, reconhecido.reconhecimentos().order_by('-id'))
 
   resposta = {
     'apreciacoes': list(apreciacoes)
@@ -128,6 +139,7 @@ def todos_os_pilares_e_colaboradores(requisicao):
     }
 
     return JsonResponse(retorno, safe=False)
+
 
 def reconhecimentos_por_pilar(requisicao, id_do_reconhecido, id_do_pilar):
   reconhecido = Colaborador.objects.get(id=id_do_reconhecido)
@@ -204,3 +216,31 @@ def obter_informacoes_ciclo_atual(requisicao):
 def obter_ciclo_atual():
   return Ciclo.objects.get(data_final__gte=date.today(), data_inicial__lte=date.today())
   
+@has_role_decorator('administrador')
+def ranking_por_periodo(requisicao):
+    data_inicio = requisicao.POST['data_inicio']
+    data_fim = requisicao.POST['data_fim']
+    
+    colaboradores = Colaborador.objects.all()
+
+    transformacao = lambda colaborador : { 
+      'nome' : colaborador.nome_abreviado,
+      'todos_reconhecimentos' : len(colaborador.reconhecimentos_por_data(converterData(data_inicio), converterData(data_fim))),
+      'colaborar_sempre': len(colaborador.reconhecimentos_por_pilar_ranking(Pilar.objects.get(nome = "Colaborar sempre"), colaborador.reconhecimentos_por_data(converterData(data_inicio), converterData(data_fim)))),
+      'focar_nas_pessoas': len(colaborador.reconhecimentos_por_pilar_ranking(Pilar.objects.get(nome = "Focar nas pessoas"), colaborador.reconhecimentos_por_data(converterData(data_inicio), converterData(data_fim)))),
+      'fazer_diferente': len(colaborador.reconhecimentos_por_pilar_ranking(Pilar.objects.get(nome = "Fazer diferente"), colaborador.reconhecimentos_por_data(converterData(data_inicio), converterData(data_fim)))),
+      'planejar_entregar_aprender': len(colaborador.reconhecimentos_por_pilar_ranking(Pilar.objects.get(nome = "Planejar, entregar e aprender"), colaborador.reconhecimentos_por_data(converterData(data_inicio), converterData(data_fim)))),
+      'foto': colaborador.foto
+    }
+    
+    colaboradores = map(transformacao, colaboradores)
+
+    colaboradoresOrdenados = sorted(colaboradores, key=lambda x: x["todos_reconhecimentos"], reverse=True)
+    
+    return JsonResponse({'colaboradores': list(colaboradoresOrdenados)})
+
+def converterData(data):
+  return datetime.strptime(data, "%Y-%m-%d").date()
+
+
+
