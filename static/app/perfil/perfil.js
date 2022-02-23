@@ -21,7 +21,7 @@
 			switchAdministrador(reconhecimentosDoColaborador, colaboradorId);
 
 			$('#conteudo')
-				.on('click', 'div[data-js="exibir-reconhecimentos"]', exibirReconhecimentos);
+				.on('click', 'button[data-js="exibir-reconhecimentos"]', exibirReconhecimentos);
 
 			if (sessaoDeUsuario.id === colaboradorId) {
 				$('div[data-js="switch-adm"]').hide();

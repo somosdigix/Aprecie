@@ -1,0 +1,32 @@
+<h2>Minhas apreciações</h2>
+<div id="reconhecimentos" reconhecimentos={{apreciacoes}}></div>
+<button data-js="reconhecimentos-recebidos" id="reconhecimentos-recebidos" class="botao__perfil__apreciacoes">Reconhecimentos Recebidos</button>
+<button data-js="reconhecimentos-feitos" id="reconhecimentos-feitos" class="botao__perfil__apreciacoes">Reconhecimentos Feitas</button>
+{{#each this}}
+<section class="feed-reconhecimentos caixa-feed">
+	<div class="container">
+		<div class="bloco-reconhecimento">
+			<img
+				class="img-reconhecedor"
+				src="{{ foto this.reconhecedor__id usar_miniatura=true}}"
+			/>
+
+			<div class="texto-reconhecimento">
+				{{#if this.pilar__nome}}
+				<strong data-id="1" data-js="ir-ao-perfil" class="apreciador">
+					{{ this.reconhecido__nome }} em {{ this.pilar__nome }}
+				</strong>
+				{{/if}}
+
+				<div class="data-reconhecimento">{{ emDataLegivel this.data }}</div>
+
+				<p>{{this.feedback__descritivo}}</p>
+			</div>
+		</div>
+	</div>
+</section>
+
+{{else}}
+<div class="ui yellow message">Ainda não possuo nenhuma apreciação.</div>
+{{/each}}
+
