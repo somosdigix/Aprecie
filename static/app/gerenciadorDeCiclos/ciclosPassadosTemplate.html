@@ -1,0 +1,30 @@
+<ul class="lista__historico">
+    {{#each this.secoes}}
+    <div class="secao opcaoSecao--ciclos" id="secaoc{{this.id_secao}}">
+        {{#each this.ciclos}}
+        <li class="lista__historico--item">
+            <p class="nome__ciclo">Nome do Ciclo: {{this.nome}}</p>
+            <p class="nome__autor">Nome do Autor: {{this.nome_autor}}</p>
+            <p class="data__inicio">Data inicial: {{this.data_inicial}}</p>
+            <p class="data__final">Data Final: {{this.data_final}}</p>
+        </li>
+        {{/each}}
+    </div>
+    {{/each}}
+</ul>
+<div class="opcoes">
+    {{#each this.secoes}}
+    <label class="opcao__secao" for="c{{this.id_secao}}">
+        <input class="para__ciclos opcao__secao--input" type="radio" name="opcaoSecao--ciclos" id="c{{this.id_secao}}"
+            onclick="exibeCiclosCarrosel(this.id, this.name)">
+        <span class="opcao__secao--span"></span>
+    </label>
+    {{/each}}
+</div>
+<button name="opcaoSecao--ciclos" class="botao__opcao--historicoEsquerda" onclick="mudarCiclosPelaSetaEsquerda(this.name)">
+    <img src="../static/img/seta-tras.svg" alt="Seta para trás">
+</button>
+<button name="opcaoSecao--ciclos" class="botao__opcao--historicoDireita" onclick="mudarCiclosPelaSetaDireita(this.name)">
+    <img src="../static/img/seta-frente.svg" alt="Seta para frente">
+</button>
+
