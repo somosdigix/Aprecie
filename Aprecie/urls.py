@@ -9,5 +9,4 @@ urlpatterns = [
     url(r'^app/', views.index),
     url(r'^login/', include('Login.urls')),
     url(r'^reconhecimentos/', include('Reconhecimentos.urls'))
-
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
