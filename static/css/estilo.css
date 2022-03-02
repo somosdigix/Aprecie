@@ -646,6 +646,10 @@ svg {
   transform: translate(-50%, -50%);
 }
 
+#modal-botao svg{
+  width: 16px;
+  height: 16px;
+}
 .circulo1 {
   width: 150px;
   height: 150px;
