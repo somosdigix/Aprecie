@@ -73,11 +73,11 @@ class Ciclo(models.Model):
     return str(porcentagem_progresso)
 
   def calcularPeriodoCiclo(self):
-    periodoCiclo = self.dataFinal - self.dataInicial
+    periodoCiclo = self.data_final - self.data_inicial
     return periodoCiclo.days
   
   def calcularProgessoEmDias(self):
-    periodoDias = self.dataFinal - date.today()
+    periodoDias = self.data_final - date.today()
     return periodoDias.days
     
 class LOG_Ciclo(models.Model):
@@ -90,14 +90,12 @@ class LOG_Ciclo(models.Model):
   antigo_nome_ciclo = models.CharField(max_length=25)
   novo_nome_ciclo = models.CharField(max_length=25)
   nova_data_alterada = models.DateField(default=None, null=True)
-  
-  def __init__(self, ciclo, usuario_que_modificou, descricao_da_alteracao, novo_nome_ciclo, nova_data_alterada):
-      self.ciclo = ciclo
-      self.usuario_que_modificou = usuario_que_modificou
-      self.descricao_da_alteracao = descricao_da_alteracao
-      self.novo_nome_ciclo = novo_nome_ciclo
-      self.nova_data_alterada = nova_data_alterada
-      if ciclo.data_final != None and ciclo.data_final != "":
-        self.antiga_data_final = ciclo.data_final
-      if ciclo.nome != None and ciclo.none != "":
-        self.antigo_nome_ciclo = ciclo.nome
+
+  @classmethod
+  def adicionar(cls, ciclo, usuario_que_modificou, descricao_da_alteracao, novo_nome_ciclo, nova_data_alterada):
+    if ciclo.data_final != None and ciclo.data_final != "":
+      data_final = ciclo.data_final
+    if ciclo.nome != None and ciclo.nome != "":
+      ciclo_nome = ciclo.nome  
+    return cls(ciclo = ciclo, usuario_que_modificou = usuario_que_modificou, descricao_da_alteracao = descricao_da_alteracao, novo_nome_ciclo = novo_nome_ciclo,
+    nova_data_alterada = nova_data_alterada, antiga_data_final = data_final, antigo_nome_ciclo = ciclo_nome)
