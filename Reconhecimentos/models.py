@@ -84,20 +84,22 @@ class LOG_Ciclo(models.Model):
   id = models.AutoField(primary_key=True)
   ciclo = models.ForeignKey('Ciclo', related_name='ciclo', on_delete=models.CASCADE)
   data_da_modificacao = models.DateField(auto_now=True)
-  usuario_que_modificou = models.ForeignKey('Login.Colaborador', related_name='usuario_que_modificou', on_delete=models.CASCADE)
+  usuario_que_modificou = models.ForeignKey('Login.Colaborador', related_name='usuario_que_modificou', on_delete=models.CASCADE, null=True)
   descricao_da_alteracao = models.CharField(max_length=63)
   antiga_data_final = models.DateField(default=None, null=True)
-  antigo_nome_ciclo = models.CharField(max_length=25)
-  novo_nome_ciclo = models.CharField(max_length=25)
+  antigo_nome_ciclo = models.CharField(max_length=25, null=True)
+  novo_nome_ciclo = models.CharField(max_length=25, null=True)
   nova_data_alterada = models.DateField(default=None, null=True)
   
-  def __init__(self, ciclo, usuario_que_modificou, descricao_da_alteracao, novo_nome_ciclo, nova_data_alterada):
-      self.ciclo = ciclo
-      self.usuario_que_modificou = usuario_que_modificou
-      self.descricao_da_alteracao = descricao_da_alteracao
-      self.novo_nome_ciclo = novo_nome_ciclo
-      self.nova_data_alterada = nova_data_alterada
-      if ciclo.data_final != None and ciclo.data_final != "":
-        self.antiga_data_final = ciclo.data_final
-      if ciclo.nome != None and ciclo.none != "":
-        self.antigo_nome_ciclo = ciclo.nome
+  @classmethod
+  def adicionar(cls, ciclo, usuario_que_modificou, descricao_da_alteracao, novo_nome_ciclo, nova_data_alterada):
+    if ciclo.data_final != None and ciclo.data_final != "":
+      data_final = ciclo.data_final
+    if ciclo.nome != None and ciclo.nome != "":
+      ciclo_nome = ciclo.nome
+    return cls(ciclo = ciclo, usuario_que_modificou = usuario_que_modificou, descricao_da_alteracao = descricao_da_alteracao, novo_nome_ciclo = novo_nome_ciclo,
+    nova_data_alterada = nova_data_alterada, antiga_data_final = data_final, antigo_nome_ciclo = ciclo_nome)
+
+  @classmethod
+  def adicionar_automatico(cls, ciclo):
+    return cls(ciclo = ciclo, descricao_da_alteracao = "Criação do ciclo automatico sem data final")

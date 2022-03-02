@@ -178,7 +178,7 @@ def definir_ciclo(requisicao):
   id_usuario_que_modificou = requisicao.POST["usuario_que_modificou"]
   usuario_que_modificou = Colaborador.objects.get(id=id_usuario_que_modificou)
 
-  log_Ciclo = LOG_Ciclo(ciclo, usuario_que_modificou, 'Criação do ciclo', nome_ciclo , data_final)
+  log_Ciclo = LOG_Ciclo.adicionar(ciclo, usuario_que_modificou, 'Criação do ciclo', nome_ciclo , data_final)
   log_Ciclo.save()
   
   ciclo = Ciclo(nome=nome_ciclo, data_inicial=data_inicial, data_final= data_final)
@@ -196,7 +196,7 @@ def alterar_ciclo(requisicao):
   ciclo = Ciclo.objects.get(id = id_ciclo)
   usuario_que_modificou = Colaborador.objects.get(id=id_usuario_que_modificou)
 
-  log_Ciclo = LOG_Ciclo(ciclo, usuario_que_modificou, descricao_da_alteracao, novo_nome_ciclo, data_final)
+  log_Ciclo = LOG_Ciclo.adicionar(ciclo, usuario_que_modificou, descricao_da_alteracao, novo_nome_ciclo, data_final)
   log_Ciclo.save()
 
   ciclo.alterar_ciclo(data_final,novo_nome_ciclo)
@@ -287,7 +287,10 @@ def historico_alteracoes(requisicao):
   return JsonResponse(resposta, safe=False)
 
 def obter_ciclo_atual():
-  return Ciclo.objects.get(data_final__gte=date.today(), data_inicial__lte=date.today())
+  try:
+    return Ciclo.objects.get(data_final__gte=date.today(), data_inicial__lte=date.today())
+  except Ciclo.DoesNotExist:
+    return Ciclo.objects.get(data_final__isnull=True, data_inicial__lte=date.today())
 
 def obter_ciclos_passados():
   return Ciclo.objects.filter(data_final__lte=date.today())
