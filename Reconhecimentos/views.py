@@ -3,6 +3,7 @@ from django.db.models import Count
 from django.core.paginator import Paginator
 from datetime import date
 
+from rolepermissions.decorators import has_role_decorator
 from Login.models import Colaborador
 from Reconhecimentos.models import Pilar, Reconhecimento, Feedback, Ciclo, LOG_Ciclo
 from Reconhecimentos.services import Notificacoes
