@@ -5,7 +5,7 @@ from Reconhecimentos.models import Pilar, Reconhecimento, Feedback, Ciclo, LOG_C
 from Reconhecimentos.services import Notificacoes
 from django.core.paginator import Paginator
 from rolepermissions.decorators import has_role_decorator
-
+from Aprecie.apps import AprecieConfig
 from datetime import date, datetime
 
 def reconhecer(requisicao):
@@ -327,5 +327,12 @@ def ranking_por_periodo(requisicao):
 def converterData(data):
   return datetime.strptime(data, "%Y-%m-%d").date()
 
+@has_role_decorator('administrador')
+def obter_notificacoes_do_administrador(requisicao):
+  notificacao = AprecieConfig.obter_mensagem_notificacao()
 
+  data = {
+    'mensagem': notificacao
+  }
 
+  return JsonResponse(data)

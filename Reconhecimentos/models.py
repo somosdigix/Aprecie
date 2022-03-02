@@ -52,7 +52,7 @@ class Ciclo(models.Model):
   id = models.AutoField(primary_key=True)  
   nome = models.CharField(max_length=25)
   data_inicial = models.DateField()
-  data_final = models.DateField()
+  data_final = models.DateField(null=True)
 
   def alterar_ciclo(self, data_final, nome):
     if data_final == None or data_final <= self.data_inicial:
