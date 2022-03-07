@@ -46,8 +46,8 @@
 					$('div[data-js="foto"]').removeClass("alterar-foto");
 				}
 
-				$('#conteudo')
-					.on('click', 'div[data-js="exibir-reconhecimentos"]', exibirReconhecimentos);
+			$('#conteudo')
+				.on('click', 'button[data-js="exibir-reconhecimentos"]', exibirReconhecimentos);
 
 				if (sessaoDeUsuario.id === colaboradorId) {
 					$('div[data-js="switch-adm"]').hide();

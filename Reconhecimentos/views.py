@@ -116,7 +116,7 @@ def reconhecimentos_por_reconhecedor(requisicao, id_do_reconhecido):
 def todas_as_apreciacoes(requisicao, id_do_reconhecido):
   reconhecido = Colaborador.objects.get(id=id_do_reconhecido)
 
-  apreciacoes = map(lambda apreciacao: {
+  apreciacoes_recebidas = map(lambda apreciacao: {
     'id': apreciacao.id,
     'data': apreciacao.data,
     'pilar__nome': apreciacao.pilar.nome,
@@ -126,11 +126,22 @@ def todas_as_apreciacoes(requisicao, id_do_reconhecido):
     'reconhecido__nome': apreciacao.reconhecido.nome_abreviado
   }, reconhecido.reconhecimentos().order_by('-id'))
 
-  resposta = {
-    'apreciacoes': list(apreciacoes)
+  apreciacoes_feitas = map(lambda apreciacao: {
+    'id': apreciacao.id,
+    'data': apreciacao.data,
+    'pilar__nome': apreciacao.pilar.nome,
+    'feedback__descritivo': apreciacao.feedback.descritivo, 
+    'reconhecedor__nome': apreciacao.reconhecedor.nome_abreviado,
+    'reconhecedor__id': apreciacao.reconhecedor.id,
+    'reconhecido__nome': apreciacao.reconhecido.nome_abreviado
+  }, Reconhecimento.objects.filter(reconhecedor = requisicao.user.id).order_by('-id'))
+
+  apreciacoes = {
+    'feitas': list(apreciacoes_feitas),
+    'recebidas': list(apreciacoes_recebidas)
   }
 
-  return JsonResponse(resposta)
+  return JsonResponse(apreciacoes)
 
 def todos_os_pilares_e_colaboradores(requisicao):
     pilares = map(lambda pilar: { 
