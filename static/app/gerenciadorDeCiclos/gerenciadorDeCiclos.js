@@ -26,6 +26,8 @@ define([
             .on("click", 'button[id="btn__cancelar__edicao"]', fecharModal)
             .on("click", 'button[id="btn__adicionar__ciclo"]',mostrarContainerNovoCiclo)
             .on("click", 'button[id="btn__cancelar"]',fecharContainerNovoCiclo)
+            .on("click", 'button[data-js="botao-historio-ciclos"]',carregarCiclosPassados)
+            .on("click", 'button[data-js="botao-alteracoes-ciclos"]',carregarHistoricoAlteracoes)
     };
 
     self.finalizar = function () {
@@ -37,10 +39,6 @@ define([
         $.getJSON("/reconhecimentos/obter_informacoes_ciclo_atual", function (ciclo_atual) {
             template.exibir(gerenciadorDeCiclosTemplate, ciclo_atual);
         });
-
-        carregarCiclosPassados();
-
-        carregarHistoricoAlteracoes();
 
         $('#corpo__historico').hide();
         $('#historico_alteracao').hide();
@@ -55,8 +53,11 @@ define([
 
     function carregarCiclosPassados() {
         $.getJSON("/reconhecimentos/ciclos_passados", function (ciclos_passados) {
+            var divCiclosPassados = document.querySelector('#corpo__historico');
+            var seta = document.querySelector("#seta_ciclos");
+            viraSeta(seta, divCiclosPassados);
+            
             var paragrafo_mensagem = document.getElementById("mensagem__ciclo");
-                console.log(ciclos_passados)
             if(ciclos_passados.secoes[0].ciclos.length == 0){
                 paragrafo_mensagem.style.display = "block";
             }
@@ -72,7 +73,10 @@ define([
     
     function carregarHistoricoAlteracoes() {
         $.getJSON("/reconhecimentos/historico_alteracoes", function (LOG_ciclos) {
-            template.acrescentarEm('#historico_alteracao', historicoDeAlteracao, LOG_ciclos);
+            var divCiclosHistoricos = document.querySelector('#historico_alteracao');
+            var seta = document.querySelector("#seta_historico");
+            viraSeta(seta, divCiclosHistoricos);
+            template.exibirEm('#historico_alteracao', historicoDeAlteracao, LOG_ciclos);
         });
 
         $("div.opcaoSecao--historico#secaoh1").toggleClass('secaoSelecionada');
@@ -176,10 +180,25 @@ define([
         roteador.atualizar();
       })};
 
-    function alterarNoBanco(data){
+    
+      function alterarNoBanco(data){
         $.post('/reconhecimentos/alterar_ciclo/', data, function () {
             growl.deSucesso().exibir('Ciclo alterado com sucesso');
             roteador.atualizar();
     })};  
+    
+    function viraSeta(seta, divCiclosPassados){
+        if (seta.getAttribute('class') == 'setaAtivada') {
+            seta.style.animation = "girarSetaCima 0.4s forwards";
+            seta.setAttribute('class', 'setaDesativada');
+            divCiclosPassados.style.display = "none";
+        }
+        else {
+            seta.setAttribute('class', 'setaAtivada');
+            seta.style.animation = "girarSetaBaixo 0.4s forwards";
+            divCiclosPassados.style.display = "block";
+        }
+    }
+
     return self;
 });
