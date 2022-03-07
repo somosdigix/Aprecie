@@ -76,8 +76,15 @@ class Colaborador(AbstractBaseUser, PermissionsMixin):
 		return len(self.reconhecimentos())
 
 	def reconhecimentos_por_pilar(self, pilar):
-		return self.reconhecido.filter(pilar=pilar).order_by('-data')
+		return self.reconhecido.filter(pilar = pilar).order_by('-data')
 
+	def reconhecimentos_por_data(self, data_inicio, data_fim):
+		reconhecimentos = self.reconhecimentos()
+		return reconhecimentos.filter(data__gte= data_inicio).filter(data__lte=data_fim)
+
+	def reconhecimentos_por_pilar_ranking(self, pilar, reconhecimentos):
+		return reconhecimentos.filter(pilar = pilar).order_by('-data')
+		
 	def tornar_administrador(self):
 		self.administrador = True
 
@@ -90,4 +97,9 @@ class Colaborador(AbstractBaseUser, PermissionsMixin):
 	def definir_ultima_data_de_publicacao(self, data):
 		self.data_ultimo_reconhecimento = data
 		
-
+class LOG_Administrador(models.Model):
+	id = models.AutoField(primary_key = True)
+	administrador = models.ForeignKey('Colaborador', on_delete=models.CASCADE, related_name="Administrador") 
+	colaborador = models.ForeignKey('Colaborador', on_delete=models.CASCADE, related_name="Colaborador")
+	data_modificacao = models.DateField(auto_now = True)
+	descricao = models.CharField(max_length = 50)
