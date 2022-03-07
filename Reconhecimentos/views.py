@@ -322,6 +322,7 @@ def ranking_por_periodo(requisicao):
     transformacao = lambda colaborador : { 
       'nome' : colaborador.nome_abreviado,
       'todos_reconhecimentos' : len(colaborador.reconhecimentos_por_data(converterData(data_inicio), converterData(data_fim))),
+      'reconhecimentos_feitos' : len(colaborador.reconhecimentos_feitos_por_data(converterData(data_inicio), converterData(data_fim))),
       'colaborar_sempre': len(colaborador.reconhecimentos_por_pilar_ranking(Pilar.objects.get(nome = "Colaborar sempre"), colaborador.reconhecimentos_por_data(converterData(data_inicio), converterData(data_fim)))),
       'focar_nas_pessoas': len(colaborador.reconhecimentos_por_pilar_ranking(Pilar.objects.get(nome = "Focar nas pessoas"), colaborador.reconhecimentos_por_data(converterData(data_inicio), converterData(data_fim)))),
       'fazer_diferente': len(colaborador.reconhecimentos_por_pilar_ranking(Pilar.objects.get(nome = "Fazer diferente"), colaborador.reconhecimentos_por_data(converterData(data_inicio), converterData(data_fim)))),

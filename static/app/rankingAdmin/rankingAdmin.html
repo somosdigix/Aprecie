@@ -16,6 +16,9 @@
                 <p class="colaborador__ranking--nome espacamento">Total de apreciações: 
                     {{todos_reconhecimentos}}
                 </p>
+                <p class="colaborador__ranking--nome espacamento">Apreciações feitas: 
+                    {{reconhecimentos_feitos}}
+                </p>
             </div>
         </div>
         <div class="apreciacoes">
@@ -36,11 +39,14 @@
     {{/each}}
 </div>
 
-
 <style>
     .foto__colaborador{
         border-radius: 50%;
+        width: 120px;
+		height: 120px;
+        margin:10px;
     }
+    
     .container__ranking{    
         font-family: Campton;
     }
@@ -64,11 +70,6 @@
         margin: 32px auto;
         width: 80%;
         flex-wrap: wrap;
-    }
-
-    .com-foto, .sem-foto{
-        width: 35%;
-        margin:10px;
     }
     
     .colaborador__ranking {
