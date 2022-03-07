@@ -1,0 +1,33 @@
+<ul class="lista__historico">
+	{{#each this.secoes}}		
+	<div class="secao opcaoSecao--historico" id="secaoh{{this.id_secao}}">
+		{{#each this.LOG_ciclos}}
+		<li class="lista__historico--item">
+			<p class="novo__nome__ciclo">Novo Nome do ciclo: {{this.novo_nome_ciclo}}</p>
+			<p class="nome__ciclo__anterior">Nome do ciclo Anterior: {{this.antigo_nome_do_ciclo}}</p>
+			<p>Autor da Alteração: {{this.nome_autor}}</p>
+			<div class="datas_modificadas">
+				<p class="data__inicio">Data Anterior: {{this.data_anterior}}</p>
+				<p class="data__final">Nova Data: {{this.nova_data}}</p>
+			</div>
+			<p class="motivo_alteracao_log">Motivo da Alteração: {{this.motivo_alteracao}}</p>
+			<p>Data da Alteração: {{this.data_alteracao}}</p>
+		</li>
+		{{/each}}
+	</div>
+	{{/each}}
+</ul>
+<div class="opcoes">
+	{{#each this.secoes}}
+	<label class="opcao__secao" for="h{{this.id_secao}}">
+		<input class="para__historico opcao__secao--input" type="radio" name="opcaoSecao--historico" id="h{{this.id_secao}}" onclick="exibeCiclosCarrosel(this.id, this.name)">
+		<span class="opcao__secao--span"></span>
+	</label>
+	{{/each}}
+</div>
+<button name="opcaoSecao--historico" class="botao__opcao--historicoEsquerda" onclick="mudarCiclosPelaSetaEsquerda(this.name)">
+	<img src="../static/img/seta-tras.svg" alt="Seta para trás">
+</button>
+<button name="opcaoSecao--historico"class="botao__opcao--historicoDireita" onclick="mudarCiclosPelaSetaDireita(this.name)">
+	<img src="../static/img/seta-frente.svg" alt="Seta para frente">
+</button>

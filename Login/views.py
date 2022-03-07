@@ -1,10 +1,7 @@
-﻿from email.errors import InvalidMultipartContentTransferEncodingDefect
-import json
-
-from Aprecie.base import ExcecaoDeDominio
+﻿import json
 from datetime import datetime
-from Login.models import Colaborador
-from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
+from Login.models import Colaborador, LOG_Administrador
+from django.http import JsonResponse, HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from io import BytesIO
 import base64
@@ -15,6 +12,8 @@ import re
 from Aprecie.base import acesso_anonimo, acesso_exclusivo_com_token
 from Login.services import ServicoDeInclusaoDeColaboradores
 from Reconhecimentos.views import converte_boolean
+from rolepermissions.roles import assign_role, remove_role
+from rolepermissions.decorators import has_role_decorator
 
 
 @acesso_anonimo
@@ -105,5 +104,32 @@ def validar_usuario_logado(requisicao):
 
 	elif id_da_sessao == id and sessao_administrador == administrador:
 		return JsonResponse({'valido': True})
+
+@has_role_decorator('administrador')
+def switch_administrador(requisicao):
+    id_do_colaborador = requisicao.POST['id_do_colaborador']
+    eh_administrador  = requisicao.POST['eh_administrador']
+    colaborador = Colaborador.objects.get(id = id_do_colaborador)
+
+    administrador = requisicao.user
+
+    eh_administrador = converte_boolean(eh_administrador)
+    
+    if eh_administrador:
+      assign_role(colaborador, 'administrador')
+      gerar_log_administrador(administrador, colaborador, "O Administrador: " + administrador.nome_abreviado + " setou o usuario: " + colaborador.nome_abreviado + " como administrador")
+      colaborador.tornar_administrador()
+      colaborador.save()
+    
+    else:
+      remove_role(colaborador, 'administrador')
+      gerar_log_administrador(administrador, colaborador, "O Administrador: " + administrador.nome_abreviado + " retirou os privilegios do usuario: " + colaborador.nome_abreviado)
+      colaborador.remover_administrador()
+      colaborador.save()
+
+    return JsonResponse({})
+
+def gerar_log_administrador(administrador, colaborador, descricao):
+	LOG_Administrador.objects.create(administrador = administrador, colaborador = colaborador, descricao = descricao)
 	
 	

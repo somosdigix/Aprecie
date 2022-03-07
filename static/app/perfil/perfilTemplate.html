@@ -1,5 +1,5 @@
 ﻿<div class="conteudo perfil-colaborador">
-	<input data-js="alterar-foto" type="file" class="invisivel" />
+	<!-- <input data-js="alterar-foto" type="file" class="invisivel" /> -->
 
 	<h1>Perfil</h1>
 
@@ -14,11 +14,11 @@
 				<p class="txt-slider">Administrador</p>
 			</label>
 		</div>
-	
+
 		<div data-js="foto" class="alterar-foto">
 			<span data-js="foto" class="editar ion-camera invisivel"></span>
 			<img data-js="foto" class="foto-colaborador" src="{{foto this.id}}" alt="Foto" title="Clique para alterar"
-					 width="100" height="100" />
+				width="100" height="100" />
 		</div>
 		<div class="informacoes-colaborador">
 			<div class="chamada-apreciar">Aprecie</div>
@@ -64,107 +64,136 @@
 	</div>
 
 	<div data-js="reconhecimentos-historicos" class="ui three column grid pilares" style="display: none;"></div>
+
+	<!-- Modal -->
+	<div class="fundo__modal__cropper" id="caixa-modal">
+		<div class="modal__cropper">
+			<div class="cabecalho__modal">
+				<h1 class="titulo__modal__cropper"> Recorte sua imagem de perfil</h1>
+				<button class="botao__modal__fechar__cropper" data-js="botao_fechar_cropper">
+					<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-x"
+						viewBox="0 0 16 16">
+						<path
+							d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+					</svg>
+				</button>
+			</div>
+			<div class="corpo__modal__cropper">
+				<input type="file" name="image" id="image" data-js="input__arquivos"/>
+				<div id="imagem__botao__cropper">
+					<div class="container__cropper">
+						<div class="image_container" id="imagem__selecionada__container">
+							<img id="imagem__selecionada" src="#" alt="imagem selecionada" />
+						</div>
+						<div id="cropped_result"> </div>
+					</div>
+					<button id="crop_button"> Cortar </button>
+				</div>
+			</div>
+			<div class="rodape__modal__cropper">
+				<button id="botao__salvar__foto__cortada" data-js="alterar-foto"> Salvar mudanças </button>
+			</div>
+		</div>
+	</div>
+	<!-- Modal -->
+
 </div>
 
 <style>
+	* {
+		margin: 0;
+		padding: 0;
+	}
+
+
 	h {
 		font-size: 24px;
 		margin-right: 65px;
 		font-weight: bold;
-		
+
 	}
 
-hr{
-  margin-bottom: 30px;
-}
-.selecionar-data{
-		display:block;
-		align-items:center;
-		
-}
-.msg-ciclo{
-		display:block;
-		font-size: 20px;
-}
-.ciclo {
-		display:none;
-		border: 1px solid black;
-		border-radius: 4px;
-		background-color: whitesmoke;
-		padding: 10px 10px 10px 10px;
-}
+	hr {
+		margin-bottom: 30px;
+	}
 
-.switch-adm{
-	text-align: left;
-	padding-bottom: 10px;
-}
+	.selecionar-data {
+		display: block;
+		align-items: center;
 
-.txt-slider{
-  font-size: 16px;
-  font-family: "Campton-Medium";
-  position: absolute;
-  left: 50px;
-  top: -2px;
-}
+	}
 
-  .switch {
-  position: relative;
-  display: inline-block;
-  width: 30px;
-  height: 14px;
-}
+	.switch-adm {
+		text-align: left;
+		padding-bottom: 10px;
+	}
 
-.switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
+	.txt-slider {
+		font-size: 16px;
+		font-family: "Campton-Medium";
+		position: absolute;
+		left: 50px;
+		top: -2px;
+	}
 
-.slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #ccc;
-  -webkit-transition: .4s;
-  transition: .4s;
-}
+	.switch {
+		position: relative;
+		display: inline-block;
+		width: 30px;
+		height: 14px;
+	}
 
-.slider:before {
-  position: absolute;
-  content: "";
-  height: 9px;
-  width: 9px;
-  left: 2.5px;
-  bottom: 2.5px;
-  background-color: white;
-  -webkit-transition: .4s;
-  transition: .4s;
-}
+	.switch input {
+		opacity: 0;
+		width: 0;
+		height: 0;
+	}
 
-input:checked + .slider {
-  background-color: #2196F3;
-}
+	.slider {
+		position: absolute;
+		cursor: pointer;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background-color: #ccc;
+		-webkit-transition: .4s;
+		transition: .4s;
+	}
 
-input:focus + .slider {
-  box-shadow: 0 0 1px #2196F3;
-}
+	.slider:before {
+		position: absolute;
+		content: "";
+		height: 9px;
+		width: 9px;
+		left: 2.5px;
+		bottom: 2.5px;
+		background-color: white;
+		-webkit-transition: .4s;
+		transition: .4s;
+	}
 
-input:checked + .slider:before {
-  -webkit-transform: translateX(16px);
-  -ms-transform: translateX(16px);
-  transform: translateX(16px);
-}
+	input:checked+.slider {
+		background-color: #2196F3;
+	}
 
-.slider.round {
-  border-radius: 34px;
-}
+	input:focus+.slider {
+		box-shadow: 0 0 1px #2196F3;
+	}
 
-.slider.round:before {
-  border-radius: 50%;
-}
+	input:checked+.slider:before {
+		-webkit-transform: translateX(16px);
+		-ms-transform: translateX(16px);
+		transform: translateX(16px);
+	}
+
+	.slider.round {
+		border-radius: 34px;
+	}
+
+	.slider.round:before {
+		border-radius: 50%;
+	}
 
 	.sobre-pilares {
 		height: 119px;
