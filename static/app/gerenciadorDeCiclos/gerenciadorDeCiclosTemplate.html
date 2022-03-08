@@ -81,8 +81,10 @@
 <div class="ciclos__passados">
 
 	<div class="cabecalho__historico">
-		<h1 onclick="exibirCiclosPeloTitulo(this.id)" id="titulo__ciclos" class="historico__ciclo--titulo">Ciclos passados</h1>
-		<img id="seta" class="seta__historico" onclick="exibirCiclos(this)" src="../static/img/seta.svg" alt="Icone de seta">
+		<button class="botao__ciclos botao__ciclos__historico" data-js="botao-historio-ciclos">
+			Ciclos passados
+			<img id="seta_ciclos" class="seta_ciclos" src="../static/img/seta.svg" alt="Icone de seta">
+		</button>
 	</div>
 
 	<div class="container__historico" id="corpo__historico">
@@ -93,8 +95,10 @@
 <div class="ciclos__passados">
 
 	<div class="cabecalho__historico">
-		<h1 onclick="exibirCiclosPeloTitulo(this.id)" id="titulo__historico" class="historico__ciclo--titulo">Historico de Alteração</h1>
-		<img id="seta" class="seta__historico" onclick="exibirCiclos(this)" src="../static/img/seta.svg" alt="Icone de seta">
+		<button class="botao__historico botao__ciclos__historico" data-js="botao-alteracoes-ciclos">
+			Historico de Alteração
+			<img id="seta_historico" class="seta__historico" src="../static/img/seta.svg" alt="Icone de seta">
+		</button>
 	</div>
 
 	<div class="container__historico" id="historico_alteracao">
