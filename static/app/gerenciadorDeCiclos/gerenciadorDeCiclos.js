@@ -73,7 +73,6 @@ define([
     function carregarHistoricoAlteracoes() {
         $.getJSON("/reconhecimentos/historico_alteracoes", function (LOG_ciclos) {
             var divCiclosHistoricos = document.querySelector('#historico_alteracao');
-            console.log(divCiclosHistoricos);
             var seta = document.querySelector("#seta_historico");
             viraSeta(seta, divCiclosHistoricos);
             template.exibirEm(divCiclosHistoricos, historicoDeAlteracao, LOG_ciclos);
