@@ -681,7 +681,7 @@ svg {
   padding: 15px;
   display: relative;
   justify-content: right;
-  background-color: #c42aea;
+  background-color: #2c006a;
   border-radius: 10px;
   width: 25%;
   font-family: Campton;
@@ -692,15 +692,11 @@ svg {
   display: absolute;
   width: 100%;
   font-family: Campton;
-  background-color: #2c006a;
+  background-color: #fc671d;
   border-radius: 5px;
   color: white;
   padding: 5px;
   border: 0;
-}
-
-input[type="date"]::-webkit-calendar-picker-indicator {
-  filter: invert(100%);
 }
 
 .container__ciclo {
