@@ -351,6 +351,9 @@ def ranking_por_periodo(requisicao):
     colaboradores_apreciacoes_recebidas = obter_ranking_de_apreciacoes_recebidas(data_inicio, data_fim)
     colaboradores_apreciacoes_feitas = obter_ranking_de_apreciacoes_feitas(data_inicio, data_fim)
     
+    if colaboradores_apreciacoes_recebidas == None and colaboradores_apreciacoes_feitas == None:
+      return JsonResponse(status=403, data={'mensagem': 'Não foram encontrados registros para esta data!'})
+      
     colaboradores_transformados = []
     colaborador_transformado = None
     for colaborador in colaboradores_apreciacoes_recebidas:      
@@ -399,8 +402,8 @@ def obter_ranking_de_apreciacoes_recebidas(data_inicial, data_final):
   with connection.cursor() as cursor:
     cursor.execute('''
     SELECT count(*), r.pilar_id, l.nome, r.reconhecido_id
-    FROM Reconhecimentos_reconhecimento r
-    JOIN Login_colaborador l ON r.reconhecido_id = l.id
+    FROM public."Reconhecimentos_reconhecimento" r
+    JOIN public."Login_colaborador" l ON r.reconhecido_id = l.id
     WHERE r.data BETWEEN %s AND %s
     GROUP by l.nome, r.pilar_id, r.reconhecido_id
     ORDER by r.reconhecido_id, r.pilar_id
@@ -412,8 +415,8 @@ def obter_ranking_de_apreciacoes_feitas(data_inicial, data_final):
   with connection.cursor() as cursor:
     cursor.execute('''
     SELECT count(*), r.reconhecedor_id, l.nome
-    FROM Reconhecimentos_reconhecimento r
-    JOIN Login_colaborador l ON r.reconhecedor_id = l.id
+    FROM public."Reconhecimentos_reconhecimento" r
+    JOIN public."Login_colaborador" l ON r.reconhecedor_id = l.id
     WHERE r.data BETWEEN %s AND %s
     GROUP by r.reconhecedor_id, l.nome
     ORDER by r.reconhecedor_id
