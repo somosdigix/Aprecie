@@ -70,6 +70,10 @@ class Ciclo(models.Model):
     diferenca_periodo_e_progresso = calculo_periodo_ciclo - calculo_progresso_em_dias
 
     porcentagem_progresso = int(((diferenca_periodo_e_progresso / calculo_periodo_ciclo) * 100))
+
+    if porcentagem_progresso < 0:
+      return str(0)
+
     return str(porcentagem_progresso)
 
   def calcularPeriodoCiclo(self):

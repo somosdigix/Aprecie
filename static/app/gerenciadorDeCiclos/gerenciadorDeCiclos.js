@@ -36,15 +36,18 @@ define([
     };
 
     function carregarGerenciador() {
-        $.getJSON("/reconhecimentos/obter_informacoes_ciclo_atual", function (ciclo_atual) {
+        $.getJSON("/reconhecimentos/obter_informacoes_ciclo", function (ciclo_atual) {
             template.exibir(gerenciadorDeCiclosTemplate, ciclo_atual);
         });
 
+        $('.container__ciclo__futuro').hide();
         $('#corpo__historico').hide();
         $('#historico_alteracao').hide();
+        
 
         definirPorcentagemNoCirculo();
     }
+    
 
     function definirPorcentagemNoCirculo() {
         var porcentagem = $('#porcentagem').html();
