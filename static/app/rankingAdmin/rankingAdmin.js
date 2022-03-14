@@ -75,7 +75,6 @@ define([
 	function carregarRankingPeriodoDeDatas() {
 		var filtroDataAdminViewModel = new FiltroDataAdminViewModel()
 		criarRankingPorPeriodo(filtroDataAdminViewModel);
-		ordenaRankingPorPilar();
 	}
 
 	function criarRankingPorPeriodo(dataAdminViewModel) {
@@ -88,6 +87,7 @@ define([
 			}
 			else {
 				exibirRanking(ranking_de_colaboradores.colaboradores);
+				ordenaRankingPorPilar();
 			}
 		});
 	}
