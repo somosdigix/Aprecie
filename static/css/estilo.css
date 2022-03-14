@@ -725,11 +725,10 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 .adicionar__ciclo{
   width: 80%;
-  margin: 32px auto;
   text-align: left;
 }
 .nome__autor,
-.data__alteracao {
+.data__alteracao, .nome__autor__edicao, .fonte-cor-branca {
   color: white;
 }
 

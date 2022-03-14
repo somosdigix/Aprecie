@@ -52,7 +52,7 @@ class Ciclo(models.Model):
   id = models.AutoField(primary_key=True)  
   nome = models.CharField(max_length=25)
   data_inicial = models.DateField()
-  data_final = models.DateField()
+  data_final = models.DateField(null=True)
 
   def alterar_ciclo(self, data_final, nome):
     if data_final == None or data_final <= self.data_inicial:
@@ -62,7 +62,16 @@ class Ciclo(models.Model):
     if nome == None or nome == "":
       raise ExcecaoDeDominio('O ciclo não pode ter um nome vazio')
     self.nome = nome
-  
+    
+  def alterar_data_inicial_ciclo(self, data_inicial):
+    if data_inicial == None:
+      raise ExcecaoDeDominio('A data final não pode estar vazia')  
+    self.data_inicial = data_inicial
+
+    if data_inicial >= self.data_final:
+      self.data_final = None
+
+
   def calcular_porcentagem_progresso(self):
     calculo_periodo_ciclo = self.calcularPeriodoCiclo()
     calculo_progresso_em_dias = self.calcularProgessoEmDias()

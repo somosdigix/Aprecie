@@ -24,52 +24,32 @@
 		</div>
 	</div>
 
-<div calss="container__ciclo__futuro">	
 {{#if this.ciclo_futuro}}
-<h2>Ciclo Futuro</h2>
-<div id="container__ciclo__atual">
-		<div class="datas__ciclos" data-inicial={{this.data_inicial_futuro}} data-final={{this.data_final_futuro}}>
-			<p id="dataTeste" class="data_inicio" value="{{this.data_inicial_futuro}}">Data de Início: {{this.ciclo_futuro.data_inicial_formatada_futuro}}</p>
-			<p class="data_final">Data Final: {{this.ciclo_futuro.data_final_formatada_futuro}}</p>
-		</div>
-		
-		<div class="nome__progresso__ciclo">
-			<p class="nome__ciclo">{{this.ciclo_futuro.nome_do_ciclo_futuro}}</p>
-			<h1 id="porcentagem">{{this.ciclo_futuro.porcentagem_do_progresso_futuro}}%</h1>
-			<svg>
-				<circle class="circulo1" cx="75" cy="75" r="50"></circle>
-				<circle id="circulo2" cx="75" cy="75" r="50"></circle>
-			</svg>
-		</div>
-		
-		<div class="caixa__informacoes__ciclo">
-			<p>Entrando em Vigor: {{this.ciclo_futuro.tempo_restante_de_dias}}</p>
-		</div>
-</div>
-{{/if}}
-	<div id="abrirModal" class="modal__ciclo">
-		<div class="box__motivo">
-			<h1 class="titulo__modal">Motivo da Alteração:</h1>
-			<form data-js="form_alterar_ciclo">
-				<div class="descricao">
-					<input hidden id="id_ciclo" value={{this.id_ciclo}}>
-					<textarea id="input__motivo" cols="50" rows="5" tabindex="50" maxlength="63" required></textarea>
-					<label for="nova__data" class="label__nova__data__final">Data Final:</label>
-					<input type="date" id="nova__data__final"  data-js="dataFinal" class="nova__data__final" value="{{this.ciclo_atual.data_final_atual}}" required/>
-					<label for="novo_nome_ciclo" class="label__novo__nome" >Novo Nome:</label>
-					<input type="text" id="novo_nome_ciclo" placeholder="Nome do Ciclo" class="novo__nome__ciclo" value="{{this.ciclo_atual.nome_do_ciclo_atual}}" required/>
-					</div>
-					<div class="btns__novo__ciclo">
-						<button type="submit" data-js="btn_alterar_ciclo" id="btn__confirmar">Confirmar</button>
-						<button id="btn__cancelar__edicao">Cancelar</button>
-					</div>
-					<div class="falha-data-final-menor-alterada">⚠ Coloque um data final maior que a data inicial!</div>
-					<div class="falha-data-final-menor-atual">⚠ Coloque um data final maior que a data atual!</div>
-				</div>
-			</form>		
+	<div calss="container__ciclo__futuro">	
+		<h2>Ciclo Futuro</h2>
+		<div id="container__ciclo__atual">
+			<div class="datas__ciclos" data-inicial={{this.data_inicial_futuro}} data-final={{this.data_final_futuro}}>
+				<p id="dataTeste" class="data_inicio" value="{{this.data_inicial_futuro}}">Data de Início: {{this.inicio_proximo_ciclo_formatado}}</p>
+				<p class="data_final">Data Final: {{this.ciclo_futuro.data_final_formatada_futuro}}</p>
+			</div>
+			
+			<div class="nome__progresso__ciclo">
+				<p class="nome__ciclo">{{this.ciclo_futuro.nome_do_ciclo_futuro}}</p>
+				<h1 id="porcentagem">0%</h1>
+				<svg>
+					<circle class="circulo1" cx="75" cy="75" r="50"></circle>
+					<circle id="circulo2" cx="75" cy="75" r="50"></circle>
+				</svg>
+			</div>
+			
+			<div class="caixa__informacoes__ciclo">
+				<p class="fonte-cor-branca">Nome do Autor: {{this.ciclo_futuro.nome_usuario_que_modificou_futuro}}</p>
+				<p class="fonte-cor-branca">Entrando em Vigor: {{this.ciclo_futuro.tempo_restante_de_dias}} Dias</p>
+			</div>
 		</div>
 	</div>
-</div>
+{{else}}
+	{{#if this.ciclo_atual.data_final_atual}}
 	<div class="adicionar__ciclo">
 		<button id="btn__adicionar__ciclo">
 			Adicionar Novo Ciclo
@@ -82,7 +62,7 @@
 			<input type="text" id="nome_ciclo" placeholder="Nome do Ciclo" class="adicionar__nome__ciclo" name="nome_ciclo" required />
 			<div class="input__data">
 				<div class="infos__data--inicio">
-					<p id="data_inicial" data-js="dataInicial" class="data__inicial__ciclo">Data Inicial: {{this.ciclo_atual.data_inicial_formatada_futuro}}</p>
+					<p id="data_inicial" data-js="dataInicial" class="data__inicial__ciclo">Data Inicial: {{this.inicio_proximo_ciclo_formatado}}</p>
 				</div>
 				<div class="infos__data--fim">
 					<label for="dataFinal">Data Final:</label>
@@ -95,11 +75,37 @@
 					Cancelar
 				</button>
 			</div>
-		</form>
-		
+		</form>		
+	</div>
+	{{/if}}	
+
+	
+{{/if}}
+
+<div id="abrirModal" class="modal__ciclo">
+	<div class="box__motivo">
+		<h1 class="titulo__modal">Motivo da Alteração:</h1>
+		<form data-js="form_alterar_ciclo">
+			<div class="descricao">
+				<input hidden id="id_ciclo" name="id_ciclo" value={{this.ciclo_atual.id_ciclo_atual}}>
+				<textarea id="input__motivo" cols="50" rows="5" tabindex="50" maxlength="63" required></textarea>
+				<label for="nova__data" class="label__nova__data__final">Data Final:</label>
+				<input type="date" id="nova__data__final"  data-js="dataFinal" class="nova__data__final" value="{{this.ciclo_atual.data_final_atual}}" required/>
+				<label for="novo_nome_ciclo" class="label__novo__nome" >Novo Nome:</label>
+				<input type="text" id="novo_nome_ciclo" placeholder="Nome do Ciclo" class="novo__nome__ciclo" value="{{this.ciclo_atual.nome_do_ciclo_atual}}" required/>
+				</div>
+				<div class="btns__novo__ciclo">
+					<button type="submit" data-js="btn_alterar_ciclo" id="btn__confirmar">Confirmar</button>
+					<button id="btn__cancelar__edicao">Cancelar</button>
+				</div>
+				<div class="falha-data-final-menor-alterada">⚠ Coloque um data final maior que a data inicial!</div>
+				<div class="falha-data-final-menor-atual">⚠ Coloque um data final maior que a data atual!</div>
+			</div>
+		</form>		
+	</div>
 	</div>
 </div>
-
+</div>
 <div class="ciclos__passados">
 
 	<div class="cabecalho__historico">
