@@ -62,8 +62,6 @@ def ultimos_reconhecimentos(requisicao):
 
   return JsonResponse(retorno, safe=False)
   
-
-   
 def converte_boolean(bool):
     if bool.lower() == 'false':
         return False
@@ -97,12 +95,25 @@ def reconhecimentos_do_colaborador(requisicao, id_do_reconhecido):
 
 def contar_reconhecimentos(requisicao):
    colaboradores = map(lambda colaborador: { 
-     'nome': colaborador.nome_abreviado, 
-     'apreciacoes': colaborador.contar_todos_reconhecimentos(), 
-     'foto': colaborador.foto
-     }, sorted(Colaborador.objects.all(), key=lambda x: x.contar_todos_reconhecimentos(), reverse=True)[:10])
+     'nome': colaborador[2], 
+     'apreciacoes': colaborador[0], 
+     'foto': colaborador[3]
+     }, obter_reconhecimentos_dos_colaboradores(requisicao))
 
    return JsonResponse({'colaboradores': list(colaboradores)})
+
+def obter_reconhecimentos_dos_colaboradores(requisicao):
+  with connection.cursor() as cursor:
+    cursor.execute('''
+      SELECT count(*), r.reconhecido_id, l.nome, l.foto
+      FROM public."Reconhecimentos_reconhecimento" r
+      JOIN public."Login_colaborador" l ON r.reconhecido_id = l.id
+      GROUP by r.reconhecido_id, l.nome, l.foto
+      ORDER by count(*) DESC, l.nome
+      LIMIT 10
+    ''')
+    reconhecimentos = cursor.fetchall()
+  return reconhecimentos
 
 def reconhecimentos_por_reconhecedor(requisicao, id_do_reconhecido):
   reconhecedores = Reconhecimento.objects.filter(reconhecido = id_do_reconhecido) \
