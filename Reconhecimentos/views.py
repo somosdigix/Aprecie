@@ -316,7 +316,7 @@ def obter_historico_de_alteracoes():
 def abreviar_nome(nome):
   return nome.split(' ')[0] + ' ' + nome.split(' ')[-1]
 
-def criar_colaborador(nome):
+def criar_colaborador(nome, foto):
   return type('',(object,),{
           'nome': abreviar_nome(nome),
           'colaborar_sempre': 0,
@@ -324,7 +324,8 @@ def criar_colaborador(nome):
           'focar_nas_pessoas': 0,
           'planejar_entregar_aprender': 0,
           'todos_reconhecimentos': 0,
-          'reconhecimentos_feitos': 0
+          'reconhecimentos_feitos': 0,
+          'foto': foto
         })()
 
 def verificar_pilar_colaborador(colaborador, colaborador_transformado):
@@ -360,7 +361,7 @@ def ranking_por_periodo(requisicao):
       if colaborador_transformado == None or colaborador_transformado.nome != colaborador[2]:
         if colaborador_transformado != None:
           colaboradores_transformados.append(colaborador_transformado)
-        colaborador_transformado = criar_colaborador(colaborador[2])
+        colaborador_transformado = criar_colaborador(colaborador[2], colaborador[4])
         verificar_pilar_colaborador(colaborador, colaborador_transformado)
       else:
         verificar_pilar_colaborador(colaborador, colaborador_transformado)
@@ -372,7 +373,7 @@ def ranking_por_periodo(requisicao):
       if colaborador_retornado != None:
         colaborador_retornado.reconhecimentos_feitos = colaborador[0]
       else:
-        novo_colaborador = criar_colaborador(colaborador[2])
+        novo_colaborador = criar_colaborador(colaborador[2], colaborador[3])
         novo_colaborador.reconhecimentos_feitos = colaborador[0]
         colaboradores_transformados.append(novo_colaborador)
     
@@ -386,6 +387,7 @@ def ranking_por_periodo(requisicao):
        'fazer_diferente': colaborador.fazer_diferente,
        'planejar_entregar_aprender': colaborador.planejar_entregar_aprender,
        'reconhecimentos_feitos' : colaborador.reconhecimentos_feitos,
+       'foto': colaborador.foto
      }
     
     colaboradores = map(transformacao, colaboradores_ordenados)
@@ -401,24 +403,25 @@ def busca_colaborador_ranking(colaborador, colaboradores_transformados):
 def obter_ranking_de_apreciacoes_recebidas(data_inicial, data_final):
   with connection.cursor() as cursor:
     cursor.execute('''
-    SELECT count(*), r.pilar_id, l.nome, r.reconhecido_id
+    SELECT count(*), r.pilar_id, l.nome, r.reconhecido_id, l.foto
     FROM public."Reconhecimentos_reconhecimento" r
     JOIN public."Login_colaborador" l ON r.reconhecido_id = l.id
     WHERE r.data BETWEEN %s AND %s
-    GROUP by l.nome, r.pilar_id, r.reconhecido_id
+    GROUP by l.nome, r.pilar_id, r.reconhecido_id, l.foto
     ORDER by r.reconhecido_id, r.pilar_id
     ''', [data_inicial, data_final])
+    
     ranking_de_apreciacoes_recebidas = cursor.fetchall()
   return ranking_de_apreciacoes_recebidas
 
 def obter_ranking_de_apreciacoes_feitas(data_inicial, data_final):
   with connection.cursor() as cursor:
     cursor.execute('''
-    SELECT count(*), r.reconhecedor_id, l.nome
+    SELECT count(*), r.reconhecedor_id, l.nome, l.foto
     FROM public."Reconhecimentos_reconhecimento" r
     JOIN public."Login_colaborador" l ON r.reconhecedor_id = l.id
     WHERE r.data BETWEEN %s AND %s
-    GROUP by r.reconhecedor_id, l.nome
+    GROUP by r.reconhecedor_id, l.nome, l.foto
     ORDER by r.reconhecedor_id
     ''', [data_inicial, data_final])
     ranking_de_apreciacoes_feitas = cursor.fetchall()
