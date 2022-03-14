@@ -105,6 +105,18 @@
   background-color: purple;
 }
 
+.novo__nome__ciclo__historico{
+  border: 0;
+  border-radius: 5px;
+  font-family: Campton-Light;
+  background-color: #2c006a;
+  color: white;
+  padding: 5px;
+  width: 80%; 
+  text-align: center;
+  margin: 8px auto;
+}
+
 .opcao__secao--span {
   background-color: gray;
   position: absolute;
