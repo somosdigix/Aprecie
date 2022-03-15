@@ -44,11 +44,12 @@ define([
     }
 
     function carregarInformacoesCicloFuturo(){
-        $.getJSON("/reconhecimentos/obter_informacoes_ciclo_futuro", function (informacoes_ciclo) {           
+        $.getJSON("/reconhecimentos/obter_informacoes_ciclo_futuro", function (informacoes_ciclo) {     
             if (informacoes_ciclo.ciclo_futuro != null){
                 template.exibirEm('div[data-js="container_ciclo_futuro"]', cicloFuturoTemplate, informacoes_ciclo);
             }
-            else if(informacoes_ciclo.ciclo_futuro == null || informacoes_ciclo.ciclo_atual.data_final_ciclo_atual != null){
+            
+            if(informacoes_ciclo.ciclo_futuro == null && informacoes_ciclo.data_final_ciclo_atual != null){
                 template.exibirEm('div[data-js="container__botao__adicionar"]', botaoAdicionarCicloTemplate, informacoes_ciclo.previsao_data)
             }
         });

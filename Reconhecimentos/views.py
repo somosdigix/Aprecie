@@ -201,6 +201,7 @@ def definir_ciclo(requisicao):
 
 @has_role_decorator('administrador')
 def alterar_ciclo(requisicao):
+  ciclo_futuro = obter_ciclo_futuro()
   id_ciclo = requisicao.POST["id_ciclo"]
   data_final = requisicao.POST["data_final"]
   id_usuario_que_modificou = requisicao.POST["usuario_que_modificou"]
@@ -209,8 +210,6 @@ def alterar_ciclo(requisicao):
   ciclo = Ciclo.objects.get(id = id_ciclo)
   usuario_que_modificou = Colaborador.objects.get(id=id_usuario_que_modificou)
 
-  ciclo_futuro = obter_ciclo_futuro()
-
   log_Ciclo = LOG_Ciclo.adicionar(ciclo, usuario_que_modificou, descricao_da_alteracao, novo_nome_ciclo, data_final)
   log_Ciclo.save()
 
@@ -218,7 +217,6 @@ def alterar_ciclo(requisicao):
   ciclo.alterar_ciclo(data_final_em_date_time, novo_nome_ciclo)
   ciclo.save()
   
-
   alterar_data_inicial_ciclo_futuro(ciclo_futuro, data_final_em_date_time, usuario_que_modificou)
 
   return JsonResponse({})
@@ -229,7 +227,8 @@ def  alterar_data_inicial_ciclo_futuro(ciclo_futuro, data_final_em_date_time, us
     if ciclo_futuro.data_final != None and ciclo_futuro.data_final <= nova_data_inicial:
       data_final = None
     else:
-      data_final = ciclo_futuro.data_final  
+      data_final = ciclo_futuro.data_final
+    
     log_Ciclo = LOG_Ciclo.adicionar(ciclo_futuro, usuario_que_modificou, "Alteração da data inicial devido a mudança da data final do ciclo atual", ciclo_futuro.nome, data_final)
     log_Ciclo.save()
     
@@ -243,24 +242,43 @@ def obter_informacoes_ciclo_atual(requisicao):
   log = LOG_Ciclo.objects.filter(ciclo=ciclo).order_by('-data_da_modificacao').first()
   colaborador = Colaborador.objects.get(id=log.usuario_que_modificou.id)
 
+  if ciclo.data_final == None:
+    data_final = ""
+    data_final_formatada = ""
+    porcentagem = "0"
+  else:
+    data_final = ciclo.data_final
+    data_final_formatada = data_final.strftime('%d/%m/%Y')
+    porcentagem = ciclo.calcular_porcentagem_progresso()
+
   resposta = {
     'id_ciclo': ciclo.id,
     'nome_do_ciclo': ciclo.nome,
     'data_inicial': ciclo.data_inicial,
     'data_inicial_formatada': ciclo.data_inicial.strftime('%d/%m/%Y'),
-    'data_final': ciclo.data_final,
-    'data_final_formatada': ciclo.data_final.strftime('%d/%m/%Y'),
+    'data_final': data_final,
+    'data_final_formatada': data_final_formatada,
     'nome_usuario_que_modificou': colaborador.nome_abreviado,
     'descricao_da_alteracao': log.descricao_da_alteracao,
     'data_ultima_alteracao': log.data_da_modificacao.strftime('%d/%m/%Y'),
-    'porcentagem_do_progresso': ciclo.calcular_porcentagem_progresso()
+    'porcentagem_do_progresso': porcentagem
   }
   
   return JsonResponse(resposta)
 
 @has_role_decorator('administrador')
 def obter_informacoes_ciclo_futuro(requisicao):
-  ciclo_futuro_obtido = obter_ciclo_futuro()
+  if obter_ciclo_atual().data_final != None:
+    ciclo_futuro_obtido = obter_ciclo_futuro()
+    data_final_ciclo_atual = obter_ciclo_atual().data_final
+    data_inicio_previsto_ciclo_futuro =  data_final_ciclo_atual + timedelta(days=1)
+    data_inicio_previsto_ciclo_futuro_formatada = data_inicio_previsto_ciclo_futuro.strftime('%d/%m/%Y')
+  else:
+    ciclo_futuro_obtido = None
+    data_final_ciclo_atual = None
+    data_inicio_previsto_ciclo_futuro = None
+    data_inicio_previsto_ciclo_futuro_formatada = None
+
 
   if ciclo_futuro_obtido != None:
     log = LOG_Ciclo.objects.filter(ciclo=ciclo_futuro_obtido).order_by('-data_da_modificacao').first()
@@ -286,15 +304,12 @@ def obter_informacoes_ciclo_futuro(requisicao):
     }
   else:
     ciclo_futuro = None
-  
-  data_final_ciclo_atual = obter_ciclo_atual().data_final
-  data_inicio_previsto_ciclo_futuro =  data_final_ciclo_atual + timedelta(days=1)
-  
+    
   resposta = {
     'ciclo_futuro': ciclo_futuro,
     'previsao_data'  : {
       'data_prevista_para_inicio': data_inicio_previsto_ciclo_futuro,
-      'data_prevista_para_inicio_formatada': data_inicio_previsto_ciclo_futuro.strftime('%d/%m/%Y'),
+      'data_prevista_para_inicio_formatada': data_inicio_previsto_ciclo_futuro_formatada,
     },
     'data_final_ciclo_atual': data_final_ciclo_atual,
   }
@@ -373,7 +388,10 @@ def obter_ciclo_atual():
 def obter_ciclo_futuro():
   ciclo_atual = obter_ciclo_atual()
   try:
-    return Ciclo.objects.filter(data_inicial__gt=ciclo_atual.data_final).first()
+    if ciclo_atual.data_final != None:
+      return Ciclo.objects.get(data_inicial__gt=ciclo_atual.data_final)
+    else:
+      return None
   except Ciclo.DoesNotExist:
     return None
 

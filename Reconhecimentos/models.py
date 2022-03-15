@@ -104,7 +104,7 @@ class LOG_Ciclo(models.Model):
   
   @classmethod
   def adicionar(cls, ciclo, usuario_que_modificou, descricao_da_alteracao, novo_nome_ciclo, nova_data_alterada):
-    if ciclo.data_final != None and ciclo.data_final != "":
+    if ciclo.data_final != "":
       data_final = ciclo.data_final
     
     if ciclo.nome != None and ciclo.nome != "":
