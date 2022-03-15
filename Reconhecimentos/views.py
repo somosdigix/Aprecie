@@ -98,11 +98,11 @@ def contar_reconhecimentos(requisicao):
      'nome': colaborador[2], 
      'apreciacoes': colaborador[0], 
      'foto': colaborador[3]
-     }, obter_reconhecimentos_dos_colaboradores(requisicao))
+     }, obter_reconhecimentos_dos_colaboradores())
 
    return JsonResponse({'colaboradores': list(colaboradores)})
 
-def obter_reconhecimentos_dos_colaboradores(requisicao):
+def obter_reconhecimentos_dos_colaboradores():
   with connection.cursor() as cursor:
     cursor.execute('''
       SELECT count(*), r.reconhecido_id, l.nome, l.foto
