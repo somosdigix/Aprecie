@@ -17,6 +17,8 @@
 	<div class="caixa__informacoes__ciclo">
 		<p class="nome__autor__edicao">Nome do Autor: {{this.nome_usuario_que_modificou}}</p>
 		<p class="data__alteracao">Data da Última Alteração: {{this.data_ultima_alteracao}}</p>
-		<button class="btn__editar" id="editar__ciclo__atual" onclick="setaIdCicloSelecionadoParaEditar('{{this.id_ciclo}}')">Editar</button>
+		<button class="btn__editar" id="editar__ciclo__atual" onclick="setaInformacoesCicloSelecionadoParaEditar('{{this.id_ciclo}}', '{{this.data_final}}', '{{this.nome_do_ciclo}}')">
+			Editar
+		</button>
 	</div>
 </div>

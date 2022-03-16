@@ -215,9 +215,15 @@ define([
     return self;
 });
 
-function setaIdCicloSelecionadoParaEditar(idCicloSelecionado){
+function setaInformacoesCicloSelecionadoParaEditar(idCicloSelecionado, dataFinal, nomeCiclo){
     var inputIdCiclo = document.getElementById('id_ciclo_edicao');
     inputIdCiclo.value = idCicloSelecionado;
+
+    var inputDataEditar = document.getElementById('nova__data__final');
+    inputDataEditar.value = dataFinal;
+
+    var inputNomeEditar = document.getElementById('novo_nome_ciclo');
+    inputNomeEditar.value = nomeCiclo;
     mostrarModal();
 }
 
