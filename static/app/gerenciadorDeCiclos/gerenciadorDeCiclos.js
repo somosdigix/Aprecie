@@ -6,8 +6,9 @@ define([
     "text!app/gerenciadorDeCiclos/historicoDeAlteracao.html",
     "sessaoDeUsuario",
     "growl",
+    "app/helpers/administradorHelper",
     "roteador"
-], function ($, template, gerenciadorDeCiclosTemplate, ciclosPassadosTemplate,historicoDeAlteracao,sessaoDeUsuario, growl, roteador) {
+], function ($, template, gerenciadorDeCiclosTemplate, ciclosPassadosTemplate,historicoDeAlteracao,sessaoDeUsuario, growl, administradorHelper, roteador) {
     "use strict";
 
     var self = {};
@@ -16,18 +17,23 @@ define([
     self.inicializar = function (sandbox) {
         _sandbox = sandbox;
 
-        carregarGerenciador(); 
+        if (administradorHelper.ehAdministrador()){
+            carregarGerenciador(); 
 
-        // on click button html para função de definir ciclo e alterar ciclo
-        $("#conteudo")
-            .on("submit", 'form[data-js="form-adicionar-ciclo"]', definirCiclo)
-            .on("submit", 'form[data-js="form_alterar_ciclo"]', alterarCiclo)
-            .on("click", 'button[id="btn__editar"]', mostrarModal)
-            .on("click", 'button[id="btn__cancelar__edicao"]', fecharModal)
-            .on("click", 'button[id="btn__adicionar__ciclo"]',mostrarContainerNovoCiclo)
-            .on("click", 'button[id="btn__cancelar"]',fecharContainerNovoCiclo)
-            .on("click", 'button[data-js="botao-historio-ciclos"]',carregarCiclosPassados)
-            .on("click", 'button[data-js="botao-alteracoes-ciclos"]',carregarHistoricoAlteracoes)
+            // on click button html para função de definir ciclo e alterar ciclo
+            $("#conteudo")
+                .on("submit", 'form[data-js="form-adicionar-ciclo"]', definirCiclo)
+                .on("submit", 'form[data-js="form_alterar_ciclo"]', alterarCiclo)
+                .on("click", 'button[id="btn__editar"]', mostrarModal)
+                .on("click", 'button[id="btn__cancelar__edicao"]', fecharModal)
+                .on("click", 'button[id="btn__adicionar__ciclo"]',mostrarContainerNovoCiclo)
+                .on("click", 'button[id="btn__cancelar"]',fecharContainerNovoCiclo)
+                .on("click", 'button[data-js="botao-historio-ciclos"]',carregarCiclosPassados)
+                .on("click", 'button[data-js="botao-alteracoes-ciclos"]',carregarHistoricoAlteracoes)
+        }
+        else{
+			roteador.navegarPara('/paginaInicial');
+		}
     };
 
     self.finalizar = function () {
