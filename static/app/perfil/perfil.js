@@ -14,12 +14,17 @@
 	_self.inicializar = function (sandbox, colaboradorId) {
 		_sandbox = sandbox;
 
+		$("#conteudo")
+			.on('click', 'a[data-js="ranking-admin"]', rankingAdmin)
+			.on('click', 'a[data-js="configuracao-ciclo"]', gerenciadorDeCiclos);
+
 		$.getJSON(
 			"/reconhecimentos/colaborador/" + colaboradorId,
 			function (reconhecimentosDoColaborador) {
 				template.exibir(perfilTemplate, reconhecimentosDoColaborador);
 
 				administradorHelper.mostrarConteudoSeForAdministrador('div[data-js="switch-adm"]');
+				administradorHelper.mostrarConteudoSeForAdministrador('div[data-js="menu__administrador"]');
 
 				switchAdministrador(reconhecimentosDoColaborador, colaboradorId);
 
@@ -28,6 +33,8 @@
 					'div[data-js="exibir-reconhecimentos"]',
 					exibirReconhecimentos
 				);
+
+				
 
 				if (sessaoDeUsuario.id === colaboradorId) {
 					$('div[data-js="switch-adm"]').hide();
@@ -67,6 +74,18 @@
 	_self.finalizar = function () {
 		$("#conteudo").off();
 	};
+
+	function rankingAdmin() {
+		require(['roteador'], function(roteador) {
+		  roteador.navegarPara('/rankingAdmin');
+		});
+	}
+
+	function gerenciadorDeCiclos() {
+		require(['roteador'], function(roteador) {
+		  roteador.navegarPara('/gerenciadorDeCiclos');
+		});
+	}
 
 	function abrirModalCrop() {
 		document.getElementById('caixa-modal').style.display = "block";

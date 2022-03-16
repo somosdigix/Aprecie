@@ -1,0 +1,32 @@
+.menu_administrador_itens{
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.titulo_menu_administrador{
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.menu__administrador{
+    background-color: #fff;
+    border: 1px solid #e2e2e2;
+    padding: 20px 20px;
+    text-align: center;
+    border-radius: 6px;
+
+    margin-top: 8px;
+}
+
+.menu__administrador__item{
+    text-align: left;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.menu__administrador__item:hover{
+    border-bottom: 3px solid #0bc0d3;
+    color: black;
+    font-weight: bold;
+}

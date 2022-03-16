@@ -443,17 +443,23 @@ h2,
   margin-bottom: 10px;
 }
 
-#perfilColaborador {
+.informacoes_perfil{
   display: inline-block;
+  width: 33%;
+}
+
+#perfilColaborador {
+
   background-color: #fff;
   border: 1px solid #e2e2e2;
   padding: 20px 20px;
-  width: 33%;
+
   text-align: center;
   border-radius: 6px;
   border-radius--moz-border-radius: 6px;
   border-radius--webkit-border-radius: 6px;
 }
+
 #perfilColaborador .alterar-foto {
   cursor: pointer;
 }
