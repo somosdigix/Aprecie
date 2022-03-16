@@ -688,7 +688,7 @@ svg {
   align-items: center;
 }
 
-#btn__editar {
+.btn__editar {
   display: absolute;
   width: 100%;
   font-family: Campton;

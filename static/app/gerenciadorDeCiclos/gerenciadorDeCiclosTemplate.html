@@ -10,6 +10,33 @@
 <div data-js="container__botao__adicionar" class="adicionar__ciclo">
 </div>
 
+<div id="abrirModal" class="modal__ciclo">
+    <div class="box__motivo">
+        <h1 class="titulo__modal">Alteração do Ciclo:</h1>
+        <form data-js="form_alterar_ciclo">
+            <div class="descricao">
+                <input hidden id="id_ciclo_edicao">
+                <div class="alterar__data">
+                    <label for="nova__data" class="label__nova__data__final">Data Final:</label>
+                    <input type="date" id="nova__data__final"  data-js="dataFinal" class="nova__data__final" value="{{this.data_final}}" required/>
+                </div>
+                <div class="alterar__nome">
+                    <label for="novo_nome_ciclo" class="label__novo__nome" >Novo Nome:</label>
+                    <input type="text" id="novo_nome_ciclo" placeholder="Nome do Ciclo" class="novo__nome__ciclo" value="{{this.nome_do_ciclo}}" required/>
+                </div>
+                <textarea id="input__motivo" cols="40" rows="4" tabindex="50" maxlength="63" placeholder="Digite aqui o motivo da Alteração" required></textarea>
+                </div>
+                <div class="btns__novo__ciclo">
+                    <button id="btn__cancelar__edicao">Cancelar</button>
+                    <button type="submit" data-js="btn_alterar_ciclo" id="btn__confirmar">Confirmar</button>
+                </div>
+                <div class="falha-data-final-menor-alterada">⚠ Coloque um data final maior que a data inicial!</div>
+                <div class="falha-data-final-menor-atual">⚠ Coloque um data final maior que a data atual!</div>
+            </div>
+        </form>		
+    </div>
+</div>
+
 <div class="ciclos__passados">
 
 	<div class="cabecalho__historico">

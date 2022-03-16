@@ -216,8 +216,9 @@ def alterar_ciclo(requisicao):
   data_final_em_date_time = datetime.strptime(data_final, '%Y-%m-%d').date()
   ciclo.alterar_ciclo(data_final_em_date_time, novo_nome_ciclo)
   ciclo.save()
-  
-  alterar_data_inicial_ciclo_futuro(ciclo_futuro, data_final_em_date_time, usuario_que_modificou)
+
+  if ciclo_futuro.id != int(id_ciclo):
+    alterar_data_inicial_ciclo_futuro(ciclo_futuro, data_final_em_date_time, usuario_que_modificou)
 
   return JsonResponse({})
   
@@ -293,7 +294,7 @@ def obter_informacoes_ciclo_futuro(requisicao):
       data_final_formatada = ""
 
     ciclo_futuro = {
-      'id_ciclo_futuro': ciclo_futuro_obtido.id,
+      'id_ciclo': ciclo_futuro_obtido.id,
       'nome_do_ciclo': ciclo_futuro_obtido.nome,
       'data_inicial': ciclo_futuro_obtido.data_inicial,
       'data_inicial_formatada': ciclo_futuro_obtido.data_inicial.strftime('%d/%m/%Y'),

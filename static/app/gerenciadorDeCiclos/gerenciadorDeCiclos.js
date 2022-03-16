@@ -24,13 +24,13 @@ define([
         $("#conteudo")
             .on("submit", 'form[data-js="form-adicionar-ciclo"]', definirCiclo)
             .on("submit", 'form[data-js="form_alterar_ciclo"]', alterarCiclo)
-            .on("click", 'button[id="btn__editar"]', mostrarModal)
-            .on("click", 'button[id="btn__cancelar__edicao"]', fecharModal)
             .on("click", 'button[id="btn__adicionar__ciclo"]',mostrarContainerNovoCiclo)
             .on("click", 'button[id="btn__cancelar"]',fecharContainerNovoCiclo)
             .on("click", 'button[data-js="botao-historio-ciclos"]',carregarCiclosPassados)
             .on("click", 'button[data-js="botao-alteracoes-ciclos"]',carregarHistoricoAlteracoes)
-    };
+            
+            .on("click", 'button[id="btn__cancelar__edicao"]', fecharModal)
+        };
 
     self.finalizar = function () {
         _sandbox.limpar("#conteudo");
@@ -47,8 +47,7 @@ define([
         $.getJSON("/reconhecimentos/obter_informacoes_ciclo_futuro", function (informacoes_ciclo) {     
             if (informacoes_ciclo.ciclo_futuro != null){
                 template.exibirEm('div[data-js="container_ciclo_futuro"]', cicloFuturoTemplate, informacoes_ciclo);
-            }
-            
+            }            
             if(informacoes_ciclo.ciclo_futuro == null && informacoes_ciclo.data_final_ciclo_atual != null){
                 template.exibirEm('div[data-js="container__botao__adicionar"]', botaoAdicionarCicloTemplate, informacoes_ciclo.previsao_data)
             }
@@ -101,7 +100,6 @@ define([
         });
     }
 
-    //funcoes para editar ciclo
     function definirCiclo(event) {
         event.preventDefault();
         var data = {
@@ -122,7 +120,7 @@ define([
     function alterarCiclo(event) {
         event.preventDefault();
         var data = {
-            'id_ciclo': $('#id_ciclo').val(),
+            'id_ciclo': $('#id_ciclo_edicao').val(),
             'data_inicial': $("#dataTeste").attr("value"),
             'data_final': $('#nova__data__final').val(),
             'usuario_que_modificou': sessaoDeUsuario.id,
@@ -137,8 +135,7 @@ define([
         if(validacaoDataFinalAlteradaMenorDataAtual(dataFinal, dataAtual)) return;
         alterarNoBanco(data);   
     }
-
-    //funcoes para abrir e fechar modal
+    
     function mostrarContainerNovoCiclo() {
         document.getElementById("container__novo__ciclo").style.display = "block";
     }
@@ -150,11 +147,6 @@ define([
     function fecharModal() {
         document.getElementById("abrirModal").style.opacity = "0";
         document.getElementById("abrirModal").style.pointerEvents = "none";
-    }
-
-    function mostrarModal() {
-        document.getElementById("abrirModal").style.opacity = "1";
-        document.getElementById("abrirModal").style.pointerEvents = "auto";
     }
 
     function exibirErroDaDiv(nomeErro){
@@ -218,6 +210,18 @@ define([
             divCiclosPassados.style.display = "flex";
         }
     }
-
+    
+    
     return self;
 });
+
+function setaIdCicloSelecionadoParaEditar(idCicloSelecionado){
+    var inputIdCiclo = document.getElementById('id_ciclo_edicao');
+    inputIdCiclo.value = idCicloSelecionado;
+    mostrarModal();
+}
+
+function mostrarModal() {
+    document.getElementById("abrirModal").style.opacity = "1";
+    document.getElementById("abrirModal").style.pointerEvents = "auto";
+}
