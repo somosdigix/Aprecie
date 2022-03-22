@@ -353,8 +353,8 @@ def historico_alteracoes(requisicao):
   historico_alteracoes = map(lambda LOG_Ciclo: { 
     'antigo_nome_do_ciclo': LOG_Ciclo.antigo_nome_ciclo, 
     'nome_autor': LOG_Ciclo.usuario_que_modificou.nome_abreviado, 
-    'data_anterior': LOG_Ciclo.antiga_data_final.strftime('%d/%m/%Y'), 
-    'nova_data': LOG_Ciclo.nova_data_alterada.strftime('%d/%m/%Y'), 
+    'data_anterior': LOG_Ciclo.antiga_data_final.strftime('%d/%m/%Y') if(LOG_Ciclo.antiga_data_final != None) else "", 
+    'nova_data': LOG_Ciclo.nova_data_alterada.strftime('%d/%m/%Y') if (LOG_Ciclo.nova_data_alterada != None) else "", 
     'data_alteracao': LOG_Ciclo.data_da_modificacao.strftime('%d/%m/%Y'), 
     'motivo_alteracao': LOG_Ciclo.descricao_da_alteracao, 
     'novo_nome_ciclo' : LOG_Ciclo.novo_nome_ciclo

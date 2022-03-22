@@ -68,8 +68,12 @@ class Ciclo(models.Model):
       raise ExcecaoDeDominio('A data inicial não pode estar vazia')  
     self.data_inicial = data_inicial
 
+    self.verificar_data_final_menor_que(data_inicial)
+  
+  def verificar_data_final_menor_que(self, data_inicial):
     if self.data_final != None and data_inicial >= self.data_final:
       self.data_final = None
+    
 
   def calcular_porcentagem_progresso(self):
     calculo_periodo_ciclo = self.calcularPeriodoCiclo()
