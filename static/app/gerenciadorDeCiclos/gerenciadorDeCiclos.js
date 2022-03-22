@@ -19,17 +19,7 @@ define([
 
         if (administradorHelper.ehAdministrador()){
             carregarGerenciador(); 
-
-            // on click button html para função de definir ciclo e alterar ciclo
-            $("#conteudo")
-                .on("submit", 'form[data-js="form-adicionar-ciclo"]', definirCiclo)
-                .on("submit", 'form[data-js="form_alterar_ciclo"]', alterarCiclo)
-                .on("click", 'button[id="btn__editar"]', mostrarModal)
-                .on("click", 'button[id="btn__cancelar__edicao"]', fecharModal)
-                .on("click", 'button[id="btn__adicionar__ciclo"]',mostrarContainerNovoCiclo)
-                .on("click", 'button[id="btn__cancelar"]',fecharContainerNovoCiclo)
-                .on("click", 'button[data-js="botao-historio-ciclos"]',carregarCiclosPassados)
-                .on("click", 'button[data-js="botao-alteracoes-ciclos"]',carregarHistoricoAlteracoes)
+            configurarTemplate();
         }
         else{
 			roteador.navegarPara('/paginaInicial');
@@ -40,6 +30,18 @@ define([
         _sandbox.limpar("#conteudo");
         _sandbox.removerEvento("#conteudo");
     };
+
+    function configurarTemplate(){
+        $("#conteudo")
+                .on("submit", 'form[data-js="form-adicionar-ciclo"]', definirCiclo)
+                .on("submit", 'form[data-js="form_alterar_ciclo"]', alterarCiclo)
+                .on("click", 'button[id="btn__editar"]', mostrarModal)
+                .on("click", 'button[id="btn__cancelar__edicao"]', fecharModal)
+                .on("click", 'button[id="btn__adicionar__ciclo"]',mostrarContainerNovoCiclo)
+                .on("click", 'button[id="btn__cancelar"]',fecharContainerNovoCiclo)
+                .on("click", 'button[data-js="botao-historio-ciclos"]',carregarCiclosPassados)
+                .on("click", 'button[data-js="botao-alteracoes-ciclos"]',carregarHistoricoAlteracoes)
+    }
 
     function carregarGerenciador() {
         $.getJSON("/reconhecimentos/obter_informacoes_ciclo_atual", function (ciclo_atual) {
