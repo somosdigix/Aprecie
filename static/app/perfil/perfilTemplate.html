@@ -6,37 +6,39 @@
 	<input type="hidden" id="reconhecidoId" value="{{this.id}}" />
 
 	<div class="informacoes_perfil">
-		<div id="perfilColaborador">
-			<div data-js="switch-adm" class="switch-adm">
-				<label class="switch">
-					<input type="checkbox" id="toggle">
-					<span class="slider round"></span>
-					<p class="txt-slider">Administrador</p>
-				</label>
+		<div class="informacoes__perfil__flex">
+			<div id="perfilColaborador">
+				<div data-js="switch-adm" class="switch-adm">
+					<label class="switch">
+						<input type="checkbox" id="toggle">
+						<span class="slider round"></span>
+						<p class="txt-slider">Administrador</p>
+					</label>
+				</div>
+				
+				<div data-js="foto" class="alterar-foto">
+					<span data-js="foto" class="editar ion-camera invisivel"></span>
+					<img data-js="foto" class="foto-colaborador" src="{{foto this.id}}" alt="Foto" title="Clique para alterar"
+					width="100" height="100" />
+				</div>
+				<div class="informacoes-colaborador">
+					<div class="chamada-apreciar">Aprecie</div>
+					<h2 class="nome-colaborador" id="reconhecidoNome">{{this.nome}}</h2>
+				</div>
+				
+				<button class="ui labeled icon floated botao-laranja button button" data-js="botao-apreciar">
+					<i class="star icon"></i>
+					Apreciar
+				</button>
 			</div>
 			
-			<div data-js="foto" class="alterar-foto">
-				<span data-js="foto" class="editar ion-camera invisivel"></span>
-				<img data-js="foto" class="foto-colaborador" src="{{foto this.id}}" alt="Foto" title="Clique para alterar"
-				width="100" height="100" />
+			<div class="menu__administrador" data-js="menu__administrador">
+				<h2 class="titulo_menu_administrador"> Menu Administrador</h2>
+				<div class="menu_administrador_itens">
+					<a class="menu__administrador__item" data-js="ranking-admin">Relatório de Ranking</a>
+					<a class="menu__administrador__item" data-js="configuracao-ciclo">Configurações de Ciclo</a>
+				</div>		
 			</div>
-			<div class="informacoes-colaborador">
-				<div class="chamada-apreciar">Aprecie</div>
-				<h2 class="nome-colaborador" id="reconhecidoNome">{{this.nome}}</h2>
-			</div>
-			
-			<button class="ui labeled icon floated botao-laranja button button" data-js="botao-apreciar">
-				<i class="star icon"></i>
-				Apreciar
-			</button>
-		</div>
-		
-		<div class="menu__administrador" data-js="menu__administrador">
-			<h2 class="titulo_menu_administrador"> Menu Administrador</h2>
-			<div class="menu_administrador_itens">
-				<a class="menu__administrador__item" data-js="ranking-admin">Relatório de Ranking</a>
-				<a class="menu__administrador__item" data-js="configuracao-ciclo">Configurações de Ciclo</a>
-			</div>		
 		</div>
 	</div>
 

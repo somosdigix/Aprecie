@@ -448,6 +448,11 @@ h2,
   width: 33%;
 }
 
+.informacoes__perfil__flex{
+  display: flex;
+  flex-direction: column;
+}
+
 #perfilColaborador {
 
   background-color: #fff;
