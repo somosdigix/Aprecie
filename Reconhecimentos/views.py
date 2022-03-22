@@ -62,8 +62,6 @@ def ultimos_reconhecimentos(requisicao):
 
   return JsonResponse(retorno, safe=False)
   
-
-   
 def converte_boolean(bool):
     if bool.lower() == 'false':
         return False

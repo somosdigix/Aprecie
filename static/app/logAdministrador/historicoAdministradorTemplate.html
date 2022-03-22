@@ -1,14 +1,15 @@
-<h1> Historico Administrador </h1>
-<div class="lista_logs">
-    <div class="administrador_log">
-        <p class="data_log"> 13/03/2022</p>
-        <p class="mensagem_log">O Administrador: Daniel Dias setou o usuario: Vitoria Carneiro como administrador</p>
+{{#if this.historico_logs}}
+    <div class="lista_logs">
+        {{#each  this.historico_logs}}
+            <div class="administrador_log">
+                <p class="data_log"> {{this.data}} </p>
+                <p class="mensagem_log"> {{this.mensagem}} </p>
+            </div>
+        {{/each}}
     </div>
-    <div class="administrador_log">
-        <p class="data_log"> 13/03/2022</p>
-        <p class="mensagem_log">O Administrador: Daniel Dias setou o usuario: Vitoria Carneiro como administrador</p>
-    </div>
-</div>
+{{else}}
+    <p class="mensagem_logs_nao_encontrados"> Não há logs </p>
+{{/if}}
 
 <style>
     .lista_logs{
@@ -28,5 +29,19 @@
 
     .data_log, .mensagem_log{
         margin: 0;
+    }
+    
+    .data_log{
+        color: #2C006A;
+        font-weight: bold;
+    }
+
+    .mensagem_logs_nao_encontrados{
+        background-color: #F5F5F5;
+        border-radius: 6px;
+        padding: 8px;
+
+        color: #2C006A;
+        font-weight: bold;
     }
 </style>

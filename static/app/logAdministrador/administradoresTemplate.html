@@ -1,29 +1,15 @@
 <h1>Administradores</h1>
 <div class="lista_colaboradores_administradores">
-    <div class="colaborador_administrador">
-        {{#if this.foto}}
-            <img class="foto_colaborador_administrador" src="{{this.foto}}" alt="foto colaborador" />
-        {{else}}
-            <img class="foto_colaborador_administrador" src="../static/img/sem-foto.png" alt="foto colaborador" />
-        {{/if}}
-        <p class="nome_colaborador_administrador"> Nome Sobrenome</p>
-    </div>
-    <div class="colaborador_administrador">
-        {{#if this.foto}}
-            <img class="foto_colaborador_administrador" src="{{this.foto}}" alt="foto colaborador" />
-        {{else}}
-            <img class="foto_colaborador_administrador" src="../static/img/sem-foto.png" alt="foto colaborador" />
-        {{/if}}
-        <p class="nome_colaborador_administrador"> Nome Sobrenome</p>
-    </div>
-    <div class="colaborador_administrador">
-        {{#if this.foto}}
-            <img class="foto_colaborador_administrador" src="{{this.foto}}" alt="foto colaborador" />
-        {{else}}
-            <img class="foto_colaborador_administrador" src="../static/img/sem-foto.png" alt="foto colaborador" />
-        {{/if}}
-        <p class="nome_colaborador_administrador"> Nome Sobrenome</p>
-    </div>
+    {{#each this.administradores}}
+        <div class="colaborador_administrador">
+            {{#if this.foto}}
+                <img class="foto_colaborador_administrador" src="{{this.foto}}" alt="foto colaborador" />
+            {{else}}
+                <img class="foto_colaborador_administrador" src="../static/img/sem-foto.png" alt="foto colaborador" />
+            {{/if}}
+            <p class="nome_colaborador_administrador"> {{this.nome}} </p>
+        </div>
+    {{/each}}
 </div>
 
 <style>

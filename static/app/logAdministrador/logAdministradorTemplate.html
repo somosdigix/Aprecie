@@ -3,8 +3,19 @@
 
     </div>
     
-    <div data-js="container-historico-alteracao-administrador" class="container__administrador historico_alterecao_administrador">
+    <div class="container__administrador historico_alterecao_administrador">
+        <h1> Histórico </h1>
+        <div class="filtros__log_administrador">
+            <label for="dataInicial">Data de início:</label>
+            <input type="date" id="data_inicio" data-js="dataInicial" class="filtro__data__input">
+            <label for="dataFinal">Data final:</label>
+            <input type="date" id="data_fim" data-js="dataFinal" class="filtro__data__input">
+            <button data-js="botao__log_administrador" class="filtro__data__botao"> Filtrar data </button>
+        </div>
         
+        <div data-js="container-historico-alteracao-administrador" >
+
+        </div>
     </div>
 </div>
 
@@ -21,6 +32,9 @@
 
     .historico_alterecao_administrador{
         width: 65%;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
     }
 
     .container__administrador{
