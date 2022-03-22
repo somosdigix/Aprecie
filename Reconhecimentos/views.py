@@ -377,7 +377,8 @@ def ranking_por_periodo(requisicao):
       else:
         verificar_pilar_colaborador(colaborador, colaborador_transformado)
       
-    colaboradores_transformados.append(colaborador_transformado)
+    if colaborador_transformado != None:
+      colaboradores_transformados.append(colaborador_transformado)
 
     for colaborador in colaboradores_apreciacoes_feitas:
       colaborador_retornado = busca_colaborador_ranking(colaborador, colaboradores_transformados)
@@ -387,21 +388,23 @@ def ranking_por_periodo(requisicao):
         novo_colaborador = criar_colaborador(colaborador[2], colaborador[3])
         novo_colaborador.reconhecimentos_feitos = colaborador[0]
         colaboradores_transformados.append(novo_colaborador)
-    
-    colaboradores_ordenados = sorted(colaboradores_transformados, key=lambda x: x.todos_reconhecimentos, reverse=True)
 
-    transformacao = lambda colaborador : { 
-       'nome' : colaborador.nome,
-       'todos_reconhecimentos' : colaborador.todos_reconhecimentos,
-       'colaborar_sempre': colaborador.colaborar_sempre,
-       'focar_nas_pessoas': colaborador.focar_nas_pessoas,
-       'fazer_diferente': colaborador.fazer_diferente,
-       'planejar_entregar_aprender': colaborador.planejar_entregar_aprender,
-       'reconhecimentos_feitos' : colaborador.reconhecimentos_feitos,
-       'foto': colaborador.foto
-     }
-    
-    colaboradores = map(transformacao, colaboradores_ordenados)
+    if len(colaboradores_transformados) != 0:
+      colaboradores_ordenados = sorted(colaboradores_transformados, key=lambda x: x.todos_reconhecimentos, reverse=True)
+      transformacao = lambda colaborador : { 
+        'nome' : colaborador.nome,
+        'todos_reconhecimentos' : colaborador.todos_reconhecimentos,
+        'colaborar_sempre': colaborador.colaborar_sempre,
+        'focar_nas_pessoas': colaborador.focar_nas_pessoas,
+        'fazer_diferente': colaborador.fazer_diferente,
+        'planejar_entregar_aprender': colaborador.planejar_entregar_aprender,
+        'reconhecimentos_feitos' : colaborador.reconhecimentos_feitos,
+        'foto': colaborador.foto
+      }
+      
+      colaboradores = map(transformacao, colaboradores_ordenados)
+    else:
+      colaboradores = ""
 
     return JsonResponse({'colaboradores': list(colaboradores)})
 
@@ -429,7 +432,7 @@ def obter_ranking_de_apreciacoes_feitas(data_inicial, data_final):
   with connection.cursor() as cursor:
     cursor.execute('''
     SELECT count(*), r.reconhecedor_id, l.nome, l.foto
-    FROM public."Reconhecimentos_reconhecimento" r
+     FROM public."Reconhecimentos_reconhecimento" r
     JOIN public."Login_colaborador" l ON r.reconhecedor_id = l.id
     WHERE r.data BETWEEN %s AND %s
     GROUP by r.reconhecedor_id, l.nome, l.foto
