@@ -99,3 +99,11 @@ class LOG_Ciclo(models.Model):
       ciclo_nome = ciclo.nome
     return cls(ciclo = ciclo, usuario_que_modificou = usuario_que_modificou, descricao_da_alteracao = descricao_da_alteracao, novo_nome_ciclo = novo_nome_ciclo,
     nova_data_alterada = nova_data_alterada, antiga_data_final = data_final, antigo_nome_ciclo = ciclo_nome)
+
+
+class Agradecimento(models.Model):
+  id = models.AutoField(primary_key=True)
+  data = models.DateField(auto_now_add=True)
+  colaborador = models.ForeignKey('Login.Colaborador', related_name='colaborador', on_delete=models.CASCADE)
+  reconhecimento = models.ForeignKey('Reconhecimentos.Reconhecimento', related_name='reconhecimento', on_delete=models.CASCADE)
+  mensagem = models.CharField(max_length=1000)
