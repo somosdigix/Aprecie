@@ -688,7 +688,7 @@ svg {
   align-items: center;
 }
 
-#btn__editar {
+.btn__editar {
   display: absolute;
   width: 100%;
   font-family: Campton;
@@ -720,13 +720,9 @@ svg {
   display: flex;
 }
 .adicionar__ciclo{
-  width: 80%;
+  width: 89.6%;
   margin: 32px auto;
   text-align: left;
-}
-.nome__autor,
-.data__alteracao {
-  color: white;
 }
 
 #container__novo__ciclo {
@@ -787,6 +783,10 @@ svg {
   color: white;
   border: 0;
   cursor: pointer;
+}
+.nome__autor,
+.data__alteracao, .nome__autor__edicao, .fonte-cor-branca {
+  color: white;
 }
 
 
