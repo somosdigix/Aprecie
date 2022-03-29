@@ -4,8 +4,10 @@
 	'text!app/perfil/perfilTemplate.html',
 	'sessaoDeUsuario',
 	'app/botaoReconhecer/botaoReconhecer',
-	'app/helpers/administradorHelper'
-], function ($, template, perfilTemplate, sessaoDeUsuario, botaoReconhecer, administradorHelper) {
+	'app/helpers/administradorHelper',
+	"growl",
+	"roteador"
+], function ($, template, perfilTemplate, sessaoDeUsuario, botaoReconhecer, administradorHelper, growl, roteador) {
 	'use strict';
 
 	var _self = {};
@@ -42,7 +44,9 @@
 					$('#conteudo').on('click', 'button[data-js="botao_fechar_cropper"]', fecharModalCrop);
 					$('#conteudo').on('change', 'input[data-js="input__arquivos"]', readURL);
 
-					$('#conteudo').on("click", 'button[class="botao--fecharModalAgradecimento"]', fecharModalAdicionarAgradecimento)
+					$('#conteudo')
+						.on("click", 'button[class="botao--fecharModalAgradecimento"]', fecharModalAdicionarAgradecimento)
+						.on("submit", 'form[data-js="form_adicionar_agradecimento"]', agradecer);
 				} else {
 					$('div[data-js="apreciacao"]').show();
 					$('div[data-js="foto"]').removeClass("alterar-foto");
@@ -82,6 +86,20 @@
 		document.getElementById('modal__adicionar-agradecimento').style.display = "none";
 	}
 
+	function agradecer(event){
+		event.preventDefault();
+		var data = {
+			'id_reconhecimento_vinculado':  $('#id_reconhecimento_vinculado').val(),
+			'id_colaborador_que_agradeceu': $('#id_colaborador_que_agradeceu').val(),
+			'agradecimento': $('#agradecimento').val(),
+		}
+
+		$.post('/reconhecimentos/agradecer/', data, function () {
+            growl.deSucesso().exibir('Agradecimento feito com sucesso');
+            roteador.atualizar();
+    	})
+	};  
+	
 
 	function apreciar() {
 		botaoReconhecer.exibirModal();
@@ -210,8 +228,13 @@
 	return _self;
 });
 
-function abrirModalAdicionarAgradecimento(idReconhecimento) {
+function abrirModalAdicionarAgradecimento(idReconhecimento, idColaborador) {
 	document.getElementById('modal__adicionar-agradecimento').style.display = "block";
 	var inputIdReconhecimento = document.getElementById('id_reconhecimento_vinculado');
-	inputIdReconhecimento.value = idReconhecimento;	
+	inputIdReconhecimento.value = idReconhecimento;
+
+	var inputIdColaborador = document.getElementById('id_colaborador_que_agradeceu');
+	inputIdColaborador.value = idColaborador;
+
+	console.log(idReconhecimento, idColaborador);
 }

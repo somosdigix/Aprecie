@@ -1,7 +1,8 @@
-﻿from django.http import JsonResponse
+﻿from inspect import CO_ASYNC_GENERATOR
+from django.http import JsonResponse
 from django.db.models import Count
 from Login.models import Colaborador
-from Reconhecimentos.models import Pilar, Reconhecimento, Feedback, Ciclo, LOG_Ciclo
+from Reconhecimentos.models import Agradecimento, Pilar, Reconhecimento, Feedback, Ciclo, LOG_Ciclo
 from Reconhecimentos.services import Notificacoes
 from django.core.paginator import Paginator
 from rolepermissions.decorators import has_role_decorator
@@ -35,6 +36,19 @@ def verificar_ultima_data_de_publicacao(reconhecedor):
 
   return not(ultima_data == date.today())
   
+def agradecer(requisicao):
+  
+  id_reconhecimento_vinculado = requisicao.POST['id_reconhecimento_vinculado']
+  id_colaborador_que_agradeceu = requisicao.POST['id_colaborador_que_agradeceu']
+  mensagem = requisicao.POST['agradecimento']
+ 
+  colaborador_que_agradeceu = Colaborador.objects.get(id=id_colaborador_que_agradeceu)
+  reconhecimento_vinculado = Reconhecimento.objects.get(id=id_reconhecimento_vinculado)
+
+  agradecimento = Agradecimento(colaborador=colaborador_que_agradeceu, reconhecimento=reconhecimento_vinculado, mensagem=mensagem)
+  agradecimento.save()
+
+  return JsonResponse({})
 
 def ultimos_reconhecimentos(requisicao):
   reconhecimentos = Reconhecimento.objects.all().order_by('-id')
@@ -133,8 +147,9 @@ def todas_as_apreciacoes(requisicao, id_do_reconhecido):
     'data': apreciacao.data,
     'pilar__nome': apreciacao.pilar.nome,
     'feedback__descritivo': apreciacao.feedback.descritivo, 
-    'reconhecedor__nome': apreciacao.reconhecedor.nome_abreviado,
     'reconhecedor__id': apreciacao.reconhecedor.id,
+    'reconhecedor__nome': apreciacao.reconhecedor.nome_abreviado,
+    'reconhecido__id': apreciacao.reconhecido.id,
     'reconhecido__nome': apreciacao.reconhecido.nome_abreviado
   }, reconhecido.reconhecimentos().order_by('-id'))
 
@@ -143,8 +158,9 @@ def todas_as_apreciacoes(requisicao, id_do_reconhecido):
     'data': apreciacao.data,
     'pilar__nome': apreciacao.pilar.nome,
     'feedback__descritivo': apreciacao.feedback.descritivo, 
-    'reconhecedor__nome': apreciacao.reconhecedor.nome_abreviado,
     'reconhecedor__id': apreciacao.reconhecedor.id,
+    'reconhecedor__nome': apreciacao.reconhecedor.nome_abreviado,
+    'reconhecido__id': apreciacao.reconhecido.id,
     'reconhecido__nome': apreciacao.reconhecido.nome_abreviado
   }, Reconhecimento.objects.filter(reconhecedor = requisicao.user.id).order_by('-id'))
 

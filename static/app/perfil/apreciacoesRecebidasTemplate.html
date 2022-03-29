@@ -25,9 +25,24 @@
                 </div>
                 <!-- Se  não tiver um agradecimento feito -->
                 <div class="botao-agradecer">
-                    <button onclick="abrirModalAdicionarAgradecimento('{{this.id}}')"> Agradecer </button>
+                    <button onclick="abrirModalAdicionarAgradecimento('{{this.id}}', '{{this.reconhecido__id}}')"> Agradecer </button>
                 </div>
 
+                <!-- Se tiver algum agradecimento -->
+                <!-- <div class="agradecimento-recebido">
+                    <img class="img-reconhecedor"	src="{{ foto this.reconhecedor__id usar_miniatura=true}}"/>
+                    <div class="texto-reconhecimento">
+                        {{#if this.pilar__nome}}
+                        <strong data-id="1" data-js="ir-ao-perfil" class="apreciador">
+                            {{ this.reconhecedor__nome }} em {{ this.pilar__nome }}
+                        </strong>
+                        {{/if}}
+        
+                        <div class="data-reconhecimento">{{ emDataLegivel this.data }}</div>
+        
+                        <p>{{this.feedback__descritivo}}</p>
+                    </div>
+                </div> -->
             </div>
             
 			<button id="modal-botao" data-js="modal-botao" onClick="obterApreciacao('{{this.pilar__nome}}', '{{this.feedback__descritivo}}', '{{this.reconhecedor__nome}}', '{{this.reconhecido__nome}}')" name="compartilhar">
@@ -70,13 +85,13 @@
 </div>
 
 <div id="modal__adicionar-agradecimento">
-    <!-- <div class="modal__agradecimento--fundo"></div> -->
     <div class="modal__agradecimento--container">
         <div class="conteudo__modal--agradecimento">
             <h1 class="titulo__modal"> Agradecer </h1>
             <form data-js="form_adicionar_agradecimento">
                 <input hidden id="id_reconhecimento_vinculado">
-                <textarea class="input__agradecimento" cols="40" rows="4" tabindex="50" maxlength="63" placeholder="Digite aqui o agradecimento" required></textarea>
+                <input hidden id="id_colaborador_que_agradeceu">
+                <textarea id="agradecimento" class="input__agradecimento" cols="40" rows="6" tabindex="50" maxlength="200" placeholder="Digite aqui o agradecimento" required></textarea>
                 <div class="botoes__modal__adicionar--agradecimento">
                     <button type="submit" class="botao__modal--agradecimento">Confirmar</button>
                 </div>
@@ -93,6 +108,10 @@
 <script src="/static/app/perfil/apreciacoesPrint.js"></script>
 
 <style>
+    .agradecimento-recebido{
+        margin: 16px 0 16px 24px;
+    }
+
     #modal__adicionar-agradecimento{
         display: none;
         position: fixed;
