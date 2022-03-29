@@ -45,7 +45,6 @@
 
 <div id="container">
     <div class="modal" id="modal"></div>
-
     <div class="corpo-modal" id="corpo-modal">
         <div class="card" id="card">
             <div class="p">
@@ -70,9 +69,83 @@
     
 </div>
 
+<div class="modal__adicionar-agradecimento">
+    <div class="modal__agradecimento--fundo"></div>
+    <div class="modal__agradecimento--container">
+        <h1 class="titulo__modal"> Agradecer </h1>
+        <form data-js="form_adicionar_agradecimento">
+            <input hidden id="id_ciclo_edicao">
+            <textarea class="input__agradecimento" cols="40" rows="4" tabindex="50" maxlength="63" placeholder="Digite aqui o agradecimento" required></textarea>
+            <div class="botoes__modal__adicionar--agradecimento">
+                <button class="botao__modal--agradecimento">Cancelar</button>
+                <button type="submit" class="botao__modal--agradecimento">Confirmar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
 <script src="/static/app/perfil/apreciacoesPrint.js"></script>
 
 <style>
+    .modal__adicionar-agradecimento{
+        display: none;
+    }
+    .modal__agradecimento--fundo{
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 2;
+
+        width: 100%;
+        height: 100%;
+
+        background: rgb(0, 0, 0, 0.5);
+    }
+
+    .modal__agradecimento--container{
+        background-color: #2c006a;
+        border-radius: 20px;
+        padding: 8px;
+
+
+        position: relative;
+        width: 25%;
+        margin: 300px auto;
+    }
+
+    .input__agradecimento{
+        margin: 15px auto;
+        resize: none;
+        display: block;
+        width: 80%;
+        justify-content: center;
+        align-items: center;
+        border-radius: 5px;
+        padding: 8px;
+    }
+
+    .botoes__modal__adicionar--agradecimento{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        margin: 0px auto;
+    }
+
+    .botao__modal--agradecimento{
+        padding: 8px;
+        font-family: Campton-Bold;
+        background-color: #2c006a;
+        color: white;
+        border: 0;
+        width: 70%;
+    }
+    
+    .botao__modal--agradecimento:hover{
+        border: 1px solid #fff;
+        border-radius: 20px;
+    }
+
+
     .botao-agradecer{
         display: flex;
         justify-content: flex-end;
