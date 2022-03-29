@@ -9,4 +9,6 @@ urlpatterns = [
   url(r'^colaborador/$', views.inserir_colaboradores, name="colaborador"),
   url(r'^verificar_usuario/$', views.validar_usuario_logado, name="validar_usuario_logado"),
   url(r'^administrador/$', views.switch_administrador, name="switch_administrador"),
+  url(r'^obter_administradores/$', views.obter_administradores, name="obter_administradores"),
+  url(r'^obter_logs_administradores/$', views.obter_logs_administradores, name="obter_logs_administradores"),
 ]

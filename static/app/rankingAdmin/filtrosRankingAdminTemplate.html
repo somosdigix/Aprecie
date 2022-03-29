@@ -1,8 +1,10 @@
 <div class="filtros">
     <h1>Relatório de Ranking</h1>
     <div class="filtro__pilares">
-        <input class="filtro__pilares__input" id="todos" data-js="todos" pilar_ranking="Todos" type="radio" name="filtro__pilares__ranking" value="todos_reconhecimentos" checked>
-        <label for="todos" class="filtro__pilares__label">Todos</label>
+        <input class="filtro__pilares__input" id="todos" data-js="todos" pilar_ranking="Todas apreciações" type="radio" name="filtro__pilares__ranking" value="todos_reconhecimentos" checked>
+        <label for="todos" class="filtro__pilares__label">Todas apreciações </label>
+        <input class="filtro__pilares__input" id="feitos" data-js="feitos" pilar_ranking="Apreciações feitas" type="radio" name="filtro__pilares__ranking" value="reconhecimentos_feitos">
+        <label for="feitos" class="filtro__pilares__label">Apreciações feitas </label>
         <input class="filtro__pilares__input" id="colaborarSempre" data-js="colaborarSempre" pilar_ranking="Colaborar Sempre" type="radio" name="filtro__pilares__ranking" value="colaborar_sempre">
         <label for="colaborarSempre" class="filtro__pilares__label"> Colaborar Sempre</label>
         <input class="filtro__pilares__input" id="fazerDiferente" data-js="fazerDiferente" pilar_ranking="Fazer diferente" type="radio" name="filtro__pilares__ranking" value="fazer_diferente">
@@ -17,7 +19,7 @@
         <input type="date" id="data_inicial" data-js="dataInicial" class="filtro__data__input">
         <label for="dataFinal">Data final:</label>
         <input type="date" id="data_final" data-js="dataFinal" class="filtro__data__input">
-        <button data-js="botao__ranking__adm" class="filtro__data__botao"> Filtrar data</button>
+        <button data-js="botao__ranking__adm" class="filtro__data__botao"> Filtrar data </button>
     </div>
     <div class="filtro__busca">
         <div data-js="buscarColaboradorRanking" class="ui fluid search largura-busca">
@@ -78,29 +80,6 @@
         font-size: 16px;
         font-family: Campton;
   
-    }
-
-    .filtro__data__input {
-        background: none;
-        border: black 1px solid;
-        border-radius: 5px;
-        margin-right: 16px;
-        padding: 10px;
-    }
-
-    .filtro__data__botao {
-        background: #2C006A;
-        border: 1px solid #2C006A;
-        border-radius: 5px;
-        color: white;
-        padding: 10px;
-        font-size: 16px;
-        font-family: Campton;
-    }
-
-    .filtro__data label{
-        font-size: 16px;
-        font-family: Campton;
     }
 
     .filtro__busca{

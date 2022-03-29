@@ -1,6 +1,6 @@
 ﻿from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
-from django.db.models.fields import IntegerField
+from Reconhecimentos.models import Reconhecimento
 from bradocs4py import ValidadorCpf
 
 from Aprecie.base import ExcecaoDeDominio
@@ -96,7 +96,11 @@ class Colaborador(AbstractBaseUser, PermissionsMixin):
 
 	def definir_ultima_data_de_publicacao(self, data):
 		self.data_ultimo_reconhecimento = data
-		
+
+	def reconhecimentos_feitos_por_data(self, data_inicio, data_fim):
+		reconhecimentos_feitos = Reconhecimento.objects.filter(reconhecedor= self)
+		return reconhecimentos_feitos.filter(data__gte= data_inicio).filter(data__lte=data_fim)
+ 
 class LOG_Administrador(models.Model):
 	id = models.AutoField(primary_key = True)
 	administrador = models.ForeignKey('Colaborador', on_delete=models.CASCADE, related_name="Administrador") 

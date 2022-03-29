@@ -21,7 +21,8 @@
         .on('click', 'div[data-js="tratar-menu-mobile"]', tratarMenuMobile)
         .on('click', 'a[data-js="ranking"]', ranking)
         .on('click', 'a[data-js="sair"]', sair)
-        .on('click', 'a[data-js="ranking-admin"]', rankingAdmin);
+        .on('click', 'a[data-js="ranking-admin"]', rankingAdmin)
+        .on('click', 'a[data-js="logs-administrador"]', logsAdministrador);
 
       administradorHelper.mostrarConteudoSeForAdministrador('div[data-js="menu__administrador"]');
 
@@ -79,6 +80,12 @@
   function rankingAdmin() {
     require(['roteador'], function(roteador) {
       roteador.navegarPara('/rankingAdmin');
+    });
+  }
+
+  function logsAdministrador() {
+    require(['roteador'], function(roteador) {
+      roteador.navegarPara('/logAdministrador');
     });
   }
 

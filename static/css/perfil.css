@@ -10,6 +10,17 @@ button {
   cursor: pointer;
 }
 
+button.botao__perfil__apreciacoes{
+  border: none;
+  background-color: transparent;
+  margin: 0 16px 0 0;
+}
+
+button.botao__selecionado__perfil, #reconhecimentos-feitos:hover, #reconhecimentos-recebidos:hover{
+  border-bottom: 3px solid #0bc0d3;
+  transform: scale(1.1);
+  transition: transform 200ms;
+}
 .escrever-apreciacao .selecione-o-pilar .campos {
   color: #616161;
   cursor: pointer;

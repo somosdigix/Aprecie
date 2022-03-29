@@ -1,46 +1,56 @@
 <h1 id="ranking__admin__pilar" class="ranking__admin__pilar"></h1>
 <div class="container__ranking">
-    {{#each this}}
-    <div class="colaborador__ranking">
-        <div class= "colaborador__informacoes">
-            {{#if foto}}
-                <img class="com-foto foto__colaborador" src={{this.foto}} alt="foto colaborador">
-            {{else}}
-                <img class="sem-foto foto__colaborador" src="../static/img/sem-foto.png" alt="foto colaborador">
-            {{/if}}
-            <div class="colaborador__informacoes__texto">
-                <p class="posicao__ranking__admin espacamento" ></p>
-                <p class="colaborador__nome espacamento">
-                    {{nome}}
+    {{#if this}}
+        {{#each this}}
+        <div class="colaborador__ranking">
+            <div class= "colaborador__informacoes">
+                {{#if foto}}
+                    <img class="com-foto foto__colaborador" src={{this.foto}} alt="foto colaborador">
+                {{else}}
+                    <img class="sem-foto foto__colaborador" src="../static/img/sem-foto.png" alt="foto colaborador">
+                {{/if}}
+                <div class="colaborador__informacoes__texto">
+                    <p class="posicao__ranking__admin espacamento" ></p>
+                    <p class="colaborador__nome espacamento">
+                        {{nome}}
+                    </p>
+                    <p class="colaborador__ranking--nome espacamento">Total de apreciações: 
+                        {{todos_reconhecimentos}}
+                    </p>
+                    <p class="colaborador__ranking--nome espacamento">Apreciações feitas: 
+                        {{reconhecimentos_feitos}}
+                    </p>
+                </div>
+            </div>
+            <div class="apreciacoes">
+                <p class="colaborador__ranking--nome">Colaborar Sempre: 
+                    {{colaborar_sempre}} 
                 </p>
-                <p class="colaborador__ranking--nome espacamento">Total de apreciações: 
-                    {{todos_reconhecimentos}}
+                <p class="colaborador__ranking--nome">Focar nas Pessoas: 
+                    {{focar_nas_pessoas}} 
+                </p>
+                <p class="colaborador__ranking--nome">Fazer Diferente: 
+                    {{fazer_diferente}} 
+                </p>
+                <p class="colaborador__ranking--nome">Planejar, Entregar e Aprender: 
+                    {{planejar_entregar_aprender}} 
                 </p>
             </div>
         </div>
-        <div class="apreciacoes">
-            <p class="colaborador__ranking--nome">Colaborar Sempre: 
-                {{colaborar_sempre}} 
-            </p>
-            <p class="colaborador__ranking--nome">Focar nas Pessoas: 
-                {{focar_nas_pessoas}} 
-            </p>
-            <p class="colaborador__ranking--nome">Fazer Diferente: 
-                {{fazer_diferente}} 
-            </p>
-            <p class="colaborador__ranking--nome">Planejar, Entregar e Aprender: 
-                {{planejar_entregar_aprender}} 
-            </p>
-        </div>
-    </div>
-    {{/each}}
+        {{/each}}
+    {{else}}
+        <p> Nenhum reconhecimento feito ou recebido no período de data </p>
+    {{/if}}
 </div>
-
 
 <style>
     .foto__colaborador{
         border-radius: 50%;
+        width: 120px;
+		height: 120px;
+        margin:10px;
     }
+    
     .container__ranking{    
         font-family: Campton;
     }
@@ -64,11 +74,6 @@
         margin: 32px auto;
         width: 80%;
         flex-wrap: wrap;
-    }
-
-    .com-foto, .sem-foto{
-        width: 35%;
-        margin:10px;
     }
     
     .colaborador__ranking {

@@ -26,6 +26,7 @@ define([
 	
 			$('#conteudo')
 				.on('click', 'input[data-js="todos"]', ordenaRankingPorPilar)
+				.on('click', 'input[data-js="feitos"]', ordenaRankingPorPilar)
 				.on('click', 'input[data-js="colaborarSempre"]', ordenaRankingPorPilar)
 				.on('click', 'input[data-js="focarNasPessoas"]', ordenaRankingPorPilar)
 				.on('click', 'input[data-js="fazerDiferente"]', ordenaRankingPorPilar)
@@ -65,16 +66,15 @@ define([
 			'data_inicio': dataHoje,
 			'data_fim': dataHoje
 		}
+	
 		criarRankingPorPeriodo(data);
 		document.getElementById('data_inicial').value = dataHoje;
 		document.getElementById('data_final').value = dataHoje;
-
 	}
 
 	function carregarRankingPeriodoDeDatas() {
 		var filtroDataAdminViewModel = new FiltroDataAdminViewModel()
 		criarRankingPorPeriodo(filtroDataAdminViewModel);
-		ordenaRankingPorPilar();
 	}
 
 	function criarRankingPorPeriodo(dataAdminViewModel) {
@@ -87,17 +87,20 @@ define([
 			}
 			else {
 				exibirRanking(ranking_de_colaboradores.colaboradores);
+				ordenaRankingPorPilar();
 			}
 		});
 	}
 
 	function exibirRanking(ranking_de_colaboradores) {
-
 		template.exibirEm('div[data-js="container__ranking"]', rankingAdmin, ranking_de_colaboradores);
 		posicaoDinamica();
 
-		var titulo = $("input[name=filtro__pilares__ranking]:checked").attr("pilar_ranking");
-		document.getElementById("ranking__admin__pilar").innerHTML = titulo;
+		var busca_por_nome = $("#input_busca_colaborador_ranking").val();
+		if (busca_por_nome == '') {
+			var titulo = $("input[name=filtro__pilares__ranking]:checked").attr("pilar_ranking");
+			document.getElementById("ranking__admin__pilar").innerHTML = titulo;
+		}
 	}
 
 	function ordenaRankingPorPilar() {
@@ -126,6 +129,9 @@ define([
 		}
 		else if (pilarSelecionado == 'planejar_entregar_aprender') {
 			return colaborador.planejar_entregar_aprender;
+		}
+		else if (pilarSelecionado == 'reconhecimentos_feitos'){
+			return colaborador.reconhecimentos_feitos;
 		}
 	}
 
