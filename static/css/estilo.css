@@ -688,7 +688,7 @@ svg {
   align-items: center;
 }
 
-#btn__editar {
+.btn__editar {
   display: absolute;
   width: 100%;
   font-family: Campton;
@@ -706,8 +706,7 @@ svg {
 
 .titulo {
   font-family: Campton;
-  margin: 24px auto;
-  width: 80%;
+  margin-bottom: 24px;
 }
 
 #btn__adicionar__ciclo {

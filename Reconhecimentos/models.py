@@ -56,7 +56,7 @@ class Ciclo(models.Model):
 
   def alterar_ciclo(self, data_final, nome):
     if data_final == None or data_final <= self.data_inicial:
-      raise ExcecaoDeDominio('A data final do ciclo não pode ser igual a data inicial') 
+      raise ExcecaoDeDominio('A data final do ciclo não pode ser igual ou maior que a data inicial') 
     self.data_final = data_final
     
     if nome == None or nome == "":
