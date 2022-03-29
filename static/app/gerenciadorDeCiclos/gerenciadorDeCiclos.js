@@ -4,10 +4,13 @@ define([
     "text!app/gerenciadorDeCiclos/gerenciadorDeCiclosTemplate.html",
     "text!app/gerenciadorDeCiclos/ciclosPassadosTemplate.html",
     "text!app/gerenciadorDeCiclos/historicoDeAlteracao.html",
+    "text!app/gerenciadorDeCiclos/cicloAtualTemplate.html",
+    "text!app/gerenciadorDeCiclos/cicloFuturoTemplate.html",
+    "text!app/gerenciadorDeCiclos/botaoAdicionarCicloTemplate.html",
     "sessaoDeUsuario",
     "growl",
     "roteador"
-], function ($, template, gerenciadorDeCiclosTemplate, ciclosPassadosTemplate,historicoDeAlteracao,sessaoDeUsuario, growl, roteador) {
+], function ($, template, gerenciadorDeCiclosTemplate, ciclosPassadosTemplate, historicoDeAlteracao, cicloAtualTemplate, cicloFuturoTemplate, botaoAdicionarCicloTemplate, sessaoDeUsuario, growl, roteador) {
     "use strict";
 
     var self = {};
@@ -16,9 +19,8 @@ define([
     self.inicializar = function (sandbox) {
         _sandbox = sandbox;
 
-        carregarGerenciador(); 
+        carregarGerenciador();
 
-        // on click button html para função de definir ciclo e alterar ciclo
         $("#conteudo")
             .on("submit", 'form[data-js="form-adicionar-ciclo"]', definirCiclo)
             .on("submit", 'form[data-js="form_alterar_ciclo"]', alterarCiclo)
@@ -35,10 +37,28 @@ define([
         _sandbox.removerEvento("#conteudo");
     };
 
-    function carregarGerenciador() {
+    function carregarInformacoesCicloAtual(){
         $.getJSON("/reconhecimentos/obter_informacoes_ciclo_atual", function (ciclo_atual) {
-            template.exibir(gerenciadorDeCiclosTemplate, ciclo_atual);
+            template.exibirEm('div[data-js="container_ciclo_atual"]', cicloAtualTemplate, ciclo_atual);
         });
+    }
+
+    function carregarInformacoesCicloFuturo(){
+        $.getJSON("/reconhecimentos/obter_informacoes_ciclo_futuro", function (informacoes_ciclo) {     
+            if (informacoes_ciclo.ciclo_futuro != null){
+                template.exibirEm('div[data-js="container_ciclo_futuro"]', cicloFuturoTemplate, informacoes_ciclo);
+            }
+            
+            if(informacoes_ciclo.ciclo_futuro == null && informacoes_ciclo.data_final_ciclo_atual != null){
+                template.exibirEm('div[data-js="container__botao__adicionar"]', botaoAdicionarCicloTemplate, informacoes_ciclo.previsao_data)
+            }
+        });
+    }
+
+    function carregarGerenciador() {
+        template.exibir(gerenciadorDeCiclosTemplate);
+        carregarInformacoesCicloAtual();
+        carregarInformacoesCicloFuturo();
 
         $('#corpo__historico').hide();
         $('#historico_alteracao').hide();
@@ -109,6 +129,7 @@ define([
             'descricao_da_alteracao': $('#input__motivo').val(),
             'novo_nome_ciclo': $('#novo_nome_ciclo').val()
         }
+
         var dataAtual = new Date();
         var dataFinal = new Date(data.data_final);
         var dataInicial = new Date(data.data_inicial);

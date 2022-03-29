@@ -11,6 +11,7 @@ urlpatterns = [
     url(r'^definir_ciclo/$', views.definir_ciclo, name="definir_ciclo"),
     url(r'^alterar_ciclo/$', views.alterar_ciclo, name="alterar_ciclo"),
     url(r'^obter_informacoes_ciclo_atual/$', views.obter_informacoes_ciclo_atual, name="obter_informacoes_ciclo_atual"),
+    url(r'^obter_informacoes_ciclo_futuro/$', views.obter_informacoes_ciclo_futuro, name="obter_informacoes_ciclo_futuro"),
     url(r'^ranking/$', views.contar_reconhecimentos, name="contar_reconhecimentos"),
     url(r'^([0-9]+)/([0-9]+)$', views.reconhecimentos_por_pilar, name="reconhecimentos_por_pilar"),
     url(r'^ciclos_passados/$', views.ciclos_passados, name="ciclos_passados"),
