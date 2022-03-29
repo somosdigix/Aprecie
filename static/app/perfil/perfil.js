@@ -41,6 +41,8 @@
 					$('#conteudo').on('click', 'button[data-js="alterar-foto"]', alterarFoto);
 					$('#conteudo').on('click', 'button[data-js="botao_fechar_cropper"]', fecharModalCrop);
 					$('#conteudo').on('change', 'input[data-js="input__arquivos"]', readURL);
+
+					$('#conteudo').on("click", 'button[class="botao--fecharModalAgradecimento"]', fecharModalAdicionarAgradecimento)
 				} else {
 					$('div[data-js="apreciacao"]').show();
 					$('div[data-js="foto"]').removeClass("alterar-foto");
@@ -75,6 +77,11 @@
 	function fecharModalCrop() {
 		document.getElementById('caixa-modal').style.display = "none";
 	}
+
+	function fecharModalAdicionarAgradecimento() {
+		document.getElementById('modal__adicionar-agradecimento').style.display = "none";
+	}
+
 
 	function apreciar() {
 		botaoReconhecer.exibirModal();
@@ -202,3 +209,9 @@
 
 	return _self;
 });
+
+function abrirModalAdicionarAgradecimento(idReconhecimento) {
+	document.getElementById('modal__adicionar-agradecimento').style.display = "block";
+	var inputIdReconhecimento = document.getElementById('id_reconhecimento_vinculado');
+	inputIdReconhecimento.value = idReconhecimento;	
+}
