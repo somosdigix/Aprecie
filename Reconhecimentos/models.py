@@ -56,7 +56,7 @@ class Ciclo(models.Model):
 
   def alterar_ciclo(self, data_final, nome):
     if data_final == None or data_final <= self.data_inicial:
-      raise ExcecaoDeDominio('A data final do ciclo não pode ser igual a data inicial') 
+      raise ExcecaoDeDominio('A data final do ciclo não pode ser igual ou maior que a data inicial') 
     self.data_final = data_final
     
     if nome == None or nome == "":
@@ -68,8 +68,12 @@ class Ciclo(models.Model):
       raise ExcecaoDeDominio('A data inicial não pode estar vazia')  
     self.data_inicial = data_inicial
 
+    self.verificar_data_final_menor_que(data_inicial)
+  
+  def verificar_data_final_menor_que(self, data_inicial):
     if self.data_final != None and data_inicial >= self.data_final:
       self.data_final = None
+    
 
   def calcular_porcentagem_progresso(self):
     calculo_periodo_ciclo = self.calcularPeriodoCiclo()

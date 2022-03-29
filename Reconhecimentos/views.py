@@ -63,8 +63,6 @@ def ultimos_reconhecimentos(requisicao):
 
   return JsonResponse(retorno, safe=False)
   
-
-   
 def converte_boolean(bool):
     if bool.lower() == 'false':
         return False
@@ -98,12 +96,25 @@ def reconhecimentos_do_colaborador(requisicao, id_do_reconhecido):
 
 def contar_reconhecimentos(requisicao):
    colaboradores = map(lambda colaborador: { 
-     'nome': colaborador.nome_abreviado, 
-     'apreciacoes': colaborador.contar_todos_reconhecimentos(), 
-     'foto': colaborador.foto
-     }, sorted(Colaborador.objects.all(), key=lambda x: x.contar_todos_reconhecimentos(), reverse=True)[:10])
+     'nome': colaborador[2], 
+     'apreciacoes': colaborador[0], 
+     'foto': colaborador[3]
+     }, obter_reconhecimentos_dos_colaboradores())
 
    return JsonResponse({'colaboradores': list(colaboradores)})
+
+def obter_reconhecimentos_dos_colaboradores():
+  with connection.cursor() as cursor:
+    cursor.execute('''
+      SELECT count(*), r.reconhecido_id, l.nome, l.foto
+      FROM public."Reconhecimentos_reconhecimento" r
+      JOIN public."Login_colaborador" l ON r.reconhecido_id = l.id
+      GROUP by r.reconhecido_id, l.nome, l.foto
+      ORDER by count(*) DESC, l.nome
+      LIMIT 10
+    ''')
+    reconhecimentos = cursor.fetchall()
+  return reconhecimentos
 
 def reconhecimentos_por_reconhecedor(requisicao, id_do_reconhecido):
   reconhecedores = Reconhecimento.objects.filter(reconhecido = id_do_reconhecido) \
@@ -461,7 +472,8 @@ def ranking_por_periodo(requisicao):
       else:
         verificar_pilar_colaborador(colaborador, colaborador_transformado)
       
-    colaboradores_transformados.append(colaborador_transformado)
+    if colaborador_transformado != None:
+      colaboradores_transformados.append(colaborador_transformado)
 
     for colaborador in colaboradores_apreciacoes_feitas:
       colaborador_retornado = busca_colaborador_ranking(colaborador, colaboradores_transformados)
@@ -471,21 +483,23 @@ def ranking_por_periodo(requisicao):
         novo_colaborador = criar_colaborador(colaborador[2], colaborador[3])
         novo_colaborador.reconhecimentos_feitos = colaborador[0]
         colaboradores_transformados.append(novo_colaborador)
-    
-    colaboradores_ordenados = sorted(colaboradores_transformados, key=lambda x: x.todos_reconhecimentos, reverse=True)
 
-    transformacao = lambda colaborador : { 
-       'nome' : colaborador.nome,
-       'todos_reconhecimentos' : colaborador.todos_reconhecimentos,
-       'colaborar_sempre': colaborador.colaborar_sempre,
-       'focar_nas_pessoas': colaborador.focar_nas_pessoas,
-       'fazer_diferente': colaborador.fazer_diferente,
-       'planejar_entregar_aprender': colaborador.planejar_entregar_aprender,
-       'reconhecimentos_feitos' : colaborador.reconhecimentos_feitos,
-       'foto': colaborador.foto
-     }
-    
-    colaboradores = map(transformacao, colaboradores_ordenados)
+    if len(colaboradores_transformados) != 0:
+      colaboradores_ordenados = sorted(colaboradores_transformados, key=lambda x: x.todos_reconhecimentos, reverse=True)
+      transformacao = lambda colaborador : { 
+        'nome' : colaborador.nome,
+        'todos_reconhecimentos' : colaborador.todos_reconhecimentos,
+        'colaborar_sempre': colaborador.colaborar_sempre,
+        'focar_nas_pessoas': colaborador.focar_nas_pessoas,
+        'fazer_diferente': colaborador.fazer_diferente,
+        'planejar_entregar_aprender': colaborador.planejar_entregar_aprender,
+        'reconhecimentos_feitos' : colaborador.reconhecimentos_feitos,
+        'foto': colaborador.foto
+      }
+      
+      colaboradores = map(transformacao, colaboradores_ordenados)
+    else:
+      colaboradores = ""
 
     return JsonResponse({'colaboradores': list(colaboradores)})
 
@@ -513,7 +527,7 @@ def obter_ranking_de_apreciacoes_feitas(data_inicial, data_final):
   with connection.cursor() as cursor:
     cursor.execute('''
     SELECT count(*), r.reconhecedor_id, l.nome, l.foto
-    FROM public."Reconhecimentos_reconhecimento" r
+     FROM public."Reconhecimentos_reconhecimento" r
     JOIN public."Login_colaborador" l ON r.reconhecedor_id = l.id
     WHERE r.data BETWEEN %s AND %s
     GROUP by r.reconhecedor_id, l.nome, l.foto
