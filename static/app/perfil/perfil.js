@@ -86,8 +86,9 @@
 		if(obterStatusDeNotificacao()){
 			$.getJSON("/reconhecimentos/obter_notificacoes_administrador/", function(notificacao){
 				require(["growl"], function (growl){
-					console.log(notificacao.mensagem);
-					growl.deErro().exibir(notificacao.mensagem);
+					if (notificacao.mensagem != " "){
+						growl.deErro().exibir(notificacao.mensagem);
+					}
 				})
 			})
 			localStorage.setItem('notificacao', 'false');

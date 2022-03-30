@@ -559,4 +559,3 @@ def obter_notificacoes_do_administrador(requisicao):
   }
 
   return JsonResponse(data)
-  return datetime.strptime(data, "%Y-%m-%d").date()

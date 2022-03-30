@@ -121,4 +121,4 @@ class LOG_Ciclo(models.Model):
 
   @classmethod
   def adicionar_automatico(cls, ciclo):
-    return cls(ciclo = ciclo, descricao_da_alteracao = "Criação do ciclo automatico sem data final")
+    return cls(ciclo = ciclo, descricao_da_alteracao = "Criação do ciclo automatico sem data final", novo_nome_ciclo = ciclo.nome, antigo_nome_ciclo = ciclo.nome)
