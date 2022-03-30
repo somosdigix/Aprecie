@@ -1,85 +1,40 @@
-<div class="container__ciclo">
-	<h1 class="titulo">Configurações de Ciclo</h1>
-	<h2>Ciclo Atual</h2>
+<h1 class="titulo">Configurações de Ciclo</h1>
 
-	<div id="container__ciclo__atual">
-		<div class="datas__ciclos" data-inicial={{this.data_inicial}} data-final={{this.data_final}}>
-			<p id="dataTeste" class="data_inicio" value="{{this.data_inicial}}">Data de Início: {{this.data_inicial_formatada}}</p>
-			<p class="data_final">Data Final: {{this.data_final_formatada}}</p>
-		</div>
-		
-		<div class="nome__progresso__ciclo">
-			<p class="nome__ciclo">{{this.nome_do_ciclo}}</p>
-			<h1 id="porcentagem">{{this.porcentagem_do_progresso}}%</h1>
-			<svg>
-				<circle class="circulo1" cx="75" cy="75" r="50"></circle>
-				<circle id="circulo2" cx="75" cy="75" r="50"></circle>
-			</svg>
-		</div>
-		
-		<div class="caixa__informacoes__ciclo">
-			<p class="nome__autor__edicao">Nome do Autor: {{this.nome_usuario_que_modificou}}</p>
-			<p class="data__alteracao">Data da Última Alteração: {{this.data_ultima_alteracao}}</p>
-			<button id="btn__editar">Editar</button>
-		</div>
-	</div>
 
-	<div id="abrirModal" class="modal__ciclo">
-		<div class="box__motivo">
-			<h1 class="titulo__modal">Alteração do Ciclo:</h1>
-			<form data-js="form_alterar_ciclo">
-				<div class="descricao">
-					<input hidden id="id_ciclo" value={{this.id_ciclo}}>
-					<div class="alterar__data">
-						<label for="nova__data" class="label__nova__data__final">Data Final:</label>
-						<input type="date" id="nova__data__final"  data-js="dataFinal" class="nova__data__final" value="{{this.data_final}}" required/>
-					</div>
-					<div class="alterar__nome">
-						<label for="novo_nome_ciclo" class="label__novo__nome" >Novo Nome:</label>
-						<input type="text" id="novo_nome_ciclo" placeholder="Nome do Ciclo" class="novo__nome__ciclo" value="{{this.nome_do_ciclo}}" required/>
-					</div>
-					<textarea id="input__motivo" cols="40" rows="4" tabindex="50" maxlength="63" placeholder="Digite aqui o motivo da Alteração" required></textarea>
-					</div>
-					<div class="btns__novo__ciclo">
-						<button type="submit" data-js="btn_alterar_ciclo" id="btn__confirmar">Confirmar</button>
-						<button id="btn__cancelar__edicao">Cancelar</button>
-					</div>
-					<div class="falha-data-final-menor-alterada">⚠ Coloque um data final maior que a data inicial!</div>
-					<div class="falha-data-final-menor-atual">⚠ Coloque um data final maior que a data atual!</div>
-				</div>
-			</form>		
-		</div>
-	</div>
-	<div class="adicionar__ciclo">
-		<button id="btn__adicionar__ciclo">
-			Adicionar Novo Ciclo
-		</button>
-		<div class="falha-data-inicial-menor">⚠ Coloque um data inicial maior que a data atual!</div>
-		<div class="falha-data-final-menor">⚠ Coloque um data final maior que a data inicial!</div>
-	</div>
-	
-	<div id="container__novo__ciclo">
-		<form data-js="form-adicionar-ciclo"id="form__adicionar__ciclo">
-			<input type="text" id="nome_ciclo" placeholder="Nome do Ciclo" class="adicionar__nome__ciclo" required />
-			<div class="input__data">
-				<div class="infos__data--inicio">
-					<label for="dataInicial">Data Inicial:</label>
-					<input type="date" id="data_inicial" data-js="dataInicial" class="data__inicial__ciclo" />
-				</div>
-				<div class="infos__data--fim">
-					<label for="dataFinal">Data Final:</label>
-					<input type="date" id="data_final" data-js="dataFinal" class="data__final__ciclo" required />
-				</div>
-			</div>
-			<div class="btns__novo__ciclo">
-				<button type="submit" data-js="btn_adicionar_ciclo" id="btn__adicionar"> Adicionar</button>
-				<button id="btn__cancelar">
-					Cancelar
-				</button>
-			</div>
-		</form>
-		
-	</div>
+<div data-js="container_ciclo_atual" class="container__ciclo">
+</div>
+
+<div data-js="container_ciclo_futuro" class="container__ciclo">
+</div>
+
+<div data-js="container__botao__adicionar" class="adicionar__ciclo">
+</div>
+
+<div id="abrirModal" class="modal__ciclo">
+    <div class="box__motivo">
+        <h1 class="titulo__modal">Alteração do Ciclo:</h1>
+        <form data-js="form_alterar_ciclo">
+            <div class="descricao">
+                <input hidden id="id_ciclo_edicao">
+                <div class="alterar__data">
+                    <label for="nova__data" class="label__nova__data__final">Data Final:</label>
+                    <input type="date" id="nova__data__final"  data-js="dataFinal" class="nova__data__final" required/>
+                </div>
+                <div class="alterar__nome">
+                    <label for="novo_nome_ciclo" class="label__novo__nome" >Novo Nome:</label>
+                    <input type="text" id="novo_nome_ciclo" placeholder="Nome do Ciclo" class="novo__nome__ciclo" required/>
+                </div>
+                <textarea id="input__motivo" cols="40" rows="4" tabindex="50" maxlength="63" placeholder="Digite aqui o motivo da Alteração" required></textarea>
+                </div>
+                <div class="btns__novo__ciclo">
+                    <button id="btn__cancelar__edicao">Cancelar</button>
+                    <button type="submit" data-js="btn_alterar_ciclo" id="btn__confirmar">Confirmar</button>
+                </div>
+                <div class="falha-data-final-menor-alterada">⚠ Coloque um data final maior que a data inicial!</div>
+                <div class="falha-data-final-menor-atual">⚠ Coloque um data final maior que a data atual!</div>
+            </div>
+        </form>		
+    </div>
 </div>
 
 <div class="ciclos__passados">

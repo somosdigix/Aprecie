@@ -52,17 +52,29 @@ class Ciclo(models.Model):
   id = models.AutoField(primary_key=True)  
   nome = models.CharField(max_length=25)
   data_inicial = models.DateField()
-  data_final = models.DateField()
+  data_final = models.DateField(null=True)
 
   def alterar_ciclo(self, data_final, nome):
     if data_final == None or data_final <= self.data_inicial:
-      raise ExcecaoDeDominio('A data final do ciclo não pode ser igual a data inicial') 
+      raise ExcecaoDeDominio('A data final do ciclo não pode ser igual ou maior que a data inicial') 
     self.data_final = data_final
     
     if nome == None or nome == "":
       raise ExcecaoDeDominio('O ciclo não pode ter um nome vazio')
     self.nome = nome
   
+  def alterar_data_inicial_ciclo(self, data_inicial):
+    if data_inicial == None:
+      raise ExcecaoDeDominio('A data inicial não pode estar vazia')  
+    self.data_inicial = data_inicial
+
+    self.verificar_data_final_menor_que(data_inicial)
+  
+  def verificar_data_final_menor_que(self, data_inicial):
+    if self.data_final != None and data_inicial >= self.data_final:
+      self.data_final = None
+    
+
   def calcular_porcentagem_progresso(self):
     calculo_periodo_ciclo = self.calcularPeriodoCiclo()
     calculo_progresso_em_dias = self.calcularProgessoEmDias()
@@ -79,6 +91,9 @@ class Ciclo(models.Model):
   def calcularProgessoEmDias(self):
     periodo_dias = self.data_final - date.today()
     return periodo_dias.days
+
+  def calcularDiasParaIniciarCiclo(self):
+    return self.data_inicial - date.today()
     
 class LOG_Ciclo(models.Model):
   id = models.AutoField(primary_key=True)
@@ -93,9 +108,11 @@ class LOG_Ciclo(models.Model):
   
   @classmethod
   def adicionar(cls, ciclo, usuario_que_modificou, descricao_da_alteracao, novo_nome_ciclo, nova_data_alterada):
-    if ciclo.data_final != None and ciclo.data_final != "":
+    if ciclo.data_final != "":
       data_final = ciclo.data_final
+    
     if ciclo.nome != None and ciclo.nome != "":
       ciclo_nome = ciclo.nome
+    
     return cls(ciclo = ciclo, usuario_que_modificou = usuario_que_modificou, descricao_da_alteracao = descricao_da_alteracao, novo_nome_ciclo = novo_nome_ciclo,
     nova_data_alterada = nova_data_alterada, antiga_data_final = data_final, antigo_nome_ciclo = ciclo_nome)

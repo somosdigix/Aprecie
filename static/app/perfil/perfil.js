@@ -14,9 +14,7 @@
 	_self.inicializar = function (sandbox, colaboradorId) {
 		_sandbox = sandbox;
 
-		$("#conteudo")
-			.on('click', 'a[data-js="ranking-admin"]', rankingAdmin)
-			.on('click', 'a[data-js="configuracao-ciclo"]', gerenciadorDeCiclos);
+		configurarMenuAdministrador()
 
 		$.getJSON(
 			"/reconhecimentos/colaborador/" + colaboradorId,
@@ -33,8 +31,6 @@
 					'div[data-js="exibir-reconhecimentos"]',
 					exibirReconhecimentos
 				);
-
-				
 
 				if (sessaoDeUsuario.id === colaboradorId) {
 					$('div[data-js="switch-adm"]').hide();
@@ -85,6 +81,19 @@
 		require(['roteador'], function(roteador) {
 		  roteador.navegarPara('/gerenciadorDeCiclos');
 		});
+	}
+
+	function logAdministrador() {
+		require(['roteador'], function(roteador) {
+		  roteador.navegarPara('/logAdministrador');
+		});
+	}
+
+	function configurarMenuAdministrador(){
+		$("#conteudo")
+			.on('click', 'a[data-js="ranking-admin"]', rankingAdmin)
+			.on('click', 'a[data-js="configuracao-ciclo"]', gerenciadorDeCiclos)
+			.on('click', 'a[data-js="logs-administrador"]', logAdministrador);
 	}
 
 	function abrirModalCrop() {
