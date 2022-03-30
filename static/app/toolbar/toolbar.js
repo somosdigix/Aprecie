@@ -3,8 +3,7 @@
   'template',
   'text!app/toolbar/toolbarTemplate.html',
   'sessaoDeUsuario',
-  "app/helpers/administradorHelper",
-], function($, template, toolbarTemplate, sessaoDeUsuario, administradorHelper) {
+], function($, template, toolbarTemplate, sessaoDeUsuario) {
   'use strict';
 
   var toolbarView = {};
@@ -20,11 +19,7 @@
         .on('click', 'div[data-js="meu-perfil"]', meuPerfil)
         .on('click', 'div[data-js="tratar-menu-mobile"]', tratarMenuMobile)
         .on('click', 'a[data-js="ranking"]', ranking)
-        .on('click', 'a[data-js="sair"]', sair)
-        .on('click', 'a[data-js="ranking-admin"]', rankingAdmin)
-        .on('click', 'a[data-js="logs-administrador"]', logsAdministrador);
-
-      administradorHelper.mostrarConteudoSeForAdministrador('div[data-js="menu__administrador"]');
+        .on('click', 'a[data-js="sair"]', sair)    
 
       $('div[data-js="buscaDeColaboradores"]').search({
         source: converterParaAutocomplete(data.colaboradores),
@@ -74,18 +69,6 @@
   function ranking() {
     require(['roteador'], function(roteador) {
       roteador.navegarPara('/ranking');
-    });
-  }
-
-  function rankingAdmin() {
-    require(['roteador'], function(roteador) {
-      roteador.navegarPara('/rankingAdmin');
-    });
-  }
-
-  function logsAdministrador() {
-    require(['roteador'], function(roteador) {
-      roteador.navegarPara('/logAdministrador');
     });
   }
 

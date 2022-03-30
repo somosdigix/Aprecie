@@ -9,9 +9,10 @@ define([
     "text!app/gerenciadorDeCiclos/botaoAdicionarCicloTemplate.html",
     "sessaoDeUsuario",
     "growl",
+    "app/helpers/administradorHelper",
     "roteador"
 ], function ($, template, gerenciadorDeCiclosTemplate, ciclosPassadosTemplate, historicoDeAlteracao, cicloAtualTemplate, cicloFuturoTemplate, botaoAdicionarCicloTemplate, 
-    sessaoDeUsuario, growl, roteador) {
+    sessaoDeUsuario, growl, administradorHelper, roteador) {
     "use strict";
 
     var self = {};
@@ -20,25 +21,33 @@ define([
     self.inicializar = function (sandbox) {
         _sandbox = sandbox;
 
-        carregarGerenciador();
-
-        $("#conteudo")
-            .on("submit", 'form[data-js="form-adicionar-ciclo"]', definirCiclo)
-            .on("submit", 'form[data-js="form_alterar_ciclo"]', alterarCiclo)
-            .on("click", 'button[id="btn__adicionar__ciclo"]',mostrarContainerNovoCiclo)
-            .on("click", 'button[id="btn__cancelar"]',fecharContainerNovoCiclo)
-            .on("click", 'button[data-js="botao-historio-ciclos"]',carregarCiclosPassados)
-            .on("click", 'button[data-js="botao-alteracoes-ciclos"]',carregarHistoricoAlteracoes)
-            
-            .on("click", 'button[id="btn__cancelar__edicao"]', fecharModal)
-        };
+        if (administradorHelper.ehAdministrador()){
+            carregarGerenciador(); 
+            configurarTemplate();
+        }
+        else{
+			roteador.navegarPara('/paginaInicial');
+		}
+    };
 
     self.finalizar = function () {
         _sandbox.limpar("#conteudo");
         _sandbox.removerEvento("#conteudo");
     };
 
-    function carregarInformacoesCicloAtual(){
+    function configurarTemplate(){
+        $("#conteudo")
+            .on("submit", 'form[data-js="form-adicionar-ciclo"]', definirCiclo)
+            .on("submit", 'form[data-js="form_alterar_ciclo"]', alterarCiclo)
+            .on("click", 'button[id="btn__editar"]', mostrarModal)
+            .on("click", 'button[id="btn__cancelar__edicao"]', fecharModal)
+            .on("click", 'button[id="btn__adicionar__ciclo"]',mostrarContainerNovoCiclo)
+            .on("click", 'button[id="btn__cancelar"]',fecharContainerNovoCiclo)
+            .on("click", 'button[data-js="botao-historio-ciclos"]',carregarCiclosPassados)
+            .on("click", 'button[data-js="botao-alteracoes-ciclos"]',carregarHistoricoAlteracoes)
+    }
+
+    function carregarGerenciador() {
         $.getJSON("/reconhecimentos/obter_informacoes_ciclo_atual", function (ciclo_atual) {
             template.exibirEm('div[data-js="container_ciclo_atual"]', cicloAtualTemplate, ciclo_atual);
         });
@@ -52,6 +61,12 @@ define([
             if(informacoes_ciclo.ciclo_futuro == null && informacoes_ciclo.data_final_ciclo_atual != null){
                 template.exibirEm('div[data-js="container__botao__adicionar"]', botaoAdicionarCicloTemplate, informacoes_ciclo.previsao_data)
             }
+        });
+    }
+
+    function carregarInformacoesCicloAtual(){
+        $.getJSON("/reconhecimentos/obter_informacoes_ciclo_atual", function (ciclo_atual) {
+            template.exibirEm('div[data-js="container_ciclo_atual"]', cicloAtualTemplate, ciclo_atual);
         });
     }
 

@@ -14,12 +14,15 @@
 	_self.inicializar = function (sandbox, colaboradorId) {
 		_sandbox = sandbox;
 
+		configurarMenuAdministrador()
+
 		$.getJSON(
 			"/reconhecimentos/colaborador/" + colaboradorId,
 			function (reconhecimentosDoColaborador) {
 				template.exibir(perfilTemplate, reconhecimentosDoColaborador);
 
 				administradorHelper.mostrarConteudoSeForAdministrador('div[data-js="switch-adm"]');
+				administradorHelper.mostrarConteudoSeForAdministrador('div[data-js="menu__administrador"]');
 
 				switchAdministrador(reconhecimentosDoColaborador, colaboradorId);
 
@@ -68,6 +71,31 @@
 	_self.finalizar = function () {
 		$("#conteudo").off();
 	};
+
+	function rankingAdmin() {
+		require(['roteador'], function(roteador) {
+		  roteador.navegarPara('/rankingAdmin');
+		});
+	}
+
+	function gerenciadorDeCiclos() {
+		require(['roteador'], function(roteador) {
+		  roteador.navegarPara('/gerenciadorDeCiclos');
+		});
+	}
+
+	function logAdministrador() {
+		require(['roteador'], function(roteador) {
+		  roteador.navegarPara('/logAdministrador');
+		});
+	}
+
+	function configurarMenuAdministrador(){
+		$("#conteudo")
+			.on('click', 'a[data-js="ranking-admin"]', rankingAdmin)
+			.on('click', 'a[data-js="configuracao-ciclo"]', gerenciadorDeCiclos)
+			.on('click', 'a[data-js="logs-administrador"]', logAdministrador);
+	}
 
 	function abrirModalCrop() {
 		document.getElementById('caixa-modal').style.display = "block";
