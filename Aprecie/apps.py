@@ -26,7 +26,7 @@ class AprecieConfig(AppConfig):
                 try:
                     resposta = Ciclo.objects.get(data_inicial = amanha)
                 except Ciclo.DoesNotExist:
-                    ciclo = Ciclo(data_inicial = amanha)
+                    ciclo = Ciclo(data_inicial = amanha, nome="Ciclo Automático")
                     ciclo.save()
                     log_Ciclo = LOG_Ciclo.adicionar_automatico(ciclo)
                     log_Ciclo.save()
@@ -45,7 +45,7 @@ class AprecieConfig(AppConfig):
                 AprecieConfig.notificacao_do_colaborador("")
     
         except  Ciclo.DoesNotExist:
-            ciclo_atual = Ciclo(data_inicial = date.today())
+            ciclo_atual = Ciclo(data_inicial = date.today(), nome="Ciclo sem fim")
             ciclo_atual.save()
             log_Ciclo = LOG_Ciclo.adicionar_automatico(ciclo_atual)
             log_Ciclo.save()
@@ -54,6 +54,6 @@ class AprecieConfig(AppConfig):
 
     def ready(self):
         cron = BackgroundScheduler(timezone="America/Campo_Grande")
-        cron.add_job(self.verifica_data_final_do_ciclo, 'interval', seconds=5)
-        #cron.add_job(self.verifica_data_final_do_ciclo, 'cron', hour=6)
+        #cron.add_job(self.verifica_data_final_do_ciclo, 'interval', seconds=5)
+        cron.add_job(self.verifica_data_final_do_ciclo, 'cron', hour=6)
         cron.start()

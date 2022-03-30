@@ -10,7 +10,8 @@ define([
     "sessaoDeUsuario",
     "growl",
     "roteador"
-], function ($, template, gerenciadorDeCiclosTemplate, ciclosPassadosTemplate, historicoDeAlteracao, cicloAtualTemplate, cicloFuturoTemplate, botaoAdicionarCicloTemplate, sessaoDeUsuario, growl, roteador) {
+], function ($, template, gerenciadorDeCiclosTemplate, ciclosPassadosTemplate, historicoDeAlteracao, cicloAtualTemplate, cicloFuturoTemplate, botaoAdicionarCicloTemplate, 
+    sessaoDeUsuario, growl, roteador) {
     "use strict";
 
     var self = {};

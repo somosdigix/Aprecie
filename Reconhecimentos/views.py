@@ -226,8 +226,8 @@ def alterar_ciclo(requisicao):
   data_final_em_date_time = datetime.strptime(data_final, '%Y-%m-%d').date()
   ciclo.alterar_ciclo(data_final_em_date_time, novo_nome_ciclo)
   ciclo.save()
-
-  if ciclo_futuro.id != int(id_ciclo):
+  
+  if ciclo_futuro and ciclo_futuro.id != int(id_ciclo):
     alterar_data_inicial_ciclo_futuro(ciclo_futuro, data_final_em_date_time, usuario_que_modificou)
 
   return JsonResponse({})
@@ -296,7 +296,10 @@ def obter_informacoes_ciclo_futuro(requisicao):
 
   if ciclo_futuro_obtido != None:
     log = LOG_Ciclo.objects.filter(ciclo=ciclo_futuro_obtido).order_by('-data_da_modificacao').first()
-    colaborador = Colaborador.objects.get(id=log.usuario_que_modificou.id)
+    if log.usuario_que_modificou != None:
+      colaborador = Colaborador.objects.get(id=log.usuario_que_modificou.id)
+    else:
+      colaborador = "Automático"
     
     if ciclo_futuro_obtido.data_final != None:
       data_final = ciclo_futuro_obtido.data_final
@@ -313,7 +316,7 @@ def obter_informacoes_ciclo_futuro(requisicao):
       'data_inicial_formatada': ciclo_futuro_obtido.data_inicial.strftime('%d/%m/%Y'),
       'data_final': data_final,
       'data_final_formatada': data_final_formatada,
-      'nome_usuario_que_modificou': colaborador.nome_abreviado,
+      'nome_usuario_que_modificou': colaborador.nome_abreviado if(colaborador != "Automático") else "Automático",
       'tempo_restante_de_dias' : ciclo_futuro_obtido.calcularDiasParaIniciarCiclo().days,
     }
   else:
@@ -333,28 +336,34 @@ def obter_informacoes_ciclo_futuro(requisicao):
 
 @has_role_decorator('administrador')
 def ciclos_passados(requisicao):
-  ciclos_passados = map(lambda ciclo: { 
-    'id_ciclo': ciclo.id, 
-    'nome': ciclo.nome, 
-    'nome_autor': obter_nome_usuario_que_modificou(ciclo), 
-    'data_inicial': ciclo.data_inicial.strftime('%d/%m/%Y'), 
-    'data_final': ciclo.data_final.strftime('%d/%m/%Y') 
-    }, obter_ciclos_passados().order_by('-id'))
+  ciclos_passados_obtidos = obter_ciclos_passados().order_by('-id')
+  
+  if ciclos_passados_obtidos != None:
+    ciclos_passados = map(lambda ciclo: { 
+      'id_ciclo': ciclo.id, 
+      'nome': ciclo.nome, 
+      'nome_autor': obter_nome_usuario_que_modificou(ciclo), 
+      'data_inicial': ciclo.data_inicial.strftime('%d/%m/%Y'), 
+      'data_final': ciclo.data_final.strftime('%d/%m/%Y') 
+      }, ciclos_passados_obtidos)
 
-  lista_todos_ciclos_passados = list(ciclos_passados)
+    lista_todos_ciclos_passados = list(ciclos_passados)
 
-  paginator = Paginator(lista_todos_ciclos_passados, 2)
+    paginator = Paginator(lista_todos_ciclos_passados, 2)
 
-  secoes = []
+    secoes = []
 
-  for i in range(1, paginator.num_pages + 1):
-    secao = {
-      'id_secao': i,
-      'ciclos': []
-    }
+    for i in range(1, paginator.num_pages + 1):
+      secao = {
+        'id_secao': i,
+        'ciclos': []
+      }
 
-    secao["ciclos"] = paginator.page(i).object_list
-    secoes.append(secao)
+      secao["ciclos"] = paginator.page(i).object_list
+      secoes.append(secao)
+  
+  else:
+    secoes = None
     
   resposta = {
     'secoes': secoes
@@ -410,7 +419,7 @@ def obter_ciclo_futuro():
     return None
 
 def obter_ciclos_passados():
-  return Ciclo.objects.filter(data_final__lte=date.today())
+  return Ciclo.objects.filter(data_final__lt=date.today())
 
 def obter_nome_usuario_que_modificou(ciclo):
   log = LOG_Ciclo.objects.get(ciclo=ciclo.id)
