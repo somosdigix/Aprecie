@@ -41,6 +41,7 @@
 					$('#conteudo').on('click', 'button[data-js="alterar-foto"]', alterarFoto);
 					$('#conteudo').on('click', 'button[data-js="botao_fechar_cropper"]', fecharModalCrop);
 					$('#conteudo').on('change', 'input[data-js="input__arquivos"]', readURL);
+					obterNotificacaoDoAdministrador();
 				} else {
 					$('div[data-js="apreciacao"]').show();
 					$('div[data-js="foto"]').removeClass("alterar-foto");
@@ -74,6 +75,24 @@
 
 	function fecharModalCrop() {
 		document.getElementById('caixa-modal').style.display = "none";
+	}
+
+	function obterStatusDeNotificacao(){
+		let statusNotificacao = localStorage.getItem('notificacao');
+		return JSON.parse(statusNotificacao);
+	}
+
+	function obterNotificacaoDoAdministrador(){
+		if(obterStatusDeNotificacao()){
+			$.getJSON("/reconhecimentos/obter_notificacoes_administrador/", function(notificacao){
+				require(["growl"], function (growl){
+					if (notificacao.mensagem != " "){
+						growl.deErro().exibir(notificacao.mensagem);
+					}
+				})
+			})
+			localStorage.setItem('notificacao', 'false');
+		}
 	}
 
 	function apreciar() {

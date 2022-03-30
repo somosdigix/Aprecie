@@ -709,6 +709,11 @@ svg {
   margin-bottom: 24px;
 }
 
+.titulo-configuracao-ciclos {
+  font-family: Campton;
+  margin: 48px;
+}
+
 #btn__adicionar__ciclo {
   font-family: Campton;
   background-color: #2c006a;

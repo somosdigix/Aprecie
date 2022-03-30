@@ -1,13 +1,12 @@
-﻿import time
-from django.http import JsonResponse
+﻿from django.http import JsonResponse
 from django.db.models import Count
 from Login.models import Colaborador
 from Reconhecimentos.models import Pilar, Reconhecimento, Feedback, Ciclo, LOG_Ciclo
 from Reconhecimentos.services import Notificacoes
 from django.core.paginator import Paginator
 from rolepermissions.decorators import has_role_decorator
+from Aprecie.apps import AprecieConfig
 from django.db import connection
-
 from datetime import date, datetime, timedelta
 
 def reconhecer(requisicao):
@@ -227,8 +226,8 @@ def alterar_ciclo(requisicao):
   data_final_em_date_time = datetime.strptime(data_final, '%Y-%m-%d').date()
   ciclo.alterar_ciclo(data_final_em_date_time, novo_nome_ciclo)
   ciclo.save()
-
-  if ciclo_futuro.id != int(id_ciclo):
+  
+  if ciclo_futuro and ciclo_futuro.id != int(id_ciclo):
     alterar_data_inicial_ciclo_futuro(ciclo_futuro, data_final_em_date_time, usuario_que_modificou)
 
   return JsonResponse({})
@@ -252,7 +251,10 @@ def  alterar_data_inicial_ciclo_futuro(ciclo_futuro, data_final_em_date_time, us
 def obter_informacoes_ciclo_atual(requisicao):
   ciclo = obter_ciclo_atual()
   log = LOG_Ciclo.objects.filter(ciclo=ciclo).order_by('-data_da_modificacao').first()
-  colaborador = Colaborador.objects.get(id=log.usuario_que_modificou.id)
+  if log.usuario_que_modificou != None:
+    colaborador = Colaborador.objects.get(id=log.usuario_que_modificou.id)
+  else:
+    colaborador = "Automático"
 
   if ciclo.data_final == None:
     data_final = ""
@@ -270,7 +272,7 @@ def obter_informacoes_ciclo_atual(requisicao):
     'data_inicial_formatada': ciclo.data_inicial.strftime('%d/%m/%Y'),
     'data_final': data_final,
     'data_final_formatada': data_final_formatada,
-    'nome_usuario_que_modificou': colaborador.nome_abreviado,
+    'nome_usuario_que_modificou': colaborador.nome_abreviado if(colaborador != "Automático") else "Automático",
     'descricao_da_alteracao': log.descricao_da_alteracao,
     'data_ultima_alteracao': log.data_da_modificacao.strftime('%d/%m/%Y'),
     'porcentagem_do_progresso': porcentagem
@@ -294,7 +296,10 @@ def obter_informacoes_ciclo_futuro(requisicao):
 
   if ciclo_futuro_obtido != None:
     log = LOG_Ciclo.objects.filter(ciclo=ciclo_futuro_obtido).order_by('-data_da_modificacao').first()
-    colaborador = Colaborador.objects.get(id=log.usuario_que_modificou.id)
+    if log.usuario_que_modificou != None:
+      colaborador = Colaborador.objects.get(id=log.usuario_que_modificou.id)
+    else:
+      colaborador = "Automático"
     
     if ciclo_futuro_obtido.data_final != None:
       data_final = ciclo_futuro_obtido.data_final
@@ -311,7 +316,7 @@ def obter_informacoes_ciclo_futuro(requisicao):
       'data_inicial_formatada': ciclo_futuro_obtido.data_inicial.strftime('%d/%m/%Y'),
       'data_final': data_final,
       'data_final_formatada': data_final_formatada,
-      'nome_usuario_que_modificou': colaborador.nome_abreviado,
+      'nome_usuario_que_modificou': colaborador.nome_abreviado if(colaborador != "Automático") else "Automático",
       'tempo_restante_de_dias' : ciclo_futuro_obtido.calcularDiasParaIniciarCiclo().days,
     }
   else:
@@ -331,28 +336,34 @@ def obter_informacoes_ciclo_futuro(requisicao):
 
 @has_role_decorator('administrador')
 def ciclos_passados(requisicao):
-  ciclos_passados = map(lambda ciclo: { 
-    'id_ciclo': ciclo.id, 
-    'nome': ciclo.nome, 
-    'nome_autor': obter_nome_usuario_que_modificou(ciclo), 
-    'data_inicial': ciclo.data_inicial.strftime('%d/%m/%Y'), 
-    'data_final': ciclo.data_final.strftime('%d/%m/%Y') 
-    }, obter_ciclos_passados().order_by('-id'))
+  ciclos_passados_obtidos = obter_ciclos_passados().order_by('-id')
+  
+  if ciclos_passados_obtidos != None:
+    ciclos_passados = map(lambda ciclo: { 
+      'id_ciclo': ciclo.id, 
+      'nome': ciclo.nome, 
+      'nome_autor': obter_nome_usuario_que_modificou(ciclo), 
+      'data_inicial': ciclo.data_inicial.strftime('%d/%m/%Y'), 
+      'data_final': ciclo.data_final.strftime('%d/%m/%Y') 
+      }, ciclos_passados_obtidos)
 
-  lista_todos_ciclos_passados = list(ciclos_passados)
+    lista_todos_ciclos_passados = list(ciclos_passados)
 
-  paginator = Paginator(lista_todos_ciclos_passados, 2)
+    paginator = Paginator(lista_todos_ciclos_passados, 2)
 
-  secoes = []
+    secoes = []
 
-  for i in range(1, paginator.num_pages + 1):
-    secao = {
-      'id_secao': i,
-      'ciclos': []
-    }
+    for i in range(1, paginator.num_pages + 1):
+      secao = {
+        'id_secao': i,
+        'ciclos': []
+      }
 
-    secao["ciclos"] = paginator.page(i).object_list
-    secoes.append(secao)
+      secao["ciclos"] = paginator.page(i).object_list
+      secoes.append(secao)
+  
+  else:
+    secoes = None
     
   resposta = {
     'secoes': secoes
@@ -364,7 +375,7 @@ def ciclos_passados(requisicao):
 def historico_alteracoes(requisicao):
   historico_alteracoes = map(lambda LOG_Ciclo: { 
     'antigo_nome_do_ciclo': LOG_Ciclo.antigo_nome_ciclo, 
-    'nome_autor': LOG_Ciclo.usuario_que_modificou.nome_abreviado, 
+    'nome_autor': LOG_Ciclo.usuario_que_modificou.nome_abreviado if(LOG_Ciclo.usuario_que_modificou != None) else "Automático", 
     'data_anterior': LOG_Ciclo.antiga_data_final.strftime('%d/%m/%Y') if(LOG_Ciclo.antiga_data_final != None) else "", 
     'nova_data': LOG_Ciclo.nova_data_alterada.strftime('%d/%m/%Y') if (LOG_Ciclo.nova_data_alterada != None) else "", 
     'data_alteracao': LOG_Ciclo.data_da_modificacao.strftime('%d/%m/%Y'), 
@@ -408,7 +419,7 @@ def obter_ciclo_futuro():
     return None
 
 def obter_ciclos_passados():
-  return Ciclo.objects.filter(data_final__lte=date.today())
+  return Ciclo.objects.filter(data_final__lt=date.today())
 
 def obter_nome_usuario_que_modificou(ciclo):
   log = LOG_Ciclo.objects.get(ciclo=ciclo.id)
@@ -538,3 +549,13 @@ def obter_ranking_de_apreciacoes_feitas(data_inicial, data_final):
   
 def converterData(data):
   return datetime.strptime(data, "%Y-%m-%d").date()
+
+@has_role_decorator('administrador')
+def obter_notificacoes_do_administrador(requisicao):
+  notificacao = AprecieConfig.obter_mensagem_notificacao()
+
+  data = {
+    'mensagem': notificacao
+  }
+
+  return JsonResponse(data)

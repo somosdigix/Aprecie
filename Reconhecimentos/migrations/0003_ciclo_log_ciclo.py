@@ -19,7 +19,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(primary_key=True, serialize=False)),
                 ('nome', models.CharField(max_length=25)),
                 ('data_inicial', models.DateField()),
-                ('data_final', models.DateField()),
+                ('data_final', models.DateField(null=True)),
             ],
         ),
         migrations.CreateModel(

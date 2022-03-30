@@ -106,4 +106,4 @@ class LOG_Administrador(models.Model):
 	administrador = models.ForeignKey('Colaborador', on_delete=models.CASCADE, related_name="Administrador") 
 	colaborador = models.ForeignKey('Colaborador', on_delete=models.CASCADE, related_name="Colaborador")
 	data_modificacao = models.DateField(auto_now = True)
-	descricao = models.CharField(max_length = 50)
+	descricao = models.CharField(max_length = 150)
