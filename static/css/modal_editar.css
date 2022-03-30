@@ -1,0 +1,123 @@
+.modal__ciclo {
+  position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.671);
+    z-index: 99999;
+    opacity: 0;
+    -webkit-transition: opacity 400ms ease-in;
+    -moz-transition: opacity 400ms ease-in;
+    transition: opacity 400ms ease-in;
+    pointer-events: none;
+  }
+  
+  .box__motivo {
+    position: relative;
+    margin: 300px auto;
+    background-color: #2c006a;
+    width: 20%;
+    padding: 10px;
+    border-radius: 20px;
+  }
+
+  @media screen and (max-width: 1553px) {
+    .box__motivo{
+      min-width: 320px;
+    }
+  }
+  
+  .titulo__modal {
+    text-align: center;
+    color: white;
+    font-family: Campton-Bold
+  }
+  
+  #input__motivo {
+    margin: 15px auto;
+    resize: none;
+    display: block;
+    width: 80%;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    padding: 8px;
+  }
+  
+  .nome__autor__edicao{
+      color: white;
+      font-family: Campton-Bold
+      
+  }
+  .label__nova__data__final {
+    color: white;
+    font-family: Campton-Bold;
+  }
+  
+  .label__novo__nome{
+    color: white;
+    font-family: Campton-Bold;
+  }
+  
+  .novo__nome__ciclo{
+    margin-left: 5px;
+    border: 0;
+    border-radius: 5px;
+    font-family: Campton-Light;
+    background-color: whitesmoke;
+    color: black;
+    padding: 5px;
+    width: 68%; 
+    text-align: left;
+  }
+
+  #nova__data__final {
+    margin-left: 5px;
+    border: 0;
+    border-radius: 5px;
+    font-family: Campton-Light;
+    background-color: whitesmoke;
+    color: black;
+    padding: 5px;
+    width: 71%;
+  }
+  
+  .btns__novo__ciclo {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin: 0px auto;
+  }
+  
+  #btn__cancelar__edicao{
+    padding: 8px;
+    font-family: Campton-Bold;
+    background-color: #2c006a;
+    border-radius: 5px;
+    color: white;
+    border: 0;
+  }
+  
+  #btn__confirmar:hover{
+    transform: scale(1.2);
+  }
+  
+  #btn__cancelar__edicao:hover{
+    transform: scale(1.2);
+  }
+  
+  #btn__confirmar{
+    padding: 8px;
+    font-family: Campton-Bold;
+    background-color: #2c006a;
+    border-radius: 5px;
+    color: white;
+    border: 0;
+    margin-left: 68px;
+  }
+
+  .alterar__data, .alterar__nome{
+    width: 80%;
+    margin: 8px auto;
+  }

@@ -1,0 +1,24 @@
+<h2>Ciclo Futuro</h2>
+    <div id="container__ciclo__atual">
+        <div class="datas__ciclos" data-inicial={{this.data_inicial_futuro}} data-final={{this.data_final_futuro}}>
+            <p id="dataTeste" class="data_inicio">Data de Início: {{this.ciclo_futuro.data_inicial_formatada}}</p>
+            <p class="data_final">Data Final: {{this.ciclo_futuro.data_final_formatada}}</p>
+        </div>
+        
+        <div class="nome__progresso__ciclo">
+            <p class="nome__ciclo">{{this.ciclo_futuro.nome_do_ciclo}}</p>
+            <h1 id="porcentagem">0%</h1>
+            <svg>
+                <circle class="circulo1" cx="75" cy="75" r="50"></circle>
+                <circle id="circulo2" cx="75" cy="75" r="50"></circle>
+            </svg>
+        </div>
+        
+        <div class="caixa__informacoes__ciclo">
+            <p class="fonte-cor-branca">Nome do Autor: {{this.ciclo_futuro.nome_usuario_que_modificou}}</p>
+            <p class="fonte-cor-branca">Entrando em Vigor: {{this.ciclo_futuro.tempo_restante_de_dias}} Dias</p>
+            <button class="btn__editar" id="editar__ciclo__atual" onclick="setaInformacoesCicloSelecionadoParaEditar('{{this.ciclo_futuro.id_ciclo}}', '{{this.ciclo_futuro.data_final}}', '{{this.ciclo_futuro.nome_do_ciclo}}')">
+            Editar
+        </button>
+        </div>
+    </div>

@@ -1,78 +1,94 @@
-<h1>Colaboradores em Destaque</h1>
-<div class="box--destaques">
-	{{#each this.colaboradores}}
-	
-	<div class="box--colaborador">
-		<div class="imagem">
-			<div id="medalha" class="medalha"></div>
-			{{#if this.foto}}
-			<img id="colab" class="com-foto" src={{this.foto}} alt="foto colaborador">
-			{{else}}
-			<img id="colab" class="sem-foto" src="../static/img/sem-foto.png" alt="foto colaborador">
-			{{/if}}
-		</div>
-			<p>{{this.nome}}</p>
-		</div>
-	{{/each}}
-	<img class="logo" src="../static/img/logos-rodape.png">
-</div>
+<h1 class="titulo-ranking">Colaboradores em Destaque</h1>
+<div class="box--todos">
+	<div class="box--destaques">
+		{{#each this.colaboradores}}
 
+		<div class="box--colaborador">
+			<div class="imagem">
+				<div id="medalha" class="medalha"></div>
+				{{#if this.foto}}
+				<img id="colab" class="com-foto" src="{{this.foto}}" alt="foto colaborador" />
+				{{else}}
+				<img id="colab" class="sem-foto" src="../static/img/sem-foto.png" alt="foto colaborador" />
+				{{/if}}
+			</div>
+			<p class="nome-colaborador-ranking">{{this.nome}}</p>
+		</div>
+		{{/each}}
+	</div>
+
+	<img class="logo" src="../static/img/logos-rodape.png" />
+</div>
 <style>
-	.imagem{
-		position:relative;
-	  	align-items:center;
-		flex-direction:column;
-		display:flex;
+	.box--todos {
+		background-color: #2c006a;
+		min-height: 48vw;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		box-sizing: border-box;
+		padding: 16px;
 	}
 
-	#medalha{
-		position:absolute;
-		top:-16px;
-		left:16px;
+	.imagem {
+		position: relative;
+		align-items: center;
+		flex-direction: column;
+		display: flex;
+	}
+
+	#medalha {
+		position: absolute;
+		top: -16px;
+		left: -15px;
 	}
 
 	.box--destaques {
-		background-color: #2c006a;
-		height: 82%;
 		display: flex;
-		align-items:center;
+		align-items: center;
 		justify-content: center;
 		flex-wrap: wrap;
 	}
 
-	p {
+	.nome-colaborador-ranking {
 		color: white;
-		font-size: 28px;
+		font-size: 20px;
 		text-align: center;
 	}
 
 	#colab {
 		margin: auto;
-		border-radius: 120px;
+		border-radius: 50%;
 		padding: 5px;
 	}
-	.com-foto{
-		width: 65%;
+
+	.com-foto,
+	.sem-foto {
+		width: 220px;
+		height: 220px;
 	}
-	.sem-foto{
-		width: 75%;
-	}
-	.posicao__medalha{
+
+	.posicao__medalha {
 		width: 100px;
 	}
+
 	.box--colaborador {
 		box-sizing: border-box;
 		padding: 20px;
 		margin: 10px;
-		width: calc((100% / 5) - 2rem);
 		display: flex;
-		align-items:center;
+		align-items: center;
 		flex-direction: column;
 	}
-	h1{
-		margin-left:30px;
-		padding-top: 100px;
+
+	.titulo-ranking {
+		margin-left: 30px;
+		padding-top: 68px;
 		font-size: 35px;
 	}
 
+	.logo {
+		width: 200px;
+	}
 </style>

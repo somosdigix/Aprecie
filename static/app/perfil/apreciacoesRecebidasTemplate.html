@@ -1,6 +1,8 @@
 <h2>Minhas apreciações</h2>
 <div id="reconhecimentos" reconhecimentos={{apreciacoes}}></div>
-{{#each this.apreciacoes}}
+<button data-js="reconhecimentos-recebidos" id="reconhecimentos-recebidos" class="botao__perfil__apreciacoes">Reconhecimentos Recebidos</button>
+<button data-js="reconhecimentos-feitos" id="reconhecimentos-feitos" class="botao__perfil__apreciacoes">Reconhecimentos Feitas</button>
+{{#each this}}
 <section class="feed-reconhecimentos caixa-feed">
 	<div class="container">
 		<div class="bloco-reconhecimento">
@@ -13,10 +15,6 @@
 				{{#if this.pilar__nome}}
 				<strong data-id="1" data-js="ir-ao-perfil" class="apreciador">
 					{{ this.reconhecedor__nome }} em {{ this.pilar__nome }}
-				</strong>
-				{{else}}
-				<strong data-id="1" data-js="ir-ao-perfil" class="apreciador">
-					{{ this.reconhecedor__nome }} em {{ this.valor__nome }}
 				</strong>
 				{{/if}}
 
