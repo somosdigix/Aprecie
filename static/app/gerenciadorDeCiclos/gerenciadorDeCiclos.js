@@ -11,7 +11,8 @@ define([
     "growl",
     "app/helpers/administradorHelper",
     "roteador"
-], function ($, template, gerenciadorDeCiclosTemplate, ciclosPassadosTemplate, historicoDeAlteracao, cicloAtualTemplate, cicloFuturoTemplate, botaoAdicionarCicloTemplate, sessaoDeUsuario, growl, roteador) {
+], function ($, template, gerenciadorDeCiclosTemplate, ciclosPassadosTemplate, historicoDeAlteracao, cicloAtualTemplate, cicloFuturoTemplate, botaoAdicionarCicloTemplate, 
+    sessaoDeUsuario, growl, administradorHelper, roteador) {
     "use strict";
 
     var self = {};
@@ -60,6 +61,12 @@ define([
             if(informacoes_ciclo.ciclo_futuro == null && informacoes_ciclo.data_final_ciclo_atual != null){
                 template.exibirEm('div[data-js="container__botao__adicionar"]', botaoAdicionarCicloTemplate, informacoes_ciclo.previsao_data)
             }
+        });
+    }
+
+    function carregarInformacoesCicloAtual(){
+        $.getJSON("/reconhecimentos/obter_informacoes_ciclo_atual", function (ciclo_atual) {
+            template.exibirEm('div[data-js="container_ciclo_atual"]', cicloAtualTemplate, ciclo_atual);
         });
     }
 

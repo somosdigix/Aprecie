@@ -228,8 +228,9 @@ def alterar_ciclo(requisicao):
   ciclo.alterar_ciclo(data_final_em_date_time, novo_nome_ciclo)
   ciclo.save()
 
-  if ciclo_futuro.id != int(id_ciclo):
-    alterar_data_inicial_ciclo_futuro(ciclo_futuro, data_final_em_date_time, usuario_que_modificou)
+  if ciclo_futuro:
+    if ciclo_futuro.id != int(id_ciclo):
+      alterar_data_inicial_ciclo_futuro(ciclo_futuro, data_final_em_date_time, usuario_que_modificou)
 
   return JsonResponse({})
   
@@ -252,7 +253,10 @@ def  alterar_data_inicial_ciclo_futuro(ciclo_futuro, data_final_em_date_time, us
 def obter_informacoes_ciclo_atual(requisicao):
   ciclo = obter_ciclo_atual()
   log = LOG_Ciclo.objects.filter(ciclo=ciclo).order_by('-data_da_modificacao').first()
-  colaborador = Colaborador.objects.get(id=log.usuario_que_modificou.id)
+  if log.usuario_que_modificou != None:
+    colaborador = Colaborador.objects.get(id=log.usuario_que_modificou.id)
+  else:
+    colaborador = "Automático"
 
   if ciclo.data_final == None:
     data_final = ""
@@ -270,7 +274,7 @@ def obter_informacoes_ciclo_atual(requisicao):
     'data_inicial_formatada': ciclo.data_inicial.strftime('%d/%m/%Y'),
     'data_final': data_final,
     'data_final_formatada': data_final_formatada,
-    'nome_usuario_que_modificou': colaborador.nome_abreviado,
+    'nome_usuario_que_modificou': colaborador.nome_abreviado if(colaborador != "Automático") else "Automático",
     'descricao_da_alteracao': log.descricao_da_alteracao,
     'data_ultima_alteracao': log.data_da_modificacao.strftime('%d/%m/%Y'),
     'porcentagem_do_progresso': porcentagem
