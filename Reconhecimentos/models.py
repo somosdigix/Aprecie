@@ -50,7 +50,7 @@ class FeedbackSCI(models.Model):
 
 class Ciclo(models.Model):
   id = models.AutoField(primary_key=True)  
-  nome = models.CharField(max_length=25, null=True)
+  nome = models.CharField(max_length=25)
   data_inicial = models.DateField()
   data_final = models.DateField(null=True)
 
