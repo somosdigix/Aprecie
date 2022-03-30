@@ -150,7 +150,7 @@ def todas_as_apreciacoes(requisicao, id_do_reconhecido):
     'reconhecedor__nome': apreciacao.reconhecedor.nome_abreviado,
     'reconhecedor__id': apreciacao.reconhecedor.id,
     'reconhecido__nome': apreciacao.reconhecido.nome_abreviado
-  }, Reconhecimento.objects.filter(reconhecedor = requisicao.user.id).order_by('-id'))
+  }, Reconhecimento.objects.filter(reconhecedor = requisicao.user.id, data__gte= ciclo_atual.data_inicial, data__lte=ciclo_atual.data_final).order_by('-id'))
 
   apreciacoes = {
     'feitas': list(apreciacoes_feitas),
