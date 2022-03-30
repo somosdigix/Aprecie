@@ -118,3 +118,7 @@ class LOG_Ciclo(models.Model):
     
     return cls(ciclo = ciclo, usuario_que_modificou = usuario_que_modificou, descricao_da_alteracao = descricao_da_alteracao, novo_nome_ciclo = novo_nome_ciclo,
     nova_data_alterada = nova_data_alterada, antiga_data_final = data_final, antigo_nome_ciclo = ciclo_nome)
+
+  @classmethod
+  def adicionar_automatico(cls, ciclo):
+    return cls(ciclo = ciclo, descricao_da_alteracao = "Criação do ciclo automatico sem data final", novo_nome_ciclo = ciclo.nome, antigo_nome_ciclo = ciclo.nome)
