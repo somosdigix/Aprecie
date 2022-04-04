@@ -47,12 +47,6 @@ define([
             .on("click", 'button[data-js="botao-alteracoes-ciclos"]',carregarHistoricoAlteracoes)
     }
 
-    function carregarGerenciador() {
-        $.getJSON("/reconhecimentos/obter_informacoes_ciclo_atual", function (ciclo_atual) {
-            template.exibirEm('div[data-js="container_ciclo_atual"]', cicloAtualTemplate, ciclo_atual);
-        });
-    }
-
     function carregarInformacoesCicloFuturo(){
         $.getJSON("/reconhecimentos/obter_informacoes_ciclo_futuro", function (informacoes_ciclo) {     
             if (informacoes_ciclo.ciclo_futuro != null){
