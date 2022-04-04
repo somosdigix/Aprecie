@@ -43,6 +43,11 @@ define([
 					usuario[i].style.visibility = "hidden";
         }
       }
+      else{
+        document.querySelectorAll(".botao-agradecer").forEach( botao => {
+          botao.style.display = "flex";
+        })
+      }
       
       $("#reconhecimentos-feitos").removeClass('botao__selecionado__perfil');
       $("#reconhecimentos-recebidos").addClass('botao__selecionado__perfil');
