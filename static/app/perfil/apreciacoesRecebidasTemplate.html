@@ -26,10 +26,10 @@
                 {{#if this.agradecimentos}}
                     {{#each this.agradecimentos}}
                         <div class="agradecimento-recebido">
-                            <img class="img-reconhecedor"	src="{{ foto this.colaborador_id usar_miniatura=true}}"/>
+                            <img class="img-reconhecedor"	src="{{ foto this.id_colaborador usar_miniatura=true}}"/>
                             <div class="texto-reconhecimento">
                                 <strong data-id="1" data-js="ir-ao-perfil" class="apreciador">
-                                    {{ this.colaborador_nome }}
+                                    {{ this.nome_colaborador }}
                                 </strong>
                         
                                 <div class="data-reconhecimento">{{ emDataLegivel this.data }}</div>
@@ -39,12 +39,10 @@
                         </div>
                     {{/each}}
                 {{else}}
-                    <div class="botao-agradecer">
+                    <div class="botao-agradecer" data-js="botao__agradecer">
                         <button onclick="abrirModalAdicionarAgradecimento('{{this.id}}', '{{this.reconhecido__id}}')"> Agradecer </button>
                     </div>
-                {{/if}}
-
-                
+                {{/if}}               
             </div>
             
 			<button id="modal-botao" data-js="modal-botao" onClick="obterApreciacao('{{this.pilar__nome}}', '{{this.feedback__descritivo}}', '{{this.reconhecedor__nome}}', '{{this.reconhecido__nome}}')" name="compartilhar">

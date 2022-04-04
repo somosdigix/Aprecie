@@ -151,13 +151,7 @@ def todas_as_apreciacoes(requisicao, id_do_reconhecido):
     'reconhecedor__nome': apreciacao.reconhecedor.nome_abreviado,
     'reconhecido__id': apreciacao.reconhecido.id,
     'reconhecido__nome': apreciacao.reconhecido.nome_abreviado,
-    'agradecimentos': list(map(lambda agradecimento: {
-      'id': agradecimento.id,
-      'data': agradecimento.data,
-      'mensagem': agradecimento.mensagem,
-      'nome_colaborador': Colaborador.objects.get(id=agradecimento.colaborador.id).nome_abreviado,
-      'foto': Colaborador.objects.get(id=agradecimento.colaborador.id).foto
-    }, Agradecimento.objects.filter(reconhecimento = apreciacao.id)))
+    'agradecimentos': obter_agradecimentos(apreciacao)
   }, reconhecido.reconhecimentos().order_by('-id'))
 
   apreciacoes_feitas = map(lambda apreciacao: {
@@ -178,6 +172,16 @@ def todas_as_apreciacoes(requisicao, id_do_reconhecido):
 
   return JsonResponse(apreciacoes)
 
+def obter_agradecimentos(apreciacao):
+  agradecimentos = map(lambda agradecimento: {
+      'id': agradecimento.id,
+      'data': agradecimento.data,
+      'mensagem': agradecimento.mensagem,
+      'nome_colaborador': Colaborador.objects.get(id=agradecimento.colaborador.id).nome_abreviado,
+      'id_colaborador': Colaborador.objects.get(id=agradecimento.colaborador.id).id
+  }, Agradecimento.objects.filter(reconhecimento = apreciacao.id))
+
+  return list(agradecimentos)
 
 def todos_os_pilares_e_colaboradores(requisicao):
     pilares = map(lambda pilar: { 

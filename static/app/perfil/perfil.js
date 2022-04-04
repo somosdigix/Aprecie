@@ -16,26 +16,30 @@
 	_self.inicializar = function (sandbox, colaboradorId) {
 		_sandbox = sandbox;
 
-		configurarMenuAdministrador()
-
+		
 		$.getJSON(
 			"/reconhecimentos/colaborador/" + colaboradorId,
 			function (reconhecimentosDoColaborador) {
 				template.exibir(perfilTemplate, reconhecimentosDoColaborador);
-
+				
 				administradorHelper.mostrarConteudoSeForAdministrador('div[data-js="switch-adm"]');
-				administradorHelper.mostrarConteudoSeForAdministrador('div[data-js="menu__administrador"]');
-
+				
 				switchAdministrador(reconhecimentosDoColaborador, colaboradorId);
-
+				
 				$("#conteudo").on(
 					"click",
 					'div[data-js="exibir-reconhecimentos"]',
 					exibirReconhecimentos
-				);
-
+					);
+					
 				if (sessaoDeUsuario.id === colaboradorId) {
 					$('div[data-js="switch-adm"]').hide();
+					administradorHelper.mostrarConteudoSeForAdministrador('div[data-js="menu__administrador"]');
+					configurarMenuAdministrador()
+
+					$('div[data-js="botao__agradecer"]').show();
+					
+					
 					$("span.ion-camera").show();
 					$("#conteudo").on(
 						"click",
@@ -53,6 +57,9 @@
 					
 					obterNotificacaoDoAdministrador();
 				} else {
+					$('div[data-js="menu__administrador"]').hide();
+					$('div[data-js="botao__agradecer"]').hide();
+				
 					$('div[data-js="apreciacao"]').show();
 					$('div[data-js="foto"]').removeClass("alterar-foto");
 				}
