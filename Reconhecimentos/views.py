@@ -38,7 +38,9 @@ def verificar_ultima_data_de_publicacao(reconhecedor):
 
 def ultimos_reconhecimentos(requisicao):
   ciclo_atual = obter_ciclo_atual()
-  reconhecimentos = Reconhecimento.objects.filter(data__gte= ciclo_atual.data_inicial).filter(data__lte=ciclo_atual.data_final).order_by('-id')
+  reconhecimentos = Reconhecimento.objects.filter(data__gte= ciclo_atual.data_inicial).order_by('-id')
+  if ciclo_atual.data_final != None:
+    reconhecimentos.filter(data__lte=ciclo_atual.data_final).order_by('-id')
 
   pagina_atual = int(requisicao.GET['pagina_atual'])
   paginacao = Paginator(reconhecimentos, 10)
@@ -97,24 +99,44 @@ def reconhecimentos_do_colaborador(requisicao, id_do_reconhecido):
 
 def contar_reconhecimentos(requisicao):
    ciclo_atual = obter_ciclo_atual()
+   if ciclo_atual.data_final != None:
+      colaboradores = obter_reconhecimentos_dos_colaboradores(ciclo_atual.data_inicial, ciclo_atual.data_final)
+   else: 
+      colaboradores = obter_reconhecimentos_dos_colaboradores_por_data(ciclo_atual.data_inicial)
+
    colaboradores = map(lambda colaborador: { 
      'nome': colaborador[2], 
      'apreciacoes': colaborador[0], 
      'foto': colaborador[3]
-     }, obter_reconhecimentos_dos_colaboradores())
+     }, colaboradores)
 
    return JsonResponse({'colaboradores': list(colaboradores)})
 
-def obter_reconhecimentos_dos_colaboradores():
+def obter_reconhecimentos_dos_colaboradores(data_inicial, data_final):
   with connection.cursor() as cursor:
     cursor.execute('''
       SELECT count(*), r.reconhecido_id, l.nome, l.foto
       FROM public."Reconhecimentos_reconhecimento" r
       JOIN public."Login_colaborador" l ON r.reconhecido_id = l.id
+      WHERE r.data BETWEEN %s AND %s
       GROUP by r.reconhecido_id, l.nome, l.foto
       ORDER by count(*) DESC, l.nome
       LIMIT 10
-    ''')
+    ''', [data_inicial.strftime('%Y-%m-%d'), data_final.strftime('%Y-%m-%d')])
+    reconhecimentos = cursor.fetchall()
+  return reconhecimentos
+
+def obter_reconhecimentos_dos_colaboradores_por_data(data_inicial):
+  with connection.cursor() as cursor:
+    cursor.execute('''
+      SELECT count(*), r.reconhecido_id, l.nome, l.foto
+      FROM public."Reconhecimentos_reconhecimento" r
+      JOIN public."Login_colaborador" l ON r.reconhecido_id = l.id
+      WHERE r.data >= %s
+      GROUP by r.reconhecido_id, l.nome, l.foto
+      ORDER by count(*) DESC, l.nome
+      LIMIT 10
+    ''', [data_inicial.strftime('%Y-%m-%d')])
     reconhecimentos = cursor.fetchall()
   return reconhecimentos
 
@@ -142,6 +164,10 @@ def todas_as_apreciacoes(requisicao, id_do_reconhecido):
     'reconhecido__nome': apreciacao.reconhecido.nome_abreviado
   }, reconhecido.reconhecimentos_por_data(ciclo_atual.data_inicial, ciclo_atual.data_final).order_by('-id'))
 
+  reconhecimentos_feitos = Reconhecimento.objects.filter(reconhecedor = requisicao.user.id, data__gte= ciclo_atual.data_inicial).order_by('-id')
+  if ciclo_atual.data_final != None:
+    reconhecimentos_feitos.filter(data__lte=ciclo_atual.data_final).order_by('-id')
+  
   apreciacoes_feitas = map(lambda apreciacao: {
     'id': apreciacao.id,
     'data': apreciacao.data,
@@ -150,7 +176,7 @@ def todas_as_apreciacoes(requisicao, id_do_reconhecido):
     'reconhecedor__nome': apreciacao.reconhecedor.nome_abreviado,
     'reconhecedor__id': apreciacao.reconhecedor.id,
     'reconhecido__nome': apreciacao.reconhecido.nome_abreviado
-  }, Reconhecimento.objects.filter(reconhecedor = requisicao.user.id, data__gte= ciclo_atual.data_inicial, data__lte=ciclo_atual.data_final).order_by('-id'))
+  }, reconhecimentos_feitos)
 
   apreciacoes = {
     'feitas': list(apreciacoes_feitas),
@@ -542,7 +568,7 @@ def obter_ranking_de_apreciacoes_feitas(data_inicial, data_final):
   with connection.cursor() as cursor:
     cursor.execute('''
     SELECT count(*), r.reconhecedor_id, l.nome, l.foto
-     FROM public."Reconhecimentos_reconhecimento" r
+    FROM public."Reconhecimentos_reconhecimento" r
     JOIN public."Login_colaborador" l ON r.reconhecedor_id = l.id
     WHERE r.data BETWEEN %s AND %s
     GROUP by r.reconhecedor_id, l.nome, l.foto

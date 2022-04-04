@@ -79,14 +79,17 @@ class Colaborador(AbstractBaseUser, PermissionsMixin):
 		return self.reconhecido.filter(pilar = pilar).order_by('-data')
 
 	def reconhecimentos_por_pilar_por_data(self, pilar, data_inicial, data_final):
-		return self.reconhecimentos_por_pilar(pilar).filter(data__gte= data_inicial).filter(data__lte=data_final)
+		reconhecimentos = self.reconhecimentos_por_pilar(pilar).filter(data__gte= data_inicial)
+		if data_final != None:
+			reconhecimentos.filter(data__lte=data_final)
+		return reconhecimentos
 
 	def reconhecimentos_por_data(self, data_inicio, data_fim):
-		return self.reconhecimentos().filter(data__gte= data_inicio).filter(data__lte=data_fim)
-
-	# def reconhecimentos_por_data(self, data_inicio, data_fim):
-	# 	reconhecimentos = self.reconhecimentos()
-	# 	return reconhecimentos.filter(data__gte= data_inicio).filter(data__lte=data_fim)
+		reconhecimentos = self.reconhecimentos().filter(data__gte= data_inicio)
+		if data_fim != None:
+			reconhecimentos.filter(data__lte=data_fim)
+		
+		return reconhecimentos
 
 	def reconhecimentos_por_pilar_ranking(self, pilar, reconhecimentos):
 		return reconhecimentos.filter(pilar = pilar).order_by('-data')
