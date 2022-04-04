@@ -36,5 +36,6 @@ tzdata = "==2021.5"
 yarl = "==1.7.2"
 Django = "==3.2.12"
 Pillow = "==9.0.1"
+apscheduler = "*"
 
 [dev-packages]

@@ -16,12 +16,15 @@
 	_self.inicializar = function (sandbox, colaboradorId) {
 		_sandbox = sandbox;
 
+		configurarMenuAdministrador()
+
 		$.getJSON(
 			"/reconhecimentos/colaborador/" + colaboradorId,
 			function (reconhecimentosDoColaborador) {
 				template.exibir(perfilTemplate, reconhecimentosDoColaborador);
 
 				administradorHelper.mostrarConteudoSeForAdministrador('div[data-js="switch-adm"]');
+				administradorHelper.mostrarConteudoSeForAdministrador('div[data-js="menu__administrador"]');
 
 				switchAdministrador(reconhecimentosDoColaborador, colaboradorId);
 
@@ -47,6 +50,8 @@
 					$('#conteudo')
 						.on("click", 'button[class="botao--fecharModalAgradecimento"]', fecharModalAdicionarAgradecimento)
 						.on("submit", 'form[data-js="form_adicionar_agradecimento"]', agradecer);
+					
+					obterNotificacaoDoAdministrador();
 				} else {
 					$('div[data-js="apreciacao"]').show();
 					$('div[data-js="foto"]').removeClass("alterar-foto");
@@ -74,6 +79,31 @@
 		$("#conteudo").off();
 	};
 
+	function rankingAdmin() {
+		require(['roteador'], function(roteador) {
+		  roteador.navegarPara('/rankingAdmin');
+		});
+	}
+
+	function gerenciadorDeCiclos() {
+		require(['roteador'], function(roteador) {
+		  roteador.navegarPara('/gerenciadorDeCiclos');
+		});
+	}
+
+	function logAdministrador() {
+		require(['roteador'], function(roteador) {
+		  roteador.navegarPara('/logAdministrador');
+		});
+	}
+
+	function configurarMenuAdministrador(){
+		$("#conteudo")
+			.on('click', 'a[data-js="ranking-admin"]', rankingAdmin)
+			.on('click', 'a[data-js="configuracao-ciclo"]', gerenciadorDeCiclos)
+			.on('click', 'a[data-js="logs-administrador"]', logAdministrador);
+	}
+
 	function abrirModalCrop() {
 		document.getElementById('caixa-modal').style.display = "block";
 	}
@@ -100,6 +130,23 @@
     	})
 	};  
 	
+	function obterStatusDeNotificacao(){
+		let statusNotificacao = localStorage.getItem('notificacao');
+		return JSON.parse(statusNotificacao);
+	}
+
+	function obterNotificacaoDoAdministrador(){
+		if(obterStatusDeNotificacao()){
+			$.getJSON("/reconhecimentos/obter_notificacoes_administrador/", function(notificacao){
+				require(["growl"], function (growl){
+					if (notificacao.mensagem != " "){
+						growl.deErro().exibir(notificacao.mensagem);
+					}
+				})
+			})
+			localStorage.setItem('notificacao', 'false');
+		}
+	}
 
 	function apreciar() {
 		botaoReconhecer.exibirModal();

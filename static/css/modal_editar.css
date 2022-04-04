@@ -97,17 +97,16 @@
     border-radius: 5px;
     color: white;
     border: 0;
-    margin-left: 68px;
   }
-
+  
   #btn__confirmar:hover{
     transform: scale(1.2);
   }
-
+  
   #btn__cancelar__edicao:hover{
     transform: scale(1.2);
   }
-
+  
   #btn__confirmar{
     padding: 8px;
     font-family: Campton-Bold;
@@ -115,7 +114,9 @@
     border-radius: 5px;
     color: white;
     border: 0;
+    margin-left: 68px;
   }
+
   .alterar__data, .alterar__nome{
     width: 80%;
     margin: 8px auto;

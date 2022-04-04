@@ -10,11 +10,16 @@ urlpatterns = [
     url(r'^por_reconhecedor/([0-9]+)$', views.reconhecimentos_por_reconhecedor, name="reconhecimentos_por_reconhecedor"),
     url(r'^todos/([0-9]+)$', views.todas_as_apreciacoes, name="todas_as_apreciacoes"),
     url(r'^([0-9]+)/([0-9]+)$', views.reconhecimentos_por_pilar, name="reconhecimentos_por_pilar"),
+    
     url(r'^ranking/$', views.contar_reconhecimentos, name="contar_reconhecimentos"),
     url(r'^ranking_por_periodo/$', views.ranking_por_periodo, name="ranking_por_periodo"),
+    
     url(r'^ciclos_passados/$', views.ciclos_passados, name="ciclos_passados"),
     url(r'^definir_ciclo/$', views.definir_ciclo, name="definir_ciclo"),
     url(r'^alterar_ciclo/$', views.alterar_ciclo, name="alterar_ciclo"),
     url(r'^obter_informacoes_ciclo_atual/$', views.obter_informacoes_ciclo_atual, name="obter_informacoes_ciclo_atual"),
+    url(r'^obter_informacoes_ciclo_futuro/$', views.obter_informacoes_ciclo_futuro, name="obter_informacoes_ciclo_futuro"),
     url(r'^historico_alteracoes/$', views.historico_alteracoes, name="historico_alteracoes"),
+    
+    url(r'^obter_notificacoes_administrador/$', views.obter_notificacoes_do_administrador, name="obter_notificacoes_do_administrador"),
 ]

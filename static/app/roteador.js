@@ -18,6 +18,7 @@
 			'/ranking': [middlewareBotaoReconhecer, middlewareDeAutenticacao, middlewareDeAtualizacaoComGoogleAnalytics, middlewareDeToolbar, middlewareDeTransicaoDeTela, limparTela, ranking],
 			'/rankingAdmin' : [middlewareBotaoReconhecer, middlewareDeAutenticacao, middlewareDeAtualizacaoComGoogleAnalytics, middlewareDeToolbar, middlewareDeTransicaoDeTela, limparTela, rankingAdmin],
 			'/gerenciadorDeCiclos': [middlewareBotaoReconhecer, middlewareDeAutenticacao, middlewareDeAtualizacaoComGoogleAnalytics, middlewareDeToolbar, middlewareDeTransicaoDeTela, limparTela, gerenciadorDeCiclos],
+			'/logAdministrador': [middlewareBotaoReconhecer, middlewareDeAutenticacao, middlewareDeAtualizacaoComGoogleAnalytics, middlewareDeToolbar, middlewareDeTransicaoDeTela, limparTela, logAdministrador],
 		};
 
 		function limparTela() {
@@ -54,6 +55,13 @@
 		
 		function ranking() { 
 			require(['app/ranking/controller'], function (controller) {
+				_controllerAtivo = controller;
+				controller.exibir();
+			});
+		}
+
+		function logAdministrador() { 
+			require(['app/logAdministrador/controller'], function (controller) {
 				_controllerAtivo = controller;
 				controller.exibir();
 			});

@@ -1,0 +1,32 @@
+<h1>Administradores</h1>
+<div class="lista_colaboradores_administradores">
+    {{#each this.administradores}}
+        <div class="colaborador_administrador">
+            {{#if this.foto}}
+                <img class="foto_colaborador_administrador" src="{{this.foto}}" alt="foto colaborador" />
+            {{else}}
+                <img class="foto_colaborador_administrador" src="../static/img/sem-foto.png" alt="foto colaborador" />
+            {{/if}}
+            <p class="nome_colaborador_administrador"> {{this.nome}} </p>
+        </div>
+    {{/each}}
+</div>
+
+<style>
+    .colaborador_administrador{
+        display: flex;
+        align-items: center;
+        gap: 4px;
+
+        background: #F5F5F5;
+        border-radius: 6px;
+        padding: 8px;
+        min-width: 300px;
+        margin: 16px auto;
+    }
+    .foto_colaborador_administrador{
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+    }
+</style>

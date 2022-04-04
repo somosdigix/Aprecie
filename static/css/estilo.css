@@ -443,17 +443,28 @@ h2,
   margin-bottom: 10px;
 }
 
-#perfilColaborador {
+.informacoes_perfil{
   display: inline-block;
+  width: 33%;
+}
+
+.informacoes__perfil__flex{
+  display: flex;
+  flex-direction: column;
+}
+
+#perfilColaborador {
+
   background-color: #fff;
   border: 1px solid #e2e2e2;
   padding: 20px 20px;
-  width: 33%;
+
   text-align: center;
   border-radius: 6px;
   border-radius--moz-border-radius: 6px;
   border-radius--webkit-border-radius: 6px;
 }
+
 #perfilColaborador .alterar-foto {
   cursor: pointer;
 }
@@ -688,7 +699,7 @@ svg {
   align-items: center;
 }
 
-#btn__editar {
+.btn__editar {
   display: absolute;
   width: 100%;
   font-family: Campton;
@@ -709,6 +720,11 @@ svg {
   margin-bottom: 24px;
 }
 
+.titulo-configuracao-ciclos {
+  font-family: Campton;
+  margin: 48px;
+}
+
 #btn__adicionar__ciclo {
   font-family: Campton;
   background-color: #2c006a;
@@ -720,13 +736,9 @@ svg {
   display: flex;
 }
 .adicionar__ciclo{
-  width: 80%;
+  width: 89.6%;
   margin: 32px auto;
   text-align: left;
-}
-.nome__autor,
-.data__alteracao {
-  color: white;
 }
 
 #container__novo__ciclo {
@@ -787,6 +799,10 @@ svg {
   color: white;
   border: 0;
   cursor: pointer;
+}
+.nome__autor,
+.data__alteracao, .nome__autor__edicao, .fonte-cor-branca {
+  color: white;
 }
 
 

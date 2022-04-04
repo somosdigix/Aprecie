@@ -14,6 +14,7 @@ from Login.services import ServicoDeInclusaoDeColaboradores
 from Reconhecimentos.views import converte_boolean
 from rolepermissions.roles import assign_role, remove_role
 from rolepermissions.decorators import has_role_decorator
+from datetime import date
 
 
 @acesso_anonimo
@@ -131,5 +132,42 @@ def switch_administrador(requisicao):
 
 def gerar_log_administrador(administrador, colaborador, descricao):
 	LOG_Administrador.objects.create(administrador = administrador, colaborador = colaborador, descricao = descricao)
+
+def obter_administradores(requisicao):
+  administradores =  map(lambda colaborador: {
+    'nome': colaborador.nome_abreviado,
+    'foto': colaborador.foto,    
+  }, Colaborador.objects.all().filter(administrador=1))
+
+  return JsonResponse({'administradores': list(administradores)})
+
+
+def obter_logs_administradores(requisicao):
+	historico = obtem_historico(requisicao)
+
+	historico_logs = map (lambda log_administrador :{
+		'data': log_administrador.data_modificacao.strftime('%d/%m/%Y'),
+		'mensagem': log_administrador.descricao
+	}, historico)
+
+	return JsonResponse({'historico_logs': list(historico_logs)})
+
+def obtem_historico(requisicao):
+	data_inicio = None
+	data_fim = None
 	
+	historico = LOG_Administrador.objects.all()
+
 	
+	if 'data_inicio' in requisicao.POST:
+		data_inicio = requisicao.POST['data_inicio']
+		if data_inicio != None and data_inicio != '':
+
+			historico = historico.filter(data_modificacao__gte= data_inicio)
+	
+	if 'data_fim' in requisicao.POST:
+		data_fim = requisicao.POST['data_fim']
+		if data_fim != None and data_fim != '':
+			historico = historico.filter(data_modificacao__lte=data_fim)
+	
+	return historico
