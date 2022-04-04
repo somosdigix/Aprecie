@@ -23,8 +23,8 @@
     
                     <p>{{this.feedback__descritivo}}</p>
                 </div>
-                {{#if this.agradecimentos}}
-                    {{#each this.agradecimentos}}
+                {{#if this.agradecimentos.agradecimento_reconhecido}}
+                    {{#each this.agradecimentos.agradecimento_reconhecido}}
                         <div class="agradecimento-recebido">
                             <img class="img-reconhecedor"	src="{{ foto this.id_colaborador usar_miniatura=true}}"/>
                             <div class="texto-reconhecimento">

@@ -151,7 +151,7 @@ def todas_as_apreciacoes(requisicao, id_do_reconhecido):
     'reconhecedor__nome': apreciacao.reconhecedor.nome_abreviado,
     'reconhecido__id': apreciacao.reconhecido.id,
     'reconhecido__nome': apreciacao.reconhecido.nome_abreviado,
-    'agradecimentos': obter_agradecimentos(apreciacao)
+    'agradecimentos': obter_agradecimentos(apreciacao, apreciacao.reconhecido.id, apreciacao.reconhecedor.id)
   }, reconhecido.reconhecimentos().order_by('-id'))
 
   apreciacoes_feitas = map(lambda apreciacao: {
@@ -163,7 +163,7 @@ def todas_as_apreciacoes(requisicao, id_do_reconhecido):
     'reconhecedor__nome': apreciacao.reconhecedor.nome_abreviado,
     'reconhecido__id': apreciacao.reconhecido.id,
     'reconhecido__nome': apreciacao.reconhecido.nome_abreviado,
-    'agradecimentos': obter_agradecimentos(apreciacao)
+    'agradecimentos': obter_agradecimentos(apreciacao, apreciacao.reconhecido.id, apreciacao.reconhecedor.id)
   }, Reconhecimento.objects.filter(reconhecedor = requisicao.user.id).order_by('-id'))
 
   apreciacoes = {
@@ -173,16 +173,27 @@ def todas_as_apreciacoes(requisicao, id_do_reconhecido):
 
   return JsonResponse(apreciacoes)
 
-def obter_agradecimentos(apreciacao):
-  agradecimentos = map(lambda agradecimento: {
+def obter_agradecimentos(apreciacao, id_reconhecido, id_reconhecedor):
+  agradecimentos = Agradecimento.objects.filter(reconhecimento = apreciacao.id)
+  agradecimento_reconhecido = mapear_agradecimento(agradecimentos.filter(colaborador = id_reconhecido))
+  agradecimento_reconhecedor = mapear_agradecimento(agradecimentos.filter(colaborador = id_reconhecedor))
+  
+  agradecimentos_mapeados = {
+    'agradecimento_reconhecido': list(agradecimento_reconhecido) if agradecimento_reconhecido else None, 
+    'agradecimento_reconhecedor': list(agradecimento_reconhecedor) if agradecimento_reconhecedor else None 
+  }
+  
+
+  return agradecimentos_mapeados
+
+def mapear_agradecimento(agradecimentos):
+  return map(lambda agradecimento: {
       'id': agradecimento.id,
       'data': agradecimento.data,
       'mensagem': agradecimento.mensagem,
       'nome_colaborador': Colaborador.objects.get(id=agradecimento.colaborador.id).nome_abreviado,
       'id_colaborador': Colaborador.objects.get(id=agradecimento.colaborador.id).id
-  }, Agradecimento.objects.filter(reconhecimento = apreciacao.id))
-
-  return list(agradecimentos)
+  }, agradecimentos)
 
 def todos_os_pilares_e_colaboradores(requisicao):
     pilares = map(lambda pilar: { 

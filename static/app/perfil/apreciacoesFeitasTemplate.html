@@ -22,13 +22,13 @@
 
 				<p>{{this.feedback__descritivo}}</p>
 			</div>
-			{{#if this.agradecimentos}}
-                    {{#each this.agradecimentos}}
+			{{#if this.agradecimentos.agradecimento_reconhecido}}
+                    {{#each this.agradecimentos.agradecimento_reconhecido}}
                         <div class="agradecimento-recebido">
                             <img class="img-reconhecedor"	src="{{ foto this.id_colaborador usar_miniatura=true}}"/>
                             <div class="texto-reconhecimento">
                                 <strong data-id="1" data-js="ir-ao-perfil" class="apreciador">
-                                    Agradecimento de {{ this.nome_colaborador }}
+                                    {{ this.nome_colaborador }}
                                 </strong>
                         
                                 <div class="data-reconhecimento">{{ emDataLegivel this.data }}</div>
