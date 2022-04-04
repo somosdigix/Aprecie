@@ -150,7 +150,14 @@ def todas_as_apreciacoes(requisicao, id_do_reconhecido):
     'reconhecedor__id': apreciacao.reconhecedor.id,
     'reconhecedor__nome': apreciacao.reconhecedor.nome_abreviado,
     'reconhecido__id': apreciacao.reconhecido.id,
-    'reconhecido__nome': apreciacao.reconhecido.nome_abreviado
+    'reconhecido__nome': apreciacao.reconhecido.nome_abreviado,
+    'agradecimentos': list(map(lambda agradecimento: {
+      'id': agradecimento.id,
+      'data': agradecimento.data,
+      'mensagem': agradecimento.mensagem,
+      'nome_colaborador': Colaborador.objects.get(id=agradecimento.colaborador.id).nome_abreviado,
+      'foto': Colaborador.objects.get(id=agradecimento.colaborador.id).foto
+    }, Agradecimento.objects.filter(reconhecimento = apreciacao.id)))
   }, reconhecido.reconhecimentos().order_by('-id'))
 
   apreciacoes_feitas = map(lambda apreciacao: {
@@ -161,7 +168,7 @@ def todas_as_apreciacoes(requisicao, id_do_reconhecido):
     'reconhecedor__id': apreciacao.reconhecedor.id,
     'reconhecedor__nome': apreciacao.reconhecedor.nome_abreviado,
     'reconhecido__id': apreciacao.reconhecido.id,
-    'reconhecido__nome': apreciacao.reconhecido.nome_abreviado
+    'reconhecido__nome': apreciacao.reconhecido.nome_abreviado,
   }, Reconhecimento.objects.filter(reconhecedor = requisicao.user.id).order_by('-id'))
 
   apreciacoes = {
@@ -170,6 +177,7 @@ def todas_as_apreciacoes(requisicao, id_do_reconhecido):
   }
 
   return JsonResponse(apreciacoes)
+
 
 def todos_os_pilares_e_colaboradores(requisicao):
     pilares = map(lambda pilar: { 

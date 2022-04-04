@@ -32,6 +32,7 @@ class Reconhecimento(models.Model):
 
     self.feedback = novo_feedback
 
+
 class Feedback(models.Model):
   id = models.AutoField(primary_key=True)
   descritivo = models.CharField(max_length=1000)

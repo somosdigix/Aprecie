@@ -23,26 +23,28 @@
     
                     <p>{{this.feedback__descritivo}}</p>
                 </div>
-                <!-- Se  não tiver um agradecimento feito -->
-                <div class="botao-agradecer">
-                    <button onclick="abrirModalAdicionarAgradecimento('{{this.id}}', '{{this.reconhecido__id}}')"> Agradecer </button>
-                </div>
-
-                <!-- Se tiver algum agradecimento -->
-                <!-- <div class="agradecimento-recebido">
-                    <img class="img-reconhecedor"	src="{{ foto this.reconhecedor__id usar_miniatura=true}}"/>
-                    <div class="texto-reconhecimento">
-                        {{#if this.pilar__nome}}
-                        <strong data-id="1" data-js="ir-ao-perfil" class="apreciador">
-                            {{ this.reconhecedor__nome }} em {{ this.pilar__nome }}
-                        </strong>
-                        {{/if}}
-        
-                        <div class="data-reconhecimento">{{ emDataLegivel this.data }}</div>
-        
-                        <p>{{this.feedback__descritivo}}</p>
+                {{#if this.agradecimentos}}
+                    {{#each this.agradecimentos}}
+                        <div class="agradecimento-recebido">
+                            <img class="img-reconhecedor"	src="{{ foto this.colaborador_id usar_miniatura=true}}"/>
+                            <div class="texto-reconhecimento">
+                                <strong data-id="1" data-js="ir-ao-perfil" class="apreciador">
+                                    {{ this.colaborador_nome }}
+                                </strong>
+                        
+                                <div class="data-reconhecimento">{{ emDataLegivel this.data }}</div>
+                
+                                <p>{{this.mensagem}}</p>
+                            </div>
+                        </div>
+                    {{/each}}
+                {{else}}
+                    <div class="botao-agradecer">
+                        <button onclick="abrirModalAdicionarAgradecimento('{{this.id}}', '{{this.reconhecido__id}}')"> Agradecer </button>
                     </div>
-                </div> -->
+                {{/if}}
+
+                
             </div>
             
 			<button id="modal-botao" data-js="modal-botao" onClick="obterApreciacao('{{this.pilar__nome}}', '{{this.feedback__descritivo}}', '{{this.reconhecedor__nome}}', '{{this.reconhecido__nome}}')" name="compartilhar">
