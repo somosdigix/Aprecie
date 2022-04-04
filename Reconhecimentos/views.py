@@ -163,6 +163,7 @@ def todas_as_apreciacoes(requisicao, id_do_reconhecido):
     'reconhecedor__nome': apreciacao.reconhecedor.nome_abreviado,
     'reconhecido__id': apreciacao.reconhecido.id,
     'reconhecido__nome': apreciacao.reconhecido.nome_abreviado,
+    'agradecimentos': obter_agradecimentos(apreciacao)
   }, Reconhecimento.objects.filter(reconhecedor = requisicao.user.id).order_by('-id'))
 
   apreciacoes = {

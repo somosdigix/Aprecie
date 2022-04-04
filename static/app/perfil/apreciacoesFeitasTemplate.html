@@ -14,7 +14,7 @@
 			<div class="texto-reconhecimento">
 				{{#if this.pilar__nome}}
 				<strong data-id="1" data-js="ir-ao-perfil" class="apreciador">
-					{{ this.reconhecido__nome }} em {{ this.pilar__nome }}
+					Apreciou {{ this.reconhecido__nome }} em {{ this.pilar__nome }}
 				</strong>
 				{{/if}}
 
@@ -22,6 +22,22 @@
 
 				<p>{{this.feedback__descritivo}}</p>
 			</div>
+			{{#if this.agradecimentos}}
+                    {{#each this.agradecimentos}}
+                        <div class="agradecimento-recebido">
+                            <img class="img-reconhecedor"	src="{{ foto this.id_colaborador usar_miniatura=true}}"/>
+                            <div class="texto-reconhecimento">
+                                <strong data-id="1" data-js="ir-ao-perfil" class="apreciador">
+                                    Agradecimento de {{ this.nome_colaborador }}
+                                </strong>
+                        
+                                <div class="data-reconhecimento">{{ emDataLegivel this.data }}</div>
+                
+                                <p>{{this.mensagem}}</p>
+                            </div>
+                        </div>
+                    {{/each}}
+            {{/if}}      
 		</div>
 	</div>
 </section>
@@ -30,3 +46,8 @@
 <div class="ui yellow message">Ainda não possuo nenhuma apreciação.</div>
 {{/each}}
 
+<style>
+	.agradecimento-recebido{
+        margin: 16px 0 16px 24px;
+    }
+</style>
