@@ -528,7 +528,7 @@ def obter_ranking_de_apreciacoes_recebidas(data_inicial, data_final):
     JOIN public."Login_colaborador" l ON r.reconhecido_id = l.id
     WHERE r.data BETWEEN %s AND %s
     GROUP by l.nome, r.pilar_id, r.reconhecido_id, l.foto
-    ORDER by r.reconhecido_id, r.pilar_id
+    ORDER by l.nome, r.reconhecido_id, r.pilar_id
     ''', [data_inicial, data_final])
     
     ranking_de_apreciacoes_recebidas = cursor.fetchall()
@@ -538,11 +538,11 @@ def obter_ranking_de_apreciacoes_feitas(data_inicial, data_final):
   with connection.cursor() as cursor:
     cursor.execute('''
     SELECT count(*), r.reconhecedor_id, l.nome, l.foto
-     FROM public."Reconhecimentos_reconhecimento" r
+    FROM public."Reconhecimentos_reconhecimento" r
     JOIN public."Login_colaborador" l ON r.reconhecedor_id = l.id
     WHERE r.data BETWEEN %s AND %s
     GROUP by r.reconhecedor_id, l.nome, l.foto
-    ORDER by r.reconhecedor_id
+    ORDER by l.nome, r.reconhecedor_id
     ''', [data_inicial, data_final])
     ranking_de_apreciacoes_feitas = cursor.fetchall()
   return ranking_de_apreciacoes_feitas
