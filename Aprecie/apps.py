@@ -53,5 +53,5 @@ class AprecieConfig(AppConfig):
         
     def ready(self):
         cron = BackgroundScheduler(timezone="America/Campo_Grande")
-        cron.add_job(self.verifica_data_final_do_ciclo,  trigger='cron', minute='*/1')
+        cron.add_job(self.verifica_data_final_do_ciclo,  trigger='cron', hour="6")
         cron.start()
