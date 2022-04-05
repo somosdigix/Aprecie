@@ -11,7 +11,7 @@ from django.conf import settings
 import re
 from Aprecie.base import acesso_anonimo, acesso_exclusivo_com_token
 from Login.services import ServicoDeInclusaoDeColaboradores
-from Reconhecimentos.views import converte_boolean
+from Reconhecimentos.views.views import converte_boolean
 from rolepermissions.roles import assign_role, remove_role
 from rolepermissions.decorators import has_role_decorator
 from datetime import date

@@ -16,7 +16,7 @@ class AprecieConfig(AppConfig):
 
     def verifica_data_final_do_ciclo(self):
         from Reconhecimentos.models import Ciclo, LOG_Ciclo
-        from Reconhecimentos.views import obter_ciclo_atual
+        from Reconhecimentos.views.views import obter_ciclo_atual
         
         try:
             ciclo_atual = obter_ciclo_atual()
