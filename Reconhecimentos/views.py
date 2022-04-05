@@ -177,7 +177,7 @@ def obter_agradecimentos(apreciacao, id_reconhecido, id_reconhecedor):
   agradecimentos = Agradecimento.objects.filter(reconhecimento = apreciacao.id)
   agradecimento_reconhecido = mapear_agradecimento(agradecimentos.filter(colaborador = id_reconhecido))
   agradecimento_reconhecedor = mapear_agradecimento(agradecimentos.filter(colaborador = id_reconhecedor))
-  
+
   agradecimentos_mapeados = {
     'agradecimento_reconhecido': list(agradecimento_reconhecido) if agradecimento_reconhecido else None, 
     'agradecimento_reconhecedor': list(agradecimento_reconhecedor) if agradecimento_reconhecedor else None 

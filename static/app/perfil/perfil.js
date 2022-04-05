@@ -283,7 +283,5 @@ function abrirModalAdicionarAgradecimento(idReconhecimento, idColaborador) {
 	inputIdReconhecimento.value = idReconhecimento;
 
 	var inputIdColaborador = document.getElementById('id_colaborador_que_agradeceu');
-	inputIdColaborador.value = idColaborador;
-
-	console.log(idReconhecimento, idColaborador);
+	inputIdColaborador.value = idColaborador;	
 }

@@ -56,7 +56,13 @@ define([
 
   function exibirApreciacoesFeitas() {
     template.exibirEm('div[data-js="todas-as-apreciacoes"]', apreciacoesFeitasTemplate, apreciacoesGlobal.feitas);
-    console.log(apreciacoesGlobal.feitas)
+    
+    if (sessaoDeUsario.id == _colaboradorId){
+      document.querySelectorAll(".botao-agradecer").forEach( botao => {
+      botao.style.display = "flex";
+      })
+    }
+
     $("#reconhecimentos-recebidos").removeClass('botao__selecionado__perfil');
     $("#reconhecimentos-feitos").addClass('botao__selecionado__perfil');
   }
