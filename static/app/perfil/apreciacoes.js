@@ -34,6 +34,7 @@ define([
 
   function exibirApreciacoesRecebidas() {
       template.exibirEm('div[data-js="todas-as-apreciacoes"]', apreciacoesRecebidasTemplate, apreciacoesGlobal.recebidas);
+
       if (sessaoDeUsario.id !== _colaboradorId){
         $("#reconhecimentos-recebidos").hide();
         $("#reconhecimentos-feitos").hide();
@@ -55,6 +56,7 @@ define([
 
   function exibirApreciacoesFeitas() {
     template.exibirEm('div[data-js="todas-as-apreciacoes"]', apreciacoesFeitasTemplate, apreciacoesGlobal.feitas);
+    console.log(apreciacoesGlobal.feitas)
     $("#reconhecimentos-recebidos").removeClass('botao__selecionado__perfil');
     $("#reconhecimentos-feitos").addClass('botao__selecionado__perfil');
   }

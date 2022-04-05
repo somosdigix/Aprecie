@@ -183,7 +183,6 @@ def obter_agradecimentos(apreciacao, id_reconhecido, id_reconhecedor):
     'agradecimento_reconhecedor': list(agradecimento_reconhecedor) if agradecimento_reconhecedor else None 
   }
   
-
   return agradecimentos_mapeados
 
 def mapear_agradecimento(agradecimentos):
