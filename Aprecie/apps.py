@@ -50,8 +50,8 @@ class AprecieConfig(AppConfig):
             log_Ciclo = LOG_Ciclo.adicionar_automatico(ciclo_atual)
             log_Ciclo.save()
             AprecieConfig.notificacao_do_colaborador("O ciclo atual não possui data final")    
-
+        
     def ready(self):
         cron = BackgroundScheduler(timezone="America/Campo_Grande")
-        cron.add_job(self.verifica_data_final_do_ciclo, 'cron', hour=6)
+        cron.add_job(self.verifica_data_final_do_ciclo,  trigger='cron', minute='*/1')
         cron.start()
