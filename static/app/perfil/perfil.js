@@ -14,45 +14,48 @@
 	_self.inicializar = function (sandbox, colaboradorId) {
 		_sandbox = sandbox;
 
-		configurarMenuAdministrador()
-
+		
 		$.getJSON(
 			"/reconhecimentos/colaborador/" + colaboradorId,
 			function (reconhecimentosDoColaborador) {
 				template.exibir(perfilTemplate, reconhecimentosDoColaborador);
-
+				
 				administradorHelper.mostrarConteudoSeForAdministrador('div[data-js="switch-adm"]');
-				administradorHelper.mostrarConteudoSeForAdministrador('div[data-js="menu__administrador"]');
-
 				switchAdministrador(reconhecimentosDoColaborador, colaboradorId);
-
+				
 				$("#conteudo").on(
 					"click",
 					'div[data-js="exibir-reconhecimentos"]',
 					exibirReconhecimentos
-				);
-
+					);
+					
 				if (sessaoDeUsuario.id === colaboradorId) {
 					$('div[data-js="switch-adm"]').hide();
+					
 					$("span.ion-camera").show();
-					$("#conteudo").on(
-						"click",
-						'div[data-js="foto"]',
-						abrirModalCrop
-					);
-
-					$('#conteudo').on('click', 'button[data-js="alterar-foto"]', alterarFoto);
+					$("#conteudo").on("click", 'div[data-js="foto"]',abrirModalCrop);	
 					$('#conteudo').on('click', 'button[data-js="botao_fechar_cropper"]', fecharModalCrop);
+					$('#conteudo').on('click', 'button[data-js="alterar-foto"]', alterarFoto);
 					$('#conteudo').on('change', 'input[data-js="input__arquivos"]', readURL);
-					obterNotificacaoDoAdministrador();
+
+					if (sessaoDeUsuario.administrador) {
+						administradorHelper.mostrarConteudoSeForAdministrador('div[data-js="menu__administrador"]');
+						configurarMenuAdministrador();
+						obterNotificacaoDoAdministrador();
+					}
+					else{
+						$('div[data-js="menu__administrador"]').hide();
+					}
+
 				} else {
+					$('div[data-js="menu__administrador"]').hide();
 					$('div[data-js="apreciacao"]').show();
 					$('div[data-js="foto"]').removeClass("alterar-foto");
 				}
-
-			$('#conteudo')
+				
+				$('#conteudo')
 				.on('click', 'button[data-js="exibir-reconhecimentos"]', exibirReconhecimentos);
-
+				
 				if (sessaoDeUsuario.id === colaboradorId) {
 					$('div[data-js="switch-adm"]').hide();
 					$('span.ion-camera').show();
