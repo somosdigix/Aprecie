@@ -1,5 +1,6 @@
 from rolepermissions.decorators import has_role_decorator
-from Reconhecimentos.models import Colaborador, Ciclo, LOG_Ciclo
+from Reconhecimentos.models import Ciclo, LOG_Ciclo
+from Login.models import Colaborador
 from django.http import JsonResponse
 from datetime import date, datetime, timedelta
 from django.core.paginator import Paginator
