@@ -15,7 +15,7 @@ django-role-permissions==3.1.1
 idna==3.3
 multidict==6.0.2
 Pillow==9.0.1
-pytz==2021.3
+pytz==2022.5
 rcssmin==1.1.0
 rjsmin==1.2.0
 six==1.16.0
