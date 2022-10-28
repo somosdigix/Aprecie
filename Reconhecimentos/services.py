@@ -1,4 +1,4 @@
-﻿from discord import Webhook, RequestsWebhookAdapter
+﻿from discord import SyncWebhook
 
 from Aprecie import settings
 
@@ -13,5 +13,5 @@ class Notificacoes():
 		mensagem = '**<@{0}>** acabou de ser reconhecido(a) em **{1}** por **<@{2}>**. Olha lá: http://aprecie.digix.com.br' \
 			.format(reconhecido.usuario_id_do_chat, pilar.nome, reconhecedor.usuario_id_do_chat)
 
-		webhook = Webhook.from_url(settings.CHAT_WEBHOOK_URL, adapter=RequestsWebhookAdapter())
-		webhook.send(mensagem)
+		webhook = SyncWebhook.from_url(settings.CHAT_WEBHOOK_URL)
+		webhook.send(content=mensagem)
