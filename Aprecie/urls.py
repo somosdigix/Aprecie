@@ -1,12 +1,12 @@
-from django.conf.urls import include, url
+from django.urls import include, path
 from django.shortcuts import render, redirect
 from django.conf.urls.static import static
 from django.conf import settings
 from Aprecie import views
 
 urlpatterns = [
-    url(r'^$', views.login),
-    url(r'^app/', views.index),
-    url(r'^login/', include('Login.urls')),
-    url(r'^reconhecimentos/', include('Reconhecimentos.urls'))
+    path(r'', views.login),
+    path(r'app/', views.index),
+    path(r'login/', include('Login.urls')),
+    path(r'reconhecimentos/', include('Reconhecimentos.urls'))
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
