@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "4c79891ca42d1987b7c9154c36ea950169f701ec75e55544b8b7791f052ed972"
+            "sha256": "55c00bcac90d99235ea20dd0bcf59c669d87f021540f7cde0181a9520929da29"
         },
         "pipfile-spec": 6,
         "requires": {},
@@ -130,24 +130,20 @@
         },
         "discord": {
             "hashes": [
-                "sha256:248d728356e149c818a81b94659047a19305ea1623d4810bbb342f6b7df55f36",
-                "sha256:846dd3d66888c2e0a8bd9120d8778a0fe088c003a7f6451668497f14e322a304",
                 "sha256:b6df1dd56c19750b3cb9b69de85bf463e712a0db232546ae8109c04bf0a61083",
                 "sha256:ffc714978d338d2b506e4924d66d7d02a649378a46743e2bdf42ef1bd43d1a67"
             ],
             "index": "pypi",
-            "version": "==1.7.3"
+            "version": "==2.0.0"
         },
         "discord.py": {
             "hashes": [
                 "sha256:309146476e986cb8faf038cd5d604d4b3834ef15c2d34df697ce5064bf5cd779",
-                "sha256:462cd0fe307aef8b29cbfa8dd613e548ae4b2cb581d46da9ac0d46fb6ea19408",
-                "sha256:aeb186348bf011708b085b2715cf92bbb72c692eb4f59c4c0b488130cc4c4b7e",
-                "sha256:c6f64db136de0e18e090f6752ea68bdd4ab0a61b82dfe7acecefa22d6477bb0c"
+                "sha256:aeb186348bf011708b085b2715cf92bbb72c692eb4f59c4c0b488130cc4c4b7e"
             ],
             "index": "pypi",
             "markers": "python_full_version >= '3.8.0'",
-            "version": "==1.7.3"
+            "version": "==2.0.1"
         },
         "dj-database-url": {
             "hashes": [
@@ -159,11 +155,11 @@
         },
         "django": {
             "hashes": [
-                "sha256:51284300f1522ffcdb07ccbdf676a307c6678659e1284f0618e5a774127a6a08",
-                "sha256:e22c9266da3eec7827737cde57694d7db801fedac938d252bf27377cec06ed1b"
+                "sha256:26dc24f99c8956374a054bcbf58aab8dc0cad2e6ac82b0fe036b752c00eee793",
+                "sha256:b8d843714810ab88d59344507d4447be8b2cf12a49031363b6eed9f1b9b2280f"
             ],
             "index": "pypi",
-            "version": "==3.2.9"
+            "version": "==4.1.2"
         },
         "django-appconf": {
             "hashes": [
