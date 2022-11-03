@@ -35,7 +35,8 @@ def entrar(requisicao):
 	data = {
       'id_do_colaborador': colaborador_autenticado.id,
 	  'nome_do_colaborador': colaborador_autenticado.primeiro_nome,
-	  'administrador': colaborador_autenticado.administrador
+	  'administrador': colaborador_autenticado.administrador,
+	  'recursos_humanos': colaborador_autenticado.has_perm('recursos_humanos')
 	}
 
 	return JsonResponse(data, status=200)

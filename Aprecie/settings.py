@@ -114,7 +114,7 @@ if IN_RELEASE_ENV:
 	# COMPRESS_ROOT = STATIC_ROOT
 else:
 	ADMIN_TOKEN = 'Basic dXN1YXJpb2xvY2FsOnNlbmhhbG9jYWw='
-	CHAT_WEBHOOK_URL = ''
+	CHAT_WEBHOOK_URL = 'https://discord.gg/V33e6vS8'
 
 STATICFILES_FINDERS = (
 	"django.contrib.staticfiles.finders.FileSystemFinder",

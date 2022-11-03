@@ -6,6 +6,7 @@ define(function() {
 		sessaoDeUsuario.nome = colaborador.nome_do_colaborador;
 		sessaoDeUsuario.foto = null;
 		sessaoDeUsuario.administrador = JSON.parse(colaborador.administrador);
+		sessaoDeUsuario.recursos_humanos = JSON.parse(colaborador.recursos_humanos);
 	};
 
 	sessaoDeUsuario.estaVazia = function() {
