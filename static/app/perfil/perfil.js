@@ -4,8 +4,9 @@
 	'text!app/perfil/perfilTemplate.html',
 	'sessaoDeUsuario',
 	'app/botaoReconhecer/botaoReconhecer',
-	'app/helpers/administradorHelper'
-], function ($, template, perfilTemplate, sessaoDeUsuario, botaoReconhecer, administradorHelper) {
+	'app/helpers/administradorHelper',
+	'app/helpers/recursosHumanosHelper'
+], function ($, template, perfilTemplate, sessaoDeUsuario, botaoReconhecer, administradorHelper,recursosHumanosHelper) {
 	'use strict';
 
 	var _self = {};
@@ -15,6 +16,7 @@
 		_sandbox = sandbox;
 
 		configurarMenuAdministrador()
+		//configurarMenuRecursosHumanos()
 
 		$.getJSON(
 			"/reconhecimentos/colaborador/" + colaboradorId,
@@ -23,6 +25,7 @@
 
 				administradorHelper.mostrarConteudoSeForAdministrador('div[data-js="switch-adm"]');
 				administradorHelper.mostrarConteudoSeForAdministrador('div[data-js="menu__administrador"]');
+				recursosHumanosHelper.mostrarConteudoSeForRecursosHumanos('div[data-js="menu__recursos_humanos')
 
 				switchAdministrador(reconhecimentosDoColaborador, colaboradorId);
 
@@ -44,8 +47,18 @@
 					$('#conteudo').on('click', 'button[data-js="alterar-foto"]', alterarFoto);
 					$('#conteudo').on('click', 'button[data-js="botao_fechar_cropper"]', fecharModalCrop);
 					$('#conteudo').on('change', 'input[data-js="input__arquivos"]', readURL);
-					obterNotificacaoDoAdministrador();
+
+					if (sessaoDeUsuario.administrador) {
+						administradorHelper.mostrarConteudoSeForAdministrador('div[data-js="menu__administrador"]');
+						configurarMenuAdministrador();
+						obterNotificacaoDoAdministrador();
+					}
+					else{
+						$('div[data-js="menu__administrador"]').hide();
+					}
+
 				} else {
+					$('div[data-js="menu__administrador"]').hide();
 					$('div[data-js="apreciacao"]').show();
 					$('div[data-js="foto"]').removeClass("alterar-foto");
 				}
@@ -96,6 +109,11 @@
 			.on('click', 'a[data-js="configuracao-ciclo"]', gerenciadorDeCiclos)
 			.on('click', 'a[data-js="logs-administrador"]', logAdministrador);
 	}
+	
+	// function configurarMenuRecursosHumanos(){
+	// 	$("#conteudo")
+	// 		.on('click', 'a[data-js="cadastro-recursos_humanos"]', casdastroRH )
+	// }
 
 	function abrirModalCrop() {
 		document.getElementById('caixa-modal').style.display = "block";
