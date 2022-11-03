@@ -16,7 +16,7 @@
 		_sandbox = sandbox;
 
 		configurarMenuAdministrador()
-		configurarMenuRecursosHumanos()
+		//configurarMenuRecursosHumanos()
 
 		$.getJSON(
 			"/reconhecimentos/colaborador/" + colaboradorId,
@@ -109,10 +109,11 @@
 			.on('click', 'a[data-js="configuracao-ciclo"]', gerenciadorDeCiclos)
 			.on('click', 'a[data-js="logs-administrador"]', logAdministrador);
 	}
-	function configurarMenuRecursosHumanos(){
-		$("#conteudo")
-			.on('click', 'a[data-js="cadastro-recursos_humanos"]', casdastroRH )
-	}
+	
+	// function configurarMenuRecursosHumanos(){
+	// 	$("#conteudo")
+	// 		.on('click', 'a[data-js="cadastro-recursos_humanos"]', casdastroRH )
+	// }
 
 	function abrirModalCrop() {
 		document.getElementById('caixa-modal').style.display = "block";
