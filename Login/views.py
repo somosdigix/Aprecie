@@ -84,7 +84,7 @@ def obter_colaboradores(requisicao):
 	colaboradores = map(transformacao, colaboradores)
 	return JsonResponse({ 'colaboradores': list(colaboradores) })
 
-@acesso_exclusivo_com_token
+@has_role_decorator('recursos_humanos')
 def inserir_colaboradores(requisicao):
 	colaboradores = json.loads(requisicao.body)['colaboradores']
 
