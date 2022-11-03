@@ -11,6 +11,7 @@ define([
 		cookie.criar('id', colaborador.id_do_colaborador);
 		cookie.criar('nome', colaborador.nome_do_colaborador);
 		cookie.criar('administrador', colaborador.administrador);
+		cookie.criar('recursos_humanos', colaborador.recursos_humanos);
 	};
 
 	servicoDeAutenticacao.jaEstaAutenticado = function() {
@@ -40,6 +41,7 @@ define([
 		colaborador.id_do_colaborador = cookie.obter('id');
 		colaborador.nome_do_colaborador = cookie.obter('nome');
 		colaborador.administrador = cookie.obter('administrador');
+		colaborador.recursos_humanos = cookie.obter('recursos_humanos');
 
 	    sessaoDeUsuario.preencherDados(colaborador);
 	};
