@@ -16,7 +16,7 @@
 		_sandbox = sandbox;
 
 		configurarMenuAdministrador()
-		//configurarMenuRecursosHumanos()
+		configurarMenuRecursosHumanos()
 
 		$.getJSON(
 			"/reconhecimentos/colaborador/" + colaboradorId,
@@ -102,6 +102,11 @@
 		  roteador.navegarPara('/logAdministrador');
 		});
 	}
+	function casdastroRH() {
+		require(['roteador'], function(roteador) {
+		  roteador.navegarPara('/cadastroDeColaboradores');
+		});
+	}
 
 	function configurarMenuAdministrador(){
 		$("#conteudo")
@@ -110,10 +115,10 @@
 			.on('click', 'a[data-js="logs-administrador"]', logAdministrador);
 	}
 	
-	// function configurarMenuRecursosHumanos(){
-	// 	$("#conteudo")
-	// 		.on('click', 'a[data-js="cadastro-recursos_humanos"]', casdastroRH )
-	// }
+	function configurarMenuRecursosHumanos(){
+		$("#conteudo")
+			.on('click', 'a[data-js="cadastro-recursos_humanos"]', casdastroRH )
+	}
 
 	function abrirModalCrop() {
 		document.getElementById('caixa-modal').style.display = "block";
