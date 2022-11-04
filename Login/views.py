@@ -15,6 +15,8 @@ from Reconhecimentos.views import converte_boolean
 from rolepermissions.roles import assign_role, remove_role
 from rolepermissions.decorators import has_role_decorator
 from datetime import date
+from rolepermissions.checkers import has_role
+
 
 
 @acesso_anonimo
@@ -35,7 +37,8 @@ def entrar(requisicao):
 	data = {
       'id_do_colaborador': colaborador_autenticado.id,
 	  'nome_do_colaborador': colaborador_autenticado.primeiro_nome,
-	  'administrador': colaborador_autenticado.administrador
+	  'administrador': colaborador_autenticado.administrador,
+	  'recursos_humanos': has_role(colaborador_autenticado, 'recursos_humanos')
 	}
 
 	return JsonResponse(data, status=200)
@@ -84,7 +87,7 @@ def obter_colaboradores(requisicao):
 	colaboradores = map(transformacao, colaboradores)
 	return JsonResponse({ 'colaboradores': list(colaboradores) })
 
-@acesso_exclusivo_com_token
+@has_role_decorator('recursos_humanos')
 def inserir_colaboradores(requisicao):
 	colaboradores = json.loads(requisicao.body)['colaboradores']
 

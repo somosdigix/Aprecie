@@ -6,3 +6,8 @@ class administrador(AbstractUserRole):
         'adicionar_administrador' : True,
         'remover_administrador'  : True
     }
+
+class recursos_humanos(AbstractUserRole):
+    available_permissions = {
+        'cadastrar_colaborador' : True,
+    }
