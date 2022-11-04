@@ -1,7 +1,7 @@
 
 
 <div class="bloco-cadastroUsuario">
-	<form class="formularioCadastro">
+	<form class="formularioCadastro" method="post">
 		<h1 class="titulo-cadastro">Cadastro de Colaboradores</h1>
 		<div class="nome-colaborador campo">
 			<label class="label" for="">Nome Completo:</label>
@@ -23,7 +23,7 @@
 			<input id="idDiscord" type="text" required>
 		</div>
 
-		<button data-js="SalvarColaborador" type="submit"
+		<button data-js="SalvarColaborador" id="salvarColaborador" type="submit"
 			class="ui botao-laranja button botao-entrar">
 			Incluir Colaborador
 		</button>
