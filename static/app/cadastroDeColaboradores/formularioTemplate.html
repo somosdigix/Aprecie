@@ -16,7 +16,8 @@
 
 		<div class="data-de-nascimento campo">
 			<label class="label" for="">Data de Nascimento:</label>
-			<input id="dataDeNascimento" type="text" required>
+			<input id="dataDeNascimento" type="date" required>
+			<span id="alert-data" class="alerta"></span>
 		</div>
 
 		<div class="id-discord campo">
@@ -32,6 +33,20 @@
 </div>
 
 <style>
+	.alerta{
+		color: #fff;
+		text-align: center;
+		margin: 5px;
+		padding: 5px;
+		width: 150px;
+		border-radius: 15px;
+	}
+	.sucesso{
+		background-color: green;
+	}
+	.erro{
+		background-color: red;
+	}
 	.campo {
 		margin: 15px;
 		display: flex;
@@ -43,6 +58,7 @@
 		height: 30px;
 		border-radius: 5px;
 		margin-top: 5px;
+		color: black;
 	}
 
 	.titulo-cadastro {
