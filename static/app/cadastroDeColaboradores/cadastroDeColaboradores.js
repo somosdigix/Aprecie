@@ -12,7 +12,7 @@ define([
 		$('#conteudo').on('focusout', 'input[id="idDiscord"]', validarUserIdDiscord);
 	};
 
-	validarUserIdDiscord = function() {
+	function validarUserIdDiscord () {
 		var userIdDiscord = $('#idDiscord').val();
 		var chaveDiscord = ''
 		$.ajax({
