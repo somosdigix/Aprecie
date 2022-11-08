@@ -12,23 +12,24 @@ define([
 	self.inicializar = function  (sandbox) {
 		_sandbox = sandbox;
 		_sandbox.exibirTemplateEm('#conteudo', cadastroTemplate);
-		$('#conteudo').on('focusout', 'input[id="idDiscord"]', validarUserIdDiscord);
+		// $('#conteudo').on('focusout', 'input[id="idDiscord"]', validarUserIdDiscord);
 		$("#salvarColaborador").click(function (event) {
 			event.preventDefault();
 			salvarColaborador();
 		});
 		$('#cpf').inputmask('999.999.999-99');
-		$('#conteudo')
-			.on('click', 'button[data-js="SalvarColaborador"]', validaFormulario);
+		// $('#conteudo')
+		// 	.on('click', 'button[data-js="SalvarColaborador"]', validaFormulario);
 	};
 
 	function salvarColaborador() {
 		var colaboradorViewModel = new ColaboradorViewModel();
+		var dados = {"colaboradores": [colaboradorViewModel]}
 		
-		$.post("/login/colaborador/", colaboradorViewModel, function () {
+		$.post("/login/colaborador/", dados, function () {
 			growl.deSucesso().exibir("Colaborador cadastrado com sucesso.");
 		}).fail(function () {
-			growl.deErro().exibir(erro);
+			growl.deErro().exibir("Colaborador nao cadastrado.");
 		});
 
 	}
@@ -38,7 +39,7 @@ define([
 		var chaveDiscord = ''
 		$.ajax({
 			beforeSend: function (request) {
-				request.setRequestHeader("Authorization", 'Bot' + chaveDiscord);
+				request.setRequestHeader("Authorization", 'Bot ' + chaveDiscord);
 			},
 			dataType: "json",
 			url: 'https://discord.com/api/v10/users/' + userIdDiscord,
