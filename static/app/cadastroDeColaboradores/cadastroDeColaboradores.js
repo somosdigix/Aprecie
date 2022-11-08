@@ -1,8 +1,8 @@
 define([
 	'text!app/cadastroDeColaboradores/formularioTemplate.html',
+	"app/models/colaboradorViewModel",
 	'growl'
-], function (cadastroTemplate,
-	growl) {
+], function (cadastroTemplate, ColaboradorViewModel, growl) {
 	'use strict';
 
 	var self = {};
@@ -11,32 +11,22 @@ define([
 	self.inicializar = function (sandbox) {
 		_sandbox = sandbox;
 		_sandbox.exibirTemplateEm('#conteudo', cadastroTemplate);
+		$("#conteudo").on("click", 'button[data-js="SalvarColaborador"]', validardataDeNascimento)
 		$('#conteudo').on('focusout', 'input[id="idDiscord"]', validarUserIdDiscord);
-		$("#salvarColaborador").click(function () {
+		$("#salvarColaborador").click(function (event) {
+			event.preventDefault();
 			salvarColaborador();
 		});
 	};
 
 	function salvarColaborador() {
-		var nome = $("#nomeColaborador").val();
-		var cpf = $("#cpf").val();
-		var dataNascimento = $("#dataDeNascimento").val();
-		var idDiscord = $("#idDiscord").val();
-		var data = {
-			"colaboradores": [{
-				"nome": nome,
-				"cpf": cpf,
-				"data_de_nascimento": dataNascimento,
-				"usuario_id_do_chat": idDiscord
-			}]	
-		};
-
-		$.post("/colaborador/", data, function () {
-			growl.deSucesso().exibir("Reconhecimento realizado com sucesso.");
+		var colaboradorViewModel = new ColaboradorViewModel();
+		
+		$.post("/login/colaborador/", colaboradorViewModel, function () {
+			growl.deSucesso().exibir("Colaborador cadastrado com sucesso.");
 		}).fail(function () {
-			growl.deErro().exibir(erro.message);
+			growl.deErro().exibir(erro);
 		});
-
 
 	}
 
@@ -60,10 +50,40 @@ define([
 		});
 	}
 
+	
+	function validardataDeNascimento(){
+		var data = new Date($("#dataDeNascimento").val().replace(/-/g, '/'));
+		var dataAtual= new Date();
+		dataAtual.setHours(0,0,0,0);
+
+		console.log(dataAtual);
+		console.log(data);
+
+		var mensagem = $('#alert-data');
+		console.log(mensagem);
+		if (data<dataAtual){
+			console.log("Data Válida");
+			mensagem.text("Data válida");
+			mensagem.removeClass("erro")
+			mensagem.addClass("sucesso")
+			
+			return true;
+		} else {
+			console.log("Data Inválida");
+			mensagem.text("Data inválida");
+			mensagem.removeClass("sucesso")
+			mensagem.addClass("erro")
+
+			return false;
+		}
+	}
+
 	self.finalizar = function () {
 		_sandbox.limpar('#conteudo');
 		_sandbox.removerEvento('#conteudo');
 	};
 
 	return self;
+
+
 });
