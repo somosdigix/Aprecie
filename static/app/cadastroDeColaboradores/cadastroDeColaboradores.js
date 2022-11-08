@@ -1,20 +1,37 @@
 define([
 	"jquery",
-	'text!app/cadastroDeColaboradores/formularioTemplate.html'
-], function ($, cadastroTemplate) {
+	'text!app/cadastroDeColaboradores/formularioTemplate.html',
+	"app/models/colaboradorViewModel",
+	'growl'
+], function  ($, cadastroTemplate, ColaboradorViewModel, growl) {
 	'use strict';
 
 	var self = {};
 	var _sandbox;
 
-	self.inicializar = function (sandbox) {
+	self.inicializar = function  (sandbox) {
 		_sandbox = sandbox;
 		_sandbox.exibirTemplateEm('#conteudo', cadastroTemplate);
 		$('#conteudo').on('focusout', 'input[id="idDiscord"]', validarUserIdDiscord);
+		$("#salvarColaborador").click(function (event) {
+			event.preventDefault();
+			salvarColaborador();
+		});
 		$('#cpf').inputmask('999.999.999-99');
 		$('#conteudo')
 			.on('click', 'button[data-js="SalvarColaborador"]', validaFormulario);
 	};
+
+	function salvarColaborador() {
+		var colaboradorViewModel = new ColaboradorViewModel();
+		
+		$.post("/login/colaborador/", colaboradorViewModel, function () {
+			growl.deSucesso().exibir("Colaborador cadastrado com sucesso.");
+		}).fail(function () {
+			growl.deErro().exibir(erro);
+		});
+
+	}
 
 	function validarUserIdDiscord() {
 		var userIdDiscord = $('#idDiscord').val();
@@ -36,12 +53,8 @@ define([
 		});
 	}
 
-	self.finalizar = function () {
-		_sandbox.limpar('#conteudo');
-		_sandbox.removerEvento('#conteudo');
-	};
-
-	function validardataDeNascimento() {
+	
+	function validardataDeNascimento(){
 		var data = new Date($("#dataDeNascimento").val().replace(/-/g, '/'));
 		var dataAtual = new Date();
 		dataAtual.setHours(0, 0, 0, 0);
@@ -122,7 +135,12 @@ define([
 			return false;
 		return true;
 	}
+
+	self.finalizar = function () {
+		_sandbox.limpar('#conteudo');
+		_sandbox.removerEvento('#conteudo');
+	};
+
 	return self;
 }
-
-);
+)
