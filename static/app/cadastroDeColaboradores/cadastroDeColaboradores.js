@@ -3,13 +3,13 @@ define([
 	'text!app/cadastroDeColaboradores/formularioTemplate.html',
 	"app/models/colaboradorViewModel",
 	'growl'
-], function  ($, cadastroTemplate, ColaboradorViewModel, growl) {
+], function ($, cadastroTemplate, ColaboradorViewModel, growl) {
 	'use strict';
 
 	var self = {};
 	var _sandbox;
 
-	self.inicializar = function  (sandbox) {
+	self.inicializar = function (sandbox) {
 		_sandbox = sandbox;
 		_sandbox.exibirTemplateEm('#conteudo', cadastroTemplate);
 		// $('#conteudo').on('focusout', 'input[id="idDiscord"]', validarUserIdDiscord);
@@ -23,14 +23,22 @@ define([
 	};
 
 	function salvarColaborador() {
-		var colaboradorViewModel = new ColaboradorViewModel();
-		var dados = {"colaboradores": [colaboradorViewModel]}
-		
-		$.post("/login/colaborador/", dados, function () {
-			growl.deSucesso().exibir("Colaborador cadastrado com sucesso.");
-		}).fail(function () {
-			growl.deErro().exibir("Colaborador nao cadastrado.");
-		});
+		var colaboradores = [
+			{
+				cpf: $('#cpf').val(),
+				nome: $('#nomeColaborador').val(),
+				data_de_nascimento: $('#dataDeNascimento').val(),
+				usuario_id_do_chat: $('#idDiscord').val(),
+			}
+		]
+		var dados = JSON.stringify({ 'colaboradores': colaboradores })
+
+		$.post("/login/colaborador/", dados,
+			function () {
+				growl.deSucesso().exibir("Colaborador cadastrado com sucesso.");
+			}).fail(function () {
+				growl.deErro().exibir("Colaborador nao cadastrado.");
+			});
 
 	}
 
@@ -54,8 +62,8 @@ define([
 		});
 	}
 
-	
-	function validardataDeNascimento(){
+
+	function validardataDeNascimento() {
 		var data = new Date($("#dataDeNascimento").val().replace(/-/g, '/'));
 		var dataAtual = new Date();
 		dataAtual.setHours(0, 0, 0, 0);
