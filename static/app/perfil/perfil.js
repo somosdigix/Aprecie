@@ -6,7 +6,7 @@
 	'app/botaoReconhecer/botaoReconhecer',
 	'app/helpers/administradorHelper',
 	'app/helpers/recursosHumanosHelper'
-], function ($, template, perfilTemplate, sessaoDeUsuario, botaoReconhecer, administradorHelper,recursosHumanosHelper) {
+], function ($, template, perfilTemplate, sessaoDeUsuario, botaoReconhecer, administradorHelper, recursosHumanosHelper) {
 	'use strict';
 
 	var _self = {};
@@ -24,9 +24,6 @@
 				template.exibir(perfilTemplate, reconhecimentosDoColaborador);
 
 				administradorHelper.mostrarConteudoSeForAdministrador('div[data-js="switch-adm"]');
-				administradorHelper.mostrarConteudoSeForAdministrador('div[data-js="menu__administrador"]');
-				recursosHumanosHelper.mostrarConteudoSeForRecursosHumanos('div[data-js="menu__recursos_humanos')
-
 				switchAdministrador(reconhecimentosDoColaborador, colaboradorId);
 
 				$("#conteudo").on(
@@ -48,23 +45,31 @@
 					$('#conteudo').on('click', 'button[data-js="botao_fechar_cropper"]', fecharModalCrop);
 					$('#conteudo').on('change', 'input[data-js="input__arquivos"]', readURL);
 
+					if (sessaoDeUsuario.recursos_humanos) {
+						recursosHumanosHelper.mostrarConteudoSeForRecursosHumanos('div[data-js="menu__recursos_humanos')
+					}
+					else {
+						$('div[data-js="menu__recursos_humanos"]').hide();
+					}
+
 					if (sessaoDeUsuario.administrador) {
 						administradorHelper.mostrarConteudoSeForAdministrador('div[data-js="menu__administrador"]');
 						configurarMenuAdministrador();
 						obterNotificacaoDoAdministrador();
 					}
-					else{
+					else {
 						$('div[data-js="menu__administrador"]').hide();
 					}
 
 				} else {
 					$('div[data-js="menu__administrador"]').hide();
+					$('div[data-js="menu__recursos_humanos"]').hide();
 					$('div[data-js="apreciacao"]').show();
 					$('div[data-js="foto"]').removeClass("alterar-foto");
 				}
 
-			$('#conteudo')
-				.on('click', 'button[data-js="exibir-reconhecimentos"]', exibirReconhecimentos);
+				$('#conteudo')
+					.on('click', 'button[data-js="exibir-reconhecimentos"]', exibirReconhecimentos);
 
 				if (sessaoDeUsuario.id === colaboradorId) {
 					$('div[data-js="switch-adm"]').hide();
@@ -86,38 +91,38 @@
 	};
 
 	function rankingAdmin() {
-		require(['roteador'], function(roteador) {
-		  roteador.navegarPara('/rankingAdmin');
+		require(['roteador'], function (roteador) {
+			roteador.navegarPara('/rankingAdmin');
 		});
 	}
 
 	function gerenciadorDeCiclos() {
-		require(['roteador'], function(roteador) {
-		  roteador.navegarPara('/gerenciadorDeCiclos');
+		require(['roteador'], function (roteador) {
+			roteador.navegarPara('/gerenciadorDeCiclos');
 		});
 	}
 
 	function logAdministrador() {
-		require(['roteador'], function(roteador) {
-		  roteador.navegarPara('/logAdministrador');
+		require(['roteador'], function (roteador) {
+			roteador.navegarPara('/logAdministrador');
 		});
 	}
 	function casdastroRH() {
-		require(['roteador'], function(roteador) {
-		  roteador.navegarPara('/cadastroDeColaboradores');
+		require(['roteador'], function (roteador) {
+			roteador.navegarPara('/cadastroDeColaboradores');
 		});
 	}
 
-	function configurarMenuAdministrador(){
+	function configurarMenuAdministrador() {
 		$("#conteudo")
 			.on('click', 'a[data-js="ranking-admin"]', rankingAdmin)
 			.on('click', 'a[data-js="configuracao-ciclo"]', gerenciadorDeCiclos)
 			.on('click', 'a[data-js="logs-administrador"]', logAdministrador);
 	}
-	
-	function configurarMenuRecursosHumanos(){
+
+	function configurarMenuRecursosHumanos() {
 		$("#conteudo")
-			.on('click', 'a[data-js="cadastro-recursos_humanos"]', casdastroRH )
+			.on('click', 'a[data-js="cadastro-recursos_humanos"]', casdastroRH)
 	}
 
 	function abrirModalCrop() {
@@ -128,16 +133,16 @@
 		document.getElementById('caixa-modal').style.display = "none";
 	}
 
-	function obterStatusDeNotificacao(){
+	function obterStatusDeNotificacao() {
 		let statusNotificacao = localStorage.getItem('notificacao');
 		return JSON.parse(statusNotificacao);
 	}
 
-	function obterNotificacaoDoAdministrador(){
-		if(obterStatusDeNotificacao()){
-			$.getJSON("/reconhecimentos/obter_notificacoes_administrador/", function(notificacao){
-				require(["growl"], function (growl){
-					if (notificacao.mensagem != " "){
+	function obterNotificacaoDoAdministrador() {
+		if (obterStatusDeNotificacao()) {
+			$.getJSON("/reconhecimentos/obter_notificacoes_administrador/", function (notificacao) {
+				require(["growl"], function (growl) {
+					if (notificacao.mensagem != " ") {
 						growl.deErro().exibir(notificacao.mensagem);
 					}
 				})
@@ -240,7 +245,7 @@
 				});
 			});
 
-			fecharModalCrop();
+		fecharModalCrop();
 	}
 
 	function readURL() {
