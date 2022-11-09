@@ -89,9 +89,6 @@ def obter_colaboradores(requisicao):
 
 @has_role_decorator('recursos_humanos')
 def inserir_colaboradores(requisicao):
-	print("----------------------------------------------")
-	print(requisicao.POST)
-	print("----------------------------------------------")
 	colaboradores = json.loads(requisicao.body)['colaboradores']
 
 	retorno_da_inclusao = \

@@ -34,7 +34,8 @@ define([
 		var dados = JSON.stringify({ 'colaboradores': colaboradores })
 
 		$.post("/login/colaborador/", dados,
-			function () {
+			function (retorno) {
+				console.log((retorno.contagem_de_inclusoes));
 				growl.deSucesso().exibir("Colaborador cadastrado com sucesso.");
 			}).fail(function () {
 				growl.deErro().exibir("Colaborador nao cadastrado.");
