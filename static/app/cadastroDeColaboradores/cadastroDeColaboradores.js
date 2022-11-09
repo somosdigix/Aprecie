@@ -18,28 +18,41 @@ define([
 			salvarColaborador();
 		});
 		$('#cpf').inputmask('999.999.999-99');
-		// $('#conteudo')
-		// 	.on('click', 'button[data-js="SalvarColaborador"]', validaFormulario);
 	};
 
 	function salvarColaborador() {
-		var colaboradores = [
-			{
-				cpf: $('#cpf').val(),
-				nome: $('#nomeColaborador').val(),
-				data_de_nascimento: $('#dataDeNascimento').val(),
-				usuario_id_do_chat: $('#idDiscord').val(),
-			}
-		]
-		var dados = JSON.stringify({ 'colaboradores': colaboradores })
+		if (validaFormulario()) {
+			var colaboradores = [
+				{
+					cpf: $('#cpf').val(),
+					nome: $('#nomeColaborador').val(),
+					data_de_nascimento: $('#dataDeNascimento').val(),
+					usuario_id_do_chat: $('#idDiscord').val(),
+				}
+			]
+			var dados = JSON.stringify({ 'colaboradores': colaboradores })
 
-		$.post("/login/colaborador/", dados,
-			function (retorno) {
-				console.log((retorno.contagem_de_inclusoes));
-				growl.deSucesso().exibir("Colaborador cadastrado com sucesso.");
-			}).fail(function () {
-				growl.deErro().exibir("Colaborador nao cadastrado.");
-			});
+			$.post("/login/colaborador/", dados,
+				function (retorno) {
+
+					if (retorno.contagem_de_inclusoes == 0 && retorno.cpfs_invalidos.length == 0) {
+						mensagem = "Colaborador já existe";
+						growl.deErro().exibir(mensagem);
+
+					} else if (retorno.contagem_de_inclusoes == 0 && retorno.cpfs_invalidos.length == 1) {
+						mensagem = "CPF inválido"
+						growl.deErro().exibir(mensagem);
+					}
+					else {
+						var mensagem = "Colaborador cadastrado com sucesso.";
+						growl.deSucesso().exibir(mensagem);
+					}
+
+				}).fail(function () {
+					growl.deErro().exibir("Colaborador não cadastrado.");
+				});
+		}
+
 
 	}
 
@@ -87,8 +100,9 @@ define([
 	}
 
 	function validaFormulario() {
-		validardataDeNascimento();
-		validaCPF();
+		var data_de_nascimento = validardataDeNascimento();
+		var cpf = validaCPF();
+		return data_de_nascimento && cpf;
 	}
 
 	function validaCPF() {
