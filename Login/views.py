@@ -16,6 +16,7 @@ from rolepermissions.roles import assign_role, remove_role
 from rolepermissions.decorators import has_role_decorator
 from datetime import date
 from rolepermissions.checkers import has_role
+import requests
 
 
 
@@ -174,3 +175,14 @@ def obtem_historico(requisicao):
 			historico = historico.filter(data_modificacao__lte=data_fim)
 	
 	return historico
+
+def validar_usuario_id_do_chat(requisicao, usuario_id_do_chat):
+	url = 'https://discord.com/api/v10/users/' + usuario_id_do_chat
+	token = ''
+	headers = {'Authorization': 'Bot ' + token}
+	resposta = requests.get(url, headers=headers)
+	respostaFormatada = json.loads(resposta.text)
+	if resposta.status_code == 200:
+		return JsonResponse({'status': 200,'username': respostaFormatada['username']})
+	else:
+		return JsonResponse({'status': 404, 'message': respostaFormatada['message']})

@@ -12,7 +12,7 @@ define([
 	self.inicializar = function (sandbox) {
 		_sandbox = sandbox;
 		_sandbox.exibirTemplateEm('#conteudo', cadastroTemplate);
-		// $('#conteudo').on('focusout', 'input[id="idDiscord"]', validarUserIdDiscord);
+		$('#conteudo').on('focusout', 'input[id="idDiscord"]', validarUserIdDiscord);
 		$("#salvarColaborador").click(function (event) {
 			event.preventDefault();
 			salvarColaborador();
@@ -36,11 +36,11 @@ define([
 				function (retorno) {
 
 					if (retorno.contagem_de_inclusoes == 0 && retorno.cpfs_invalidos.length == 0) {
-						mensagem = "Colaborador já existe";
+						mensagem = "Colaborador já existe.";
 						growl.deErro().exibir(mensagem);
 
 					} else if (retorno.contagem_de_inclusoes == 0 && retorno.cpfs_invalidos.length == 1) {
-						mensagem = "CPF inválido"
+						mensagem = "CPF inválido."
 						growl.deErro().exibir(mensagem);
 					}
 					else {
@@ -53,29 +53,28 @@ define([
 				});
 		}
 
-
 	}
 
 	function validarUserIdDiscord() {
 		var userIdDiscord = $('#idDiscord').val();
-		var chaveDiscord = ''
+		var mensagem = $('#alert-discord');
 		$.ajax({
-			beforeSend: function (request) {
-				request.setRequestHeader("Authorization", 'Bot ' + chaveDiscord);
-			},
+			type: "GET",
 			dataType: "json",
-			url: 'https://discord.com/api/v10/users/' + userIdDiscord,
+			url: '/login/usario_discord/' + userIdDiscord,
 			success: function (data) {
-				// Se deu certo
-			},
-			statusCode: {
-				404: function () {
-					// Se deu errado
+				if(data.status == 200) {
+					mensagem.html('Esse id pertence ao usuário <strong>' + data.username + '</strong>.');
+					mensagem.removeClass("erro")
+					mensagem.addClass("sucesso")
+				} else {
+					mensagem.html("Esse id nao pertence a um usuário do discord.");
+					mensagem.removeClass("sucesso")
+					mensagem.addClass("erro")
 				}
-			}
+			},
 		});
 	}
-
 
 	function validardataDeNascimento() {
 		var data = new Date($("#dataDeNascimento").val().replace(/-/g, '/'));
