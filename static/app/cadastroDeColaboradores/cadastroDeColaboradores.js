@@ -52,7 +52,6 @@ define([
 					growl.deErro().exibir("Colaborador não cadastrado.");
 				});
 		}
-
 	}
 
 	function validarUserIdDiscord() {
