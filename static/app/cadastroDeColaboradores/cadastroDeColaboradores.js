@@ -1,9 +1,10 @@
 define([
 	"jquery",
 	'text!app/cadastroDeColaboradores/formularioTemplate.html',
-	"app/models/colaboradorViewModel",
-	'growl'
-], function ($, cadastroTemplate, ColaboradorViewModel, growl) {
+	'app/helpers/recursosHumanosHelper',
+	"roteador",
+	"growl"
+], function ($, cadastroTemplate, recursosHumanosHelper, roteador, growl) {
 	'use strict';
 
 	var self = {};
@@ -11,54 +12,88 @@ define([
 
 	self.inicializar = function (sandbox) {
 		_sandbox = sandbox;
-		_sandbox.exibirTemplateEm('#conteudo', cadastroTemplate);
-		// $('#conteudo').on('focusout', 'input[id="idDiscord"]', validarUserIdDiscord);
-		$("#salvarColaborador").click(function (event) {
-			event.preventDefault();
-			salvarColaborador();
-		});
-		$('#cpf').inputmask('999.999.999-99');
-		// $('#conteudo')
-		// 	.on('click', 'button[data-js="SalvarColaborador"]', validaFormulario);
+		if (recursosHumanosHelper.ehRecursosHumanos()) {
+			_sandbox.exibirTemplateEm('#conteudo', cadastroTemplate);
+			$('#conteudo').on('focusout','keyup', 'input[id="idDiscord"]', validarUserIdDiscord);
+			$("#conteudo").on("focusout", 'input[id="cpf"]', validaCPF);
+			$("#conteudo").on("focusout", 'input[id="dataDeNascimento"]', validardataDeNascimento);
+			$("#salvarColaborador").click(function (event) {
+				event.preventDefault();
+				salvarColaborador();
+			});
+			$('#cpf').inputmask('999.999.999-99');
+		} else {
+			roteador.navegarPara('/paginaInicial');
+		}
 	};
 
 	function salvarColaborador() {
-		let colaborador = new ColaboradorViewModel();
-		let colaboradores = new Array()
-		colaboradores.push(colaborador)
-		console.log(colaboradores);
-		let data = {
-			"colaboradores": colaboradores,
-		}
+		if (validaFormulario()) {
+			var colaboradores = [
+				{
+					cpf: $('#cpf').val(),
+					nome: $('#nomeColaborador').val(),
+					data_de_nascimento: $('#dataDeNascimento').val(),
+					usuario_id_do_chat: $('#idDiscord').val(),
+				}
+			]
+			var dados = JSON.stringify({ 'colaboradores': colaboradores })
 
-		$.post("/login/colaborador/", data, function () {
-			growl.deSucesso().exibir("Colaborador cadastrado com sucesso.");
-		}).fail(function () {
-			growl.deErro().exibir("Colaborador nao cadastrado.");
-		});
+			$.post("/login/colaborador/", dados,
+				function (retorno) {
 
-	}
+					if (retorno.contagem_de_inclusoes == 0 && retorno.cpfs_invalidos.length == 0) {
+						mensagem = "Colaborador já existe.";
+						growl.deErro().exibir(mensagem);
+
+					} else if (retorno.contagem_de_inclusoes == 0 && retorno.cpfs_invalidos.length == 1) {
+						mensagem = "CPF inválido."
+						growl.deErro().exibir(mensagem);
+					}
+					else {
+						var mensagem = "Colaborador cadastrado com sucesso.";
+						growl.deSucesso().exibir(mensagem);
+						
+							var frm = document.getElementById("formularioCadastro");
+							
+							frm.reset();  
+							setTimeout(() => {
+								location.reload();
+							  }, 3000);
+					}
+
+	
+				}).fail(function () {
+					growl.deErro().exibir("Colaborador não cadastrado.");
+				});
+			}
+	};
 
 	function validarUserIdDiscord() {
 		var userIdDiscord = $('#idDiscord').val();
-		var chaveDiscord = ''
+		var mensagem = $('#alert-discord');
 		$.ajax({
-			beforeSend: function (request) {
-				request.setRequestHeader("Authorization", 'Bot ' + chaveDiscord);
-			},
+			type: "GET",
 			dataType: "json",
-			url: 'https://discord.com/api/v10/users/' + userIdDiscord,
+			url: '/login/usario_discord/' + userIdDiscord,
 			success: function (data) {
-				// Se deu certo
-			},
-			statusCode: {
-				404: function () {
-					// Se deu errado
+				if (data.status == 200) {
+					mensagem.html('Esse id pertence ao usuário <strong>' + data.username + '</strong>.');
+					mensagem.removeClass("erro")
+					mensagem.addClass("sucesso")
+				} else {
+					mensagem.html("Esse id nao pertence a um usuário do discord.");
+					mensagem.removeClass("sucesso")
+					mensagem.addClass("erro")
 				}
 			}
 		});
 	}
 
+	self.finalizar = function () {
+		_sandbox.limpar('#conteudo');
+		_sandbox.removerEvento('#conteudo');
+	};
 
 	function validardataDeNascimento() {
 		var data = new Date($("#dataDeNascimento").val().replace(/-/g, '/'));
@@ -83,8 +118,9 @@ define([
 	}
 
 	function validaFormulario() {
-		validardataDeNascimento();
-		validaCPF();
+		var data_de_nascimento = validardataDeNascimento();
+		var cpf = validaCPF();
+		return data_de_nascimento && cpf;
 	}
 
 	function validaCPF() {
@@ -141,11 +177,6 @@ define([
 			return false;
 		return true;
 	}
-
-	self.finalizar = function () {
-		_sandbox.limpar('#conteudo');
-		_sandbox.removerEvento('#conteudo');
-	};
-
 	return self;
-})
+
+});

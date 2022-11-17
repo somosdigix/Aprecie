@@ -1,7 +1,5 @@
-
-
 <div class="bloco-cadastroUsuario">
-	<form class="formularioCadastro" method="post">
+	<form id="formularioCadastro" class="formularioCadastro" method="post">
 		<h1 class="titulo-cadastro">Cadastro de Colaboradores</h1>
 		<div class="nome-colaborador campo">
 			<label class="label" for="">Nome Completo:</label>
@@ -23,6 +21,7 @@
 		<div class="id-discord campo">
 			<label class="label" for="">Id no Discord:</label>
 			<input id="idDiscord" type="text" required>
+			<span id="alert-discord" class="alerta"></span>
 		</div>
 
 		<button data-js="SalvarColaborador" id="salvarColaborador" type="submit"
@@ -33,20 +32,22 @@
 </div>
 
 <style>
-	.alerta{
+	.alerta {
 		color: #fff;
 		text-align: center;
 		margin: 5px;
 		padding: 5px;
-		width: 150px;
 		border-radius: 15px;
 	}
-	.sucesso{
+
+	.sucesso {
 		background-color: green;
 	}
-	.erro{
+
+	.erro {
 		background-color: red;
 	}
+
 	.campo {
 		margin: 15px;
 		display: flex;
@@ -77,7 +78,7 @@
 		flex-direction: column;
 		align-items: center;
 		justify-content: center;
-		margin-top: 150px;
+		margin-top: 50px;
 	}
 
 	.formularioCadastro {
@@ -93,5 +94,4 @@
 		font-family: "Arial";
 		color: #ffffff;
 	}
-
 </style>
