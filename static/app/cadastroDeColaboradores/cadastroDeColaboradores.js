@@ -1,7 +1,9 @@
 define([
 	"jquery",
-	'text!app/cadastroDeColaboradores/formularioTemplate.html'
-], function ($, cadastroTemplate) {
+	'text!app/cadastroDeColaboradores/formularioTemplate.html',
+	'app/helpers/recursosHumanosHelper',
+	"roteador"
+], function ($, cadastroTemplate, recursosHumanosHelper, roteador ) {
 	'use strict';
 
 	var self = {};
@@ -9,11 +11,15 @@ define([
 
 	self.inicializar = function (sandbox) {
 		_sandbox = sandbox;
-		_sandbox.exibirTemplateEm('#conteudo', cadastroTemplate);
-		$('#conteudo').on('focusout', 'input[id="idDiscord"]', validarUserIdDiscord);
-		$('#cpf').inputmask('999.999.999-99');
-		$('#conteudo')
-			.on('click', 'button[data-js="SalvarColaborador"]', validaFormulario);
+		if (recursosHumanosHelper.ehRecursosHumanos()) {
+			_sandbox.exibirTemplateEm('#conteudo', cadastroTemplate);
+			$('#conteudo').on('focusout', 'input[id="idDiscord"]', validarUserIdDiscord);
+			$('#cpf').inputmask('999.999.999-99');
+			$('#conteudo')
+				.on('click', 'button[data-js="SalvarColaborador"]', validaFormulario);
+		} else {
+			roteador.navegarPara('/paginaInicial');
+		}
 	};
 
 	function validarUserIdDiscord() {
