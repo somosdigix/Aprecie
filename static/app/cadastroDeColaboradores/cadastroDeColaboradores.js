@@ -12,51 +12,82 @@ define([
 	self.inicializar = function (sandbox) {
 		_sandbox = sandbox;
 		_sandbox.exibirTemplateEm('#conteudo', cadastroTemplate);
-		// $('#conteudo').on('focusout', 'input[id="idDiscord"]', validarUserIdDiscord);
+		$('#conteudo').on('keydown', 'input[id="idDiscord"]', validarUserIdDiscord);
 		$("#salvarColaborador").click(function (event) {
 			event.preventDefault();
 			salvarColaborador();
 		});
 		$('#cpf').inputmask('999.999.999-99');
-		// $('#conteudo')
-		// 	.on('click', 'button[data-js="SalvarColaborador"]', validaFormulario);
+		
 	};
 
 	function salvarColaborador() {
-		let colaborador = new ColaboradorViewModel();
-		let colaboradores = new Array()
-		colaboradores.push(colaborador)
-		console.log(colaboradores);
-		let data = {
-			"colaboradores": colaboradores,
-		}
+		if (validaFormulario()) {
+			var colaboradores = [
+				{
+					cpf: $('#cpf').val(),
+					nome: $('#nomeColaborador').val(),
+					data_de_nascimento: $('#dataDeNascimento').val(),
+					usuario_id_do_chat: $('#idDiscord').val(),
+				}
+			]
+			var dados = JSON.stringify({ 'colaboradores': colaboradores })
 
-		$.post("/login/colaborador/", data, function () {
-			growl.deSucesso().exibir("Colaborador cadastrado com sucesso.");
-		}).fail(function () {
-			growl.deErro().exibir("Colaborador nao cadastrado.");
-		});
+			$.post("/login/colaborador/", dados,
+				function (retorno) {
+
+					if (retorno.contagem_de_inclusoes == 0 && retorno.cpfs_invalidos.length == 0) {
+						mensagem = "Colaborador já existe.";
+						growl.deErro().exibir(mensagem);
+
+					} else if (retorno.contagem_de_inclusoes == 0 && retorno.cpfs_invalidos.length == 1) {
+						mensagem = "CPF inválido."
+						growl.deErro().exibir(mensagem);
+					}
+					else {
+						var mensagem = "Colaborador cadastrado com sucesso.";
+						growl.deSucesso().exibir(mensagem);
+					}
+
+				}).fail(function () {
+					growl.deErro().exibir("Colaborador não cadastrado.");
+				});
+		}
 
 	}
 
+
 	function validarUserIdDiscord() {
 		var userIdDiscord = $('#idDiscord').val();
-		var chaveDiscord = ''
+		console.log(userIdDiscord);
+		var mensagem = $('#alert-discord');
+		
+		
+		if(userIdDiscord.length >= 16){
 		$.ajax({
-			beforeSend: function (request) {
-				request.setRequestHeader("Authorization", 'Bot ' + chaveDiscord);
-			},
+			type: "GET",
 			dataType: "json",
-			url: 'https://discord.com/api/v10/users/' + userIdDiscord,
+			url: '/login/usario_discord/' + userIdDiscord,
 			success: function (data) {
-				// Se deu certo
-			},
-			statusCode: {
-				404: function () {
-					// Se deu errado
+			mensagem.removeClass("erro")
+				if(data.status == 200 ) {
+					mensagem.html('Esse id pertence ao usuário <strong>' + data.username + '</strong>.');
+					mensagem.removeClass("erro")
+					mensagem.addClass("sucesso")
+				} else {
+					mensagem.html("Esse id nao pertence a um usuário do discord.");
+					console.log("entrei");
+					mensagem.removeClass("sucesso")
+					mensagem.addClass("erro")
 				}
 			}
-		});
+		})
+	} else{
+		mensagem.removeClass("erro")
+		mensagem.html('A quantidade mínimo de número deve ser 17!')
+		mensagem.removeClass("sucesso")
+		mensagem.addClass("erro")
+	}
 	}
 
 
@@ -83,8 +114,9 @@ define([
 	}
 
 	function validaFormulario() {
-		validardataDeNascimento();
-		validaCPF();
+		var data_de_nascimento = validardataDeNascimento();
+		var cpf = validaCPF();
+		return data_de_nascimento && cpf;
 	}
 
 	function validaCPF() {
