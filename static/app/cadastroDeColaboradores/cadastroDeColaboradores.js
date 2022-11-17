@@ -1,9 +1,9 @@
 define([
 	"jquery",
 	'text!app/cadastroDeColaboradores/formularioTemplate.html',
-	"app/models/colaboradorViewModel",
-	'growl'
-], function ($, cadastroTemplate, ColaboradorViewModel, growl) {
+	'app/helpers/recursosHumanosHelper',
+	"roteador"
+], function ($, cadastroTemplate, recursosHumanosHelper, roteador ) {
 	'use strict';
 
 	var self = {};
