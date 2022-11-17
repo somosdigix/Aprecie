@@ -53,16 +53,15 @@ define([
 					else {
 						var mensagem = "Colaborador cadastrado com sucesso.";
 						growl.deSucesso().exibir(mensagem);
-						
-							var frm = document.getElementById("formularioCadastro");
-							
-							frm.reset();  
-							setTimeout(() => {
-								location.reload();
-							  }, 3000);
+
+						var frm = document.getElementById("formularioCadastro");
+
+						frm.reset();
+						setTimeout(() => {
+							location.reload();
+						}, 3000);
 					}
 
-	
 				}).fail(function () {
 					growl.deErro().exibir("Colaborador não cadastrado.");
 				});
@@ -80,15 +79,17 @@ define([
 			success: function (data) {
 				if (data.status == 200) {
 					mensagem.html('Esse id pertence ao usuário <strong>' + data.username + '</strong>.');
-					mensagem.removeClass("erro")
-					mensagem.addClass("sucesso")
+					mensagem.removeClass("erro");
+					mensagem.addClass("sucesso");
 				} else {
 					mensagem.html("Esse id nao pertence a um usuário do discord.");
-					mensagem.removeClass("sucesso")
-					mensagem.addClass("erro")
+					mensagem.removeClass("sucesso");
+					mensagem.addClass("erro");
 				}
 			}
 		});
+
+		return mensagem.hasClass("sucesso");
 	}
 
 	self.finalizar = function () {
@@ -121,7 +122,8 @@ define([
 	function validaFormulario() {
 		var data_de_nascimento = validardataDeNascimento();
 		var cpf = validaCPF();
-		return data_de_nascimento && cpf;
+		var discord = validarUserIdDiscord();
+		return data_de_nascimento && cpf && discord;
 	}
 
 	function validaCPF() {
