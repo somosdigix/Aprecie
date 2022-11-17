@@ -1,9 +1,9 @@
 define([
 	"jquery",
 	'text!app/cadastroDeColaboradores/formularioTemplate.html',
-	"app/models/colaboradorViewModel",
-	'growl'
-], function ($, cadastroTemplate, ColaboradorViewModel, growl) {
+	'app/helpers/recursosHumanosHelper',
+	"roteador"
+], function ($, cadastroTemplate, recursosHumanosHelper, roteador ) {
 	'use strict';
 
 	var self = {};
@@ -13,6 +13,8 @@ define([
 		_sandbox = sandbox;
 		_sandbox.exibirTemplateEm('#conteudo', cadastroTemplate);
 		$('#conteudo').on('focusout', 'input[id="idDiscord"]', validarUserIdDiscord);
+		$("#conteudo").on("focusout", 'input[id="cpf"]', validaCPF);
+		$("#conteudo").on("focusout", 'input[id="dataDeNascimento"]', validardataDeNascimento);
 		$("#salvarColaborador").click(function (event) {
 			event.preventDefault();
 			salvarColaborador();
@@ -71,7 +73,7 @@ define([
 			dataType: "json",
 			url: '/login/usario_discord/' + userIdDiscord,
 			success: function (data) {
-				if(data.status == 200) {
+				if (data.status == 200) {
 					mensagem.html('Esse id pertence ao usuário <strong>' + data.username + '</strong>.');
 					mensagem.removeClass("erro")
 					mensagem.addClass("sucesso")
@@ -155,7 +157,7 @@ define([
 			rev = 0;
 		if (rev != parseInt(cpf.charAt(9)))
 			return false;
-		// Valida 2o digito	
+		// Valida 2o digito
 		add = 0;
 		for (var i = 0; i < 10; i++)
 			add += parseInt(cpf.charAt(i)) * (11 - i);
