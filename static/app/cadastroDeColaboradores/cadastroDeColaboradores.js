@@ -1,9 +1,10 @@
 define([
 	"jquery",
 	'text!app/cadastroDeColaboradores/formularioTemplate.html',
-	"app/models/colaboradorViewModel",
-	'growl'
-], function ($, cadastroTemplate, ColaboradorViewModel, growl) {
+	'app/helpers/recursosHumanosHelper',
+	"roteador",
+	"growl"
+], function ($, cadastroTemplate, recursosHumanosHelper, roteador, growl) {
 	'use strict';
 
 	var self = {};
@@ -11,14 +12,19 @@ define([
 
 	self.inicializar = function (sandbox) {
 		_sandbox = sandbox;
-		_sandbox.exibirTemplateEm('#conteudo', cadastroTemplate);
-		$('#conteudo').on('keydown', 'input[id="idDiscord"]', validarUserIdDiscord);
-		$("#salvarColaborador").click(function (event) {
-			event.preventDefault();
-			salvarColaborador();
-		});
-		$('#cpf').inputmask('999.999.999-99');
-		
+		if (recursosHumanosHelper.ehRecursosHumanos()) {
+			_sandbox.exibirTemplateEm('#conteudo', cadastroTemplate);
+			$('#conteudo').on('keyup', 'input[id="idDiscord"]', validarUserIdDiscord);
+			$("#conteudo").on("focusout", 'input[id="cpf"]', validaCPF);
+			$("#conteudo").on("focusout", 'input[id="dataDeNascimento"]', validardataDeNascimento);
+			$("#salvarColaborador").click(function (event) {
+				event.preventDefault();
+				salvarColaborador();
+			});
+			$('#cpf').inputmask('999.999.999-99');
+		} else {
+			roteador.navegarPara('/paginaInicial');
+		}
 	};
 
 	function salvarColaborador() {
@@ -47,14 +53,21 @@ define([
 					else {
 						var mensagem = "Colaborador cadastrado com sucesso.";
 						growl.deSucesso().exibir(mensagem);
+						
+							var frm = document.getElementById("formularioCadastro");
+							
+							frm.reset();  
+							setTimeout(() => {
+								location.reload();
+							  }, 3000);
 					}
 
+	
 				}).fail(function () {
 					growl.deErro().exibir("Colaborador não cadastrado.");
 				});
-		}
-
-	}
+			}
+	};
 
 
 	function validarUserIdDiscord() {
@@ -63,7 +76,7 @@ define([
 		var mensagem = $('#alert-discord');
 		
 		
-		if(userIdDiscord.length >= 16){
+		if(userIdDiscord.length >= 17){
 		$.ajax({
 			type: "GET",
 			dataType: "json",
@@ -84,12 +97,16 @@ define([
 		})
 	} else{
 		mensagem.removeClass("erro")
-		mensagem.html('A quantidade mínimo de número deve ser 17!')
+		mensagem.html('A quantidade mínima de número deve ser 17!')
 		mensagem.removeClass("sucesso")
 		mensagem.addClass("erro")
 	}
 	}
 
+	self.finalizar = function () {
+		_sandbox.limpar('#conteudo');
+		_sandbox.removerEvento('#conteudo');
+	};
 
 	function validardataDeNascimento() {
 		var data = new Date($("#dataDeNascimento").val().replace(/-/g, '/'));
@@ -173,11 +190,6 @@ define([
 			return false;
 		return true;
 	}
-
-	self.finalizar = function () {
-		_sandbox.limpar('#conteudo');
-		_sandbox.removerEvento('#conteudo');
-	};
-
 	return self;
-})
+
+});
