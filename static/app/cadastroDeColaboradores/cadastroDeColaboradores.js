@@ -46,8 +46,16 @@ define([
 					else {
 						var mensagem = "Colaborador cadastrado com sucesso.";
 						growl.deSucesso().exibir(mensagem);
+						
+							var frm = document.getElementById("formularioCadastro");
+							
+							frm.reset();  
+							setTimeout(() => {
+								location.reload();
+							  }, 3000);
 					}
 
+	
 				}).fail(function () {
 					growl.deErro().exibir("Colaborador não cadastrado.");
 				});
