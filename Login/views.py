@@ -178,7 +178,7 @@ def obtem_historico(requisicao):
 
 def validar_usuario_id_do_chat(requisicao, usuario_id_do_chat):
 	url = 'https://discord.com/api/v10/users/' + usuario_id_do_chat
-	token = 'MTAzODEzNzMzODEyMDkwNDc2NA.GtdevI.LRLjcESywn3n9zjLl7j9sAzcv7_ZsWYNomUFZI'
+	token = ''
 	headers = {'Authorization': 'Bot ' + token}
 	resposta = requests.get(url, headers=headers)
 	respostaFormatada = json.loads(resposta.text)
