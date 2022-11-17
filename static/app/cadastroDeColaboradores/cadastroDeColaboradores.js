@@ -10,17 +10,17 @@ define([
 	var _sandbox;
 
 	self.inicializar = function (sandbox) {
-		_sandbox = sandbox;
-		_sandbox.exibirTemplateEm('#conteudo', cadastroTemplate);
-		$('#conteudo').on('focusout', 'input[id="idDiscord"]', validarUserIdDiscord);
-		$("#conteudo").on("focusout", 'input[id="cpf"]', validaCPF);
-		$("#conteudo").on("focusout", 'input[id="dataDeNascimento"]', validardataDeNascimento);
-		$("#salvarColaborador").click(function (event) {
-			event.preventDefault();
-			salvarColaborador();
-		});
-		$('#cpf').inputmask('999.999.999-99');
-	};
+        _sandbox = sandbox;
+        if (recursosHumanosHelper.ehRecursosHumanos()) {
+            _sandbox.exibirTemplateEm('#conteudo', cadastroTemplate);
+            $('#conteudo').on('focusout', 'input[id="idDiscord"]', validarUserIdDiscord);
+            $('#cpf').inputmask('999.999.999-99');
+            $('#conteudo')
+                .on('click', 'button[data-js="SalvarColaborador"]', validaFormulario);
+        } else {
+            roteador.navegarPara('/paginaInicial');
+        }
+    };
 
 	function salvarColaborador() {
 		if (validaFormulario()) {
