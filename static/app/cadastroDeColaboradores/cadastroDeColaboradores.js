@@ -14,7 +14,7 @@ define([
 		_sandbox = sandbox;
 		if (recursosHumanosHelper.ehRecursosHumanos()) {
 			_sandbox.exibirTemplateEm('#conteudo', cadastroTemplate);
-			$('#conteudo').on('focusout', 'input[id="idDiscord"]', validarUserIdDiscord);
+			$('#conteudo').on('focusout','keyup', 'input[id="idDiscord"]', validarUserIdDiscord);
 			$("#conteudo").on("focusout", 'input[id="cpf"]', validaCPF);
 			$("#conteudo").on("focusout", 'input[id="dataDeNascimento"]', validardataDeNascimento);
 			$("#salvarColaborador").click(function (event) {
