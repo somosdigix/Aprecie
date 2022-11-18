@@ -14,7 +14,7 @@ define([
 		_sandbox = sandbox;
 		if (recursosHumanosHelper.ehRecursosHumanos()) {
 			_sandbox.exibirTemplateEm('#conteudo', cadastroTemplate);
-			$('#conteudo').on('focusout','keyup', 'input[id="idDiscord"]', validarUserIdDiscord);
+			$('#conteudo').on('keyup', 'input[id="idDiscord"]', validarUserIdDiscord);
 			$("#conteudo").on("focusout", 'input[id="cpf"]', validaCPF);
 			$("#conteudo").on("focusout", 'input[id="dataDeNascimento"]', validardataDeNascimento);
 			$("#salvarColaborador").click(function (event) {
@@ -69,27 +69,37 @@ define([
 
 	}
 
+
 	function validarUserIdDiscord() {
 		var userIdDiscord = $('#idDiscord').val();
 		var mensagem = $('#alert-discord');
-		$.ajax({
-			type: "GET",
-			dataType: "json",
-			url: '/login/usario_discord/' + userIdDiscord,
-			success: function (data) {
-				if (data.status == 200) {
-					mensagem.html('Esse id pertence ao usuário <strong>' + data.username + '</strong>.');
-					mensagem.removeClass("erro");
-					mensagem.addClass("sucesso");
-				} else {
-					mensagem.html("Esse id nao pertence a um usuário do discord.");
-					mensagem.removeClass("sucesso");
-					mensagem.addClass("erro");
-				}
-			}
-		});
 
-		return mensagem.hasClass("sucesso");
+		if (userIdDiscord.length >= 17) {
+			$.ajax({
+				type: "GET",
+				dataType: "json",
+				url: '/login/usario_discord/' + userIdDiscord,
+				success: function (data) {
+					mensagem.removeClass("erro")
+					if (data.status == 200) {
+						mensagem.html('Esse id pertence ao usuário <strong>' + data.username + '</strong>.');
+						mensagem.removeClass("erro");
+						mensagem.addClass("sucesso");
+					} else {
+						mensagem.html("Esse id nao pertence a um usuário do discord.");
+						mensagem.removeClass("sucesso")
+						mensagem.addClass("erro")
+					}
+				}
+			})
+		} else {
+			mensagem.removeClass("erro")
+			mensagem.html('A quantidade mínima de números deve ser 17!')
+			mensagem.removeClass("sucesso")
+			mensagem.addClass("erro")
+		}
+
+		return mensagem.hasClass("sucesso");;
 	}
 
 	self.finalizar = function () {
