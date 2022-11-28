@@ -20,6 +20,8 @@
 			'/gerenciadorDeCiclos': [middlewareBotaoReconhecer, middlewareDeAutenticacao, middlewareDeAtualizacaoComGoogleAnalytics, middlewareDeToolbar, middlewareDeTransicaoDeTela, limparTela, gerenciadorDeCiclos],
 			'/logAdministrador': [middlewareBotaoReconhecer, middlewareDeAutenticacao, middlewareDeAtualizacaoComGoogleAnalytics, middlewareDeToolbar, middlewareDeTransicaoDeTela, limparTela, logAdministrador],
 			'/cadastroDeColaboradores': [middlewareBotaoReconhecer, middlewareDeAutenticacao, middlewareDeAtualizacaoComGoogleAnalytics, middlewareDeToolbar, middlewareDeTransicaoDeTela, limparTela, cadastroDeColaboradores],
+			'/listagemColaboradoresRh': [middlewareBotaoReconhecer, middlewareDeAutenticacao, middlewareDeAtualizacaoComGoogleAnalytics, middlewareDeToolbar, middlewareDeTransicaoDeTela, limparTela, listagemColaboradoresRh],
+			
 
 		};
 
@@ -43,6 +45,13 @@
 		
 		function cadastroDeColaboradores() {
 			require(['app/cadastroDeColaboradores/controller'], function (controller) {
+				_controllerAtivo = controller;
+				controller.exibir();
+			});
+		}
+
+		function listagemColaboradoresRh() {
+			require(['app/listagemColaboradoresRh/controller'], function (controller) {
 				_controllerAtivo = controller;
 				controller.exibir();
 			});
