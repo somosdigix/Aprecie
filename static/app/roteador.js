@@ -21,8 +21,6 @@
 			'/logAdministrador': [middlewareBotaoReconhecer, middlewareDeAutenticacao, middlewareDeAtualizacaoComGoogleAnalytics, middlewareDeToolbar, middlewareDeTransicaoDeTela, limparTela, logAdministrador],
 			'/cadastroDeColaboradores': [middlewareBotaoReconhecer, middlewareDeAutenticacao, middlewareDeAtualizacaoComGoogleAnalytics, middlewareDeToolbar, middlewareDeTransicaoDeTela, limparTela, cadastroDeColaboradores],
 			'/listagemColaboradoresRh': [middlewareBotaoReconhecer, middlewareDeAutenticacao, middlewareDeAtualizacaoComGoogleAnalytics, middlewareDeToolbar, middlewareDeTransicaoDeTela, limparTela, listagemColaboradoresRh],
-			
-
 		};
 
 		function limparTela() {
