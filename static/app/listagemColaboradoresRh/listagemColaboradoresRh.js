@@ -10,6 +10,10 @@ define([
 	self.inicializar = function (sandbox) {
 		_sandbox = sandbox;
 		_sandbox.exibirTemplateEm('#conteudo', template);
+
+		$.getJSON("/login/listagemColaboradoresRH", function (colaboradores) {
+			console.log(colaboradores);
+		})
 	};
 
 	self.finalizar = function () {

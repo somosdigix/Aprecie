@@ -6,6 +6,7 @@ urlpatterns = [
   path(r'alterar_foto/', views.alterar_foto, name="alterar_foto"),
   path(r'foto/<int:id_do_colaborador>', views.foto_do_perfil),
   path(r'obter_colaboradores/', views.obter_colaboradores, name="obter_colaboradores"),
+  path(r'listagemColaboradoresRH/', views.buscar_colaboradores_para_RH, name="buscar_colaboradores_para_RH"),
   path(r'colaborador/', views.inserir_colaboradores, name="colaborador"),
   path(r'verificar_usuario/', views.validar_usuario_logado, name="validar_usuario_logado"),
   path(r'administrador/', views.switch_administrador, name="switch_administrador"),
