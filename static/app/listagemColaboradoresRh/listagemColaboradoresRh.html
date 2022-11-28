@@ -1,0 +1,75 @@
+<div class="colaboradores">
+    <div class="cartao-colaborador">
+        <img src="" alt="" class="foto-colaborador">
+        <p class="informacao-colaborador nome-colaborador"> </p>
+        <p class="informacao-colaborador cpf-colaborador"></p>
+        <p class="informacao-colaborador dataNascimento-colaborador"></p>
+        <div class="container-discord">
+            <p class="informacao-colaborador discord-colaborador"></p>
+            <div class="tooltip">
+                <img src="../../img/icon-question.svg" alt="">
+                <span class="tooltip-text"> ID do chat do discord</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .colaboradores {
+        display: flex;
+    }
+
+    .cartao-colaborador {
+        display: flex;
+        flex-direction: column;
+        border-radius: 10px;
+        margin-left: 20px;
+        background-color: white;
+        padding: 10px;
+        margin-bottom: 10px;
+        max-width: 250px;
+    }
+
+    .foto-colaborador {
+        align-self: center;
+        border-radius: 50%;
+        width: 100px;
+        height: 100px;
+    }
+
+    .nome-colaborador {
+        font-size: 18px;
+        text-transform: uppercase;
+    }
+
+    .informacao-colaborador {
+        font-size: 14px;
+    }
+
+    .container-discord {
+        display: flex;
+        gap: 8px;
+    }
+
+    .tooltip {
+        position: relative;
+    }
+
+    .tooltip .tooltip-text {
+        visibility: hidden;
+        width: 120px;
+        background-color: black;
+        color: #fff;
+        text-align: center;
+        border-radius: 6px;
+        padding: 5px 0;
+
+        /* Position the tooltip */
+        position: absolute;
+        z-index: 1;
+    }
+
+    .tooltip:hover .tooltip-text {
+        visibility: visible;
+    }
+</style>
