@@ -22,3 +22,4 @@ class ServicoDeInclusaoDeColaboradores:
 			'contagem_de_inclusoes': contagem_de_inclusoes,
 			'cpfs_invalidos': cpfs_invalidos
 		}
+

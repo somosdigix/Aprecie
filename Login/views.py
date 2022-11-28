@@ -98,6 +98,13 @@ def inserir_colaboradores(requisicao):
 	
 	return JsonResponse(data=retorno_da_inclusao, status=200)
 
+@has_role_decorator('recursos_humanos')
+def buscar_colaboradores_para_RH (requisicao):
+	retorno_da_busca = \
+		ServicoDeBuscaDeColaboradores().buscar()
+	
+	return JsonResponse(data=retorno_da_busca, status=200)
+
 def validar_usuario_logado(requisicao):
 	id_da_sessao = int(requisicao.POST['id'])
 	sessao_administrador = converte_boolean(requisicao.POST['administrador'])
