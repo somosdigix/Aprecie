@@ -11,8 +11,8 @@ define([
 		_sandbox = sandbox;
 		_sandbox.exibirTemplateEm('#conteudo', template);
 
-		$.getJSON("/login/listagemColaboradoresRH", function (colaboradores) {
-			console.log(colaboradores);
+		$.getJSON("/login/listagemColaboradoresRh", function (colaboradores) {
+			
 		})
 	};
 

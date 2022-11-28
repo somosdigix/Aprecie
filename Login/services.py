@@ -30,6 +30,6 @@ class ServicoDeBuscaDeColaboradores:
 		colaboradores = map(transformacao, colaboradores)
 
 		return {
-			"colaboradores": colaboradores
+			'colaboradores': list(colaboradores)
 		}
 
