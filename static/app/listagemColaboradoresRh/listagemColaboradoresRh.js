@@ -9,10 +9,9 @@ define([
 
 	self.inicializar = function (sandbox) {
 		_sandbox = sandbox;
-		_sandbox.exibirTemplateEm('#conteudo', template);
-
+		
 		$.getJSON("/login/listagemColaboradoresRh", function (colaboradores) {
-			
+			_sandbox.exibirTemplateEm('#conteudo', template, colaboradores);
 		})
 	};
 

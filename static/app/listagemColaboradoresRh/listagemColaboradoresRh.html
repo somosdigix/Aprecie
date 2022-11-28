@@ -1,17 +1,23 @@
 <div class="colaboradores">
+    {{#each this.colaboradores}}
     <div class="cartao-colaborador">
-        <img src="" alt="" class="foto-colaborador">
-        <p class="informacao-colaborador nome-colaborador"> </p>
-        <p class="informacao-colaborador cpf-colaborador"></p>
-        <p class="informacao-colaborador dataNascimento-colaborador"></p>
+        {{#if this.foto}}
+        <img class="foto-colaborador" src="{{this.foto}}" alt="foto colaborador" />
+        {{else}}
+        <img class="foto-colaborador" src="../static/img/sem-foto.png" alt="foto colaborador" />
+        {{/if}}
+        <p class="informacao-colaborador nome-colaborador">{{this.nome}}</p>
+        <p class="informacao-colaborador cpf-colaborador">{{this.cpf}}</p>
+        <p class="informacao-colaborador dataNascimento-colaborador">{{this.data_de_nascimento}}</p>
         <div class="container-discord">
-            <p class="informacao-colaborador discord-colaborador"></p>
+            <p class="informacao-colaborador discord-colaborador">{{this.usuario_id_do_chat}}</p>
             <div class="tooltip">
-                <img src="../../img/icon-question.svg" alt="">
+                <img src="../static/img/question.svg" alt="icone question">
                 <span class="tooltip-text"> ID do chat do discord</span>
             </div>
         </div>
     </div>
+    {{/each}}
 </div>
 
 <style>
@@ -44,14 +50,19 @@
 
     .informacao-colaborador {
         font-size: 14px;
+        padding: 0;
+        margin: 0;
     }
 
     .container-discord {
         display: flex;
+        align-items: center;
         gap: 8px;
     }
 
     .tooltip {
+        display: flex;
+        align-items: center;
         position: relative;
     }
 
@@ -63,6 +74,7 @@
         text-align: center;
         border-radius: 6px;
         padding: 5px 0;
+        margin-left: 20px;
 
         /* Position the tooltip */
         position: absolute;
