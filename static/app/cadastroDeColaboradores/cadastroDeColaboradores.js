@@ -14,7 +14,7 @@ define([
 		_sandbox = sandbox;
 		if (recursosHumanosHelper.ehRecursosHumanos()) {
 			_sandbox.exibirTemplateEm('#conteudo', cadastroTemplate);
-			$('#conteudo').on('focusout', 'input[id="idDiscord"]', validarUserIdDiscord);
+			$('#conteudo').on('keyup', 'input[id="idDiscord"]', validarUserIdDiscord);
 			$("#conteudo").on("focusout", 'input[id="cpf"]', validaCPF);
 			$("#conteudo").on("focusout", 'input[id="dataDeNascimento"]', validardataDeNascimento);
 			$("#salvarColaborador").click(function (event) {
@@ -53,41 +53,53 @@ define([
 					else {
 						var mensagem = "Colaborador cadastrado com sucesso.";
 						growl.deSucesso().exibir(mensagem);
-						
-							var frm = document.getElementById("formularioCadastro");
-							
-							frm.reset();  
-							setTimeout(() => {
-								location.reload();
-							  }, 3000);
+
+						var frm = document.getElementById("formularioCadastro");
+
+						frm.reset();
+						setTimeout(() => {
+							location.reload();
+						}, 3000);
 					}
 
-	
 				}).fail(function () {
 					growl.deErro().exibir("Colaborador não cadastrado.");
 				});
-			}
-	};
+		}
+
+	}
+
 
 	function validarUserIdDiscord() {
 		var userIdDiscord = $('#idDiscord').val();
 		var mensagem = $('#alert-discord');
-		$.ajax({
-			type: "GET",
-			dataType: "json",
-			url: '/login/usario_discord/' + userIdDiscord,
-			success: function (data) {
-				if (data.status == 200) {
-					mensagem.html('Esse id pertence ao usuário <strong>' + data.username + '</strong>.');
+
+		if (userIdDiscord.length >= 17) {
+			$.ajax({
+				type: "GET",
+				dataType: "json",
+				url: '/login/usario_discord/' + userIdDiscord,
+				success: function (data) {
 					mensagem.removeClass("erro")
-					mensagem.addClass("sucesso")
-				} else {
-					mensagem.html("Esse id nao pertence a um usuário do discord.");
-					mensagem.removeClass("sucesso")
-					mensagem.addClass("erro")
+					if (data.status == 200) {
+						mensagem.html('Esse id pertence ao usuário <strong>' + data.username + '</strong>.');
+						mensagem.removeClass("erro");
+						mensagem.addClass("sucesso");
+					} else {
+						mensagem.html("Esse id nao pertence a um usuário do discord.");
+						mensagem.removeClass("sucesso")
+						mensagem.addClass("erro")
+					}
 				}
-			}
-		});
+			})
+		} else {
+			mensagem.removeClass("erro")
+			mensagem.html('A quantidade mínima de números deve ser 17!')
+			mensagem.removeClass("sucesso")
+			mensagem.addClass("erro")
+		}
+
+		return mensagem.hasClass("sucesso");;
 	}
 
 	self.finalizar = function () {
@@ -120,7 +132,8 @@ define([
 	function validaFormulario() {
 		var data_de_nascimento = validardataDeNascimento();
 		var cpf = validaCPF();
-		return data_de_nascimento && cpf;
+		var discord = validarUserIdDiscord();
+		return data_de_nascimento && cpf && discord;
 	}
 
 	function validaCPF() {
