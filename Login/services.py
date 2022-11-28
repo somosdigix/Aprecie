@@ -26,7 +26,7 @@ class ServicoDeInclusaoDeColaboradores:
 class ServicoDeBuscaDeColaboradores:
 	def buscar(self):
 		colaboradores = Colaborador.objects.all()
-		transformacao = lambda colaborador: { 'id': colaborador.id, 'nome': colaborador.nome_abreviado, 'data_de_nascimento': colaborador.data_de_nascimento, 'usuario_id_do_chat': colaborador.usuario_id_do_chat }
+		transformacao = lambda colaborador: { 'id': colaborador.id, 'nome': colaborador.nome_abreviado, 'data_de_nascimento': colaborador.data_de_nascimento, 'usuario_id_do_chat': colaborador.usuario_id_do_chat, 'foto': colaborador.foto }
 		colaboradores = map(transformacao, colaboradores)
 
 		return {
