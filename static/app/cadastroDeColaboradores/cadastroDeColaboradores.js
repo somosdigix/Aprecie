@@ -133,7 +133,24 @@ define([
 		var data_de_nascimento = validardataDeNascimento();
 		var cpf = validaCPF();
 		var discord = validarUserIdDiscord();
-		return data_de_nascimento && cpf && discord;
+		var nome = validarNome();
+		return data_de_nascimento && cpf && discord && nome;
+	}
+	
+	function validarNome(){
+		var mensagem = $('#alert-nome');
+		var nome = ($('#nomeColaborador').val()).trim();
+		
+		if (!nome){
+			mensagem.text("Prencha o nome");
+			mensagem.addClass("erro");
+		}
+		else{
+			mensagem.text("");
+			mensagem.removeClass("erro");
+		};
+
+		return nome;
 	}
 
 	function validaCPF() {
