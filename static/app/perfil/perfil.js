@@ -101,6 +101,11 @@
 			roteador.navegarPara('/cadastroDeColaboradores');
 		});
 	}
+	function ListagemRH() {
+		require(['roteador'], function (roteador) {
+			roteador.navegarPara('/listagemColaboradoresRh');
+		});
+	}
 
 	function configurarMenuAdministrador() {
 		$("#conteudo")
@@ -112,6 +117,8 @@
 	function configurarMenuRecursosHumanos() {
 		$("#conteudo")
 			.on('click', 'a[data-js="cadastro-recursos_humanos"]', casdastroRH)
+		$("#conteudo")
+			.on('click', 'a[data-js="listagem-recursos_humanos"]', ListagemRH)
 	}
 
 	function abrirModalCrop() {
