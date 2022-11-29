@@ -1,4 +1,6 @@
 from Login.models import CPF, Colaborador
+from django.core.paginator import Paginator
+
 
 class ServicoDeInclusaoDeColaboradores:
 	def incluir(self, colaboradores):
@@ -25,11 +27,19 @@ class ServicoDeInclusaoDeColaboradores:
 
 class ServicoDeBuscaDeColaboradores:
 	def buscar(self):
-		colaboradores = Colaborador.objects.all()
-		transformacao = lambda colaborador: { 'id': colaborador.id, 'nome': colaborador.nome_abreviado, 'data_de_nascimento': colaborador.data_de_nascimento, 'usuario_id_do_chat': colaborador.usuario_id_do_chat, 'foto': colaborador.foto }
-		colaboradores = map(transformacao, colaboradores)
-
+		colaboradores_mapeados = []
+		
+		colaboradores = Colaborador.objects.all().order_by("-id")
+		paginacao = Paginator(colaboradores, 2)
+		numero_paginas = paginacao.num_pages
+		
+		for i in range(1,numero_paginas):
+			pagina = paginacao.page(i)
+			transformacao = lambda colaborador: { 'id': colaborador.id, 'nome': colaborador.nome_abreviado, 'data_de_nascimento': colaborador.data_de_nascimento, 'usuario_id_do_chat': colaborador.usuario_id_do_chat, 'foto': colaborador.foto }
+			colaboradores_mapeados.append(list(map(transformacao, pagina.object_list)))
+				
 		return {
-			'colaboradores': list(colaboradores)
+			'colaboradores': list(colaboradores_mapeados),
+			'numero_paginas': numero_paginas
 		}
 
