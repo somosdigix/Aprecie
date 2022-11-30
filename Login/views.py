@@ -99,8 +99,7 @@ def inserir_colaboradores(requisicao):
 	return JsonResponse(data=retorno_da_inclusao, status=200)
 
 @has_role_decorator('recursos_humanos')
-def buscar_colaboradores_para_RH(requisicao):
-	tipo_ordenacao = requisicao.POST['ordenacao']
+def buscar_colaboradores_para_RH(requisicao, tipo_ordenacao):
 	retorno_da_busca = ServicoDeBuscaDeColaboradores().buscar(tipo_ordenacao)
 	
 	return JsonResponse(data=retorno_da_busca, status=200)
