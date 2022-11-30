@@ -1,4 +1,6 @@
 from Login.models import CPF, Colaborador
+from datetime import datetime
+
 
 class ServicoDeInclusaoDeColaboradores:
 	def incluir(self, colaboradores):
@@ -26,10 +28,12 @@ class ServicoDeInclusaoDeColaboradores:
 class ServicoDeBuscaDeColaboradores:
 	def buscar(self):
 		colaboradores = Colaborador.objects.all()
-		transformacao = lambda colaborador: { 'id': colaborador.id, 'nome': colaborador.nome_abreviado, 'data_de_nascimento': colaborador.data_de_nascimento, 'usuario_id_do_chat': colaborador.usuario_id_do_chat, 'foto': colaborador.foto }
+		transformacao = lambda colaborador: { 'id': colaborador.id, 'nome': colaborador.nome_abreviado, 'data_de_nascimento': self.converter_data(colaborador.data_de_nascimento), 'usuario_id_do_chat': colaborador.usuario_id_do_chat, 'foto': colaborador.foto }
 		colaboradores = map(transformacao, colaboradores)
 
 		return {
 			'colaboradores': list(colaboradores)
 		}
 
+	def converter_data(self, data):
+		return data.strftime('%d/%m/%Y')

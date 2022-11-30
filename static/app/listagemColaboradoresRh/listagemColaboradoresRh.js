@@ -28,8 +28,6 @@ define([
 				});
 			});
 		});
-
-
 	};
 
 	function converterParaAutocomplete(colaboradores) {
