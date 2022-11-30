@@ -22,3 +22,14 @@ class ServicoDeInclusaoDeColaboradores:
 			'contagem_de_inclusoes': contagem_de_inclusoes,
 			'cpfs_invalidos': cpfs_invalidos
 		}
+
+class ServicoDeBuscaDeColaboradores:
+	def buscar(self):
+		colaboradores = Colaborador.objects.all()
+		transformacao = lambda colaborador: { 'id': colaborador.id, 'nome': colaborador.nome_abreviado, 'data_de_nascimento': colaborador.data_de_nascimento, 'usuario_id_do_chat': colaborador.usuario_id_do_chat, 'foto': colaborador.foto }
+		colaboradores = map(transformacao, colaboradores)
+
+		return {
+			'colaboradores': list(colaboradores)
+		}
+

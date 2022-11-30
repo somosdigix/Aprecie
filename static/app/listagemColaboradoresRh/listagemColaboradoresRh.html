@@ -1,0 +1,88 @@
+<div class="filtro__buscaListagem">
+    <div data-js="buscarColaboradorListagem" class="ui fluid search largura-busca">
+        <div class="ui icon small input largura-busca">
+            <input id="input_busca_listagem" class="prompt" placeholder="Busque um colaborador" type="text" />
+            <i class="search icon" id="icone_pesquisa"></i>
+        </div>
+        <div class="results"></div>
+    </div>
+</div>
+</div>
+
+<div class="colaboradores" data-js="lista-colaboradores-rh">
+    
+</div>
+
+<style>
+    .colaboradores {
+        display: flex;
+        flex-wrap: wrap;
+        margin-top: 15px;
+    }
+
+    .cartao-colaborador {
+        display: flex;
+        flex-direction: column;
+        border-radius: 10px;
+        margin-left: 20px;
+        background-color: white;
+        padding: 10px;
+        margin-bottom: 10px;
+        max-width: 250px;
+        width: 250px;
+    }
+
+    .foto-colaborador {
+        align-self: center;
+        border-radius: 50%;
+        width: 100px;
+        height: 100px;
+    }
+
+    .nome-colaborador {
+        font-size: 18px;
+        text-transform: uppercase;
+    }
+
+    .informacao-colaborador {
+        font-size: 14px;
+        padding: 0;
+        margin: 0;
+    }
+
+    .container-discord {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .tooltip {
+        display: flex;
+        align-items: center;
+        position: relative;
+    }
+
+    .tooltip .tooltip-text {
+        visibility: hidden;
+        width: 120px;
+        background-color: black;
+        color: #fff;
+        text-align: center;
+        border-radius: 6px;
+        padding: 5px 0;
+        margin-left: 20px;
+
+        /* Position the tooltip */
+        position: absolute;
+        z-index: 1;
+    }
+
+    .tooltip:hover .tooltip-text {
+        visibility: visible;
+    }
+
+    .filtro__buscaListagem{
+        width: 40%;
+        margin-left: 20px;
+    }
+</style>
