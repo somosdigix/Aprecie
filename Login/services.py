@@ -1,4 +1,5 @@
 from Login.models import CPF, Colaborador
+from django.db.models.functions import Lower
 
 class ServicoDeInclusaoDeColaboradores:
 	def incluir(self, colaboradores):
@@ -24,8 +25,12 @@ class ServicoDeInclusaoDeColaboradores:
 		}
 
 class ServicoDeBuscaDeColaboradores:
-	def buscar(self):
-		colaboradores = Colaborador.objects.all()
+	def buscar(self,tipo_ordenacao):
+		if tipo_ordenacao == 'crescente':
+			colaboradores = Colaborador.objects.all().order_by(Lower("nome").asc())
+		else: 
+			colaboradores = Colaborador.objects.all().order_by(Lower("nome").desc())
+
 		transformacao = lambda colaborador: { 'id': colaborador.id, 'nome': colaborador.nome_abreviado, 'data_de_nascimento': colaborador.data_de_nascimento, 'usuario_id_do_chat': colaborador.usuario_id_do_chat, 'foto': colaborador.foto }
 		colaboradores = map(transformacao, colaboradores)
 
