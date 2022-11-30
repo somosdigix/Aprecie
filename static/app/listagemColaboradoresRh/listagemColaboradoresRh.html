@@ -1,3 +1,15 @@
+<div class="filtro__buscaListagem">
+    <div data-js="buscarColaboradorRanking" class="ui fluid search largura-buscaListagem">
+        <div class="ui icon small input largura-buscaListagem">
+            <input id="input_busca_listagem" class="prompt" class="largura-buscaListagem"
+                placeholder="Busque um colaborador" type="text" />
+            <i class="search icon" id="icone_pesquisa"></i>
+        </div>
+        <div class="results"></div>
+    </div>
+</div>
+</div>
+
 <div class="colaboradores">
     {{#each this.colaboradores}}
     <div class="cartao-colaborador">
@@ -23,6 +35,7 @@
 <style>
     .colaboradores {
         display: flex;
+        margin-top: 15px;
     }
 
     .cartao-colaborador {
@@ -84,4 +97,8 @@
     .tooltip:hover .tooltip-text {
         visibility: visible;
     }
+
+    .largura-buscaListagem{
+		width: 50%
+	}
 </style>
