@@ -12,10 +12,16 @@ define([
 
 	self.inicializar = function (sandbox) {
 		_sandbox = sandbox;
+		_sandbox.exibirTemplateEm('#conteudo', ListagemTemplate);
+		$("#select").on("change", carregarListagem);
+		carregarListagem();
+	};
 
-		$.getJSON("/login/listagemColaboradoresRh", function (colaboradores) {
+
+	function carregarListagem() {
+		let tipo_ordenacao = $("#select").val();
+		$.getJSON("/login/listagemColaboradoresRh/" + tipo_ordenacao, function (colaboradores) {
 			listagem = colaboradores;
-			_sandbox.exibirTemplateEm('#conteudo', ListagemTemplate);
 			template.exibirEm('div[data-js="lista-colaboradores-rh"]', listaColaboradoresTemplate, listagem);
 
 			$.getJSON('/login/obter_colaboradores/', function (data) {
@@ -46,7 +52,9 @@ define([
 			}
 		})
 
-		template.exibirEm('div[data-js="lista-colaboradores-rh"]', listaColaboradoresTemplate, {"colaboradores": colaboradorFiltrado});
+		template.exibirEm('div[data-js="lista-colaboradores-rh"]', listaColaboradoresTemplate, {
+			"colaboradores": colaboradorFiltrado
+		});
 	}
 
 	self.finalizar = function () {
