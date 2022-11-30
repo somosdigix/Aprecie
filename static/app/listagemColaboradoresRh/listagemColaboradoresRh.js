@@ -3,7 +3,8 @@ define([
 	"template",
 	'text!app/listagemColaboradoresRh/listagemColaboradoresRh.html',
 	'text!app/listagemColaboradoresRh/listaColaboradores.html',
-], function ($, template, ListagemTemplate, listaColaboradoresTemplate) {
+	'text!app/listagemColaboradoresRh/paginacao.html',
+], function ($, template, ListagemTemplate, listaColaboradoresTemplate, paginacaoTemplate) {
 	'use strict';
 
 	var self = {};
@@ -12,11 +13,34 @@ define([
 
 	self.inicializar = function (sandbox) {
 		_sandbox = sandbox;
+		_sandbox.exibirTemplateEm('#conteudo', ListagemTemplate);
+		$("#select").on("change", carregarListagem);
+		carregarListagem();
+	};
 
-		$.getJSON("/login/listagemColaboradoresRh", function (colaboradores) {
+	function carregarPaginacao(numero_paginas) {
+		template.exibirEm('div[data-js="paginacao"]', paginacaoTemplate);
+		const divNumerosPaginas = $('div[data-js="numero-paginas"]');
+
+		for (let index = 0; index < numero_paginas; index++) {
+			divNumerosPaginas.append('<button class="page-item" id="pagina" value="'+ index + '">' + (index + 1) + '</button>');
+		}
+
+		const paginas = $('button[id="pagina"]');
+		Array.from(paginas).forEach(paginabtn => {
+			paginabtn.addEventListener("click", () => {
+				let numero = paginabtn.value;
+				template.exibirEm('div[data-js="lista-colaboradores-rh"]', listaColaboradoresTemplate, listagem.colaboradores[numero]);
+			})
+		});
+	}
+
+	function carregarListagem() {
+		let tipo_ordenacao = $("#select").val();
+		$.getJSON("/login/listagemColaboradoresRh/" + tipo_ordenacao, function (colaboradores) {
 			listagem = colaboradores;
-			_sandbox.exibirTemplateEm('#conteudo', ListagemTemplate);
-			template.exibirEm('div[data-js="lista-colaboradores-rh"]', listaColaboradoresTemplate, listagem);
+			template.exibirEm('div[data-js="lista-colaboradores-rh"]', listaColaboradoresTemplate, listagem.colaboradores[0]);
+			carregarPaginacao(listagem.numero_paginas);
 
 			$.getJSON('/login/obter_colaboradores/', function (data) {
 				$('div[data-js="buscarColaboradorListagem"]').search({
@@ -28,8 +52,6 @@ define([
 				});
 			});
 		});
-
-
 	};
 
 	function converterParaAutocomplete(colaboradores) {
@@ -48,7 +70,7 @@ define([
 			}
 		})
 
-		template.exibirEm('div[data-js="lista-colaboradores-rh"]', listaColaboradoresTemplate, {"colaboradores": colaboradorFiltrado});
+		template.exibirEm('div[data-js="lista-colaboradores-rh"]', listaColaboradoresTemplate, colaboradorFiltrado);
 	}
 
 	self.finalizar = function () {
