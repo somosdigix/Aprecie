@@ -1,8 +1,7 @@
 <div class="filtro__buscaListagem">
-    <div data-js="buscarColaboradorRanking" class="ui fluid search largura-buscaListagem">
-        <div class="ui icon small input largura-buscaListagem">
-            <input id="input_busca_listagem" class="prompt" class="largura-buscaListagem"
-                placeholder="Busque um colaborador" type="text" />
+    <div data-js="buscarColaboradorListagem" class="ui fluid search largura-busca">
+        <div class="ui icon small input largura-busca">
+            <input id="input_busca_listagem" class="prompt" placeholder="Busque um colaborador" type="text" />
             <i class="search icon" id="icone_pesquisa"></i>
         </div>
         <div class="results"></div>
@@ -35,6 +34,7 @@
 <style>
     .colaboradores {
         display: flex;
+        flex-wrap: wrap;
         margin-top: 15px;
     }
 
@@ -47,6 +47,7 @@
         padding: 10px;
         margin-bottom: 10px;
         max-width: 250px;
+        width: 250px;
     }
 
     .foto-colaborador {
@@ -98,7 +99,8 @@
         visibility: visible;
     }
 
-    .largura-buscaListagem{
-		width: 50%
-	}
+    .filtro__buscaListagem{
+        width: 40%;
+        margin-left: 20px;
+    }
 </style>
