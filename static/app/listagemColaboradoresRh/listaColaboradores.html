@@ -1,0 +1,19 @@
+{{#each this.colaboradores}}
+    <div class="cartao-colaborador">
+        {{#if this.foto}}
+        <img class="foto-colaborador" src="{{this.foto}}" alt="foto colaborador" />
+        {{else}}
+        <img class="foto-colaborador" src="../static/img/sem-foto.png" alt="foto colaborador" />
+        {{/if}}
+        <p class="informacao-colaborador nome-colaborador">{{this.nome}}</p>
+        <p class="informacao-colaborador cpf-colaborador">{{this.cpf}}</p>
+        <p class="informacao-colaborador dataNascimento-colaborador">{{this.data_de_nascimento}}</p>
+        <div class="container-discord">
+            <p class="informacao-colaborador discord-colaborador">{{this.usuario_id_do_chat}}</p>
+            <div class="tooltip">
+                <img src="../static/img/question.svg" alt="icone question">
+                <span class="tooltip-text"> ID do chat do discord</span>
+            </div>
+        </div>
+    </div>
+    {{/each}}
