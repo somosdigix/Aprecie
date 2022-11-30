@@ -9,8 +9,9 @@ from PIL import Image
 import os
 from django.conf import settings
 import re
-from Aprecie.base import acesso_anonimo, acesso_exclusivo_com_token
-from Login.services import ServicoDeInclusaoDeColaboradores
+from Aprecie.base import acesso_anonimo
+from Aprecie import settings
+from Login.services import ServicoDeInclusaoDeColaboradores, ServicoDeBuscaDeColaboradores
 from Reconhecimentos.views import converte_boolean
 from rolepermissions.roles import assign_role, remove_role
 from rolepermissions.decorators import has_role_decorator
@@ -97,6 +98,12 @@ def inserir_colaboradores(requisicao):
 	
 	return JsonResponse(data=retorno_da_inclusao, status=200)
 
+@has_role_decorator('recursos_humanos')
+def buscar_colaboradores_para_RH(requisicao):
+	retorno_da_busca = ServicoDeBuscaDeColaboradores().buscar()
+	
+	return JsonResponse(data=retorno_da_busca, status=200)
+
 def validar_usuario_logado(requisicao):
 	id_da_sessao = int(requisicao.POST['id'])
 	sessao_administrador = converte_boolean(requisicao.POST['administrador'])
@@ -178,7 +185,7 @@ def obtem_historico(requisicao):
 
 def validar_usuario_id_do_chat(requisicao, usuario_id_do_chat):
 	url = 'https://discord.com/api/v10/users/' + usuario_id_do_chat
-	token = ''
+	token = settings.DISCORD_KEY
 	headers = {'Authorization': 'Bot ' + token}
 	resposta = requests.get(url, headers=headers)
 	respostaFormatada = json.loads(resposta.text)

@@ -15,15 +15,11 @@
 	_self.inicializar = function (sandbox, colaboradorId) {
 		_sandbox = sandbox;
 
-		configurarMenuAdministrador()
-		configurarMenuRecursosHumanos()
-
 		$.getJSON(
 			"/reconhecimentos/colaborador/" + colaboradorId,
 			function (reconhecimentosDoColaborador) {
 				template.exibir(perfilTemplate, reconhecimentosDoColaborador);
 
-				administradorHelper.mostrarConteudoSeForAdministrador('div[data-js="switch-adm"]');
 				switchAdministrador(reconhecimentosDoColaborador, colaboradorId);
 
 				$("#conteudo").on(
@@ -47,9 +43,7 @@
 
 					if (sessaoDeUsuario.recursos_humanos) {
 						recursosHumanosHelper.mostrarConteudoSeForRecursosHumanos('div[data-js="menu__recursos_humanos')
-					}
-					else {
-						$('div[data-js="menu__recursos_humanos"]').hide();
+						configurarMenuRecursosHumanos();
 					}
 
 					if (sessaoDeUsuario.administrador) {
@@ -57,13 +51,8 @@
 						configurarMenuAdministrador();
 						obterNotificacaoDoAdministrador();
 					}
-					else {
-						$('div[data-js="menu__administrador"]').hide();
-					}
 
 				} else {
-					$('div[data-js="menu__administrador"]').hide();
-					$('div[data-js="menu__recursos_humanos"]').hide();
 					$('div[data-js="apreciacao"]').show();
 					$('div[data-js="foto"]').removeClass("alterar-foto");
 				}
@@ -112,6 +101,11 @@
 			roteador.navegarPara('/cadastroDeColaboradores');
 		});
 	}
+	function ListagemRH() {
+		require(['roteador'], function (roteador) {
+			roteador.navegarPara('/listagemColaboradoresRh');
+		});
+	}
 
 	function configurarMenuAdministrador() {
 		$("#conteudo")
@@ -123,6 +117,8 @@
 	function configurarMenuRecursosHumanos() {
 		$("#conteudo")
 			.on('click', 'a[data-js="cadastro-recursos_humanos"]', casdastroRH)
+		$("#conteudo")
+			.on('click', 'a[data-js="listagem-recursos_humanos"]', ListagemRH)
 	}
 
 	function abrirModalCrop() {
@@ -187,6 +183,7 @@
 		} else {
 			document.getElementById("toggle").checked = false;
 		}
+		
 		$("#toggle").change(function () {
 			if (administradorHelper.ehAdministrador()) {
 				if (this.checked) {
