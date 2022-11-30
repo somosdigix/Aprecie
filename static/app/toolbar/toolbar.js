@@ -21,6 +21,8 @@
         .on('click', 'a[data-js="ranking"]', ranking)
         .on('click', 'a[data-js="sair"]', sair)    
 
+
+      
       $('div[data-js="buscaDeColaboradores"]').search({
         source: converterParaAutocomplete(data.colaboradores),
         onSelect: selecionar,

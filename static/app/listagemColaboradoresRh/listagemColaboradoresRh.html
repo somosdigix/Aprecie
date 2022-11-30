@@ -1,28 +1,23 @@
-<div class="colaboradores">
-    {{#each this.colaboradores}}
-    <div class="cartao-colaborador">
-        {{#if this.foto}}
-        <img class="foto-colaborador" src="{{this.foto}}" alt="foto colaborador" />
-        {{else}}
-        <img class="foto-colaborador" src="../static/img/sem-foto.png" alt="foto colaborador" />
-        {{/if}}
-        <p class="informacao-colaborador nome-colaborador">{{this.nome}}</p>
-        <p class="informacao-colaborador cpf-colaborador">{{this.cpf}}</p>
-        <p class="informacao-colaborador dataNascimento-colaborador">{{this.data_de_nascimento}}</p>
-        <div class="container-discord">
-            <p class="informacao-colaborador discord-colaborador">{{this.usuario_id_do_chat}}</p>
-            <div class="tooltip">
-                <img src="../static/img/question.svg" alt="icone question">
-                <span class="tooltip-text"> ID do chat do discord</span>
-            </div>
+<div class="filtro__buscaListagem">
+    <div data-js="buscarColaboradorListagem" class="ui fluid search largura-busca">
+        <div class="ui icon small input largura-busca">
+            <input id="input_busca_listagem" class="prompt" placeholder="Busque um colaborador" type="text" />
+            <i class="search icon" id="icone_pesquisa"></i>
         </div>
+        <div class="results"></div>
     </div>
-    {{/each}}
+</div>
+</div>
+
+<div class="colaboradores" data-js="lista-colaboradores-rh">
+    
 </div>
 
 <style>
     .colaboradores {
         display: flex;
+        flex-wrap: wrap;
+        margin-top: 15px;
     }
 
     .cartao-colaborador {
@@ -34,6 +29,7 @@
         padding: 10px;
         margin-bottom: 10px;
         max-width: 250px;
+        width: 250px;
     }
 
     .foto-colaborador {
@@ -83,5 +79,10 @@
 
     .tooltip:hover .tooltip-text {
         visibility: visible;
+    }
+
+    .filtro__buscaListagem{
+        width: 40%;
+        margin-left: 20px;
     }
 </style>
