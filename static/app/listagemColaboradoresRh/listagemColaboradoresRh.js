@@ -4,7 +4,9 @@ define([
 	'text!app/listagemColaboradoresRh/listagemColaboradoresRh.html',
 	'text!app/listagemColaboradoresRh/listaColaboradores.html',
 	'text!app/listagemColaboradoresRh/paginacao.html',
-], function ($, template, ListagemTemplate, listaColaboradoresTemplate, paginacaoTemplate) {
+	'app/helpers/recursosHumanosHelper',
+	"roteador",
+], function ($, template, ListagemTemplate, listaColaboradoresTemplate, paginacaoTemplate, recursosHumanosHelper, roteador) {
 	'use strict';
 
 	var self = {};
@@ -13,9 +15,14 @@ define([
 
 	self.inicializar = function (sandbox) {
 		_sandbox = sandbox;
-		_sandbox.exibirTemplateEm('#conteudo', ListagemTemplate);
-		$("#select").on("change", carregarListagem);
-		carregarListagem();
+		if (recursosHumanosHelper.ehRecursosHumanos()) {
+			_sandbox.exibirTemplateEm('#conteudo', ListagemTemplate);
+			$("#select").on("change", carregarListagem);
+			carregarListagem();
+
+		} else {
+			roteador.navegarPara('/paginaInicial');
+		}
 	};
 
 	function carregarPaginacao(numero_paginas) {
@@ -23,7 +30,7 @@ define([
 		const divNumerosPaginas = $('div[data-js="numero-paginas"]');
 
 		for (let index = 0; index < numero_paginas; index++) {
-			divNumerosPaginas.append('<button class="page-item" id="pagina" value="'+ index + '">' + (index + 1) + '</button>');
+			divNumerosPaginas.append('<button class="page-item" id="pagina" value="' + index + '">' + (index + 1) + '</button>');
 		}
 
 		const paginas = $('button[id="pagina"]');
