@@ -52,3 +52,13 @@ class ServicoDeBuscaDeColaboradores:
 
 	def converter_cpf(self, cpf):
 		return f'{cpf[:3]}.{cpf[3:6]}.{cpf[6:9]}-{cpf[9:]}'
+
+class ServicoDeBuscaDeColaborador:
+	def buscar(self,id_colaborador):
+		colaborador = Colaborador.objects.get(id=id_colaborador)
+		return{
+			'nome': colaborador.nome,
+			'data_de_nascimento': colaborador.data_de_nascimento,
+			'cpf': colaborador.cpf,
+			'usuario_id_do_chat': colaborador.usuario_id_do_chat
+		}
