@@ -62,3 +62,14 @@ class ServicoDeBuscaDeColaborador:
 			'cpf': colaborador.cpf,
 			'usuario_id_do_chat': colaborador.usuario_id_do_chat
 		}
+
+class ServicoDeEdicaoDeColaborador:
+	def editar(self, colaborador):
+		colaborador_obtido = Colaborador.objects.get(id = colaborador.id)
+		colaborador_obtido.nome = colaborador.nome
+		colaborador_obtido.cpf = colaborador.cpf
+		colaborador_obtido.usuario_id_do_chat = colaborador.usuario_id_do_chat
+		colaborador_obtido.data_de_nascimento = colaborador.data_de_nascimento
+		colaborador_obtido.save()
+		return {
+		}
