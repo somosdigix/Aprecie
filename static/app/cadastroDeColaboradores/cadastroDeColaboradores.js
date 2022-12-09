@@ -10,18 +10,29 @@ define([
 	var self = {};
 	var _sandbox;
 
-	self.inicializar = function (sandbox) {
+	self.inicializar = function (sandbox, colaboradorId) {
 		_sandbox = sandbox;
+
 		if (recursosHumanosHelper.ehRecursosHumanos()) {
 			_sandbox.exibirTemplateEm('#conteudo', cadastroTemplate);
+			$('#cpf').inputmask('999.999.999-99');
 			$('#conteudo').on('keyup', 'input[id="idDiscord"]', validarUserIdDiscord);
 			$("#conteudo").on("focusout", 'input[id="cpf"]', validaCPF);
 			$("#conteudo").on("focusout", 'input[id="dataDeNascimento"]', validardataDeNascimento);
-			$("#salvarColaborador").click(function (event) {
-				event.preventDefault();
-				salvarColaborador();
-			});
-			$('#cpf').inputmask('999.999.999-99');
+
+			if (!colaboradorId) {
+				$("#salvarColaborador").click(function (event) {
+					event.preventDefault();
+					salvarColaborador();
+				});
+			}
+			else {
+				$("#salvarColaborador").click(function (event) {
+					event.preventDefault();
+					console.log("Edição");
+				});
+			}
+
 		} else {
 			roteador.navegarPara('/paginaInicial');
 		}
@@ -136,16 +147,16 @@ define([
 		var nome = validarNome();
 		return data_de_nascimento && cpf && discord && nome;
 	}
-	
-	function validarNome(){
+
+	function validarNome() {
 		var mensagem = $('#alert-nome');
 		var nome = ($('#nomeColaborador').val()).trim();
-		
-		if (!nome){
+
+		if (!nome) {
 			mensagem.text("Prencha o nome");
 			mensagem.addClass("erro");
 		}
-		else{
+		else {
 			mensagem.text("");
 			mensagem.removeClass("erro");
 		};
