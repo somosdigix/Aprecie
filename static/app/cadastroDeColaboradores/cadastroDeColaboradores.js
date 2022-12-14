@@ -27,11 +27,20 @@ define([
 				});
 			}
 			else {
+
 				document.getElementById('tituloPaginaCadastro').textContent = 'Editar Colaborador';
-				
+
+				$.getJSON("/login/obter_colaborador/" + colaboradorId, function (colaborador) {
+					$("#nomeColaborador").val(colaborador.nome)
+					$("#cpf").val(colaborador.cpf)
+					$("#dataDeNascimento").val(colaborador.data_de_nascimento)
+					$("#idDiscord").val(colaborador.usuario_id_do_chat)
+
+				});
+
 				$("#salvarColaborador").click(function (event) {
 					event.preventDefault();
-					console.log("Edição");
+					editarCadastroColaborador();
 				});
 			}
 
@@ -81,7 +90,17 @@ define([
 		}
 
 	}
-
+	function editarCadastroColaborador() {
+		if (validaFormulario()) {
+			$.put("",
+				function () {
+					growl.deSucesso().exibir("Colaborador editado com sucesso.");
+					roteador.navegarPara('/listagemColaboradoresRh')
+				}).fail(function () {
+					growl.deErro().exibir("Erro ao editar colaborador. Entre em contato com os Dev's responsáveis!");
+				});
+		}
+	}
 
 	function validarUserIdDiscord() {
 		var userIdDiscord = $('#idDiscord').val();
