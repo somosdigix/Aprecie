@@ -27,6 +27,17 @@ define([
 				});
 			}
 			else {
+				$.getJSON("/login/obter_colaborador/"+colaboradorId, function (colaborador) {
+					$("#nomeColaborador").val(colaborador.nome)
+					$("#cpf").val(colaborador.cpf)
+					$("#dataDeNascimento").val(colaborador.data_de_nascimento)
+					$("#idDiscord").val(colaborador.usuario_id_do_chat)
+						
+				}
+
+				)
+
+
 				$("#salvarColaborador").click(function (event) {
 					event.preventDefault();
 					console.log("Edição");
