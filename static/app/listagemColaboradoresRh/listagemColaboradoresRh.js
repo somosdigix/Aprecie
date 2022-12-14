@@ -87,3 +87,9 @@ define([
 
 	return self;
 });
+
+function editar(id) {
+	require(['roteador'], function(roteador) {
+		roteador.navegarPara('/cadastroDeColaboradores/'+id);
+	});
+}
