@@ -80,23 +80,29 @@ define([
 		}
 
 	}
-	function editarCadastroColaborador(){
+	function editarCadastroColaborador() {
 		if (validaFormulario()) {
-			var editarColaboradores = [
-				{
-					cpf: $('#cpf').val(),
-					nome: $('#nomeColaborador').val(),
-					data_de_nascimento: $('#dataDeNascimento').val(),
-					usuario_id_do_chat: $('#idDiscord').val(),
-				}
-			]
-			$.post("", 
+			$.put("",
 				function (retorno) {
 
-					
+					if ( retorno.cpfs_invalidos.length == 1) {
+						mensagem = "CPF inválido."
+						growl.deErro().exibir(mensagem);
+					}
+					else {
+						var mensagem = "Colaborador editado com sucesso.";
+						growl.deSucesso().exibir(mensagem);
+
+						var frm = document.getElementById("formularioCadastro");
+
+						frm.reset();
+						setTimeout(() => {
+							location.reload();
+						}, 3000);
+					}
 
 				}).fail(function () {
-					growl.deErro().exibir("Colaborador não cadastrado.");
+					growl.deErro().exibir("Erro ao editar colaborador. Entre em contato com os Dev's responsáveis!");
 				});
 		}
 
