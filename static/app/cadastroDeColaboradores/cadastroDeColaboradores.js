@@ -30,6 +30,7 @@ define([
 				$("#salvarColaborador").click(function (event) {
 					event.preventDefault();
 					console.log("Edição");
+					editarCadastroColaborador();
 				});
 			}
 
@@ -72,6 +73,27 @@ define([
 							location.reload();
 						}, 3000);
 					}
+
+				}).fail(function () {
+					growl.deErro().exibir("Colaborador não cadastrado.");
+				});
+		}
+
+	}
+	function editarCadastroColaborador(){
+		if (validaFormulario()) {
+			var editarColaboradores = [
+				{
+					cpf: $('#cpf').val(),
+					nome: $('#nomeColaborador').val(),
+					data_de_nascimento: $('#dataDeNascimento').val(),
+					usuario_id_do_chat: $('#idDiscord').val(),
+				}
+			]
+			$.post("", 
+				function (retorno) {
+
+					
 
 				}).fail(function () {
 					growl.deErro().exibir("Colaborador não cadastrado.");
