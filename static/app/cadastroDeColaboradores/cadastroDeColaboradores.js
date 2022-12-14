@@ -92,6 +92,7 @@ define([
 			$.put("",
 				function () {
 					growl.deSucesso().exibir( "Colaborador editado com sucesso.");
+					roteador.navegarPara('/listagemColaboradoresRh')
 				}).fail(function () {
 					growl.deErro().exibir("Erro ao editar colaborador. Entre em contato com os Dev's responsáveis!");
 				});
