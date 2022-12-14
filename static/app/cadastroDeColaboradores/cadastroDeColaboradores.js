@@ -3,8 +3,9 @@ define([
 	'text!app/cadastroDeColaboradores/formularioTemplate.html',
 	'app/helpers/recursosHumanosHelper',
 	"roteador",
-	"growl"
-], function ($, cadastroTemplate, recursosHumanosHelper, roteador, growl) {
+	"growl",
+	"app/models/colaboradorViewModel"
+], function ($, cadastroTemplate, recursosHumanosHelper, roteador, growl, ColaboradorViewModel) {
 	'use strict';
 
 	var self = {};
@@ -47,14 +48,10 @@ define([
 	};
 
 	function salvarColaborador() {
+
 		if (validaFormulario()) {
 			var colaboradores = [
-				{
-					cpf: $('#cpf').val(),
-					nome: $('#nomeColaborador').val(),
-					data_de_nascimento: $('#dataDeNascimento').val(),
-					usuario_id_do_chat: $('#idDiscord').val(),
-				}
+				new ColaboradorViewModel()
 			]
 			var dados = JSON.stringify({ 'colaboradores': colaboradores })
 
