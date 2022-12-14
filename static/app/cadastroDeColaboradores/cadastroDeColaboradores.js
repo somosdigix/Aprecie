@@ -41,6 +41,7 @@ define([
 				$("#salvarColaborador").click(function (event) {
 					event.preventDefault();
 					console.log("Edição");
+					editarCadastroColaborador();
 				});
 			}
 
@@ -86,6 +87,33 @@ define([
 
 				}).fail(function () {
 					growl.deErro().exibir("Colaborador não cadastrado.");
+				});
+		}
+
+	}
+	function editarCadastroColaborador() {
+		if (validaFormulario()) {
+			$.put("",
+				function (retorno) {
+
+					if ( retorno.cpfs_invalidos.length == 1) {
+						mensagem = "CPF inválido."
+						growl.deErro().exibir(mensagem);
+					}
+					else {
+						var mensagem = "Colaborador editado com sucesso.";
+						growl.deSucesso().exibir(mensagem);
+
+						var frm = document.getElementById("formularioCadastro");
+
+						frm.reset();
+						setTimeout(() => {
+							location.reload();
+						}, 3000);
+					}
+
+				}).fail(function () {
+					growl.deErro().exibir("Erro ao editar colaborador. Entre em contato com os Dev's responsáveis!");
 				});
 		}
 
