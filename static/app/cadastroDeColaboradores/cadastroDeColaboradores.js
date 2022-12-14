@@ -27,6 +27,8 @@ define([
 				});
 			}
 			else {
+				document.getElementById('tituloPaginaCadastro').textContent = 'Editar Colaborador';
+				
 				$("#salvarColaborador").click(function (event) {
 					event.preventDefault();
 					console.log("Edição");
