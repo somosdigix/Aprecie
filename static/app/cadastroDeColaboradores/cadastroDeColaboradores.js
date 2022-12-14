@@ -29,6 +29,7 @@ define([
 			else {
 
 				document.getElementById('tituloPaginaCadastro').textContent = 'Editar Colaborador';
+				document.getElementById('salvarColaborador').textContent = 'Concluir Edição';
 
 				$.getJSON("/login/obter_colaborador/" + colaboradorId, function (colaborador) {
 					$("#nomeColaborador").val(colaborador.nome)
