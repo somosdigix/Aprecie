@@ -8,10 +8,11 @@ define([
 	'use strict';
 
 	var self = {};
-	var _sandbox;
+	var _sandbox, _colaboradorId;
 
 	self.inicializar = function (sandbox, colaboradorId) {
 		_sandbox = sandbox;
+		_colaboradorId = colaboradorId;
 
 		if (recursosHumanosHelper.ehRecursosHumanos()) {
 			_sandbox.exibirTemplateEm('#conteudo', cadastroTemplate);
@@ -92,8 +93,17 @@ define([
 
 	}
 	function editarCadastroColaborador() {
+		var colaborador = 
+			{
+				cpf: $('#cpf').val(),
+				nome: $('#nomeColaborador').val(),
+				data_de_nascimento: $('#dataDeNascimento').val(),
+				usuario_id_do_chat: $('#idDiscord').val(),
+			}
+		
+		var dados = JSON.stringify(colaborador)
 		if (validaFormulario()) {
-			$.put("",
+			$.post("/login/colaborador/" + _colaboradorId, dados,
 				function () {
 					growl.deSucesso().exibir("Colaborador editado com sucesso.");
 					roteador.navegarPara('/listagemColaboradoresRh')

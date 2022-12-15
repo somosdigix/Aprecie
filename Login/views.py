@@ -99,11 +99,11 @@ def inserir_colaboradores(requisicao):
 	return JsonResponse(data=retorno_da_inclusao, status=200)
 
 @has_role_decorator('recursos_humanos')
-def editar_colaboradores(requisicao):
-	colaborador = requisicao.POST['colaborador']
-
+def editar_colaboradores(requisicao, id_colaborador):
+	colaborador = json.loads(requisicao.body)
+	
 	retorno_da_inclusao = \
-		ServicoDeEdicaoDeColaborador().editar(colaborador)
+		ServicoDeEdicaoDeColaborador().editar(colaborador, id_colaborador)
 	
 	return JsonResponse(data=retorno_da_inclusao, status=200)
 
