@@ -28,6 +28,10 @@ define([
 				});
 			}
 			else {
+
+				document.getElementById('tituloPaginaCadastro').textContent = 'Editar Colaborador';
+				document.getElementById('salvarColaborador').textContent = 'Concluir Edição';
+
 				$.getJSON("/login/obter_colaborador/" + colaboradorId, function (colaborador) {
 					$("#nomeColaborador").val(colaborador.nome)
 					$("#cpf").val(colaborador.cpf)
@@ -88,7 +92,8 @@ define([
 		if (validaFormulario()) {
 			$.put("",
 				function () {
-					growl.deSucesso().exibir( "Colaborador editado com sucesso.");
+					growl.deSucesso().exibir("Colaborador editado com sucesso.");
+					roteador.navegarPara('/listagemColaboradoresRh')
 				}).fail(function () {
 					growl.deErro().exibir("Erro ao editar colaborador. Entre em contato com os Dev's responsáveis!");
 				});
