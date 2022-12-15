@@ -67,6 +67,28 @@ def obter_imagem(colaborador):
 
 	return image
 
+from PIL import Image
+def comprimir_imagens(requisicao):
+	colaboradores = Colaborador.objects.filter(foto__isnull = False)
+	print(colaboradores.count())
+	for colaborador in colaboradores:
+		padrao = r'^data:image/.+;base64,(?P<b64>.+)'
+		match = re.match(padrao, colaborador.foto)
+		b64 = match.group('b64')
+		image = Image.open(BytesIO(base64.b64decode(b64)))
+		
+		# converting to jpg
+		rgb_im = image.convert("RGB")
+		padrao = r'^data:image/.+;base64,(?P<b64>.+)'
+		match = re.match(padrao, rgb_im)
+		b64 = match.group('b64')
+		image_comprimida = Image.open(BytesIO(base64.b64decode(b64)))
+		
+		colaborador.alterar_foto(image_comprimida)
+		colaborador.save()
+	return JsonResponse(data={"mensagem": "Comprimiu!!!!"}, status=200)
+
+
 def foto_do_perfil(requisicao, id_do_colaborador):
 	# TODO: Tratar outras extensoes de imagem
 	eh_miniatura = int(requisicao.GET['eh_miniatura'])

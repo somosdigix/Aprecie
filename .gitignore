@@ -53,3 +53,10 @@ static/CACHE/
 .sass-cache/
 # Visual Studio
 .vs/
+.idea/inspectionProfiles/Project_Default.xml
+.idea/vcs.xml
+.idea/inspectionProfiles/profiles_settings.xml
+.gitignore
+.idea/modules.xml
+.idea/misc.xml
+.idea/Aprecie.iml
