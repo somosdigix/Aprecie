@@ -64,12 +64,12 @@ class ServicoDeBuscaDeColaborador:
 		}
 
 class ServicoDeEdicaoDeColaborador:
-	def editar(self, colaborador):
-		colaborador_obtido = Colaborador.objects.get(id = colaborador.id)
-		colaborador_obtido.nome = colaborador.nome
-		colaborador_obtido.cpf = colaborador.cpf
-		colaborador_obtido.usuario_id_do_chat = colaborador.usuario_id_do_chat
-		colaborador_obtido.data_de_nascimento = colaborador.data_de_nascimento
+	def editar(self, colaborador, id_colaborador):
+		colaborador_obtido = Colaborador.objects.get(id = id_colaborador)
+		colaborador_obtido.nome = colaborador['nome']
+		colaborador_obtido.cpf = colaborador['cpf']
+		colaborador_obtido.usuario_id_do_chat = colaborador['usuario_id_do_chat']
+		colaborador_obtido.data_de_nascimento = colaborador['data_de_nascimento']
 		colaborador_obtido.save()
 		return {
 		}
