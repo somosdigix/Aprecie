@@ -67,26 +67,28 @@ def obter_imagem(colaborador):
 
 	return image
 
-from PIL import Image
 def comprimir_imagens(requisicao):
-	colaboradores = Colaborador.objects.filter(foto__isnull = False)
-	print(colaboradores.count())
+	colaboradores = Colaborador.objects.filter(foto__isnull = False).order_by("id")
+
 	for colaborador in colaboradores:
-		padrao = r'^data:image/.+;base64,(?P<b64>.+)'
-		match = re.match(padrao, colaborador.foto)
-		b64 = match.group('b64')
-		image = Image.open(BytesIO(base64.b64decode(b64)))
-		
-		# converting to jpg
-		rgb_im = image.convert("RGB")
-		padrao = r'^data:image/.+;base64,(?P<b64>.+)'
-		match = re.match(padrao, rgb_im)
-		b64 = match.group('b64')
-		image_comprimida = Image.open(BytesIO(base64.b64decode(b64)))
-		
-		colaborador.alterar_foto(image_comprimida)
-		colaborador.save()
-	return JsonResponse(data={"mensagem": "Comprimiu!!!!"}, status=200)
+		if(colaborador.id != 260):
+			padrao = r'^data:image/.+;base64,(?P<b64>.+)'
+			match = re.match(padrao, colaborador.foto)
+			b64 = match.group('b64')
+			image = Image.open(BytesIO(base64.b64decode(b64)))
+			
+			rgb_im = image.convert('RGB')
+			rgb_im.save('audacious.jpg')
+
+			with open("audacious.jpg", "rb") as image_file:
+				image_comprimida = base64.b64encode(image_file.read())
+
+			teste = "data:image/jpeg;base64," + image_comprimida.decode("utf-8")
+
+			colaborador.alterar_foto(teste)
+			colaborador.save()
+
+	return JsonResponse(data={"mensagem": "Comprimiu!!!!" }, status=200)
 
 
 def foto_do_perfil(requisicao, id_do_colaborador):
