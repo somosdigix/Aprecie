@@ -106,6 +106,7 @@ if IN_RELEASE_ENV:
 	# URL_DO_AMBIENTE = os.environ['APP_DNS']
 	ADMIN_TOKEN = os.environ['ADMIN_TOKEN']
 	CHAT_WEBHOOK_URL = os.environ['CHAT_WEBHOOK_URL']
+	DISCORD_KEY = os.environ['DISCORD_KEY']
 
 	db_from_env = dj_database_url.config(conn_max_age=500)
 	DATABASES['default'].update(db_from_env)
@@ -114,7 +115,8 @@ if IN_RELEASE_ENV:
 	# COMPRESS_ROOT = STATIC_ROOT
 else:
 	ADMIN_TOKEN = 'Basic dXN1YXJpb2xvY2FsOnNlbmhhbG9jYWw='
-	CHAT_WEBHOOK_URL = ''
+	CHAT_WEBHOOK_URL = 'https://discord.com/api/webhooks/1035623511995191296/gA23jiZ6SRvDnsZtoUdFpvNbuOBRWzWiUmKnur_ZRxt9YSLfQtFLTw2wyNAO1W-5j8OP'
+	DISCORD_KEY = ''
 
 STATICFILES_FINDERS = (
 	"django.contrib.staticfiles.finders.FileSystemFinder",
