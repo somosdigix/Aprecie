@@ -18,4 +18,5 @@ urlpatterns = [
     path(r'historico_alteracoes/', views.historico_alteracoes, name="historico_alteracoes"),
     path(r'ranking_por_periodo/', views.ranking_por_periodo, name="ranking_por_periodo"),
     path(r'obter_notificacoes_administrador/', views.obter_notificacoes_do_administrador, name="obter_notificacoes_do_administrador"),
+    url(r'^agradecer/$', views.agradecer, name="agradecer"),
 ]
