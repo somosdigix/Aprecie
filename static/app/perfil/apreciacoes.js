@@ -34,6 +34,7 @@ define([
 
   function exibirApreciacoesRecebidas() {
       template.exibirEm('div[data-js="todas-as-apreciacoes"]', apreciacoesRecebidasTemplate, apreciacoesGlobal.recebidas);
+
       if (sessaoDeUsario.id !== _colaboradorId){
         $("#reconhecimentos-recebidos").hide();
         $("#reconhecimentos-feitos").hide();
@@ -43,6 +44,11 @@ define([
 					usuario[i].style.visibility = "hidden";
         }
       }
+      else{
+        document.querySelectorAll(".botao-agradecer").forEach( botao => {
+          botao.style.display = "flex";
+        })
+      }
       
       $("#reconhecimentos-feitos").removeClass('botao__selecionado__perfil');
       $("#reconhecimentos-recebidos").addClass('botao__selecionado__perfil');
@@ -50,6 +56,13 @@ define([
 
   function exibirApreciacoesFeitas() {
     template.exibirEm('div[data-js="todas-as-apreciacoes"]', apreciacoesFeitasTemplate, apreciacoesGlobal.feitas);
+    
+    if (sessaoDeUsario.id == _colaboradorId){
+      document.querySelectorAll(".botao-agradecer").forEach( botao => {
+      botao.style.display = "flex";
+      })
+    }
+
     $("#reconhecimentos-recebidos").removeClass('botao__selecionado__perfil');
     $("#reconhecimentos-feitos").addClass('botao__selecionado__perfil');
   }
