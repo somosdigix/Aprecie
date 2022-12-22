@@ -32,6 +32,7 @@ class Reconhecimento(models.Model):
 
     self.feedback = novo_feedback
 
+
 class Feedback(models.Model):
   id = models.AutoField(primary_key=True)
   descritivo = models.CharField(max_length=1000)
@@ -122,3 +123,10 @@ class LOG_Ciclo(models.Model):
   @classmethod
   def adicionar_automatico(cls, ciclo):
     return cls(ciclo = ciclo, descricao_da_alteracao = "Criação do ciclo automatico sem data final", novo_nome_ciclo = ciclo.nome, antigo_nome_ciclo = ciclo.nome)
+
+class Agradecimento(models.Model):
+  id = models.AutoField(primary_key=True)
+  data = models.DateField(auto_now_add=True)
+  colaborador = models.ForeignKey('Login.Colaborador', related_name='colaborador', on_delete=models.CASCADE)
+  reconhecimento = models.ForeignKey('Reconhecimentos.Reconhecimento', related_name='reconhecimento', on_delete=models.CASCADE)
+  mensagem = models.CharField(max_length=1000)
