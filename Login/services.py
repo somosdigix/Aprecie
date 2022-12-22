@@ -34,7 +34,8 @@ class ServicoDeBuscaDeColaboradores:
 		else: 
 			colaboradores = Colaborador.objects.all().order_by(Lower("nome").desc())
 
-		paginacao = Paginator(colaboradores, 2)
+		numero_pessoas_por_pagina = 10
+		paginacao = Paginator(colaboradores, numero_pessoas_por_pagina)
 		numero_paginas = paginacao.num_pages
 		
 		for i in range(1,numero_paginas+1):
