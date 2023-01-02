@@ -44,7 +44,7 @@ class ServicoDeBuscaDeColaboradores:
 			colaboradores_mapeados.append(list(map(transformacao, pagina.object_list)))
 
 		return {
-			'colaboradores': list(colaboradores_mapeados),
+			'colaboradores': colaboradores_mapeados,
 			'numero_paginas': numero_paginas
 		}
 
