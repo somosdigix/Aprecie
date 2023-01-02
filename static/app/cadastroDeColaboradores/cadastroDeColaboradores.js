@@ -93,16 +93,16 @@ define([
 
 	}
 	function editarCadastroColaborador() {
+		if (validaFormulario()) {
 		var colaborador = 
 			{
-				cpf: $('#cpf').val(),
+				cpf: $('#cpf').val().replaceAll('.', '').replace('-', ''),
 				nome: $('#nomeColaborador').val(),
 				data_de_nascimento: $('#dataDeNascimento').val(),
 				usuario_id_do_chat: $('#idDiscord').val(),
 			}
 		
 		var dados = JSON.stringify(colaborador)
-		if (validaFormulario()) {
 			$.post("/login/colaborador/" + _colaboradorId, dados,
 				function () {
 					growl.deSucesso().exibir("Colaborador editado com sucesso.");
