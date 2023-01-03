@@ -28,7 +28,6 @@
 					'div[data-js="exibir-reconhecimentos"]',
 					exibirReconhecimentos
 					);
-					
 				if (sessaoDeUsuario.id === colaboradorId) {
 					$('div[data-js="switch-adm"]').hide();
 					administradorHelper.mostrarConteudoSeForAdministrador('div[data-js="menu__administrador"]');
@@ -60,6 +59,7 @@
 						.on("click", 'button[class="botao--fecharModalAgradecimento"]', fecharModalAdicionarAgradecimento)
 						.on("submit", 'form[data-js="form_adicionar_agradecimento"]', agradecer);
 				} else {
+					if(!sessaoDeUsuario.administrador){$('div[data-js="switch-adm"]').hide();}
 					$('div[data-js="menu__administrador"]').hide();
 					$('div[data-js="apreciacao"]').show();
 					$('div[data-js="foto"]').removeClass("alterar-foto");
@@ -211,6 +211,7 @@
 		}
 		
 		$("#toggle").change(function () {
+			console.log("entrou!")
 			if (administradorHelper.ehAdministrador()) {
 				if (this.checked) {
 					if (confirmaAlteracao()) {
