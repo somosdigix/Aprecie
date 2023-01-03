@@ -26,11 +26,14 @@ define([
 					event.preventDefault();
 					salvarColaborador();
 				});
-			}
-			else {
+				$("#retornarFormulario").click(function () {
+					roteador.navegarPara('/listagemColaboradoresRh');
+				});		
+			} else {
 
 				document.getElementById('tituloPaginaCadastro').textContent = 'Editar Colaborador';
 				document.getElementById('salvarColaborador').textContent = 'Concluir Edição';
+				document.getElementById('retornarFormulario').textContent = 'Cancelar Edição';
 
 				$.getJSON("/login/obter_colaborador/" + colaboradorId, function (colaborador) {
 					$("#nomeColaborador").val(colaborador.nome)
@@ -44,6 +47,10 @@ define([
 					event.preventDefault();
 					editarCadastroColaborador();
 				});
+
+				$("#retornarFormulario").click(function () {
+					roteador.navegarPara('/listagemColaboradoresRh');
+				});
 			}
 
 		} else {
@@ -53,15 +60,15 @@ define([
 
 	function salvarColaborador() {
 		if (validaFormulario()) {
-			var colaboradores = [
-				{
-					cpf: $('#cpf').val(),
-					nome: $('#nomeColaborador').val(),
-					data_de_nascimento: $('#dataDeNascimento').val(),
-					usuario_id_do_chat: $('#idDiscord').val(),
-				}
-			]
-			var dados = JSON.stringify({ 'colaboradores': colaboradores })
+			var colaboradores = [{
+				cpf: $('#cpf').val(),
+				nome: $('#nomeColaborador').val(),
+				data_de_nascimento: $('#dataDeNascimento').val(),
+				usuario_id_do_chat: $('#idDiscord').val(),
+			}]
+			var dados = JSON.stringify({
+				'colaboradores': colaboradores
+			})
 
 			$.post("/login/colaborador/", dados,
 				function (retorno) {
@@ -73,8 +80,7 @@ define([
 					} else if (retorno.contagem_de_inclusoes == 0 && retorno.cpfs_invalidos.length == 1) {
 						mensagem = "CPF inválido."
 						growl.deErro().exibir(mensagem);
-					}
-					else {
+					} else {
 						var mensagem = "Colaborador cadastrado com sucesso.";
 						growl.deSucesso().exibir(mensagem);
 
@@ -87,29 +93,29 @@ define([
 					}
 
 				}).fail(function () {
-					growl.deErro().exibir("Colaborador não cadastrado.");
-				});
+				growl.deErro().exibir("Colaborador não cadastrado.");
+			});
 		}
 
 	}
+
 	function editarCadastroColaborador() {
 		if (validaFormulario()) {
-		var colaborador = 
-			{
+			var colaborador = {
 				cpf: $('#cpf').val().replaceAll('.', '').replace('-', ''),
 				nome: $('#nomeColaborador').val(),
 				data_de_nascimento: $('#dataDeNascimento').val(),
 				usuario_id_do_chat: $('#idDiscord').val(),
 			}
-		
-		var dados = JSON.stringify(colaborador)
+
+			var dados = JSON.stringify(colaborador)
 			$.post("/login/colaborador/" + _colaboradorId, dados,
 				function () {
 					growl.deSucesso().exibir("Colaborador editado com sucesso.");
 					roteador.navegarPara('/listagemColaboradoresRh')
 				}).fail(function () {
-					growl.deErro().exibir("Erro ao editar colaborador. Entre em contato com os Dev's responsáveis!");
-				});
+				growl.deErro().exibir("Erro ao editar colaborador. Entre em contato com os Dev's responsáveis!");
+			});
 		}
 	}
 
@@ -187,8 +193,7 @@ define([
 		if (!nome) {
 			mensagem.text("Prencha o nome");
 			mensagem.addClass("erro");
-		}
-		else {
+		} else {
 			mensagem.text("");
 			mensagem.removeClass("erro");
 		};
