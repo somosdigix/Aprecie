@@ -116,7 +116,7 @@ if IN_RELEASE_ENV:
 else:
 	ADMIN_TOKEN = 'Basic dXN1YXJpb2xvY2FsOnNlbmhhbG9jYWw='
 	CHAT_WEBHOOK_URL = 'https://discord.com/api/webhooks/1035623511995191296/gA23jiZ6SRvDnsZtoUdFpvNbuOBRWzWiUmKnur_ZRxt9YSLfQtFLTw2wyNAO1W-5j8OP'
-	DISCORD_KEY = ''
+	DISCORD_KEY = 'MTAzODEzNzMzODEyMDkwNDc2NA.G5oeks.XWn3Cgk8x_QdkiAX1LBDBfNMEnRfTquauK6aso'
 
 STATICFILES_FINDERS = (
 	"django.contrib.staticfiles.finders.FileSystemFinder",

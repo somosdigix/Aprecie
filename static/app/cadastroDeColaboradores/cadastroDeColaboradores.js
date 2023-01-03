@@ -14,10 +14,12 @@ define([
 		_sandbox = sandbox;
 		_colaboradorId = colaboradorId;
 
+
 		if (recursosHumanosHelper.ehRecursosHumanos()) {
 			_sandbox.exibirTemplateEm('#conteudo', cadastroTemplate);
+
 			$('#cpf').inputmask('999.999.999-99');
-			$('#conteudo').on('keyup', 'input[id="idDiscord"]', validarUserIdDiscord);
+			$('#conteudo').on('focusout', 'input[id="idDiscord"]', validarUserIdDiscord);
 			$("#conteudo").on("focusout", 'input[id="cpf"]', validaCPF);
 			$("#conteudo").on("focusout", 'input[id="dataDeNascimento"]', validardataDeNascimento);
 
@@ -94,15 +96,15 @@ define([
 	}
 	function editarCadastroColaborador() {
 		if (validaFormulario()) {
-		var colaborador = 
+			var colaborador =
 			{
 				cpf: $('#cpf').val().replaceAll('.', '').replace('-', ''),
 				nome: $('#nomeColaborador').val(),
 				data_de_nascimento: $('#dataDeNascimento').val(),
 				usuario_id_do_chat: $('#idDiscord').val(),
 			}
-		
-		var dados = JSON.stringify(colaborador)
+
+			var dados = JSON.stringify(colaborador)
 			$.post("/login/colaborador/" + _colaboradorId, dados,
 				function () {
 					growl.deSucesso().exibir("Colaborador editado com sucesso.");
@@ -110,6 +112,9 @@ define([
 				}).fail(function () {
 					growl.deErro().exibir("Erro ao editar colaborador. Entre em contato com os Dev's responsáveis!");
 				});
+		}
+		else {
+			console.log("oi");
 		}
 	}
 
@@ -142,6 +147,7 @@ define([
 			mensagem.addClass("erro")
 		}
 
+		console.log( mensagem.hasClass("sucesso"));
 		return mensagem.hasClass("sucesso");;
 	}
 
@@ -151,6 +157,7 @@ define([
 	};
 
 	function validardataDeNascimento() {
+
 		var data = new Date($("#dataDeNascimento").val().replace(/-/g, '/'));
 		var dataAtual = new Date();
 		dataAtual.setHours(0, 0, 0, 0);
@@ -175,8 +182,10 @@ define([
 	function validaFormulario() {
 		var data_de_nascimento = validardataDeNascimento();
 		var cpf = validaCPF();
-		var discord = validarUserIdDiscord();
 		var nome = validarNome();
+		validarUserIdDiscord();
+		var discord = !($('#alert-discord').hasClass("erro"));
+		
 		return data_de_nascimento && cpf && discord && nome;
 	}
 
@@ -197,7 +206,9 @@ define([
 	}
 
 	function validaCPF() {
+
 		var mensagem = $('#alert-cpf');
+
 
 		if (valida($('#cpf').val())) {
 			mensagem.text("CPF válido");
@@ -212,6 +223,7 @@ define([
 
 			return false;
 		}
+
 	}
 
 	function valida(strCPF) {
