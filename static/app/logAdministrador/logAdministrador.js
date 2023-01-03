@@ -4,7 +4,9 @@ define([
     "text!app/logAdministrador/logAdministradorTemplate.html",
     "text!app/logAdministrador/administradoresTemplate.html",
     "text!app/logAdministrador/historicoAdministradorTemplate.html",
-], function ($, template, logAdministradorTemplate, administradoresTemplate, historicoAdministradorTemplate) {
+    "app/helpers/administradorHelper",
+	"roteador"
+], function ($, template, logAdministradorTemplate, administradoresTemplate, historicoAdministradorTemplate, administradorHelper, roteador) {
 	"use strict";
 
 	var self = {};
@@ -12,12 +14,17 @@ define([
 
 	self.inicializar = function (sandbox) {
 		_sandbox = sandbox;
-        
-        template.exibir(logAdministradorTemplate);
-        carregarColaboradoresAdministradores();
-        carregarHistoricoAlteracaoAdministradores();
+		console.log(administradorHelper.ehAdministrador());
+        if (administradorHelper.ehAdministrador()) {
+			template.exibir(logAdministradorTemplate);
+			carregarColaboradoresAdministradores();
+			carregarHistoricoAlteracaoAdministradores();
+			$('#conteudo').on('click', 'button[data-js="botao__log_administrador"]', carregarHistoricoAlteracaoAdministradores);
+		}
+		else {
+			roteador.navegarPara('/paginaInicial');
+		}
 
-		$('#conteudo').on('click', 'button[data-js="botao__log_administrador"]', carregarHistoricoAlteracaoAdministradores);
 	};
 
 	self.finalizar = function () {
