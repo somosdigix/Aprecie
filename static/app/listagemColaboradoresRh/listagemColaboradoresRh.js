@@ -46,6 +46,7 @@ define([
 		let tipo_ordenacao = $("#select").val();
 		$.getJSON("/login/listagemColaboradoresRh/" + tipo_ordenacao, function (colaboradores) {
 			listagem = colaboradores;
+
 			template.exibirEm('div[data-js="lista-colaboradores-rh"]', listaColaboradoresTemplate, listagem.colaboradores[0]);
 			carregarPaginacao(listagem.numero_paginas);
 
@@ -71,7 +72,8 @@ define([
 	function filtrarColaboradores(colaborador) {
 		var listagemPorNome = jQuery.extend(true, {}, listagem);
 		let nomeColaborador = colaborador.nome;
-		let colaboradorFiltrado = listagemPorNome.colaboradores.filter(function (colaborador) {
+
+		let colaboradorFiltrado = listagemPorNome.colaboradores[0].filter(function (colaborador) {
 			if (colaborador.nome.toLowerCase() === nomeColaborador.toLowerCase()) {
 				return colaborador;
 			}
