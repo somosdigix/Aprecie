@@ -30,7 +30,7 @@ define([
 				});
 				$("#retornarFormulario").click(function () {
 					roteador.navegarPara('/listagemColaboradoresRh');
-				});		
+				});
 			} else {
 
 				document.getElementById('tituloPaginaCadastro').textContent = 'Editar Colaborador';
@@ -61,7 +61,13 @@ define([
 	};
 
 	function salvarColaborador() {
-		if (validaFormulario()) {
+		validaFormulario();
+		var discord = $('#alert-discord').hasClass("sucesso");
+		var nome = !$('#alert-nome').hasClass("erro");
+		var cpf = $('#alert-cpf').hasClass("sucesso");
+		var data_de_nascimento = $('#alert-data').hasClass("sucesso");
+
+		if (discord && nome && cpf && data_de_nascimento) {
 			var colaboradores = [{
 				cpf: $('#cpf').val(),
 				nome: $('#nomeColaborador').val(),
@@ -91,38 +97,43 @@ define([
 						frm.reset();
 						setTimeout(() => {
 							location.reload();
-						}, 3000);
+						}, 1000);
 					}
 
 				}).fail(function () {
-				growl.deErro().exibir("Colaborador não cadastrado.");
-			});
+					growl.deErro().exibir("Colaborador não cadastrado.");
+				});
 		}
-
 	}
 
 	function editarCadastroColaborador() {
-		if (validaFormulario()) {
-			var colaborador =
-			{
-				cpf: $('#cpf').val().replaceAll('.', '').replace('-', ''),
-				nome: $('#nomeColaborador').val(),
-				data_de_nascimento: $('#dataDeNascimento').val(),
-				usuario_id_do_chat: $('#idDiscord').val(),
-			}
+		validaFormulario();
+		setTimeout(() => {
+			var discord = $('#alert-discord').hasClass("sucesso");
+			var nome = !$('#alert-nome').hasClass("erro");
+			var cpf = $('#alert-cpf').hasClass("sucesso");
+			var data_de_nascimento = $('#alert-data').hasClass("sucesso");
 
-			var dados = JSON.stringify(colaborador)
-			$.post("/login/colaborador/" + _colaboradorId, dados,
-				function () {
-					growl.deSucesso().exibir("Colaborador editado com sucesso.");
-					roteador.navegarPara('/listagemColaboradoresRh')
-				}).fail(function () {
-				growl.deErro().exibir("Erro ao editar colaborador. Entre em contato com os Dev's responsáveis!");
-			});
-		}
-		else {
-			console.log("oi");
-		}
+			if (discord && nome && cpf && data_de_nascimento) {
+				var colaborador =
+				{
+					cpf: $('#cpf').val().replaceAll('.', '').replace('-', ''),
+					nome: $('#nomeColaborador').val(),
+					data_de_nascimento: $('#dataDeNascimento').val(),
+					usuario_id_do_chat: $('#idDiscord').val(),
+				}
+
+				var dados = JSON.stringify(colaborador)
+				$.post("/login/colaborador/" + _colaboradorId, dados,
+					function () {
+						growl.deSucesso().exibir("Colaborador editado com sucesso.");
+						roteador.navegarPara('/listagemColaboradoresRh')
+					}).fail(function () {
+						growl.deErro().exibir("Erro ao editar colaborador. Entre em contato com os Dev's responsáveis!");
+					});
+			}
+		}, 1000);
+
 	}
 
 	function validarUserIdDiscord() {
@@ -153,9 +164,6 @@ define([
 			mensagem.removeClass("sucesso")
 			mensagem.addClass("erro")
 		}
-
-		console.log( mensagem.hasClass("sucesso"));
-		return mensagem.hasClass("sucesso");;
 	}
 
 	self.finalizar = function () {
@@ -164,7 +172,6 @@ define([
 	};
 
 	function validardataDeNascimento() {
-
 		var data = new Date($("#dataDeNascimento").val().replace(/-/g, '/'));
 		var dataAtual = new Date();
 		dataAtual.setHours(0, 0, 0, 0);
@@ -175,25 +182,18 @@ define([
 			mensagem.text("Data válida");
 			mensagem.removeClass("erro")
 			mensagem.addClass("sucesso")
-
-			return true;
 		} else {
 			mensagem.text("Data inválida");
 			mensagem.removeClass("sucesso")
 			mensagem.addClass("erro")
-
-			return false;
 		}
 	}
 
 	function validaFormulario() {
-		var data_de_nascimento = validardataDeNascimento();
-		var cpf = validaCPF();
-		var nome = validarNome();
 		validarUserIdDiscord();
-		var discord = !($('#alert-discord').hasClass("erro"));
-		
-		return data_de_nascimento && cpf && discord && nome;
+		validardataDeNascimento();
+		validaCPF();
+		validarNome();
 	}
 
 	function validarNome() {
@@ -207,8 +207,6 @@ define([
 			mensagem.text("");
 			mensagem.removeClass("erro");
 		};
-
-		return nome;
 	}
 
 	function validaCPF() {
