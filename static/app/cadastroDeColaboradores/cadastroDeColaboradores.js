@@ -108,7 +108,6 @@ define([
 
 	function editarCadastroColaborador() {
 		validaFormulario();
-		setTimeout(() => {
 			var discord = $('#alert-discord').hasClass("sucesso");
 			var nome = !$('#alert-nome').hasClass("erro");
 			var cpf = $('#alert-cpf').hasClass("sucesso");
@@ -132,8 +131,6 @@ define([
 						growl.deErro().exibir("Erro ao editar colaborador. Entre em contato com os Dev's responsáveis!");
 					});
 			}
-		}, 1000);
-
 	}
 
 	function validarUserIdDiscord() {
@@ -143,6 +140,7 @@ define([
 		if (userIdDiscord.length >= 17) {
 			$.ajax({
 				type: "GET",
+				async: false,
 				dataType: "json",
 				url: '/login/usario_discord/' + userIdDiscord,
 				success: function (data) {
