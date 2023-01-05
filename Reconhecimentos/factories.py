@@ -25,3 +25,4 @@ class FeedbackSCIFactory(factory.django.DjangoModelFactory):
   situacao = 'Aquele dia...'
   comportamento = 'Você fez tal coisa...'
   impacto = 'E o cliente ficou chateado'
+
