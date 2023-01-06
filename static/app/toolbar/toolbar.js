@@ -13,36 +13,36 @@
       template.exibirEm('header[data-js="toolbar"]', toolbarTemplate, sessaoDeUsuario);
 
       $('header[data-js="toolbar"]')
-        .off()
-        .show()
-        .on('click', 'a[data-js="pagina-inicial"]', paginaInicial)
-        .on('click', 'div[data-js="meu-perfil"]', meuPerfil)
-        .on('click', 'div[data-js="tratar-menu-mobile"]', tratarMenuMobile)
-        .on('click', 'a[data-js="ranking"]', ranking)
-        .on('click', 'a[data-js="sair"]', sair)    
-
-
+			.off()
+			.show()
+			.on('click', 'a[data-js="pagina-inicial"]', paginaInicial)
+			.on('click', 'div[data-js="meu-perfil"]', meuPerfil)
+			.on('click', 'div[data-js="tratar-menu-mobile"]', tratarMenuMobile)
+			.on('click', 'a[data-js="ranking"]', ranking)
+			.on('click', 'a[data-js="sair"]', sair)    
+			
+			
       
       $('div[data-js="buscaDeColaboradores"]').search({
         source: converterParaAutocomplete(data.colaboradores),
         onSelect: selecionar,
         error: {
-          noResults: 'Não encontrei ninguém :('
-        }
+					noResults: 'Não encontrei ninguém :('
+        },
       });
-
+			
       if (callback)
-        callback();
+			callback();
     });
   };
-
+	
   toolbarView.esconder = function() {
-    $('header[data-js="toolbar"]').hide(toolbarTemplate).empty();
+		$('header[data-js="toolbar"]').hide(toolbarTemplate).empty();
   };
-
+	
   function converterParaAutocomplete(colaboradores) {
-    return colaboradores.map(function(colaborador) {
-      colaborador.title = colaborador.nome;
+		return colaboradores.map(function(colaborador) {
+      colaborador.title = colaborador.nome.toUpperCase();
 
       return colaborador;
     });
