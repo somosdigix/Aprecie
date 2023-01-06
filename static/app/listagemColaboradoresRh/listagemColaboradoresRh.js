@@ -72,12 +72,15 @@ define([
 	function filtrarColaboradores(colaborador) {
 		var listagemPorNome = jQuery.extend(true, {}, listagem);
 		let nomeColaborador = colaborador.nome;
+		let colaboradorFiltrado = null;
 
-		let colaboradorFiltrado = listagemPorNome.colaboradores[0].filter(function (colaborador) {
-			if (colaborador.nome.toLowerCase() === nomeColaborador.toLowerCase()) {
-				return colaborador;
-			}
-		})
+		for (let index = 0; index < listagemPorNome.colaboradores.length; index++) {
+			listagemPorNome.colaboradores[index].filter(function (colaborador) {
+				if (colaborador.nome.toLowerCase() === nomeColaborador.toLowerCase()) {
+					colaboradorFiltrado = [colaborador];
+				}
+			})
+		}
 
 		template.exibirEm('div[data-js="lista-colaboradores-rh"]', listaColaboradoresTemplate, colaboradorFiltrado);
 	}
