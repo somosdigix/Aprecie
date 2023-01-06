@@ -31,6 +31,11 @@
         }
       });
 
+      let buscaInput = document.querySelector("#busca-toolbar");
+      buscaInput.addEventListener('keyup', () => {
+        buscaInput.value = remover_acentos_espaco(buscaInput.value);
+      })
+
       if (callback)
         callback();
     });

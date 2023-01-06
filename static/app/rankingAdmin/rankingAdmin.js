@@ -8,7 +8,7 @@ define([
 	"app/helpers/formatadorDeData",
 	"app/helpers/administradorHelper",
 	'roteador',
-], function ($, template, rankingAdminTemplate, rankingAdmin, filtrosRankingAdminTemplate, FiltroDataAdminViewModel,formatadorDeData, administradorHelper, roteador) {
+], function ($, template, rankingAdminTemplate, rankingAdmin, filtrosRankingAdminTemplate, FiltroDataAdminViewModel, formatadorDeData, administradorHelper, roteador) {
 	"use strict";
 
 	var self = {};
@@ -18,12 +18,12 @@ define([
 
 	self.inicializar = function (sandbox) {
 		_sandbox = sandbox;
-		
-		if (administradorHelper.ehAdministrador()){
+
+		if (administradorHelper.ehAdministrador()) {
 			template.exibir(rankingAdminTemplate);
 			carregarFiltrosRankingAdmin();
 			carregarRankingAdmin();
-	
+
 			$('#conteudo')
 				.on('click', 'input[data-js="todos"]', ordenaRankingPorPilar)
 				.on('click', 'input[data-js="feitos"]', ordenaRankingPorPilar)
@@ -32,9 +32,9 @@ define([
 				.on('click', 'input[data-js="fazerDiferente"]', ordenaRankingPorPilar)
 				.on('click', 'input[data-js="planejarEntregarAprender"]', ordenaRankingPorPilar)
 				.on('click', 'button[data-js="botao__ranking__adm"]', carregarRankingPeriodoDeDatas);
-	
+
 			$.getJSON('/login/obter_colaboradores/', function (data) {
-	
+
 				$('div[data-js="buscarColaboradorRanking"]').search({
 					source: converterParaAutocomplete(data.colaboradores),
 					onSelect: ordenaRankingPorNome,
@@ -42,12 +42,17 @@ define([
 						noResults: 'Não encontrei ninguém :('
 					}
 				});
-			});	
+
+				let buscaInput = document.querySelector("#input_busca_colaborador_ranking");
+				buscaInput.addEventListener('keyup', () => {
+					buscaInput.value = remover_acentos_espaco(buscaInput.value);
+				})
+			});
 		}
-		else{
+		else {
 			roteador.navegarPara('/paginaInicial');
 		}
-		
+
 	};
 
 	self.finalizar = function () {
@@ -66,7 +71,7 @@ define([
 			'data_inicio': dataHoje,
 			'data_fim': dataHoje
 		}
-	
+
 		criarRankingPorPeriodo(data);
 		document.getElementById('data_inicial').value = dataHoje;
 		document.getElementById('data_final').value = dataHoje;
@@ -130,7 +135,7 @@ define([
 		else if (pilarSelecionado == 'planejar_entregar_aprender') {
 			return colaborador.planejar_entregar_aprender;
 		}
-		else if (pilarSelecionado == 'reconhecimentos_feitos'){
+		else if (pilarSelecionado == 'reconhecimentos_feitos') {
 			return colaborador.reconhecimentos_feitos;
 		}
 	}

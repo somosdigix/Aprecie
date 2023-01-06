@@ -47,7 +47,7 @@ define([
 					selecionarPilarGlobal
 				)
 				.on("click", 'button[data-js="reconhecerGlobal"]', botaoReconhecer.reconhecerGlobal);
-				
+
 			$('div[data-js="botaoReconhecer"]').show();
 
 
@@ -65,6 +65,11 @@ define([
 				noResults: "Nenhum colaborador foi encontrado.",
 			},
 		});
+
+		let buscaInput = document.querySelector("#busca-botaoReconhecer");
+		buscaInput.addEventListener('keyup', () => {
+			buscaInput.value = remover_acentos_espaco(buscaInput.value);
+		})
 	};
 
 	botaoReconhecer.fecharModal = function () {
