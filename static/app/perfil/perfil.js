@@ -28,10 +28,6 @@
 					'div[data-js="exibir-reconhecimentos"]',
 					exibirReconhecimentos
 				);
-<<<<<<< HEAD
-=======
-
->>>>>>> MelhoriaFoto
 				if (sessaoDeUsuario.id === colaboradorId) {
 					$('div[data-js="switch-adm"]').hide();
 					administradorHelper.mostrarConteudoSeForAdministrador('div[data-js="menu__administrador"]');
