@@ -3,13 +3,13 @@
   'template',
   'text!app/toolbar/toolbarTemplate.html',
   'sessaoDeUsuario',
-], function($, template, toolbarTemplate, sessaoDeUsuario) {
+], function ($, template, toolbarTemplate, sessaoDeUsuario) {
   'use strict';
 
   var toolbarView = {};
 
-  toolbarView.exibir = function(callback) {
-    $.getJSON('/login/obter_colaboradores/', function(data) {
+  toolbarView.exibir = function (callback) {
+    $.getJSON('/login/obter_colaboradores/', function (data) {
       template.exibirEm('header[data-js="toolbar"]', toolbarTemplate, sessaoDeUsuario);
 
       $('header[data-js="toolbar"]')
@@ -19,10 +19,10 @@
         .on('click', 'div[data-js="meu-perfil"]', meuPerfil)
         .on('click', 'div[data-js="tratar-menu-mobile"]', tratarMenuMobile)
         .on('click', 'a[data-js="ranking"]', ranking)
-        .on('click', 'a[data-js="sair"]', sair)    
+        .on('click', 'a[data-js="sair"]', sair)
 
 
-      
+
       $('div[data-js="buscaDeColaboradores"]').search({
         source: converterParaAutocomplete(data.colaboradores),
         onSelect: selecionar,
@@ -36,20 +36,23 @@
     });
   };
 
-  toolbarView.esconder = function() {
+  toolbarView.esconder = function () {
     $('header[data-js="toolbar"]').hide(toolbarTemplate).empty();
   };
 
   function converterParaAutocomplete(colaboradores) {
-    return colaboradores.map(function(colaborador) {
-      colaborador.title = colaborador.nome;
-
+    return colaboradores.map(function (colaborador) {
+      colaborador.title = remover_acentos_espaco(colaborador.nome);
       return colaborador;
     });
   }
 
+  function remover_acentos_espaco(str) {
+    return str.normalize("NFD").replace(/[^a-zA-Z\s]/g, "");
+  }
+
   function selecionar(colaborador) {
-    require(['roteador'], function(roteador) {
+    require(['roteador'], function (roteador) {
       $('#colaborador').val('').blur();
 
       roteador.navegarPara('/perfil/' + colaborador.id);
@@ -57,19 +60,19 @@
   }
 
   function paginaInicial() {
-    require(['roteador'], function(roteador) {
+    require(['roteador'], function (roteador) {
       roteador.navegarPara('/paginaInicial');
     });
   }
 
   function meuPerfil() {
-    require(['roteador'], function(roteador) {
+    require(['roteador'], function (roteador) {
       roteador.navegarPara('/perfil/' + sessaoDeUsuario.id);
     });
   }
 
   function ranking() {
-    require(['roteador'], function(roteador) {
+    require(['roteador'], function (roteador) {
       roteador.navegarPara('/ranking');
     });
   }
@@ -82,13 +85,13 @@
     require([
       'app/helpers/cookie',
       'roteador'
-    ], function(cookie, roteador) {
+    ], function (cookie, roteador) {
       cookie.limpar();
       toolbarView.esconder();
       window.location = '/';
     });
-	}
-		
+  }
+
   return toolbarView;
 });
 

@@ -137,10 +137,13 @@ define([
 
 	function converterParaAutocomplete(colaboradores) {
 		return colaboradores.map(function (colaborador) {
-			colaborador.title = colaborador.nome;
-
+			colaborador.title = remover_acentos_espaco(colaborador.nome);
 			return colaborador;
 		});
+	}
+
+	function remover_acentos_espaco(str) {
+		return str.normalize("NFD").replace(/[^a-zA-Z\s]/g, "");
 	}
 
 	function ordenaRankingPorNome(colaborador) {
