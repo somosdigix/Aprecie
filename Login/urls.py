@@ -15,4 +15,5 @@ urlpatterns = [
   path(r'obter_logs_administradores/', views.obter_logs_administradores, name="obter_logs_administradores"),
   path(r'usario_discord/<str:usuario_id_do_chat>', views.validar_usuario_id_do_chat, name="validar_usuario_id_do_chat"),
   path(r'colaborador/<int:id_colaborador>', views.editar_colaboradores, name="editar_colaboradores"),
+	path(r'converter_maiusculo/', views.converter_nome_para_maiuscula, name="converter_maiusculo"),
 ]
