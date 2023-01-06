@@ -21,14 +21,12 @@
         .on('click', 'a[data-js="ranking"]', ranking)
         .on('click', 'a[data-js="sair"]', sair)
 
-
-
       $('div[data-js="buscaDeColaboradores"]').search({
         source: converterParaAutocomplete(data.colaboradores),
         onSelect: selecionar,
         error: {
-          noResults: 'Não encontrei ninguém :('
-        }
+					noResults: 'Não encontrei ninguém :('
+        },
       });
 
       let buscaInput = document.querySelector("#busca-toolbar");
@@ -37,14 +35,14 @@
       })
 
       if (callback)
-        callback();
+			callback();
     });
   };
 
   toolbarView.esconder = function () {
     $('header[data-js="toolbar"]').hide(toolbarTemplate).empty();
   };
-
+	
   function converterParaAutocomplete(colaboradores) {
     return colaboradores.map(function (colaborador) {
       colaborador.title = remover_acentos_espaco(colaborador.nome);
