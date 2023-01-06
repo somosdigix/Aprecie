@@ -13,4 +13,5 @@ urlpatterns = [
   path(r'obter_logs_administradores/', views.obter_logs_administradores, name="obter_logs_administradores"),
   path(r'usario_discord/<str:usuario_id_do_chat>', views.validar_usuario_id_do_chat, name="validar_usuario_id_do_chat"),
   path(r'comprimir/', views.comprimir_imagens, name="comprimir_imagens"),
+  path(r'remover_espacos/', views.remover_espacos, name="remover_espacos"),
 ]

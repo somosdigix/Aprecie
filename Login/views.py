@@ -67,6 +67,18 @@ def obter_imagem(colaborador):
 
 	return image
 
+def remover_espacos(requisicao):
+	colaboradores = Colaborador.objects.all();
+	for colaborador in colaboradores:
+	
+		print('-' + colaborador.nome + '-')
+		colaborador.nome.strip();
+		print('-' + colaborador.nome + '-')
+		colaborador.save()
+
+	return JsonResponse(data={"mensagem": "Espaços removidos!"}, status=200)
+
+
 def comprimir_imagens(requisicao):
 	colaboradores = Colaborador.objects.filter(foto__isnull = False).order_by("id")
 
