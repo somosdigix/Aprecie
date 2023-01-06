@@ -2,8 +2,12 @@
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from Reconhecimentos.models import Reconhecimento
 from bradocs4py import ValidadorCpf
-
+from io import BytesIO
+import base64
+from PIL import Image
 from Aprecie.base import ExcecaoDeDominio
+import re
+import os
 
 
 class CPF():
@@ -47,7 +51,23 @@ class Colaborador(AbstractBaseUser, PermissionsMixin):
 		if not nova_foto_em_base64.strip():
 			raise ExcecaoDeDominio('Foto deve ser informada')
 
-		self.foto = nova_foto_em_base64
+		# converter
+		padrao = r'^data:image/.+;base64,(?P<b64>.+)'
+		match = re.match(padrao, nova_foto_em_base64)
+		b64 = match.group('b64')
+		image = Image.open(BytesIO(base64.b64decode(b64)))
+			
+		rgb_im = image.convert('RGB')
+		rgb_im.save('foto.jpg')
+
+		with open("foto.jpg", "rb") as image_file:
+			image_comprimida = base64.b64encode(image_file.read())
+
+		teste = "data:image/jpeg;base64," + image_comprimida.decode("utf-8")
+
+		self.foto = teste
+		os.close("foto.jpg")
+		#TO DO apagar arquivo gerado
 
 	def reconhecer(self, reconhecedor, pilar, feedback):
 		if reconhecedor == self:

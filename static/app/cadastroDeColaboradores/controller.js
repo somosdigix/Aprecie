@@ -6,9 +6,9 @@ define([
 
 	var _self = {};
 
-	_self.exibir = function() {
+	_self.exibir = function(colaboradorId) {
 		gerenciadorDeModulos.registrar('cadastroDeColaboradores', cadastroDeColaboradores);
-		gerenciadorDeModulos.iniciarTodos();
+		gerenciadorDeModulos.iniciarTodos(colaboradorId);
 	};
 
 	_self.finalizar = function() {

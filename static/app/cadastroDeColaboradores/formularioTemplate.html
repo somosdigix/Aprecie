@@ -1,9 +1,10 @@
 <div class="bloco-cadastroUsuario">
 	<form id="formularioCadastro" class="formularioCadastro" method="post">
-		<h1 class="titulo-cadastro">Cadastro de Colaboradores</h1>
+		<h1 id="tituloPaginaCadastro" class="titulo-cadastro">Cadastro de Colaboradores</h1>
 		<div class="nome-colaborador campo">
 			<label class="label" for="">Nome Completo:</label>
 			<input id="nomeColaborador" type="text" required>
+			<span id="alert-nome" class="alerta"></span>
 		</div>
 
 		<div class="cpf-colaborador campo">
@@ -24,10 +25,17 @@
 			<span id="alert-discord" class="alerta"></span>
 		</div>
 
-		<button data-js="SalvarColaborador" id="salvarColaborador" type="submit"
-			class="ui botao-laranja button botao-entrar">
-			Incluir Colaborador
-		</button>
+		<div class="botoes">
+			<button data-js="RetornarFormulario" id="retornarFormulario" type="submit"
+				class="ui button botao-entrar">
+				Cancelar 
+			</button>
+
+			<button data-js="SalvarColaborador" id="salvarColaborador" type="reset"
+				class="ui botao-laranja button botao-entrar">
+				Incluir Colaborador
+			</button>
+		</div>
 	</form>
 </div>
 
@@ -94,4 +102,7 @@
 		font-family: "Arial";
 		color: #ffffff;
 	}
+
+	
+	
 </style>

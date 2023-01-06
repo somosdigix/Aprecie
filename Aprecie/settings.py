@@ -70,12 +70,8 @@ WSGI_APPLICATION = 'Aprecie.wsgi.application'
 
 DATABASES = {
 	'default': {
-		'ENGINE': 'django.db.backends.postgresql',
-		'NAME': 'd4s7ojkungeqr9',
-		'USER': 'postgres',
-		'PASSWORD': 'postgres',
-		'HOST': '127.0.0.1',
-		'PORT': '5433',
+		'ENGINE': 'django.db.backends.sqlite3',
+		'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
 	}
 }
 
@@ -121,6 +117,7 @@ else:
 	ADMIN_TOKEN = 'Basic dXN1YXJpb2xvY2FsOnNlbmhhbG9jYWw='
 	CHAT_WEBHOOK_URL = 'https://discord.com/api/webhooks/1035623511995191296/gA23jiZ6SRvDnsZtoUdFpvNbuOBRWzWiUmKnur_ZRxt9YSLfQtFLTw2wyNAO1W-5j8OP'
 	DISCORD_KEY = ''
+
 
 STATICFILES_FINDERS = (
 	"django.contrib.staticfiles.finders.FileSystemFinder",

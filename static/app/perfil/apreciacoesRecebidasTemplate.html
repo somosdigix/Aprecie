@@ -6,22 +6,61 @@
 <section class="feed-reconhecimentos caixa-feed">
 	<div class="container">
 		<div class="bloco-reconhecimento">
-			<img
-				class="img-reconhecedor"
-				src="{{ foto this.reconhecedor__id usar_miniatura=true}}"
-			/>
-
-			<div class="texto-reconhecimento">
-				{{#if this.pilar__nome}}
-				<strong data-id="1" data-js="ir-ao-perfil" class="apreciador">
-					{{ this.reconhecedor__nome }} em {{ this.pilar__nome }}
-				</strong>
-				{{/if}}
-
-				<div class="data-reconhecimento">{{ emDataLegivel this.data }}</div>
-
-				<p>{{this.feedback__descritivo}}</p>
-			</div>
+            
+            <div class="reconhecimento-recebido">
+                <img
+                    class="img-reconhecedor"
+                    src="{{ foto this.reconhecedor__id usar_miniatura=true}}"
+                />
+                <div class="texto-reconhecimento">
+                    {{#if this.pilar__nome}}
+                    <strong data-id="1" data-js="ir-ao-perfil" class="apreciador">
+                        {{ this.reconhecedor__nome }} em {{ this.pilar__nome }}
+                    </strong>
+                    {{/if}}
+    
+                    <div class="data-reconhecimento">{{ emDataLegivel this.data }}</div>
+    
+                    <p>{{this.feedback__descritivo}}</p>
+                </div>
+                {{#if this.agradecimentos.agradecimento_reconhecido}}
+                    {{#each this.agradecimentos.agradecimento_reconhecido}}
+                        <div class="agradecimento-recebido">
+                            <img class="img-reconhecedor"	src="{{ foto this.id_colaborador usar_miniatura=true}}"/>
+                            <div class="texto-reconhecimento">
+                                <strong data-id="1" data-js="ir-ao-perfil" class="apreciador">
+                                    {{ this.nome_colaborador }} respondeu:
+                                </strong>
+                        
+                                <div class="data-reconhecimento">{{ emDataLegivel this.data }}</div>
+                
+                                <p>{{this.mensagem}}</p>
+                            </div>
+                        </div>
+                    {{/each}}
+                    {{#if this.agradecimentos.agradecimento_reconhecedor}}
+                        {{#each this.agradecimentos.agradecimento_reconhecedor}}
+                            <div class="agradecimento-recebido">
+                                <img class="img-reconhecedor"	src="{{ foto this.id_colaborador usar_miniatura=true}}"/>
+                                <div class="texto-reconhecimento">
+                                    <strong data-id="1" data-js="ir-ao-perfil" class="apreciador">
+                                        {{ this.nome_colaborador }} respondeu:
+                                    </strong>
+                            
+                                    <div class="data-reconhecimento">{{ emDataLegivel this.data }}</div>
+                    
+                                    <p>{{this.mensagem}}</p>
+                                </div>
+                            </div>
+                        {{/each}}
+                    {{/if}}
+                {{else}}
+                    <div class="botao-agradecer" data-js="botao__agradecer" style="display: none;">
+                        <button onclick="abrirModalAdicionarAgradecimento('{{this.id}}', '{{this.reconhecido__id}}')"> Agradecer </button>
+                    </div>
+                {{/if}}               
+            </div>
+            
 			<button id="modal-botao" data-js="modal-botao" onClick="obterApreciacao('{{this.pilar__nome}}', '{{this.feedback__descritivo}}', '{{this.reconhecedor__nome}}', '{{this.reconhecido__nome}}')" name="compartilhar">
 				<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-share" viewBox="0 0 16 16" id="compartilhar" >
 					<path d="M13.5 1a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.499 2.499 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5zm-8.5 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm11 5.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z" />
@@ -37,7 +76,6 @@
 
 <div id="container">
     <div class="modal" id="modal"></div>
-
     <div class="corpo-modal" id="corpo-modal">
         <div class="card" id="card">
             <div class="p">
