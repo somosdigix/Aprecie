@@ -70,7 +70,7 @@ define([
 		if (discord && nome && cpf && data_de_nascimento) {
 			var colaboradores = [{
 				cpf: $('#cpf').val(),
-				nome: $('#nomeColaborador').val(),
+				nome: ($('#nomeColaborador').val()).toUpperCase(),
 				data_de_nascimento: $('#dataDeNascimento').val(),
 				usuario_id_do_chat: $('#idDiscord').val(),
 			}]
@@ -117,12 +117,12 @@ define([
 				var colaborador =
 				{
 					cpf: $('#cpf').val().replaceAll('.', '').replace('-', ''),
-					nome: $('#nomeColaborador').val(),
+					nome: ($('#nomeColaborador').val()).toUpperCase(),
 					data_de_nascimento: $('#dataDeNascimento').val(),
 					usuario_id_do_chat: $('#idDiscord').val(),
 				}
 
-				var dados = JSON.stringify(colaborador)
+				var dados = JSON.stringify(colaborador)	
 				$.post("/login/colaborador/" + _colaboradorId, dados,
 					function () {
 						growl.deSucesso().exibir("Colaborador editado com sucesso.");

@@ -208,3 +208,5 @@ def validar_usuario_id_do_chat(requisicao, usuario_id_do_chat):
 		return JsonResponse({'status': 200,'username': respostaFormatada['username']})
 	else:
 		return JsonResponse({'status': 404, 'message': respostaFormatada['message']})
+
+	
