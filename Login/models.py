@@ -66,7 +66,7 @@ class Colaborador(AbstractBaseUser, PermissionsMixin):
 		teste = "data:image/jpeg;base64," + image_comprimida.decode("utf-8")
 
 		self.foto = teste
-		os.close("foto.jpg")
+		image.close()
 		#TO DO apagar arquivo gerado
 
 	def reconhecer(self, reconhecedor, pilar, feedback):
