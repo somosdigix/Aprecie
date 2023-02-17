@@ -2,6 +2,7 @@
 from Reconhecimentos import views
 
 urlpatterns = [
+    path(r'agradecer/', views.agradecer, name="agradecer"),
     path(r'pilares/', views.todos_os_pilares_e_colaboradores, name="todos_os_pilares_e_colaboradores"),
     path(r'reconhecer/', views.reconhecer, name="reconhecer"),
     path(r'ultimos/', views.ultimos_reconhecimentos, name="ultimos_reconhecimentos"),
@@ -18,5 +19,4 @@ urlpatterns = [
     path(r'historico_alteracoes/', views.historico_alteracoes, name="historico_alteracoes"),
     path(r'ranking_por_periodo/', views.ranking_por_periodo, name="ranking_por_periodo"),
     path(r'obter_notificacoes_administrador/', views.obter_notificacoes_do_administrador, name="obter_notificacoes_do_administrador"),
-    url(r'^agradecer/$', views.agradecer, name="agradecer"),
 ]

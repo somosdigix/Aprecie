@@ -13,14 +13,15 @@
 			'/': [middlewareDeTransicaoDeTela, limparTela, login],
 			'/login': [middlewareDeAutenticacao, middlewareDeAtualizacaoComGoogleAnalytics, middlewareDeToolbar, middlewareDeTransicaoDeTela, limparTela, login],
 			'/paginaInicial': [middlewareBotaoReconhecer, middlewareDeAutenticacao, middlewareDeAtualizacaoComGoogleAnalytics, middlewareDeToolbar, middlewareDeTransicaoDeTela, limparTela, paginaInicial],
-			'/estatisticas': [middlewareBotaoReconhecer ,middlewareDeAutenticacao, middlewareDeAtualizacaoComGoogleAnalytics, middlewareDeToolbar, middlewareDeTransicaoDeTela, limparTela, estatisticas],
+			'/estatisticas': [middlewareBotaoReconhecer, middlewareDeAutenticacao, middlewareDeAtualizacaoComGoogleAnalytics, middlewareDeToolbar, middlewareDeTransicaoDeTela, limparTela, estatisticas],
 			'/perfil/:colaboradorId': [middlewareBotaoReconhecer, middlewareDeAutenticacao, middlewareDeAtualizacaoComGoogleAnalytics, middlewareDeToolbar, middlewareDeTransicaoDeTela, limparTela, perfil],
 			'/ranking': [middlewareBotaoReconhecer, middlewareDeAutenticacao, middlewareDeAtualizacaoComGoogleAnalytics, middlewareDeToolbar, middlewareDeTransicaoDeTela, limparTela, ranking],
-			'/rankingAdmin' : [middlewareBotaoReconhecer, middlewareDeAutenticacao, middlewareDeAtualizacaoComGoogleAnalytics, middlewareDeToolbar, middlewareDeTransicaoDeTela, limparTela, rankingAdmin],
+			'/rankingAdmin': [middlewareBotaoReconhecer, middlewareDeAutenticacao, middlewareDeAtualizacaoComGoogleAnalytics, middlewareDeToolbar, middlewareDeTransicaoDeTela, limparTela, rankingAdmin],
 			'/gerenciadorDeCiclos': [middlewareBotaoReconhecer, middlewareDeAutenticacao, middlewareDeAtualizacaoComGoogleAnalytics, middlewareDeToolbar, middlewareDeTransicaoDeTela, limparTela, gerenciadorDeCiclos],
 			'/logAdministrador': [middlewareBotaoReconhecer, middlewareDeAutenticacao, middlewareDeAtualizacaoComGoogleAnalytics, middlewareDeToolbar, middlewareDeTransicaoDeTela, limparTela, logAdministrador],
 			'/cadastroDeColaboradores': [middlewareBotaoReconhecer, middlewareDeAutenticacao, middlewareDeAtualizacaoComGoogleAnalytics, middlewareDeToolbar, middlewareDeTransicaoDeTela, limparTela, cadastroDeColaboradores],
-
+			'/cadastroDeColaboradores/:colaboradorId': [middlewareBotaoReconhecer, middlewareDeAutenticacao, middlewareDeAtualizacaoComGoogleAnalytics, middlewareDeToolbar, middlewareDeTransicaoDeTela, limparTela, edicaoDeColaboradores],
+			'/listagemColaboradoresRh': [middlewareBotaoReconhecer, middlewareDeAutenticacao, middlewareDeAtualizacaoComGoogleAnalytics, middlewareDeToolbar, middlewareDeTransicaoDeTela, limparTela, listagemColaboradoresRh],
 		};
 
 		function limparTela() {
@@ -40,9 +41,23 @@
 				controller.exibir();
 			});
 		}
-		
+
 		function cadastroDeColaboradores() {
 			require(['app/cadastroDeColaboradores/controller'], function (controller) {
+				_controllerAtivo = controller;
+				controller.exibir();
+			});
+		}
+
+		function edicaoDeColaboradores(colaboradorId) {
+			require(['app/cadastroDeColaboradores/controller'], function (controller) {
+				_controllerAtivo = controller;
+				controller.exibir(parseInt(colaboradorId));
+			});
+		}
+
+		function listagemColaboradoresRh() {
+			require(['app/listagemColaboradoresRh/controller'], function (controller) {
 				_controllerAtivo = controller;
 				controller.exibir();
 			});
@@ -61,15 +76,15 @@
 				controller.exibir(parseInt(colaboradorId));
 			});
 		}
-		
-		function ranking() { 
+
+		function ranking() {
 			require(['app/ranking/controller'], function (controller) {
 				_controllerAtivo = controller;
 				controller.exibir();
 			});
 		}
 
-		function logAdministrador() { 
+		function logAdministrador() {
 			require(['app/logAdministrador/controller'], function (controller) {
 				_controllerAtivo = controller;
 				controller.exibir();
@@ -83,7 +98,7 @@
 			});
 		}
 
-		function rankingAdmin(){
+		function rankingAdmin() {
 			require(['app/rankingAdmin/controller'], function (controller) {
 				_controllerAtivo = controller;
 				controller.exibir();
@@ -144,8 +159,8 @@
 		});
 	}
 
-	function middlewareBotaoReconhecer(){
-		require(['app/botaoReconhecer/botaoReconhecer'], function(botaoReconhecer) { 
+	function middlewareBotaoReconhecer() {
+		require(['app/botaoReconhecer/botaoReconhecer'], function (botaoReconhecer) {
 			if (servicoDeAutenticacao.jaEstaAutenticado() && roteador.paginaAtual() !== '/login' && !botaoReconhecer.existe()) {
 				botaoReconhecer.exibir();
 			}

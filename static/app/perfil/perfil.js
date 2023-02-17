@@ -5,8 +5,10 @@
 	'sessaoDeUsuario',
 	'app/botaoReconhecer/botaoReconhecer',
 	'app/helpers/administradorHelper',
-	'app/helpers/recursosHumanosHelper'
-], function ($, template, perfilTemplate, sessaoDeUsuario, botaoReconhecer, administradorHelper, recursosHumanosHelper) {
+	'app/helpers/recursosHumanosHelper',
+	"growl",
+	"roteador"
+], function ($, template, perfilTemplate, sessaoDeUsuario, botaoReconhecer, administradorHelper, recursosHumanosHelper, growl, roteador) {
 	'use strict';
 
 	var _self = {};
@@ -14,22 +16,17 @@
 
 	_self.inicializar = function (sandbox, colaboradorId) {
 		_sandbox = sandbox;
-		
 		$.getJSON(
 			"/reconhecimentos/colaborador/" + colaboradorId,
 			function (reconhecimentosDoColaborador) {
 				template.exibir(perfilTemplate, reconhecimentosDoColaborador);
-
-        administradorHelper.mostrarConteudoSeForAdministrador('div[data-js="switch-adm"]');
-				
 				switchAdministrador(reconhecimentosDoColaborador, colaboradorId);
-				
+
 				$("#conteudo").on(
 					"click",
 					'div[data-js="exibir-reconhecimentos"]',
 					exibirReconhecimentos
-					);
-					
+				);
 				if (sessaoDeUsuario.id === colaboradorId) {
 					$('div[data-js="switch-adm"]').hide();
 					administradorHelper.mostrarConteudoSeForAdministrador('div[data-js="menu__administrador"]');
@@ -60,9 +57,10 @@
 					$('#conteudo')
 						.on("click", 'button[class="botao--fecharModalAgradecimento"]', fecharModalAdicionarAgradecimento)
 						.on("submit", 'form[data-js="form_adicionar_agradecimento"]', agradecer);
-					
-					obterNotificacaoDoAdministrador();
 				} else {
+					if (!sessaoDeUsuario.administrador) {
+						$('div[data-js="switch-adm"]').hide();
+					}
 					$('div[data-js="menu__administrador"]').hide();
 					$('div[data-js="apreciacao"]').show();
 					$('div[data-js="foto"]').removeClass("alterar-foto");
@@ -112,6 +110,11 @@
 			roteador.navegarPara('/cadastroDeColaboradores');
 		});
 	}
+	function ListagemRH() {
+		require(['roteador'], function (roteador) {
+			roteador.navegarPara('/listagemColaboradoresRh');
+		});
+	}
 
 	function configurarMenuAdministrador() {
 		$("#conteudo")
@@ -123,6 +126,8 @@
 	function configurarMenuRecursosHumanos() {
 		$("#conteudo")
 			.on('click', 'a[data-js="cadastro-recursos_humanos"]', casdastroRH)
+		$("#conteudo")
+			.on('click', 'a[data-js="listagem-recursos_humanos"]', ListagemRH)
 	}
 
 	function abrirModalCrop() {
@@ -137,21 +142,21 @@
 		document.getElementById('modal__adicionar-agradecimento').style.display = "none";
 	}
 
-	function agradecer(event){
+	function agradecer(event) {
 		event.preventDefault();
 		var data = {
-			'id_reconhecimento_vinculado':  $('#id_reconhecimento_vinculado').val(),
+			'id_reconhecimento_vinculado': $('#id_reconhecimento_vinculado').val(),
 			'id_colaborador_que_agradeceu': $('#id_colaborador_que_agradeceu').val(),
 			'agradecimento': $('#agradecimento').val(),
 		}
 
 		$.post('/reconhecimentos/agradecer/', data, function () {
-            growl.deSucesso().exibir('Agradecimento feito com sucesso');
-            roteador.atualizar();
-    	})
-	};  
-	
-	function obterStatusDeNotificacao(){
+			growl.deSucesso().exibir('Agradecimento feito com sucesso');
+			roteador.atualizar();
+		})
+	};
+
+	function obterStatusDeNotificacao() {
 		let statusNotificacao = localStorage.getItem('notificacao');
 		return JSON.parse(statusNotificacao);
 	}
@@ -205,8 +210,9 @@
 		} else {
 			document.getElementById("toggle").checked = false;
 		}
-		
+
 		$("#toggle").change(function () {
+			console.log("entrou!")
 			if (administradorHelper.ehAdministrador()) {
 				if (this.checked) {
 					if (confirmaAlteracao()) {
@@ -303,5 +309,5 @@ function abrirModalAdicionarAgradecimento(idReconhecimento, idColaborador) {
 	inputIdReconhecimento.value = idReconhecimento;
 
 	var inputIdColaborador = document.getElementById('id_colaborador_que_agradeceu');
-	inputIdColaborador.value = idColaborador;	
+	inputIdColaborador.value = idColaborador;
 }
