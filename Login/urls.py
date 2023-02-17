@@ -1,7 +1,11 @@
 from django.urls import path
 from Login import views
+from rest_framework_swagger.views import get_swagger_view
+
+schema_view = get_swagger_view(title='Aprecie API')
 
 urlpatterns = [
+  path(r'api/', schema_view),
   path(r'entrar/', views.entrar, name="entrar"),
   path(r'alterar_foto/', views.alterar_foto, name="alterar_foto"),
   path(r'foto/<int:id_do_colaborador>', views.foto_do_perfil),

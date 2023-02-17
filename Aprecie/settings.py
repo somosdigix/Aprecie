@@ -20,6 +20,7 @@ INSTALLED_APPS = (
 	'django.contrib.sessions',
 	'django.contrib.contenttypes',
 	'django.contrib.staticfiles',
+	'rest_framework_swagger',
 	'Login',
 	'Reconhecimentos',
 	'compressor',

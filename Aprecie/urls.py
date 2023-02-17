@@ -1,10 +1,13 @@
-from django.urls import include, path
-from django.shortcuts import render, redirect
+from django.urls import include, path, url
 from django.conf.urls.static import static
 from django.conf import settings
 from Aprecie import views
+from rest_framework_swagger.views import get_swagger_view
+
+schema_view = get_swagger_view(title='Aprecie API')
 
 urlpatterns = [
+    path(r'api/', schema_view),
     path(r'', views.login),
     path(r'app/', views.index),
     path(r'login/', include('Login.urls')),
