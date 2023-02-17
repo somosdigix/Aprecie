@@ -20,6 +20,7 @@ INSTALLED_APPS = (
 	'django.contrib.sessions',
 	'django.contrib.contenttypes',
 	'django.contrib.staticfiles',
+	'rest_framework',
 	'rest_framework_swagger',
 	'Login',
 	'Reconhecimentos',
@@ -125,3 +126,7 @@ STATICFILES_FINDERS = (
 	"django.contrib.staticfiles.finders.AppDirectoriesFinder",
 	'compressor.finders.CompressorFinder', 
 )
+
+REST_FRAMEWORK = {
+	'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
+}
