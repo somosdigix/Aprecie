@@ -11,6 +11,8 @@ define([
 		self.id_do_reconhecido = $('#idDoReconhecido').val();
 		self.id_do_pilar = $('div.escolhaPilar :radio:checked').val();
 		self.descritivo = $('.elogio').val();
+		self.email_do_reconhecedor = 'higornucci@digix.com.br';
+		self.email_do_reconhecido = 'clevertonxavier@digix.com.br';
 	}
 
 	return ReconhecerGlobalViewModel;

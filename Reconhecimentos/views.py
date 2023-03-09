@@ -9,6 +9,8 @@ from rolepermissions.decorators import has_role_decorator
 from Aprecie.apps import AprecieConfig
 from django.db import connection
 from datetime import date, datetime, timedelta
+import logging
+logger = logging.getLogger(__name__)
 
 def reconhecer(requisicao):
   id_do_reconhecedor = requisicao.POST['id_do_reconhecedor']
@@ -25,6 +27,7 @@ def reconhecer(requisicao):
     pilar = Pilar.objects.get(id = id_do_pilar)
     feedback = Feedback.objects.create(descritivo = descritivo)
     reconhecido.reconhecer(reconhecedor, pilar, feedback)
+    logger.warning('reconheceu')
     Notificacoes.notificar_no_chat_msteams(reconhecedor, reconhecido, pilar)
     definir_data_de_publicacao(reconhecedor)
 
