@@ -9,6 +9,9 @@ SECRET_KEY = 'j@6p9^mw-rp$jwrk^hp7p@^cx=xo1siv**2!395vu@2rmd0z@8'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+# Variável que decide qual o canal de comunicação (DISCORD, MSTEAMS)
+COMMUNICATION_CHANNEL = 'DISCORD'
+
 ALLOWED_HOSTS = [
 	'aprecie.herokuapp.com',
 	'aprecie.digix.com.br',
@@ -115,7 +118,7 @@ if IN_RELEASE_ENV:
 	# COMPRESS_ROOT = STATIC_ROOT
 else:
 	ADMIN_TOKEN = 'Basic dXN1YXJpb2xvY2FsOnNlbmhhbG9jYWw='
-	CHAT_WEBHOOK_URL = 'https://discord.com/api/webhooks/1035623511995191296/gA23jiZ6SRvDnsZtoUdFpvNbuOBRWzWiUmKnur_ZRxt9YSLfQtFLTw2wyNAO1W-5j8OP'
+	CHAT_WEBHOOK_URL = 'https://somosdigix.webhook.office.com/webhookb2/da1ea293-f7a3-4eb0-bb87-0b31a31d0f64@0b7d0763-4b89-40fa-9dec-6eed7d82aad4/IncomingWebhook/ac427f9971de451fbd26cb672563c32f/ff8eb29b-e634-4db9-8d37-b7cf4f4c00d0'
 	DISCORD_KEY = ''
 
 

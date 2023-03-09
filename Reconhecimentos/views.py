@@ -12,18 +12,20 @@ from datetime import date, datetime, timedelta
 
 def reconhecer(requisicao):
   id_do_reconhecedor = requisicao.POST['id_do_reconhecedor']
+  email_do_reconhecedor = requisicao.POST['email_do_reconhecedor']
   id_do_reconhecido = requisicao.POST['id_do_reconhecido']
+  email_do_reconhecido = requisicao.POST['email_do_reconhecido']
   id_do_pilar = requisicao.POST['id_do_pilar']
   descritivo = requisicao.POST['descritivo']
 
-  reconhecedor = Colaborador.objects.get(id = id_do_reconhecedor)
+  reconhecedor = Colaborador.objects.get(id = id_do_reconhecedor, email = email_do_reconhecedor)
   
   if verificar_ultima_data_de_publicacao(reconhecedor):
-    reconhecido = Colaborador.objects.get(id = id_do_reconhecido)
+    reconhecido = Colaborador.objects.get(id = id_do_reconhecido, email = email_do_reconhecido)
     pilar = Pilar.objects.get(id = id_do_pilar)
     feedback = Feedback.objects.create(descritivo = descritivo)
     reconhecido.reconhecer(reconhecedor, pilar, feedback)
-    Notificacoes.notificar_no_chat(reconhecedor, reconhecido, pilar)
+    Notificacoes.notificar_no_chat_msteams(reconhecedor, reconhecido, pilar)
     definir_data_de_publicacao(reconhecedor)
 
     return JsonResponse({})
