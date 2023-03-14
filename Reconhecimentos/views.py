@@ -26,7 +26,7 @@ def reconhecer(requisicao):
     feedback = Feedback.objects.create(descritivo = descritivo)
     reconhecido.reconhecer(reconhecedor, pilar, feedback)
     logger.warning('reconheceu')
-    Notificacoes.notificar_no_chat_msteams(reconhecedor, reconhecido, pilar)
+    Notificacoes.notificar_no_chat_msteams(reconhecedor, reconhecido, pilar, descritivo)
     definir_data_de_publicacao(reconhecedor)
 
     return JsonResponse({})
