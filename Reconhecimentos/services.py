@@ -24,9 +24,9 @@ class Notificacoes():
     def notificar_no_chat_msteams(reconhecedor, reconhecido, pilar):
         arroba = '@'
         logger.warning('entrou na notificação')
-        mensagem = '**<@{0}>** acabou de ser reconhecido(a) em **{1}** por **<@{2}>**. Olha lá: http://aprecie.digix.com.br'.format(reconhecido.email, pilar.nome, reconhecedor.email)
-        myTeamsMessage = pymsteams.connectorcard('https://somosdigix.webhook.office.com/webhookb2/da1ea293-f7a3-4eb0-bb87-0b31a31d0f64@0b7d0763-4b89-40fa-9dec-6eed7d82aad4/IncomingWebhook/ac427f9971de451fbd26cb672563c32f/ff8eb29b-e634-4db9-8d37-b7cf4f4c00d0')
-
+        mensagem = '{0} acabou de ser reconhecido(a) em {1} por {2}. Olha lá: http://aprecie.digix.com.br'.format(reconhecido.nome, pilar.nome, reconhecedor.nome)
+        myTeamsMessage = pymsteams.connectorcard(settings.CHAT_WEBHOOK_URL)
+        myTeamsMessage.text(mensagem)
         myTeamsMessage.payload = {
             "type": "message",
             "attachments": [
@@ -37,7 +37,7 @@ class Notificacoes():
                     "body": [
                         {
                         "type": "TextBlock",
-                        "text": "Hello {4}{0} você foi reconhecido por {4}{1}".format(reconhecido.email, reconhecedor.nome, reconhecedor.email, reconhecido.nome, arroba)
+                        "text": mensagem
                         }
                     ],
                     "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
@@ -48,7 +48,7 @@ class Notificacoes():
                                 "type": "mention",
                                 "text": reconhecedor.nome,
                                 "mentioned": {
-                                    "id": arroba + reconhecedor.email,
+                                    "id": 'ff8eb29b-e634-4db9-8d37-b7cf4f4c00d0',
                                     "name": reconhecedor.nome,
                                 }
                             }
@@ -57,4 +57,21 @@ class Notificacoes():
                 }
             }]
         }
+
+        # message_payload = {
+        #     "@type": "MessageCard",
+        #     "@context": "http://schema.org/extensions",
+        #             "text": mensagem,
+        #     "mentions": [
+        #         {
+        #             "mri": f"mention:ff8eb29b-e634-4db9-8d37-b7cf4f4c00d0",
+        #             "text": reconhecido.nome,
+        #             "id": "ff8eb29b-e634-4db9-8d37-b7cf4f4c00d0"
+        #                 }
+        #     ]
+        # }
+        # myTeamsMessage.payload = message_payload
         myTeamsMessage.send()
+        logger.warning('enviou a notificação')
+        logger.warning(reconhecido)
+        logger.warning(reconhecedor)
