@@ -25,7 +25,6 @@ def reconhecer(requisicao):
     pilar = Pilar.objects.get(id = id_do_pilar)
     feedback = Feedback.objects.create(descritivo = descritivo)
     reconhecido.reconhecer(reconhecedor, pilar, feedback)
-    logger.warning('reconheceu')
     Notificacoes.notificar_no_chat_msteams(reconhecedor, reconhecido, pilar, descritivo)
     definir_data_de_publicacao(reconhecedor)
 

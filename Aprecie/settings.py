@@ -108,7 +108,7 @@ COMPRESS_ROOT = os.path.join(BASE_DIR, "static")
 if IN_RELEASE_ENV:
 	# URL_DO_AMBIENTE = os.environ['APP_DNS']
 	ADMIN_TOKEN = os.environ['ADMIN_TOKEN']
-	CHAT_WEBHOOK_URL = os.environ['CHAT_WEBHOOK_URL']
+	CHAT_WEBHOOK_URL_TEAMS = os.environ['CHAT_WEBHOOK_URL_TEAMS']
 	DISCORD_KEY = os.environ['DISCORD_KEY']
 
 	db_from_env = dj_database_url.config(conn_max_age=500)
@@ -118,7 +118,7 @@ if IN_RELEASE_ENV:
 	# COMPRESS_ROOT = STATIC_ROOT
 else:
 	ADMIN_TOKEN = 'Basic dXN1YXJpb2xvY2FsOnNlbmhhbG9jYWw='
-	CHAT_WEBHOOK_URL = 'https://somosdigix.webhook.office.com/webhookb2/da1ea293-f7a3-4eb0-bb87-0b31a31d0f64@0b7d0763-4b89-40fa-9dec-6eed7d82aad4/IncomingWebhook/ac427f9971de451fbd26cb672563c32f/ff8eb29b-e634-4db9-8d37-b7cf4f4c00d0'
+	CHAT_WEBHOOK_URL_TEAMS = ''
 	DISCORD_KEY = ''
 
 
