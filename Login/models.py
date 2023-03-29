@@ -16,7 +16,7 @@ class CPF():
 		self.eh_valido = ValidadorCpf.validar(valor)
 
 	def __str__(self) -> str:
-			return self.valor
+		return self.valor
 
 
 class Colaborador(AbstractBaseUser, PermissionsMixin):
