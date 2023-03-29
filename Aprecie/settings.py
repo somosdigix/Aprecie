@@ -9,9 +9,6 @@ SECRET_KEY = 'j@6p9^mw-rp$jwrk^hp7p@^cx=xo1siv**2!395vu@2rmd0z@8'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-# Variável que decide qual o canal de comunicação (DISCORD, MSTEAMS)
-COMMUNICATION_CHANNEL = 'DISCORD'
-
 ALLOWED_HOSTS = [
 	'aprecie.herokuapp.com',
 	'aprecie.digix.com.br',

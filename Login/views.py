@@ -39,7 +39,6 @@ def entrar(requisicao):
 	data = {
       'id_do_colaborador': colaborador_autenticado.id,
 	  'nome_do_colaborador': colaborador_autenticado.primeiro_nome,
-	  'email': colaborador_autenticado.email,
 	  'administrador': colaborador_autenticado.administrador,
 	  'recursos_humanos': has_role(colaborador_autenticado, 'recursos_humanos')
 	}

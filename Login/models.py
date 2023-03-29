@@ -23,7 +23,6 @@ class Colaborador(AbstractBaseUser, PermissionsMixin):
 	id = models.AutoField(primary_key=True)
 	cpf = models.CharField(max_length=11, unique=True)
 	nome = models.CharField(max_length=200)
-	email = models.CharField(max_length=200, null=True)
 	data_de_nascimento = models.DateField()
 	foto = models.TextField(default=None, null=True)
 	usuario_id_do_chat = models.CharField(max_length=100, null=True)

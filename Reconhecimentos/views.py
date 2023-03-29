@@ -9,8 +9,6 @@ from rolepermissions.decorators import has_role_decorator
 from Aprecie.apps import AprecieConfig
 from django.db import connection
 from datetime import date, datetime, timedelta
-import logging
-logger = logging.getLogger(__name__)
 
 def reconhecer(requisicao):
   id_do_reconhecedor = requisicao.POST['id_do_reconhecedor']

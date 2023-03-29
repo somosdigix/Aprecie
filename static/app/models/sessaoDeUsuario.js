@@ -7,7 +7,6 @@ define(function() {
 		sessaoDeUsuario.foto = null;
 		sessaoDeUsuario.administrador = JSON.parse(colaborador.administrador);
 		sessaoDeUsuario.recursos_humanos = JSON.parse(colaborador.recursos_humanos);
-		sessaoDeUsuario.email = colaborador.email;
 	};
 
 	sessaoDeUsuario.estaVazia = function() {

@@ -1,9 +1,6 @@
-﻿from discord import SyncWebhook
-import pymsteams
-import logging
+﻿import pymsteams
 
 from Aprecie import settings
-logger = logging.getLogger(__name__)
 
 class Notificacoes():
 
