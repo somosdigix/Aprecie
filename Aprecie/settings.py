@@ -105,6 +105,7 @@ COMPRESS_ROOT = os.path.join(BASE_DIR, "static")
 if IN_RELEASE_ENV:
 	# URL_DO_AMBIENTE = os.environ['APP_DNS']
 	ADMIN_TOKEN = os.environ['ADMIN_TOKEN']
+	CHAT_WEBHOOK_URL = os.environ['CHAT_WEBHOOK_URL']
 	CHAT_WEBHOOK_URL_TEAMS = os.environ['CHAT_WEBHOOK_URL_TEAMS']
 	DISCORD_KEY = os.environ['DISCORD_KEY']
 
@@ -116,6 +117,7 @@ if IN_RELEASE_ENV:
 else:
 	ADMIN_TOKEN = 'Basic dXN1YXJpb2xvY2FsOnNlbmhhbG9jYWw='
 	CHAT_WEBHOOK_URL_TEAMS = ''
+	CHAT_WEBHOOK_URL = ''
 	DISCORD_KEY = ''
 
 
