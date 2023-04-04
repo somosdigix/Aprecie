@@ -119,7 +119,7 @@ define([
 
 		setTimeout(() => {
 			window.location.reload(true);
-		}, 750);
+		}, 1500);
 	}
 
 
