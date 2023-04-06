@@ -15,7 +15,7 @@ ALLOWED_HOSTS = [
 	'127.0.0.1'
 ]
 
-INSTALLED_APPS = (
+INSTALLED_APPS = [
 	'django.contrib.auth',
 	'django.contrib.sessions',
 	'django.contrib.contenttypes',
@@ -25,19 +25,22 @@ INSTALLED_APPS = (
 	'compressor',
 	'Aprecie.apps.AprecieConfig',
 	'rolepermissions',
-)
+]
 
-MIDDLEWARE = (
+MIDDLEWARE = [
+	'django.middleware.security.SecurityMiddleware',
 	'django.contrib.sessions.middleware.SessionMiddleware',
 	'django.contrib.auth.middleware.AuthenticationMiddleware',
 	'django.middleware.common.CommonMiddleware',
 	'django.middleware.clickjacking.XFrameOptionsMiddleware',
-	'django.middleware.security.SecurityMiddleware',
 	'Aprecie.middlewares.ProcessadorDeExcecao',
 	'Aprecie.middlewares.TimezoneMiddleware',
 	'Aprecie.middlewares.LoginObrigatorioMiddleware',
 	'Aprecie.middlewares.PermiteUsoComTokenDeAdmin',
-)
+]
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SECURE_SSL_REDIRECT = True
 
 ROLEPERMISSIONS_MODULE = 'Login.roles'
 
