@@ -38,5 +38,6 @@ Pillow = "==9.2.0"
 apscheduler = "*"
 "discord.py" = "==2.0.1"
 update = "*"
+pymsteams = {extras = ["async"], version = "*"}
 
 [dev-packages]

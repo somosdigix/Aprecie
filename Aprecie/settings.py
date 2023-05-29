@@ -15,7 +15,7 @@ ALLOWED_HOSTS = [
 	'127.0.0.1'
 ]
 
-INSTALLED_APPS = (
+INSTALLED_APPS = [
 	'django.contrib.auth',
 	'django.contrib.sessions',
 	'django.contrib.contenttypes',
@@ -25,19 +25,22 @@ INSTALLED_APPS = (
 	'compressor',
 	'Aprecie.apps.AprecieConfig',
 	'rolepermissions',
-)
+]
 
-MIDDLEWARE = (
+MIDDLEWARE = [
+	'django.middleware.security.SecurityMiddleware',
 	'django.contrib.sessions.middleware.SessionMiddleware',
 	'django.contrib.auth.middleware.AuthenticationMiddleware',
 	'django.middleware.common.CommonMiddleware',
 	'django.middleware.clickjacking.XFrameOptionsMiddleware',
-	'django.middleware.security.SecurityMiddleware',
 	'Aprecie.middlewares.ProcessadorDeExcecao',
 	'Aprecie.middlewares.TimezoneMiddleware',
 	'Aprecie.middlewares.LoginObrigatorioMiddleware',
 	'Aprecie.middlewares.PermiteUsoComTokenDeAdmin',
-)
+]
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SECURE_SSL_REDIRECT = True
 
 ROLEPERMISSIONS_MODULE = 'Login.roles'
 
@@ -106,6 +109,7 @@ if IN_RELEASE_ENV:
 	# URL_DO_AMBIENTE = os.environ['APP_DNS']
 	ADMIN_TOKEN = os.environ['ADMIN_TOKEN']
 	CHAT_WEBHOOK_URL = os.environ['CHAT_WEBHOOK_URL']
+	CHAT_WEBHOOK_URL_TEAMS = os.environ['CHAT_WEBHOOK_URL_TEAMS']
 	DISCORD_KEY = os.environ['DISCORD_KEY']
 
 	db_from_env = dj_database_url.config(conn_max_age=500)
@@ -115,7 +119,8 @@ if IN_RELEASE_ENV:
 	# COMPRESS_ROOT = STATIC_ROOT
 else:
 	ADMIN_TOKEN = 'Basic dXN1YXJpb2xvY2FsOnNlbmhhbG9jYWw='
-	CHAT_WEBHOOK_URL = 'https://discord.com/api/webhooks/1035623511995191296/gA23jiZ6SRvDnsZtoUdFpvNbuOBRWzWiUmKnur_ZRxt9YSLfQtFLTw2wyNAO1W-5j8OP'
+	CHAT_WEBHOOK_URL_TEAMS = ''
+	CHAT_WEBHOOK_URL = ''
 	DISCORD_KEY = ''
 
 
