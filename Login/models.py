@@ -25,7 +25,6 @@ class Colaborador(AbstractBaseUser, PermissionsMixin):
 	nome = models.CharField(max_length=200)
 	data_de_nascimento = models.DateField()
 	foto = models.TextField(default=None, null=True)
-	usuario_id_do_chat = models.CharField(max_length=100, null=True)
 	administrador = models.BooleanField(default=False)
 	data_ultimo_reconhecimento = models.DateField(null=True)
 

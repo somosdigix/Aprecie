@@ -197,16 +197,4 @@ def obtem_historico(requisicao):
 			historico = historico.filter(data_modificacao__lte=data_fim)
 	
 	return historico
-
-def validar_usuario_id_do_chat(requisicao, usuario_id_do_chat):
-	url = 'https://discord.com/api/v10/users/' + usuario_id_do_chat
-	token = settings.DISCORD_KEY
-	headers = {'Authorization': 'Bot ' + token}
-	resposta = requests.get(url, headers=headers)
-	respostaFormatada = json.loads(resposta.text)
-	if resposta.status_code == 200:
-		return JsonResponse({'status': 200,'username': respostaFormatada['username']})
-	else:
-		return JsonResponse({'status': 404, 'message': respostaFormatada['message']})
-
 	

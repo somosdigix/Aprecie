@@ -39,9 +39,6 @@ MIDDLEWARE = [
 	'Aprecie.middlewares.PermiteUsoComTokenDeAdmin',
 ]
 
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-SECURE_SSL_REDIRECT = True
-
 ROLEPERMISSIONS_MODULE = 'Login.roles'
 
 DATA_UPLOAD_MAX_MEMORY_SIZE = 5242880
@@ -108,20 +105,18 @@ COMPRESS_ROOT = os.path.join(BASE_DIR, "static")
 if IN_RELEASE_ENV:
 	# URL_DO_AMBIENTE = os.environ['APP_DNS']
 	ADMIN_TOKEN = os.environ['ADMIN_TOKEN']
-	CHAT_WEBHOOK_URL = os.environ['CHAT_WEBHOOK_URL']
 	CHAT_WEBHOOK_URL_TEAMS = os.environ['CHAT_WEBHOOK_URL_TEAMS']
-	DISCORD_KEY = os.environ['DISCORD_KEY']
 
 	db_from_env = dj_database_url.config(conn_max_age=500)
 	DATABASES['default'].update(db_from_env)
 
+	SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+	SECURE_SSL_REDIRECT = True
 	# STATIC_ROOT = os.path.join(os.environ['REPO_DIR'], 'wsgi', 'static')
 	# COMPRESS_ROOT = STATIC_ROOT
 else:
 	ADMIN_TOKEN = 'Basic dXN1YXJpb2xvY2FsOnNlbmhhbG9jYWw='
 	CHAT_WEBHOOK_URL_TEAMS = ''
-	CHAT_WEBHOOK_URL = ''
-	DISCORD_KEY = ''
 
 
 STATICFILES_FINDERS = (
