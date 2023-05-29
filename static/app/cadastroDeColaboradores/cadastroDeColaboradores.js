@@ -19,7 +19,6 @@ define([
 			_sandbox.exibirTemplateEm('#conteudo', cadastroTemplate);
 
 			$('#cpf').inputmask('999.999.999-99');
-			$('#conteudo').on('focusout', 'input[id="idDiscord"]', validarUserIdDiscord);
 			$("#conteudo").on("focusout", 'input[id="cpf"]', validaCPF);
 			$("#conteudo").on("focusout", 'input[id="dataDeNascimento"]', validardataDeNascimento);
 
@@ -41,7 +40,6 @@ define([
 					$("#nomeColaborador").val(colaborador.nome)
 					$("#cpf").val(colaborador.cpf)
 					$("#dataDeNascimento").val(colaborador.data_de_nascimento)
-					$("#idDiscord").val(colaborador.usuario_id_do_chat)
 
 				});
 
@@ -62,17 +60,15 @@ define([
 
 	function salvarColaborador() {
 		validaFormulario();
-		var discord = $('#alert-discord').hasClass("sucesso");
 		var nome = !$('#alert-nome').hasClass("erro");
 		var cpf = $('#alert-cpf').hasClass("sucesso");
 		var data_de_nascimento = $('#alert-data').hasClass("sucesso");
 
-		if (discord && nome && cpf && data_de_nascimento) {
+		if (nome && cpf && data_de_nascimento) {
 			var colaboradores = [{
 				cpf: $('#cpf').val(),
 				nome: ($('#nomeColaborador').val()).toUpperCase(),
-				data_de_nascimento: $('#dataDeNascimento').val(),
-				usuario_id_do_chat: $('#idDiscord').val(),
+				data_de_nascimento: $('#dataDeNascimento').val()
 			}]
 			var dados = JSON.stringify({
 				'colaboradores': colaboradores
@@ -108,18 +104,16 @@ define([
 
 	function editarCadastroColaborador() {
 		validaFormulario();
-			var discord = $('#alert-discord').hasClass("sucesso");
 			var nome = !$('#alert-nome').hasClass("erro");
 			var cpf = $('#alert-cpf').hasClass("sucesso");
 			var data_de_nascimento = $('#alert-data').hasClass("sucesso");
 
-			if (discord && nome && cpf && data_de_nascimento) {
+			if (nome && cpf && data_de_nascimento) {
 				var colaborador =
 				{
 					cpf: $('#cpf').val().replaceAll('.', '').replace('-', ''),
 					nome: ($('#nomeColaborador').val()).toUpperCase(),
 					data_de_nascimento: $('#dataDeNascimento').val(),
-					usuario_id_do_chat: $('#idDiscord').val(),
 				}
 
 				var dados = JSON.stringify(colaborador)	
@@ -131,37 +125,6 @@ define([
 						growl.deErro().exibir("Erro ao editar colaborador. Entre em contato com os Dev's responsáveis!");
 					});
 			}
-	}
-
-	function validarUserIdDiscord() {
-		var userIdDiscord = $('#idDiscord').val();
-		var mensagem = $('#alert-discord');
-
-		if (userIdDiscord.length >= 17) {
-			$.ajax({
-				type: "GET",
-				async: false,
-				dataType: "json",
-				url: '/login/usario_discord/' + userIdDiscord,
-				success: function (data) {
-					mensagem.removeClass("erro")
-					if (data.status == 200) {
-						mensagem.html('Esse id pertence ao usuário <strong>' + data.username + '</strong>.');
-						mensagem.removeClass("erro");
-						mensagem.addClass("sucesso");
-					} else {
-						mensagem.html("Esse id nao pertence a um usuário do discord.");
-						mensagem.removeClass("sucesso")
-						mensagem.addClass("erro")
-					}
-				}
-			})
-		} else {
-			mensagem.removeClass("erro")
-			mensagem.html('A quantidade mínima de números deve ser 17!')
-			mensagem.removeClass("sucesso")
-			mensagem.addClass("erro")
-		}
 	}
 
 	self.finalizar = function () {
@@ -188,7 +151,6 @@ define([
 	}
 
 	function validaFormulario() {
-		validarUserIdDiscord();
 		validardataDeNascimento();
 		validaCPF();
 		validarNome();
