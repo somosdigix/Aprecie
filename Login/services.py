@@ -61,7 +61,8 @@ class ServicoDeBuscaDeColaborador:
 			'nome': colaborador.nome,
 			'data_de_nascimento': colaborador.data_de_nascimento,
 			'cpf': colaborador.cpf,
-			'usuario_id_do_chat': colaborador.usuario_id_do_chat
+			'usuario_id_do_chat': colaborador.usuario_id_do_chat,
+			'esta_ativo': colaborador.esta_ativo
 		}
 
 class ServicoDeEdicaoDeColaborador:

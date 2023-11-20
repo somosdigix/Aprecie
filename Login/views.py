@@ -156,6 +156,30 @@ def switch_administrador(requisicao):
 
     return JsonResponse({})
 
+@has_role_decorator('recursos_humanos')
+def switch_desativar_colaborador(requisicao):
+    id_do_colaborador = requisicao.POST['id_do_colaborador']
+    esta_ativo  = requisicao.POST['esta_ativo']
+    colaborador = Colaborador.objects.get(id = id_do_colaborador)
+
+    administrador = requisicao.user
+
+    esta_ativo = converte_boolean(esta_ativo)
+    
+    if esta_ativo:
+      assign_role(colaborador, 'recursos_humanos')
+      gerar_log_administrador(administrador, colaborador, "O Administrador: " + administrador.nome_abreviado + " setou o usuario: " + colaborador.nome_abreviado + " como administrador")
+      colaborador.tornar_administrador()
+      colaborador.save()
+    
+    else:
+      remove_role(colaborador, 'administrador')
+      gerar_log_administrador(administrador, colaborador, "O Administrador: " + administrador.nome_abreviado + " retirou os privilegios do usuario: " + colaborador.nome_abreviado)
+      colaborador.remover_administrador()
+      colaborador.save()
+
+    return JsonResponse({})
+
 def gerar_log_administrador(administrador, colaborador, descricao):
 	LOG_Administrador.objects.create(administrador = administrador, colaborador = colaborador, descricao = descricao)
 

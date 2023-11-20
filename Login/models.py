@@ -23,6 +23,7 @@ class Colaborador(AbstractBaseUser, PermissionsMixin):
 	foto = models.TextField(default=None, null=True)
 	usuario_id_do_chat = models.CharField(max_length=100, null=True)
 	administrador = models.BooleanField(default=False)
+	esta_ativo = models.BooleanField(default=True)
 	data_ultimo_reconhecimento = models.DateField(null=True)
 
 	USERNAME_FIELD = 'cpf'
@@ -90,6 +91,12 @@ class Colaborador(AbstractBaseUser, PermissionsMixin):
 
 	def remover_administrador(self):
 		self.administrador = False
+
+	def ativar_colaborador(self):
+		self.esta_ativo = True
+
+	def desativar_colaborador(self):
+		self.esta_ativo = False
 		
 	def obter_ultima_data_de_publicacao(self):
 		return self.data_ultimo_reconhecimento	

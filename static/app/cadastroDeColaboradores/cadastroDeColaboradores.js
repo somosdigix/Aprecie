@@ -21,8 +21,9 @@ define([
 			$('#conteudo').on('keyup', 'input[id="idDiscord"]', validarUserIdDiscord);
 			$("#conteudo").on("focusout", 'input[id="cpf"]', validaCPF);
 			$("#conteudo").on("focusout", 'input[id="dataDeNascimento"]', validardataDeNascimento);
-
+			
 			if (!colaboradorId) {
+				$('div[data-js="switch-ativo"]').hide();
 				$("#salvarColaborador").click(function (event) {
 					event.preventDefault();
 					salvarColaborador();
@@ -38,6 +39,7 @@ define([
 					$("#cpf").val(colaborador.cpf)
 					$("#dataDeNascimento").val(colaborador.data_de_nascimento)
 					$("#idDiscord").val(colaborador.usuario_id_do_chat)
+					$("#switch-ativo").val(colaborador.esta_ativo)
 
 				});
 
@@ -89,17 +91,76 @@ define([
 		}
 
 	}
+
+
+
+
+
+	function switchDesativarColaborador(reconhecimentosDoColaborador, colaboradorId) {
+		if (reconhecimentosDoColaborador.administrador === true) {
+			document.getElementById("toggle").checked = true;
+		} else {
+			document.getElementById("toggle").checked = false;
+		}
+
+		$("#toggle").change(function () {
+			if (administradorHelper.ehAdministrador()) {
+				if (this.checked) {
+					if (confirmaAlteracao()) {
+						var dados = {
+							id_do_colaborador: colaboradorId,
+							eh_administrador: true,
+						};
+						var mensagem = "Colaborador se tornou um administrador com sucesso!";
+
+						postSwitch(dados, mensagem);
+					} else {
+						$("#toggle").prop("checked", false);
+					}
+				}
+				else {
+					if (confirmaAlteracao()) {
+						var dados = {
+							id_do_colaborador: colaboradorId,
+							eh_administrador: false,
+						};
+						var mensagem = "Retirado o acesso de administrador do Colaborador com sucesso!";
+
+						postSwitch(dados, mensagem);
+					} else {
+						$("#toggle").prop("checked", true);
+					}
+				}
+			}
+		});
+	}
+
+	function postSwitch(dados, mensagem) {
+		$.post("/login/administrador/", dados).done(function () {
+			require(["growl"], function (growl) {
+				growl.deSucesso().exibir(mensagem);
+			});
+		});
+	}
+
+
+
+
+
+
+
+
 	function editarCadastroColaborador() {
 		if (validaFormulario()) {
-		var colaborador = 
+			var colaborador =
 			{
 				cpf: $('#cpf').val().replaceAll('.', '').replace('-', ''),
 				nome: $('#nomeColaborador').val(),
 				data_de_nascimento: $('#dataDeNascimento').val(),
 				usuario_id_do_chat: $('#idDiscord').val(),
 			}
-		
-		var dados = JSON.stringify(colaborador)
+
+			var dados = JSON.stringify(colaborador)
 			$.post("/login/colaborador/" + _colaboradorId, dados,
 				function () {
 					growl.deSucesso().exibir("Colaborador editado com sucesso.");
