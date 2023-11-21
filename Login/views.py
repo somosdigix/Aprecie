@@ -162,20 +162,16 @@ def switch_desativar_colaborador(requisicao):
     esta_ativo  = requisicao.POST['esta_ativo']
     colaborador = Colaborador.objects.get(id = id_do_colaborador)
 
-    administrador = requisicao.user
-
     esta_ativo = converte_boolean(esta_ativo)
     
     if esta_ativo:
       assign_role(colaborador, 'recursos_humanos')
-      gerar_log_administrador(administrador, colaborador, "O Administrador: " + administrador.nome_abreviado + " setou o usuario: " + colaborador.nome_abreviado + " como administrador")
-      colaborador.tornar_administrador()
+      colaborador.ativar_colaborador()
       colaborador.save()
     
     else:
-      remove_role(colaborador, 'administrador')
-      gerar_log_administrador(administrador, colaborador, "O Administrador: " + administrador.nome_abreviado + " retirou os privilegios do usuario: " + colaborador.nome_abreviado)
-      colaborador.remover_administrador()
+      remove_role(colaborador, 'recursos_humanos')
+      colaborador.desativar_colaborador()
       colaborador.save()
 
     return JsonResponse({})

@@ -33,14 +33,13 @@ define([
 
 				document.getElementById('tituloPaginaCadastro').textContent = 'Editar Colaborador';
 				document.getElementById('salvarColaborador').textContent = 'Concluir Edição';
-
 				$.getJSON("/login/obter_colaborador/" + colaboradorId, function (colaborador) {
+					switchDesativarColaborador(reconhecimentosDoColaborador, colaboradorId);
 					$("#nomeColaborador").val(colaborador.nome)
 					$("#cpf").val(colaborador.cpf)
 					$("#dataDeNascimento").val(colaborador.data_de_nascimento)
 					$("#idDiscord").val(colaborador.usuario_id_do_chat)
-					$("#switch-ativo").val(colaborador.esta_ativo)
-
+					document.getElementById("toggle").checked = colaborador.esta_ativo;
 				});
 
 				$("#salvarColaborador").click(function (event) {
@@ -92,41 +91,28 @@ define([
 
 	}
 
-
-
-
-
 	function switchDesativarColaborador(reconhecimentosDoColaborador, colaboradorId) {
-		if (reconhecimentosDoColaborador.administrador === true) {
-			document.getElementById("toggle").checked = true;
-		} else {
-			document.getElementById("toggle").checked = false;
-		}
+		_colaboradorId = colaboradorId;
+		document.getElementById("toggle").checked = colaborador.esta_ativo;
 
 		$("#toggle").change(function () {
-			if (administradorHelper.ehAdministrador()) {
+			if (recursosHumanosHelper.ehRecursosHumanos()) {
 				if (this.checked) {
-					if (confirmaAlteracao()) {
+					if (confirmaAlteracaoDeEstadoDoColaborador()) {
 						var dados = {
 							id_do_colaborador: colaboradorId,
-							eh_administrador: true,
+							esta_ativo: true,
 						};
-						var mensagem = "Colaborador se tornou um administrador com sucesso!";
-
-						postSwitch(dados, mensagem);
 					} else {
 						$("#toggle").prop("checked", false);
 					}
 				}
 				else {
-					if (confirmaAlteracao()) {
+					if (confirmaAlteracaoDeEstadoDoColaborador()) {
 						var dados = {
 							id_do_colaborador: colaboradorId,
-							eh_administrador: false,
+							esta_ativo: false,
 						};
-						var mensagem = "Retirado o acesso de administrador do Colaborador com sucesso!";
-
-						postSwitch(dados, mensagem);
 					} else {
 						$("#toggle").prop("checked", true);
 					}
@@ -135,16 +121,7 @@ define([
 		});
 	}
 
-	function postSwitch(dados, mensagem) {
-		$.post("/login/administrador/", dados).done(function () {
-			require(["growl"], function (growl) {
-				growl.deSucesso().exibir(mensagem);
-			});
-		});
-	}
-
-
-
+	
 
 
 

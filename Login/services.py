@@ -72,6 +72,7 @@ class ServicoDeEdicaoDeColaborador:
 		colaborador_obtido.cpf = colaborador['cpf']
 		colaborador_obtido.usuario_id_do_chat = colaborador['usuario_id_do_chat']
 		colaborador_obtido.data_de_nascimento = colaborador['data_de_nascimento']
+		colaborador_obtido.esta_ativo = colaborador['esta_ativo']
 		colaborador_obtido.save()
 		return {
 		}
