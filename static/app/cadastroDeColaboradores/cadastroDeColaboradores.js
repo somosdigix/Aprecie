@@ -38,7 +38,7 @@ define([
 					$("#cpf").val(colaborador.cpf)
 					$("#dataDeNascimento").val(colaborador.data_de_nascimento)
 					$("#idDiscord").val(colaborador.usuario_id_do_chat)
-					document.getElementById("toggle").checked = colaborador.esta_ativo;
+					$("#colaboradorAtivo").prop("checked", colaborador.esta_ativo);
 				});
 
 				$("#salvarColaborador").click(function (event) {
@@ -91,13 +91,19 @@ define([
 	}
 
 	function editarCadastroColaborador() {
+		
 		if (validaFormulario()) {
 			var colaborador =
 			{
 				cpf: $('#cpf').val().replaceAll('.', '').replace('-', ''),
 				nome: $('#nomeColaborador').val(),
 				data_de_nascimento: $('#dataDeNascimento').val(),
-				usuario_id_do_chat: $('#idDiscord').val(),
+				// usuario_id_do_chat: $('#idDiscord').val(),
+				esta_ativo: $('#colaboradorAtivo').change(function() {
+					var estaAtivo = this.checked;
+				
+					colaborador.esta_ativo = estaAtivo;
+				})
 			}
 
 			var dados = JSON.stringify(colaborador)
