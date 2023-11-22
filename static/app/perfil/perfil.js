@@ -203,14 +203,6 @@
 		}
 	}
 
-	function confirmaAlteracaoDeEstadoDoColaborador() {
-		if (confirm("Confirmar as alteracoes?") && recursosHumanosHelper.ehRecursosHumanos()) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
 	function switchAdministrador(reconhecimentosDoColaborador, colaboradorId) {
 		if (reconhecimentosDoColaborador.administrador === true) {
 			document.getElementById("toggle").checked = true;

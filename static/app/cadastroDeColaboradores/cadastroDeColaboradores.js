@@ -21,7 +21,7 @@ define([
 			$('#conteudo').on('keyup', 'input[id="idDiscord"]', validarUserIdDiscord);
 			$("#conteudo").on("focusout", 'input[id="cpf"]', validaCPF);
 			$("#conteudo").on("focusout", 'input[id="dataDeNascimento"]', validardataDeNascimento);
-			
+
 			if (!colaboradorId) {
 				$('div[data-js="switch-ativo"]').hide();
 				$("#salvarColaborador").click(function (event) {
@@ -34,7 +34,6 @@ define([
 				document.getElementById('tituloPaginaCadastro').textContent = 'Editar Colaborador';
 				document.getElementById('salvarColaborador').textContent = 'Concluir Edição';
 				$.getJSON("/login/obter_colaborador/" + colaboradorId, function (colaborador) {
-					switchDesativarColaborador(reconhecimentosDoColaborador, colaboradorId);
 					$("#nomeColaborador").val(colaborador.nome)
 					$("#cpf").val(colaborador.cpf)
 					$("#dataDeNascimento").val(colaborador.data_de_nascimento)
@@ -90,42 +89,6 @@ define([
 		}
 
 	}
-
-	function switchDesativarColaborador(reconhecimentosDoColaborador, colaboradorId) {
-		_colaboradorId = colaboradorId;
-		document.getElementById("toggle").checked = colaborador.esta_ativo;
-
-		$("#toggle").change(function () {
-			if (recursosHumanosHelper.ehRecursosHumanos()) {
-				if (this.checked) {
-					if (confirmaAlteracaoDeEstadoDoColaborador()) {
-						var dados = {
-							id_do_colaborador: colaboradorId,
-							esta_ativo: true,
-						};
-					} else {
-						$("#toggle").prop("checked", false);
-					}
-				}
-				else {
-					if (confirmaAlteracaoDeEstadoDoColaborador()) {
-						var dados = {
-							id_do_colaborador: colaboradorId,
-							esta_ativo: false,
-						};
-					} else {
-						$("#toggle").prop("checked", true);
-					}
-				}
-			}
-		});
-	}
-
-	
-
-
-
-
 
 	function editarCadastroColaborador() {
 		if (validaFormulario()) {
