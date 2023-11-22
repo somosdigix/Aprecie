@@ -59,25 +59,37 @@ define([
 					}
 				});
 			});
+
+			let buscaInput = document.querySelector("#busca-listagemRh");
+			buscaInput.addEventListener('keyup', () => {
+				buscaInput.value = remover_acentos_espaco(buscaInput.value);
+			})
 		});
 	};
 
 	function converterParaAutocomplete(colaboradores) {
 		return colaboradores.map(function (colaborador) {
-			colaborador.title = colaborador.nome;
+			colaborador.title = remover_acentos_espaco(colaborador.nome);
 			return colaborador;
 		});
+	}
+
+	function remover_acentos_espaco(str) {
+		return str.normalize("NFD").replace(/[^a-zA-Z\s]/g, "");
 	}
 
 	function filtrarColaboradores(colaborador) {
 		var listagemPorNome = jQuery.extend(true, {}, listagem);
 		let nomeColaborador = colaborador.nome;
+		let colaboradorFiltrado = null;
 
-		let colaboradorFiltrado = listagemPorNome.colaboradores[0].filter(function (colaborador) {
-			if (colaborador.nome.toLowerCase() === nomeColaborador.toLowerCase()) {
-				return colaborador;
-			}
-		})
+		for (let index = 0; index < listagemPorNome.colaboradores.length; index++) {
+			listagemPorNome.colaboradores[index].filter(function (colaborador) {
+				if (colaborador.nome.toLowerCase() === nomeColaborador.toLowerCase()) {
+					colaboradorFiltrado = [colaborador];
+				}
+			})
+		}
 
 		template.exibirEm('div[data-js="lista-colaboradores-rh"]', listaColaboradoresTemplate, colaboradorFiltrado);
 	}
@@ -91,7 +103,7 @@ define([
 });
 
 function editar(id) {
-	require(['roteador'], function(roteador) {
-		roteador.navegarPara('/cadastroDeColaboradores/'+id);
+	require(['roteador'], function (roteador) {
+		roteador.navegarPara('/cadastroDeColaboradores/' + id);
 	});
 }

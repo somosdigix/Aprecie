@@ -26,17 +26,17 @@
 			<span id="alert-data" class="alerta"></span>
 		</div>
 
-		<div class="id-discord campo">
-			<label class="label" for="">Id no Discord:</label>
-			<input id="idDiscord" type="text" required>
-			<span id="alert-discord" class="alerta"></span>
+		<div class="botoes">
+			<button data-js="RetornarFormulario" id="retornarFormulario" type="submit"
+				class="ui button botao-entrar">
+				Cancelar 
+			</button>
+
+			<button data-js="SalvarColaborador" id="salvarColaborador" type="reset"
+				class="ui botao-laranja button botao-entrar">
+				Incluir Colaborador
+			</button>
 		</div>
-
-		<button data-js="SalvarColaborador" id="salvarColaborador" type="submit"
-			class="ui botao-laranja button botao-entrar">
-			Incluir Colaborador
-		</button>
-
 	</form>
 </div>
 
@@ -175,4 +175,10 @@
 	.slider.round:before {
 		border-radius: 50%;
 	}
+	#nomeColaborador {
+		text-transform: uppercase;
+	}
+
+	
+	
 </style>

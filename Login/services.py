@@ -16,8 +16,7 @@ class ServicoDeInclusaoDeColaboradores:
 
 			if not Colaborador.objects.filter(cpf=cpf).exists():
 				Colaborador.objects.create(nome=colaborador['nome'], cpf=cpf, \
-					data_de_nascimento=colaborador['data_de_nascimento'], \
-					usuario_id_do_chat=colaborador['usuario_id_do_chat']).save()
+					data_de_nascimento=colaborador['data_de_nascimento']).save()
 				contagem_de_inclusoes += 1
 
 		return {
@@ -40,7 +39,7 @@ class ServicoDeBuscaDeColaboradores:
 		
 		for i in range(1,numero_paginas+1):
 			pagina = paginacao.page(i)
-			transformacao = lambda colaborador: { 'id': colaborador.id, 'nome': colaborador.nome_abreviado,'cpf': self.converter_cpf(colaborador.cpf), 'data_de_nascimento': self.converter_data(colaborador.data_de_nascimento), 'usuario_id_do_chat': colaborador.usuario_id_do_chat, 'foto': colaborador.foto }
+			transformacao = lambda colaborador: { 'id': colaborador.id, 'nome': colaborador.nome_abreviado,'cpf': self.converter_cpf(colaborador.cpf), 'data_de_nascimento': self.converter_data(colaborador.data_de_nascimento), 'foto': colaborador.foto }
 			colaboradores_mapeados.append(list(map(transformacao, pagina.object_list)))
 
 		return {
@@ -61,7 +60,6 @@ class ServicoDeBuscaDeColaborador:
 			'nome': colaborador.nome,
 			'data_de_nascimento': colaborador.data_de_nascimento,
 			'cpf': colaborador.cpf,
-			'usuario_id_do_chat': colaborador.usuario_id_do_chat,
 			'esta_ativo': colaborador.esta_ativo
 		}
 
@@ -70,7 +68,6 @@ class ServicoDeEdicaoDeColaborador:
 		colaborador_obtido = Colaborador.objects.get(id = id_colaborador)
 		colaborador_obtido.nome = colaborador['nome']
 		colaborador_obtido.cpf = colaborador['cpf']
-		colaborador_obtido.usuario_id_do_chat = colaborador['usuario_id_do_chat']
 		colaborador_obtido.data_de_nascimento = colaborador['data_de_nascimento']
 		colaborador_obtido.esta_ativo = colaborador['esta_ativo']
 		colaborador_obtido.save()
