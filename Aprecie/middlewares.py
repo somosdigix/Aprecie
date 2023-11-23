@@ -40,7 +40,11 @@ class AutenticadorDeColaborador(BaseBackend):
 
 	def authenticate(self, request, cpf=None, data_de_nascimento=None):
 		try:
-			return Colaborador.objects.get(cpf=cpf, data_de_nascimento=data_de_nascimento)
+				colaborador = Colaborador.objects.get(cpf=cpf, data_de_nascimento=data_de_nascimento)
+				if colaborador.esta_ativo:
+					return colaborador
+				else:
+					return None
 		except:
 			return None
 

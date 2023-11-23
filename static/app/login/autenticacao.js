@@ -13,10 +13,11 @@ define(function () {
 		_sandbox.removerEscuta('autenticar');
 	};
 
-	function validarAutenticacao(cpf, dataDeNascimento) {
+	function validarAutenticacao(cpf, dataDeNascimento, estaAtivo) {
 		var parametros = {
 			cpf: cpf,
-			data_de_nascimento: dataDeNascimento
+			data_de_nascimento: dataDeNascimento,
+			esta_ativo: estaAtivo
 		};
 
 		validarOperacao(parametros);
@@ -38,6 +39,8 @@ define(function () {
 
 		if (parametros.data_de_nascimento === '' || parametros.data_de_nascimento === undefined)
 			throw new ViolacaoDeRegra('Data de nascimento deve ser informada');
+		if (parametros.esta_ativo === 0)
+			throw new ViolacaoDeRegra('Usuário inativo');
 	}
 
 	return self;
