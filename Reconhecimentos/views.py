@@ -122,6 +122,7 @@ def obter_reconhecimentos_dos_colaboradores():
       SELECT count(*), r.reconhecido_id, l.nome, l.foto
       FROM public."Reconhecimentos_reconhecimento" r
       JOIN public."Login_colaborador" l ON r.reconhecido_id = l.id
+      WHERE l.esta_ativo = 1
       GROUP by r.reconhecido_id, l.nome, l.foto
       ORDER by count(*) DESC, l.nome
       LIMIT 10
