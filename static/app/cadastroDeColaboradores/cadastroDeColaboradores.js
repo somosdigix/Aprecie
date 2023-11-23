@@ -22,6 +22,7 @@ define([
 			$('#cpf').inputmask('999.999.999-99');
 			$("#conteudo").on("focusout", 'input[id="cpf"]', validaCPF);
 			$("#conteudo").on("focusout", 'input[id="dataDeNascimento"]', validardataDeNascimento);
+			
 
 			if (!colaboradorId) {
 				$('div[data-js="switch-ativo"]').hide();

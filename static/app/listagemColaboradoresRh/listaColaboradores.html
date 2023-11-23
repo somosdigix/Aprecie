@@ -5,9 +5,14 @@
 	{{else}}
 	<img class="foto-colaborador" src="../static/img/sem-foto.png" alt="foto colaborador" />
 	{{/if}}
-	<p class="informacao-colaborador nome-colaborador">{{this.nome}}</p>
+	<p class="informacao-colaborador nome-colaborador"> {{this.nome}}</p>
 	<p class="informacao-colaborador cpf-colaborador">{{this.cpf}}</p>
 	<p class="informacao-colaborador dataNascimento-colaborador">{{this.data_de_nascimento}}</p>
+	<p  class="informacao-colaborador estaAtivo-colaborador">{{#if this.esta_ativo}}
+		<span class="status-circulo ativo"></span>  Ativo
+    {{else}}
+	<span class="status-circulo inativo"></span> Inativo
+    {{/if}}</p>
 	<div class="opcoes__listagemColaborador">
 		<button class="editar__colaborador" onclick="editar('{{this.id}}')">
 			<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-pencil-fill"
@@ -40,5 +45,22 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
+	}
+	.status-circulo {
+		display: inline-block;
+		width: 10px;
+		height: 10px;
+		border-radius: 50%;
+		margin-right: 5px; 
+	}
+	
+	
+	.status-circulo.ativo {
+		background-color: #4caf50;
+	}
+	
+	
+	.status-circulo.inativo {
+		background-color: #f44336;
 	}
 </style>
