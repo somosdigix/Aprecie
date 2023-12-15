@@ -12,6 +12,7 @@ DEBUG = True
 ALLOWED_HOSTS = [
 	'aprecie.herokuapp.com',
 	'aprecie.digix.com.br',
+	'temp.digix.com.br',
 	'127.0.0.1'
 ]
 
