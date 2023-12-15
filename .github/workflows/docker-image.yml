@@ -1,0 +1,30 @@
+name: Build & Push Docker Container
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      
+      - name: Gerar Tag
+        id: generate_tag
+        run: echo ::set-output name=TAG::$(date +'%Y%m%d%H%M')	  
+
+      - name: Build Imagem Docker
+        run: docker build -t containerdigixprod.azurecr.io/aprecie:${{ steps.generate_tag.outputs.TAG }} .
+
+      - name: Login Azure Container Registry
+        run: az login --service-principal -u ${{ secrets.AZURE_CLIENT_ID }} -p ${{ secrets.AZURE_CLIENT_SECRET }} --tenant ${{ secrets.AZURE_TENANT_ID }}
+
+      - name: Push Imagem Docker
+        run: |
+          docker login containerdigixprod.azurecr.io -u ${{ secrets.AZURE_REGISTRY_USERNAME }} -p ${{ secrets.AZURE_REGISTRY_PASSWORD }}
+          docker push containerdigixprod.azurecr.io/aprecie:${{ steps.generate_tag.outputs.TAG }}
