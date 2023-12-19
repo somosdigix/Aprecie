@@ -1,6 +1,13 @@
 <div class="bloco-cadastroUsuario">
 	<form id="formularioCadastro" class="formularioCadastro" method="post">
 		<h1 id="tituloPaginaCadastro" class="titulo-cadastro">Cadastro de Colaboradores</h1>
+		<div data-js="switch-ativo" class="switch-ativo">
+			<label class="switch">
+				<input data-js="" type="checkbox" id="colaboradorAtivo">
+				<span class="slider round"></span>
+				<p class="txt-slider">Ativo</p>
+			</label>
+		</div>
 		<div class="nome-colaborador campo">
 			<label class="label" for="">Nome Completo:</label>
 			<input id="nomeColaborador" type="text" required>
@@ -97,6 +104,77 @@
 		color: #ffffff;
 	}
 
+	.switch-ativo {
+		text-align: left;
+		padding-bottom: 10px;
+	}
+
+	.txt-slider {
+		font-size: 16px;
+		font-family: "Campton-Medium";
+		position: absolute;
+		left: 50px;
+		top: -2px;
+	}
+
+	.switch {
+		position: relative;
+		display: inline-block;
+		width: 30px;
+		height: 14px;
+	}
+
+	.switch input {
+		opacity: 0;
+		width: 0;
+		height: 0;
+	}
+
+	.slider {
+		position: absolute;
+		cursor: pointer;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background-color: #ccc;
+		-webkit-transition: .4s;
+		transition: .4s;
+	}
+
+	.slider:before {
+		position: absolute;
+		content: "";
+		height: 9px;
+		width: 9px;
+		left: 2.5px;
+		bottom: 2.5px;
+		background-color: white;
+		-webkit-transition: .4s;
+		transition: .4s;
+	}
+
+	input:checked+.slider {
+		background-color: #2196F3;
+	}
+
+	input:focus+.slider {
+		box-shadow: 0 0 1px #2196F3;
+	}
+
+	input:checked+.slider:before {
+		-webkit-transform: translateX(16px);
+		-ms-transform: translateX(16px);
+		transform: translateX(16px);
+	}
+
+	.slider.round {
+		border-radius: 34px;
+	}
+
+	.slider.round:before {
+		border-radius: 50%;
+	}
 	#nomeColaborador {
 		text-transform: uppercase;
 	}

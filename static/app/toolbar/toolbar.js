@@ -25,7 +25,7 @@
         source: converterParaAutocomplete(data.colaboradores),
         onSelect: selecionar,
         error: {
-					noResults: 'Não encontrei ninguém :('
+          noResults: 'Não encontrei ninguém :('
         },
       });
 
@@ -35,14 +35,14 @@
       })
 
       if (callback)
-			callback();
+        callback();
     });
   };
 
   toolbarView.esconder = function () {
     $('header[data-js="toolbar"]').hide(toolbarTemplate).empty();
   };
-	
+
   function converterParaAutocomplete(colaboradores) {
     return colaboradores.map(function (colaborador) {
       colaborador.title = remover_acentos_espaco(colaborador.nome);
@@ -84,17 +84,28 @@
     $('div[data-js="menu-mobile"]').toggleClass('aberto');
   }
 
+  function limparCookies() {
+    document.cookie = 'administrador@aprecie.me=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+    document.cookie = 'recursos_humanos@aprecie.me=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+    document.cookie = 'nome@aprecie.me=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+    document.cookie = 'id@aprecie.me=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+    document.cookie = 'sessionid=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+  }
+
   function sair() {
     require([
       'app/helpers/cookie',
       'roteador'
     ], function (cookie, roteador) {
-      cookie.limpar();
       toolbarView.esconder();
+      // cookie.limpar(); Substituído pela função limparCookies
+      limparCookies();
       window.location = '/';
     });
   }
 
+
   return toolbarView;
 });
+
 

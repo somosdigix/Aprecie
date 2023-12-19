@@ -46,7 +46,8 @@ define([
 		let tipo_ordenacao = $("#select").val();
 		$.getJSON("/login/listagemColaboradoresRh/" + tipo_ordenacao, function (colaboradores) {
 			listagem = colaboradores;
-
+			
+			
 			template.exibirEm('div[data-js="lista-colaboradores-rh"]', listaColaboradoresTemplate, listagem.colaboradores[0]);
 			carregarPaginacao(listagem.numero_paginas);
 

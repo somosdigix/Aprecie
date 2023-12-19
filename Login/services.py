@@ -39,7 +39,7 @@ class ServicoDeBuscaDeColaboradores:
 		
 		for i in range(1,numero_paginas+1):
 			pagina = paginacao.page(i)
-			transformacao = lambda colaborador: { 'id': colaborador.id, 'nome': colaborador.nome_abreviado,'cpf': self.converter_cpf(colaborador.cpf), 'data_de_nascimento': self.converter_data(colaborador.data_de_nascimento), 'foto': colaborador.foto }
+			transformacao = lambda colaborador: { 'id': colaborador.id, 'nome': colaborador.nome_abreviado,'cpf': self.converter_cpf(colaborador.cpf), 'data_de_nascimento': self.converter_data(colaborador.data_de_nascimento), 'foto': colaborador.foto, 'esta_ativo':colaborador.esta_ativo}
 			colaboradores_mapeados.append(list(map(transformacao, pagina.object_list)))
 
 		return {
@@ -59,7 +59,8 @@ class ServicoDeBuscaDeColaborador:
 		return{
 			'nome': colaborador.nome,
 			'data_de_nascimento': colaborador.data_de_nascimento,
-			'cpf': colaborador.cpf
+			'cpf': colaborador.cpf,
+			'esta_ativo': colaborador.esta_ativo
 		}
 
 class ServicoDeEdicaoDeColaborador:
@@ -68,6 +69,7 @@ class ServicoDeEdicaoDeColaborador:
 		colaborador_obtido.nome = colaborador['nome']
 		colaborador_obtido.cpf = colaborador['cpf']
 		colaborador_obtido.data_de_nascimento = colaborador['data_de_nascimento']
+		colaborador_obtido.esta_ativo = colaborador['esta_ativo']
 		colaborador_obtido.save()
 		return {
 		}

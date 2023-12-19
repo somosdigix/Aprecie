@@ -3,8 +3,9 @@ define([
 	'text!app/cadastroDeColaboradores/formularioTemplate.html',
 	'app/helpers/recursosHumanosHelper',
 	"roteador",
-	"growl"
-], function ($, cadastroTemplate, recursosHumanosHelper, roteador, growl) {
+	"growl",
+	"app/models/colaboradorViewModel"
+], function ($, cadastroTemplate, recursosHumanosHelper, roteador, growl, ColaboradorViewModel) {
 	'use strict';
 
 	var self = {};
@@ -21,8 +22,10 @@ define([
 			$('#cpf').inputmask('999.999.999-99');
 			$("#conteudo").on("focusout", 'input[id="cpf"]', validaCPF);
 			$("#conteudo").on("focusout", 'input[id="dataDeNascimento"]', validardataDeNascimento);
+			
 
 			if (!colaboradorId) {
+				$('div[data-js="switch-ativo"]').hide();
 				$("#salvarColaborador").click(function (event) {
 					event.preventDefault();
 					salvarColaborador();
@@ -40,7 +43,7 @@ define([
 					$("#nomeColaborador").val(colaborador.nome)
 					$("#cpf").val(colaborador.cpf)
 					$("#dataDeNascimento").val(colaborador.data_de_nascimento)
-
+					$("#colaboradorAtivo").prop("checked", colaborador.esta_ativo);
 				});
 
 				$("#salvarColaborador").click(function (event) {
@@ -106,7 +109,8 @@ define([
 		validaFormulario();
 			var nome = !$('#alert-nome').hasClass("erro");
 			var cpf = $('#alert-cpf').hasClass("sucesso");
-			var data_de_nascimento = $('#alert-data').hasClass("sucesso");
+			var data_de_nascimento = $('#alert-data').hasClass("sucesso");;
+			
 
 			if (nome && cpf && data_de_nascimento) {
 				var colaborador =
@@ -114,6 +118,7 @@ define([
 					cpf: $('#cpf').val().replaceAll('.', '').replace('-', ''),
 					nome: ($('#nomeColaborador').val()).toUpperCase(),
 					data_de_nascimento: $('#dataDeNascimento').val(),
+					esta_ativo: $('#colaboradorAtivo').is(":checked") 
 				}
 
 				var dados = JSON.stringify(colaborador)	

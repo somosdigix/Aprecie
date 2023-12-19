@@ -23,27 +23,26 @@ import requests
 
 @acesso_anonimo
 def entrar(requisicao):
-	cpf = requisicao.POST['cpf']
-	data_de_nascimento = datetime.strptime(requisicao.POST['data_de_nascimento'], '%d/%m/%Y')
+    cpf = requisicao.POST['cpf']
+    data_de_nascimento = datetime.strptime(requisicao.POST['data_de_nascimento'], '%d/%m/%Y')
 
-	# TODO: Pensar uma forma melhor do que lançar excecao e extrair daqui
-	colaborador_autenticado = authenticate(cpf=cpf, data_de_nascimento=data_de_nascimento)
-  
-	if colaborador_autenticado:
-		login(requisicao, colaborador_autenticado)
-	else:
-		return JsonResponse(status=403, data={
-			'mensagem': 'Oi! Seus dados não foram encontrados. Confira e tente novamente. :)'
-		})
-	  
-	data = {
-      'id_do_colaborador': colaborador_autenticado.id,
-	  'nome_do_colaborador': colaborador_autenticado.primeiro_nome,
-	  'administrador': colaborador_autenticado.administrador,
-	  'recursos_humanos': has_role(colaborador_autenticado, 'recursos_humanos')
-	}
+    colaborador_autenticado = authenticate(cpf=cpf, data_de_nascimento=data_de_nascimento)
 
-	return JsonResponse(data, status=200)
+    if colaborador_autenticado:
+        login(requisicao, colaborador_autenticado)
+
+        data = {
+            'id_do_colaborador': colaborador_autenticado.id,
+            'nome_do_colaborador': colaborador_autenticado.primeiro_nome,
+            'administrador': colaborador_autenticado.administrador,
+            'recursos_humanos': has_role(colaborador_autenticado, 'recursos_humanos')
+        }
+
+        return JsonResponse(data, status=200)
+    else:
+        return JsonResponse(status=403, data={
+            'mensagem': 'Usuário inativo.' if colaborador_autenticado is None else 'Oi! Seus dados não foram encontrados. Confira e tente novamente. :)'
+        })
 
 def alterar_foto(requisicao):
 	id_do_colaborador = requisicao.POST['id_do_colaborador']
@@ -152,6 +151,26 @@ def switch_administrador(requisicao):
       remove_role(colaborador, 'administrador')
       gerar_log_administrador(administrador, colaborador, "O Administrador: " + administrador.nome_abreviado + " retirou os privilegios do usuario: " + colaborador.nome_abreviado)
       colaborador.remover_administrador()
+      colaborador.save()
+
+    return JsonResponse({})
+
+@has_role_decorator('recursos_humanos')
+def switch_desativar_colaborador(requisicao):
+    id_do_colaborador = requisicao.POST['id_do_colaborador']
+    esta_ativo  = requisicao.POST['esta_ativo']
+    colaborador = Colaborador.objects.get(id = id_do_colaborador)
+
+    esta_ativo = converte_boolean(esta_ativo)
+    
+    if esta_ativo:
+      assign_role(colaborador, 'recursos_humanos')
+      colaborador.ativar_colaborador()
+      colaborador.save()
+    
+    else:
+      remove_role(colaborador, 'recursos_humanos')
+      colaborador.desativar_colaborador()
       colaborador.save()
 
     return JsonResponse({})
