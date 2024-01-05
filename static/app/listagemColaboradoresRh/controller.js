@@ -17,4 +17,5 @@ define([
 	};
 
 	return _self;
+	
 });
