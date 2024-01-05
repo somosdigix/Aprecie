@@ -43,9 +43,9 @@ def agradecer(requisicao):
   mensagem = requisicao.POST.get('agradecimento')
 
   if id_reconhecimento_vinculado is None or id_colaborador_que_agradeceu is None:
-		print('Está null')
-  else:
-		print('Não está null')
+    print('Está null')
+  else: 
+    print('Não está null')
 
   colaborador_que_agradeceu = Colaborador.objects.get(id=id_colaborador_que_agradeceu)
   reconhecimento_vinculado = Reconhecimento.objects.get(id=id_reconhecimento_vinculado)
