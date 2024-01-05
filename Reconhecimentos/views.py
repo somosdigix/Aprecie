@@ -17,7 +17,7 @@ def reconhecer(requisicao):
   descritivo = requisicao.POST['descritivo']
 
   reconhecedor = Colaborador.objects.get(id = id_do_reconhecedor)
-  
+
   if verificar_ultima_data_de_publicacao(reconhecedor):
     reconhecido = Colaborador.objects.get(id = id_do_reconhecido)
     pilar = Pilar.objects.get(id = id_do_pilar)
@@ -35,13 +35,18 @@ def verificar_ultima_data_de_publicacao(reconhecedor):
   ultima_data = reconhecedor.obter_ultima_data_de_publicacao()
 
   return not(ultima_data == date.today())
-  
+
 def agradecer(requisicao):
-  
-  id_reconhecimento_vinculado = requisicao.POST['id_reconhecimento_vinculado']
-  id_colaborador_que_agradeceu = requisicao.POST['id_colaborador_que_agradeceu']
-  mensagem = requisicao.POST['agradecimento']
- 
+
+  id_reconhecimento_vinculado = requisicao.POST.get('id_reconhecimento_vinculado')
+  id_colaborador_que_agradeceu = requisicao.POST.get('id_colaborador_que_agradeceu')
+  mensagem = requisicao.POST.get('agradecimento')
+
+  if id_reconhecimento_vinculado is None or id_colaborador_que_agradeceu is None:
+		print('Está null')
+  else:
+		print('Não está null')
+
   colaborador_que_agradeceu = Colaborador.objects.get(id=id_colaborador_que_agradeceu)
   reconhecimento_vinculado = Reconhecimento.objects.get(id=id_reconhecimento_vinculado)
 
@@ -75,7 +80,7 @@ def ultimos_reconhecimentos(requisicao):
   }
 
   return JsonResponse(retorno, safe=False)
-  
+
 def converte_boolean(bool):
     if bool.lower() == 'false':
         return False
@@ -108,9 +113,9 @@ def reconhecimentos_do_colaborador(requisicao, id_do_reconhecido):
   return JsonResponse(resposta, safe = False)
 
 def contar_reconhecimentos(requisicao):
-   colaboradores = map(lambda colaborador: { 
-     'nome': colaborador[2], 
-     'apreciacoes': colaborador[0], 
+   colaboradores = map(lambda colaborador: {
+     'nome': colaborador[2],
+     'apreciacoes': colaborador[0],
      'foto': colaborador[3]
      }, obter_reconhecimentos_dos_colaboradores())
 
@@ -147,7 +152,7 @@ def todas_as_apreciacoes(requisicao, id_do_reconhecido):
     'id': apreciacao.id,
     'data': apreciacao.data,
     'pilar__nome': apreciacao.pilar.nome,
-    'feedback__descritivo': apreciacao.feedback.descritivo, 
+    'feedback__descritivo': apreciacao.feedback.descritivo,
     'reconhecedor__id': apreciacao.reconhecedor.id,
     'reconhecedor__nome': apreciacao.reconhecedor.nome_abreviado,
     'reconhecido__id': apreciacao.reconhecido.id,
@@ -159,7 +164,7 @@ def todas_as_apreciacoes(requisicao, id_do_reconhecido):
     'id': apreciacao.id,
     'data': apreciacao.data,
     'pilar__nome': apreciacao.pilar.nome,
-    'feedback__descritivo': apreciacao.feedback.descritivo, 
+    'feedback__descritivo': apreciacao.feedback.descritivo,
     'reconhecedor__id': apreciacao.reconhecedor.id,
     'reconhecedor__nome': apreciacao.reconhecedor.nome_abreviado,
     'reconhecido__id': apreciacao.reconhecido.id,
@@ -180,10 +185,10 @@ def obter_agradecimentos(apreciacao, id_reconhecido, id_reconhecedor):
   agradecimento_reconhecedor = mapear_agradecimento(agradecimentos.filter(colaborador = id_reconhecedor))
 
   agradecimentos_mapeados = {
-    'agradecimento_reconhecido': list(agradecimento_reconhecido) if agradecimento_reconhecido else None, 
-    'agradecimento_reconhecedor': list(agradecimento_reconhecedor) if agradecimento_reconhecedor else None 
+    'agradecimento_reconhecido': list(agradecimento_reconhecido) if agradecimento_reconhecido else None,
+    'agradecimento_reconhecedor': list(agradecimento_reconhecedor) if agradecimento_reconhecedor else None
   }
-  
+
   return agradecimentos_mapeados
 
 def mapear_agradecimento(agradecimentos):
@@ -196,13 +201,13 @@ def mapear_agradecimento(agradecimentos):
   }, agradecimentos)
 
 def todos_os_pilares_e_colaboradores(requisicao):
-    pilares = map(lambda pilar: { 
-      'id': pilar.id, 
-      'nome': pilar.nome 
+    pilares = map(lambda pilar: {
+      'id': pilar.id,
+      'nome': pilar.nome
       }, Pilar.objects.all())
 
-    colaboradores = map(lambda colaborador: { 
-      'id_colaborador': colaborador.id, 
+    colaboradores = map(lambda colaborador: {
+      'id_colaborador': colaborador.id,
       'nome': colaborador.nome_abreviado
       }, Colaborador.objects.all())
 
@@ -240,10 +245,10 @@ def definir_ciclo(requisicao):
   data_final = requisicao.POST["data_final"]
   id_usuario_que_modificou = requisicao.POST["usuario_que_modificou"]
   usuario_que_modificou = Colaborador.objects.get(id=id_usuario_que_modificou)
- 
+
   ciclo = Ciclo(nome=nome_ciclo, data_inicial=data_inicial, data_final= data_final)
   ciclo.save()
-  
+
   log_Ciclo = LOG_Ciclo.adicionar(ciclo, usuario_que_modificou, 'Criação do ciclo', nome_ciclo , data_final)
   log_Ciclo.save()
 
@@ -266,12 +271,12 @@ def alterar_ciclo(requisicao):
   data_final_em_date_time = datetime.strptime(data_final, '%Y-%m-%d').date()
   ciclo.alterar_ciclo(data_final_em_date_time, novo_nome_ciclo)
   ciclo.save()
-  
+
   if ciclo_futuro and ciclo_futuro.id != int(id_ciclo):
     alterar_data_inicial_ciclo_futuro(ciclo_futuro, data_final_em_date_time, usuario_que_modificou)
 
   return JsonResponse({})
-  
+
 def  alterar_data_inicial_ciclo_futuro(ciclo_futuro, data_final_em_date_time, usuario_que_modificou):
   if ciclo_futuro != None:
     nova_data_inicial = data_final_em_date_time + timedelta(days=1)
@@ -279,13 +284,13 @@ def  alterar_data_inicial_ciclo_futuro(ciclo_futuro, data_final_em_date_time, us
       data_final = None
     else:
       data_final = ciclo_futuro.data_final
-    
+
     log_Ciclo = LOG_Ciclo.adicionar(ciclo_futuro, usuario_que_modificou, "Alteração da data inicial devido a mudança da data final do ciclo atual", ciclo_futuro.nome, data_final)
     log_Ciclo.save()
-    
+
     ciclo_futuro.alterar_data_inicial_ciclo(nova_data_inicial)
     ciclo_futuro.save()
-    
+
 
 @has_role_decorator('administrador')
 def obter_informacoes_ciclo_atual(requisicao):
@@ -317,7 +322,7 @@ def obter_informacoes_ciclo_atual(requisicao):
     'data_ultima_alteracao': log.data_da_modificacao.strftime('%d/%m/%Y'),
     'porcentagem_do_progresso': porcentagem
   }
-  
+
   return JsonResponse(resposta)
 
 @has_role_decorator('administrador')
@@ -340,11 +345,11 @@ def obter_informacoes_ciclo_futuro(requisicao):
       colaborador = Colaborador.objects.get(id=log.usuario_que_modificou.id)
     else:
       colaborador = "Automático"
-    
+
     if ciclo_futuro_obtido.data_final != None:
       data_final = ciclo_futuro_obtido.data_final
       data_final_formatada = data_final.strftime('%d/%m/%Y')
-      
+
     else :
       data_final = ""
       data_final_formatada = ""
@@ -361,7 +366,7 @@ def obter_informacoes_ciclo_futuro(requisicao):
     }
   else:
     ciclo_futuro = None
-    
+
   resposta = {
     'ciclo_futuro': ciclo_futuro,
     'previsao_data'  : {
@@ -377,14 +382,14 @@ def obter_informacoes_ciclo_futuro(requisicao):
 @has_role_decorator('administrador')
 def ciclos_passados(requisicao):
   ciclos_passados_obtidos = obter_ciclos_passados().order_by('-id')
-  
+
   if ciclos_passados_obtidos != None:
-    ciclos_passados = map(lambda ciclo: { 
-      'id_ciclo': ciclo.id, 
-      'nome': ciclo.nome, 
-      'nome_autor': obter_nome_usuario_que_modificou(ciclo), 
-      'data_inicial': ciclo.data_inicial.strftime('%d/%m/%Y'), 
-      'data_final': ciclo.data_final.strftime('%d/%m/%Y') 
+    ciclos_passados = map(lambda ciclo: {
+      'id_ciclo': ciclo.id,
+      'nome': ciclo.nome,
+      'nome_autor': obter_nome_usuario_que_modificou(ciclo),
+      'data_inicial': ciclo.data_inicial.strftime('%d/%m/%Y'),
+      'data_final': ciclo.data_final.strftime('%d/%m/%Y')
       }, ciclos_passados_obtidos)
 
     lista_todos_ciclos_passados = list(ciclos_passados)
@@ -401,25 +406,25 @@ def ciclos_passados(requisicao):
 
       secao["ciclos"] = paginator.page(i).object_list
       secoes.append(secao)
-  
+
   else:
     secoes = None
-    
+
   resposta = {
     'secoes': secoes
-  }	
-  
+  }
+
   return JsonResponse(resposta, safe=False)
 
 @has_role_decorator('administrador')
 def historico_alteracoes(requisicao):
-  historico_alteracoes = map(lambda LOG_Ciclo: { 
-    'antigo_nome_do_ciclo': LOG_Ciclo.antigo_nome_ciclo, 
-    'nome_autor': LOG_Ciclo.usuario_que_modificou.nome_abreviado if(LOG_Ciclo.usuario_que_modificou != None) else "Automático", 
-    'data_anterior': LOG_Ciclo.antiga_data_final.strftime('%d/%m/%Y') if(LOG_Ciclo.antiga_data_final != None) else "", 
-    'nova_data': LOG_Ciclo.nova_data_alterada.strftime('%d/%m/%Y') if (LOG_Ciclo.nova_data_alterada != None) else "", 
-    'data_alteracao': LOG_Ciclo.data_da_modificacao.strftime('%d/%m/%Y'), 
-    'motivo_alteracao': LOG_Ciclo.descricao_da_alteracao, 
+  historico_alteracoes = map(lambda LOG_Ciclo: {
+    'antigo_nome_do_ciclo': LOG_Ciclo.antigo_nome_ciclo,
+    'nome_autor': LOG_Ciclo.usuario_que_modificou.nome_abreviado if(LOG_Ciclo.usuario_que_modificou != None) else "Automático",
+    'data_anterior': LOG_Ciclo.antiga_data_final.strftime('%d/%m/%Y') if(LOG_Ciclo.antiga_data_final != None) else "",
+    'nova_data': LOG_Ciclo.nova_data_alterada.strftime('%d/%m/%Y') if (LOG_Ciclo.nova_data_alterada != None) else "",
+    'data_alteracao': LOG_Ciclo.data_da_modificacao.strftime('%d/%m/%Y'),
+    'motivo_alteracao': LOG_Ciclo.descricao_da_alteracao,
     'novo_nome_ciclo' : LOG_Ciclo.novo_nome_ciclo
   }, obter_historico_de_alteracoes().order_by('-id'))
 
@@ -435,11 +440,11 @@ def historico_alteracoes(requisicao):
 
     secao["LOG_ciclos"] = paginator.page(i).object_list
     secoes.append(secao)
-      
+
   resposta = {
     'secoes': secoes
-  }	
-  
+  }
+
   return JsonResponse(resposta, safe=False)
 
 def obter_ciclo_atual():
@@ -496,25 +501,25 @@ def verificar_pilar_colaborador(colaborador, colaborador_transformado):
     colaborador_transformado.focar_nas_pessoas = quantidade
   elif id_pilar == 4:
     colaborador_transformado.planejar_entregar_aprender = quantidade
-  
+
   colaborador_transformado.todos_reconhecimentos += quantidade
-  
+
   return colaborador_transformado
 
 @has_role_decorator('administrador')
 def ranking_por_periodo(requisicao):
     data_inicio = requisicao.POST['data_inicio']
     data_fim = requisicao.POST['data_fim']
-    
+
     colaboradores_apreciacoes_recebidas = obter_ranking_de_apreciacoes_recebidas(data_inicio, data_fim)
     colaboradores_apreciacoes_feitas = obter_ranking_de_apreciacoes_feitas(data_inicio, data_fim)
-    
+
     if colaboradores_apreciacoes_recebidas == None and colaboradores_apreciacoes_feitas == None:
       return JsonResponse(status=403, data={'mensagem': 'Não foram encontrados registros para esta data!'})
-      
+
     colaboradores_transformados = []
     colaborador_transformado = None
-    for colaborador in colaboradores_apreciacoes_recebidas:      
+    for colaborador in colaboradores_apreciacoes_recebidas:
       if colaborador_transformado == None or colaborador_transformado.nome != colaborador[2]:
         if colaborador_transformado != None:
           colaboradores_transformados.append(colaborador_transformado)
@@ -522,7 +527,7 @@ def ranking_por_periodo(requisicao):
         verificar_pilar_colaborador(colaborador, colaborador_transformado)
       else:
         verificar_pilar_colaborador(colaborador, colaborador_transformado)
-      
+
     if colaborador_transformado != None:
       colaboradores_transformados.append(colaborador_transformado)
 
@@ -537,7 +542,7 @@ def ranking_por_periodo(requisicao):
 
     if len(colaboradores_transformados) != 0:
       colaboradores_ordenados = sorted(colaboradores_transformados, key=lambda x: x.todos_reconhecimentos, reverse=True)
-      transformacao = lambda colaborador : { 
+      transformacao = lambda colaborador : {
         'nome' : colaborador.nome,
         'todos_reconhecimentos' : colaborador.todos_reconhecimentos,
         'colaborar_sempre': colaborador.colaborar_sempre,
@@ -547,7 +552,7 @@ def ranking_por_periodo(requisicao):
         'reconhecimentos_feitos' : colaborador.reconhecimentos_feitos,
         'foto': colaborador.foto
       }
-      
+
       colaboradores = map(transformacao, colaboradores_ordenados)
     else:
       colaboradores = ""
@@ -570,7 +575,7 @@ def obter_ranking_de_apreciacoes_recebidas(data_inicial, data_final):
     GROUP by l.nome, r.pilar_id, r.reconhecido_id, l.foto
     ORDER by l.nome, r.reconhecido_id, r.pilar_id
     ''', [data_inicial, data_final])
-    
+
     ranking_de_apreciacoes_recebidas = cursor.fetchall()
   return ranking_de_apreciacoes_recebidas
 
@@ -586,7 +591,7 @@ def obter_ranking_de_apreciacoes_feitas(data_inicial, data_final):
     ''', [data_inicial, data_final])
     ranking_de_apreciacoes_feitas = cursor.fetchall()
   return ranking_de_apreciacoes_feitas
-  
+
 def converterData(data):
   return datetime.strptime(data, "%Y-%m-%d").date()
 

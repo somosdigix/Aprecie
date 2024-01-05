@@ -53,3 +53,5 @@ static/CACHE/
 .sass-cache/
 # Visual Studio
 .vs/
+# Intellij
+.idea/
